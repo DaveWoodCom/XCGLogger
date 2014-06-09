@@ -2,7 +2,7 @@
 #####By: Dave Wood, Cerebral Gardens http://www.cerebralgardens.com/
 
 ###tl;dr
-A debug log framework for use in Swift projects. Allows you to log details to the console (and optionally a file), just like you would have with NSLog or println, but with additional information, such as the date, function name, filename and line number.
+A debug log framework for use in Swift projects. Allows you to log details to the console (and optionally a file), just like you would have with NSLog or println, but with additional information such as the date, function name, filename and line number.
 
 Go from this:
 
@@ -16,7 +16,7 @@ to this:
 
 XCGLogger works in both iOS and OS X projects. It is a Swift library intended for use in Swift projects.
 
-Swift does away with the c preprocessor, which kills the ability to use ```#define``` macros. This means our traditional way of generating nice debug logs is dead. Resorting to just plain old ```println``` calls means you lose a lot of helpful information, or requires you to type a tonne more code.
+Swift does away with the c preprocessor, which kills the ability to use ```#define``` macros. This means our traditional way of generating nice debug logs is dead. Resorting to just plain old ```println``` calls means you lose a lot of helpful information, or requires you to type a lot more code.
 
 ###How to Use
 
