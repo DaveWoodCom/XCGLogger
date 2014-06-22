@@ -23,12 +23,6 @@
 import Foundation
 
 class XCGLogger {
-    /// #pragma mark - Static variables
-    struct statics {
-        static var sharedInstanceOnceToken: dispatch_once_t = 0
-        static var sharedInstance: XCGLogger? = nil
-    }
-
     /// #pragma mark - Enums
     enum LogLevel: Int {
         case Verbose = 1, Debug, Info, Error, Severe, None
@@ -100,12 +94,10 @@ class XCGLogger {
 
     /// #pragma mark - Shared instance
     class func sharedInstance() -> XCGLogger {
-        dispatch_once(&statics.sharedInstanceOnceToken) {
-            var sharedInstance = XCGLogger()
-            statics.sharedInstance = sharedInstance
+        struct statics {
+            static let instance: XCGLogger = XCGLogger()
         }
-
-        return statics.sharedInstance!
+        return statics.instance
     }
 
     /// #pragma mark - Setup methods
