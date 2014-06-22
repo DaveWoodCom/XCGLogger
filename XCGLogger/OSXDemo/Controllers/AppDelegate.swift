@@ -10,7 +10,7 @@
 import Cocoa
 import XCGLogger
 
-let log = XCGLogger.sharedInstance()
+let log = XCGLogger.defaultInstance()
 
 class AppDelegate: NSObject, NSApplicationDelegate {
 
