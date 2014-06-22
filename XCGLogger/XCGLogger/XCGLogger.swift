@@ -52,6 +52,7 @@ class XCGLogger {
     var showFileName: Bool = true
     var showLineNumber: Bool = true
     var showLogLevel: Bool = true
+    var identifier: String = ""
 
     /// #pragma mark - Properties (Internal)
     var dateFormatter: NSDateFormatter? = nil
@@ -97,6 +98,7 @@ class XCGLogger {
         struct statics {
             static let instance: XCGLogger = XCGLogger()
         }
+        statics.instance.identifier = "com.cerebralgardens.xcglogger.defaultInstance"
         return statics.instance
     }
     class func sharedInstance() -> XCGLogger {
