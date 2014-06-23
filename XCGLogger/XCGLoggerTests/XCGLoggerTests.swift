@@ -36,10 +36,10 @@ class XCGLoggerTests: XCTestCase {
     func testDefaultInstance() {
         // Test that if we request the default instance multiple times, we always get the same instance
         let defaultInstance1: XCGLogger = XCGLogger.defaultInstance()
-        defaultInstance1.identifier = "com.cerebralgardens.xcglogger.defaultInstance"
+        defaultInstance1.identifier = XCGLogger.constants.defaultInstanceIdentifier
 
         let defaultInstance2: XCGLogger = XCGLogger.defaultInstance()
-        defaultInstance2.identifier = "com.cerebralgardens.xcglogger.defaultInstance.second" // this should also change defaultInstance1.identifier
+        defaultInstance2.identifier = XCGLogger.constants.defaultInstanceIdentifier + ".second" // this should also change defaultInstance1.identifier
 
         XCTAssert(defaultInstance1.identifier == defaultInstance2.identifier, "Fail: defaultInstance() is not returning a common instance")
     }
@@ -53,5 +53,44 @@ class XCGLoggerTests: XCTestCase {
         instance2.identifier = "instance2" // this should not affect instance1
 
         XCTAssert(instance1.identifier != instance2.identifier, "Fail: same instance is being returned")
+    }
+
+    func testAddRemoveLogDestination() {
+        let testIdentifier = "second.console"
+
+        let log = XCGLogger.defaultInstance()
+        let logDestinationCountAtStart = log.logDestinations.count
+
+        let additionalConsoleLogger = XCGConsoleLogDestination(owner: log, identifier: testIdentifier)
+
+        let additionSuccess = log.addLogDestination(additionalConsoleLogger)
+        let logDestinationCountAfterAddition = log.logDestinations.count
+
+        log.removeLogDestination(testIdentifier)
+        let logDestinationCountAfterRemoval = log.logDestinations.count
+
+        XCTAssert(additionSuccess, "Failed to add additional logger, correct result code")
+        XCTAssert(logDestinationCountAtStart == (logDestinationCountAfterAddition - 1), "Failed to add additional logger")
+        XCTAssert(logDestinationCountAfterAddition == (logDestinationCountAfterRemoval + 1), "Failed to remove addtional logger")
+    }
+
+    func testDenyAdditionOfLogDestinationWithDuplicateIdentifier() {
+        let testIdentifier = "second.console"
+
+        let log = XCGLogger.defaultInstance()
+        let logDestinationCountAtStart = log.logDestinations.count
+
+        let additionalConsoleLogger = XCGConsoleLogDestination(owner: log, identifier: testIdentifier)
+        let additionalConsoleLogger2 = XCGConsoleLogDestination(owner: log, identifier: testIdentifier)
+
+        let additionSuccess = log.addLogDestination(additionalConsoleLogger)
+        let logDestinationCountAfterAddition = log.logDestinations.count
+
+        let additionSuccess2 = log.addLogDestination(additionalConsoleLogger2)
+        let logDestinationCountAfterAddition2 = log.logDestinations.count
+
+        XCTAssert(additionSuccess, "Failed to add additional logger, correct result code")
+        XCTAssert(!additionSuccess2, "Failed to prevent adding additional logger with a duplicate identifier")
+        XCTAssert(logDestinationCountAfterAddition == logDestinationCountAfterAddition2, "Failed to prevent adding additional logger with a duplicate identifier")
     }
 }

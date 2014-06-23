@@ -1,5 +1,7 @@
 #XCGLogger
-#####By: Dave Wood, Cerebral Gardens http://www.cerebralgardens.com/
+#####By: Dave Wood
+- Cerebral Gardens http://www.cerebralgardens.com/
+- Twitter: [@CerebralGardens](https://twitter.com/CerebralGardens)
 
 ###tl;dr
 A debug log framework for use in Swift projects. Allows you to log details to the console (and optionally a file), just like you would have with NSLog or println, but with additional information such as the date, function name, filename and line number.
@@ -28,11 +30,13 @@ In each source file:
 import XCGLogger
 ```
 
-In your AppDelegate, declare a global constant to the shared XCGLogger instance.
+In your AppDelegate, declare a global constant to the default XCGLogger instance.
 
 ```Swift
-let log = XCGLogger.sharedInstance()
+let log = XCGLogger.defaultInstance()
 ```
+
+**Note**: previously this was ```XCGLogger.sharedInstance()```, but it was changed to better reflect that you can create multiple instances.
 
 In the 
 ```Swift
@@ -67,6 +71,15 @@ fileLog.setup(logLevel: .Debug, showLogLevel: true, showFileNames: true, showLin
 fileLog.info("Have a second instance for special use")
 ```
 
+You can create alternate log destinations (besides the two built in ones for the console  and a file). Your custom log destination must implement the ```XCGLogDestinationProtocol``` protocol. Instantiate your object, configure it, and then add it to the ```XCGLogger``` object with ```addLogDestination```. Take a look at ```XCGConsoleLogDestination``` and ```XCGFileLogDestination``` for examples.
+
+Each log destination can have its own log level. Setting the log level on the log object itself will pass that level to each destination. Then set the destinations that need to be different.
+
+###To Do
+- Access NSDateFormatters in a thread safe manner
+- Add examples of some advanced use cases
+- Add additional log destination types
+
 ###More
 
 If you find this library helpful, you'll definitely find these other tools helpful:
@@ -80,6 +93,7 @@ Briefs: http://giveabrief.com/
 
 ###Change Log
 
-####Version 1.0: 2014/06/09
- - Initial Release
+* **Version 1.0**: *(2014/06/09)* - Initial Release
+* **Version 1.1**: *(2014/06/22)* - Changed the internal architecture to allow for more flexibility
+
 
