@@ -93,4 +93,35 @@ class XCGLoggerTests: XCTestCase {
         XCTAssert(!additionSuccess2, "Failed to prevent adding additional logger with a duplicate identifier")
         XCTAssert(logDestinationCountAfterAddition == logDestinationCountAfterAddition2, "Failed to prevent adding additional logger with a duplicate identifier")
     }
+
+    func testExecExecutes() {
+        var log: XCGLogger = XCGLogger()
+        log.identifier = "com.cerebralgardens.xcglogger.testExecExecutes"
+        log.outputLogLevel = .Debug
+
+        var executed: Bool = false
+        log.debugExec {
+            log.debug("executed closure correctly")
+            executed = true
+        }
+
+        log.debug("executed: \(executed)")
+        XCTAssert(executed, "Fail: Didn't execute the closure when it should have")
+    }
+
+    func testExecDoesntExecute() {
+        var log: XCGLogger = XCGLogger()
+        log.identifier = "com.cerebralgardens.xcglogger.testExecDoesntExecute"
+        log.outputLogLevel = .Error
+
+        var executed: Bool = false
+        log.debugExec {
+            log.debug("executed closure incorrectly")
+            executed = true
+        }
+
+        log.outputLogLevel = .Debug
+        log.debug("executed: \(executed)")
+        XCTAssert(!executed, "Fail: Executed the closure when it shouldn't have")
+    }
 }

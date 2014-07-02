@@ -378,6 +378,18 @@ class XCGLogger : DebugPrintable {
         }
     }
 
+    class func exec(logLevel: LogLevel = .Debug, closure: () -> () = {}) {
+        self.defaultInstance().exec(logLevel: logLevel, closure: closure)
+    }
+
+    func exec(logLevel: LogLevel = .Debug, closure: () -> () = {}) {
+        if (!isEnabledForLogLevel(logLevel)) {
+            return
+        }
+
+        closure()
+    }
+
     func logAppDetails(selectedLogDestination: XCGLogDestinationProtocol? = nil) {
         let date = NSDate.date()
         var infoDictionary: NSDictionary = NSBundle.mainBundle().infoDictionary
@@ -440,7 +452,51 @@ class XCGLogger : DebugPrintable {
         self.logln(logMessage, logLevel: .Severe, functionName: functionName, fileName: fileName, lineNumber: lineNumber, functionNameDuplicate: functionNameDuplicate)
     }
 
+    class func verboseExec(closure: () -> () = {}) {
+        self.defaultInstance().exec(logLevel: XCGLogger.LogLevel.Verbose, closure: closure)
+    }
+
+    func verboseExec(closure: () -> () = {}) {
+        self.exec(logLevel: XCGLogger.LogLevel.Verbose, closure: closure)
+    }
+    
+    class func debugExec(closure: () -> () = {}) {
+        self.defaultInstance().exec(logLevel: XCGLogger.LogLevel.Debug, closure: closure)
+    }
+
+    func debugExec(closure: () -> () = {}) {
+        self.exec(logLevel: XCGLogger.LogLevel.Debug, closure: closure)
+    }
+    
+    class func infoExec(closure: () -> () = {}) {
+        self.defaultInstance().exec(logLevel: XCGLogger.LogLevel.Info, closure: closure)
+    }
+
+    func infoExec(closure: () -> () = {}) {
+        self.exec(logLevel: XCGLogger.LogLevel.Info, closure: closure)
+    }
+    
+    class func errorExec(closure: () -> () = {}) {
+        self.defaultInstance().exec(logLevel: XCGLogger.LogLevel.Error, closure: closure)
+    }
+
+    func errorExec(closure: () -> () = {}) {
+        self.exec(logLevel: XCGLogger.LogLevel.Error, closure: closure)
+    }
+    
+    class func severeExec(closure: () -> () = {}) {
+        self.defaultInstance().exec(logLevel: XCGLogger.LogLevel.Severe, closure: closure)
+    }
+
+    func severeExec(closure: () -> () = {}) {
+        self.exec(logLevel: XCGLogger.LogLevel.Severe, closure: closure)
+    }
+
     /// #pragma mark - Misc methods
+    func isEnabledForLogLevel (logLevel: XCGLogger.LogLevel) -> Bool {
+        return logLevel.toRaw() >= self.outputLogLevel.toRaw()
+    }
+
     func logDestination(identifier: String) -> XCGLogDestinationProtocol? {
 
         for logDestination in logDestinations {

@@ -611,6 +611,7 @@
 				5510DB4519459F8C00F86BAB /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		5510DB4719459F8C00F86BAB /* Build configuration list for PBXNativeTarget "XCGLoggerTests" */ = {
 			isa = XCConfigurationList;
@@ -619,6 +620,7 @@
 				5510DB4919459F8C00F86BAB /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		55166E7B19459B8E0075FF22 /* Build configuration list for PBXNativeTarget "OSXDemo" */ = {
 			isa = XCConfigurationList;

@@ -38,22 +38,37 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     /// #pragma mark - Main View
     @IBAction func verboseButtonTouchUpInside(sender : AnyObject) {
         log.verbose("Verbose button tapped")
+        log.verboseExec {
+            log.verbose("Executed verbose code block")
+        }
     }
 
     @IBAction func debugButtonTouchUpInside(sender : AnyObject) {
         log.debug("Debug button tapped")
+        log.debugExec {
+            log.debug("Executed debug code block")
+        }
     }
 
     @IBAction func infoButtonTouchUpInside(sender : AnyObject) {
         log.info("Info button tapped")
+        log.infoExec {
+            log.info("Executed info code block")
+        }
     }
 
     @IBAction func errorButtonTouchUpInside(sender : AnyObject) {
         log.error("Error button tapped")
+        log.errorExec {
+            log.error("Executed error code block")
+        }
     }
 
     @IBAction func severeButtonTouchUpInside(sender : AnyObject) {
         log.severe("Severe button tapped")
+        log.severeExec {
+            log.severe("Executed severe code block")
+        }
     }
 
     @IBAction func logLevelSliderValueChanged(sender : AnyObject) {
