@@ -59,7 +59,7 @@ log.error("An error occurred, but it's recoverable, just info about what happene
 log.severe("A severe error occurred, we are likely about to crash now")
 ```
 
-The different methods set the log level of the message. XCGLogger will only print messages that >= its current log level setting.
+The different methods set the log level of the message. XCGLogger will only print messages with a log level that is >= its current log level setting.
 
 ###Advanced Use
 
@@ -74,6 +74,26 @@ fileLog.info("Have a second instance for special use")
 You can create alternate log destinations (besides the two built in ones for the console  and a file). Your custom log destination must implement the ```XCGLogDestinationProtocol``` protocol. Instantiate your object, configure it, and then add it to the ```XCGLogger``` object with ```addLogDestination```. Take a look at ```XCGConsoleLogDestination``` and ```XCGFileLogDestination``` for examples.
 
 Each log destination can have its own log level. Setting the log level on the log object itself will pass that level to each destination. Then set the destinations that need to be different.
+
+###Selectively Executing Code
+As of version 1.2, you can now also selectively execute code based on the log level. This is useful for cases where you have to do some work in order to generate a log message, but don't want to do that work when the log messages won't be printed anyway.
+
+For example, if you have to iterate through a loop in order to do some calculation before logging the result. In Objective-C, you could put that code block between ```#if``` ```#endif```, and prevent the code from running. But in Swift, previously you would need to still process that loop, wasting resources.
+
+```Swift
+log.debugExec {
+    var total = 0.0
+    for receipt in receipts {
+	    total += receipt.total
+    }
+    
+    log.debug("Total of all receipts: \(total)")
+}
+
+```
+
+There are convenience methods for each log level:
+```verboseExec```, ```debugExec```, ```infoExec```, ```errorExec```, ```severeExec```
 
 ###To Do
 - Access NSDateFormatters in a thread safe manner
@@ -95,5 +115,6 @@ Briefs: http://giveabrief.com/
 
 * **Version 1.0**: *(2014/06/09)* - Initial Release
 * **Version 1.1**: *(2014/06/22)* - Changed the internal architecture to allow for more flexibility
+* **Version 1.2**: *(2014/07/01)* - Added exec methods to selectively execute code
 
 
