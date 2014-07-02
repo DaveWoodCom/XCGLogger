@@ -253,6 +253,7 @@ class XCGLogger : DebugPrintable {
         static let defaultInstanceIdentifier = "com.cerebralgardens.xcglogger.defaultInstance"
         static let baseConsoleLogDestinationIdentifier = "com.cerebralgardens.xcglogger.logdestination.console"
         static let baseFileLogDestinationIdentifier = "com.cerebralgardens.xcglogger.logdestination.file"
+        static let versionString = "1.2"
     }
 
     /// #pragma mark - Enums
@@ -396,6 +397,7 @@ class XCGLogger : DebugPrintable {
         var processInfo: NSProcessInfo = NSProcessInfo.processInfo()
         let CFBundleShortVersionString = infoDictionary["CFBundleShortVersionString"] as String
         let CFBundleVersion = infoDictionary["CFBundleVersion"] as String
+        let XCGLoggerVersionNumber = XCGLogger.constants.versionString
 
         let logDetails: Array<XCGLogDetails> = [XCGLogDetails(logLevel: .Info, date: date, logMessage: "\(processInfo.processName!) (\(CFBundleShortVersionString) Build: \(CFBundleVersion)) PID: \(processInfo.processIdentifier)", functionName: "", fileName: "", lineNumber: 0),
             XCGLogDetails(logLevel: .Info, date: date, logMessage: "XCGLogger Version: \(XCGLoggerVersionNumber) - LogLevel: \(outputLogLevel.description())", functionName: "", fileName: "", lineNumber: 0)]
