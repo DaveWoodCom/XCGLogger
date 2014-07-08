@@ -284,7 +284,7 @@ class XCGLogger : DebugPrintable {
     var identifier: String = ""
     var outputLogLevel: LogLevel = .Debug {
         didSet {
-            for index in 0 .. logDestinations.count {
+            for index in 0 ..< logDestinations.count {
                 logDestinations[index].outputLogLevel = outputLogLevel
             }
         }

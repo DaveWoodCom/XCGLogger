@@ -63,15 +63,15 @@ class ViewController: UIViewController {
         var logLevel: XCGLogger.LogLevel = .Verbose
 
         switch(logLevelSlider.value) {
-            case 0..1:
+            case 0 ..< 1:
                 logLevel = .Verbose
-            case 1..2:
+            case 1 ..< 2:
                 logLevel = .Debug
-            case 2..3:
+            case 2 ..< 3:
                 logLevel = .Info
-            case 3..4:
+            case 3 ..< 4:
                 logLevel = .Error
-            case 4..5:
+            case 4 ..< 5:
                 logLevel = .Severe
             default:
                 logLevel = .None
