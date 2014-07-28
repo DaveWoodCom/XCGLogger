@@ -363,8 +363,9 @@ class XCGLogger : DebugPrintable {
         let functionNameDuplicateLength = functionNameDuplicate.lengthOfBytesUsingEncoding(NSUTF8StringEncoding)
         let functionNameLength = functionName.lengthOfBytesUsingEncoding(NSUTF8StringEncoding)
         if functionNameLength < functionNameDuplicateLength {
-            let range: Range = functionNameDuplicate.rangeOfString(functionName, options: .LiteralSearch)
-            realFunctionName = functionNameDuplicate.stringByReplacingCharactersInRange(range, withString: "")
+            if let range: Range = functionNameDuplicate.rangeOfString(functionName, options: .LiteralSearch) {
+                realFunctionName = functionNameDuplicate.stringByReplacingCharactersInRange(range, withString: "")
+            }
         }
 
         var logDetails: XCGLogDetails? = nil
