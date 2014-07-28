@@ -14,15 +14,15 @@ let log = XCGLogger.defaultInstance()
 
 class AppDelegate: NSObject, NSApplicationDelegate {
 
-    /// #pragma mark - Properties
     @IBOutlet var window: NSWindow
+    // MARK: - Properties
 
     @IBOutlet var logLevelTextField : NSTextField
     @IBOutlet var currentLogLevelTextField : NSTextField
     @IBOutlet var generateTestLogTextField : NSTextField
     @IBOutlet var logLevelSlider : NSSlider
 
-    /// #pragma mark - Life cycle methods
+    // MARK: - Life cycle methods
     func applicationDidFinishLaunching(aNotification: NSNotification?) {
         // Insert code here to initialize your application
 
@@ -35,7 +35,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         // Insert code here to tear down your application
     }
 
-    /// #pragma mark - Main View
+    // MARK: - Main View
     @IBAction func verboseButtonTouchUpInside(sender : AnyObject) {
         log.verbose("Verbose button tapped")
         log.verboseExec {

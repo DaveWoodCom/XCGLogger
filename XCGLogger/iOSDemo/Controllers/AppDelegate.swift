@@ -15,20 +15,20 @@ let log = XCGLogger.defaultInstance()
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
-    /// #pragma mark - Properties
+    // MARK: - Properties
     var window: UIWindow?
 
     var documentsDirectory: NSURL {
-    let urls = NSFileManager.defaultManager().URLsForDirectory(.DocumentDirectory, inDomains: .UserDomainMask)
+        let urls = NSFileManager.defaultManager().URLsForDirectory(.DocumentDirectory, inDomains: .UserDomainMask)
         return urls[urls.endIndex-1] as NSURL
     }
 
     var cacheDirectory: NSURL {
-    let urls = NSFileManager.defaultManager().URLsForDirectory(.CachesDirectory, inDomains: .UserDomainMask)
+        let urls = NSFileManager.defaultManager().URLsForDirectory(.CachesDirectory, inDomains: .UserDomainMask)
         return urls[urls.endIndex-1] as NSURL
     }
 
-    /// #pragma mark - Life cycle methods
+    // MARK: - Life cycle methods
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: NSDictionary?) -> Bool {
         // Override point for customization after application launch.
 
