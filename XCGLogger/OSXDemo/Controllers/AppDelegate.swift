@@ -74,18 +74,22 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     @IBAction func logLevelSliderValueChanged(sender : AnyObject) {
         var logLevel: XCGLogger.LogLevel = .Verbose
 
-        switch(logLevelSlider.floatValue) {
-        case 0 ..< 1:
+        if (0 <= logLevelSlider.floatValue && logLevelSlider.floatValue < 1) {
             logLevel = .Verbose
-        case 1 ..< 2:
+        }
+        else if (1 <= logLevelSlider.floatValue && logLevelSlider.floatValue < 2) {
             logLevel = .Debug
-        case 2 ..< 3:
+        }
+        else if (2 <= logLevelSlider.floatValue && logLevelSlider.floatValue < 3) {
             logLevel = .Info
-        case 3 ..< 4:
+        }
+        else if (3 <= logLevelSlider.floatValue && logLevelSlider.floatValue < 4) {
             logLevel = .Error
-        case 4 ..< 5:
+        }
+        else if (4 <= logLevelSlider.floatValue && logLevelSlider.floatValue < 5) {
             logLevel = .Severe
-        default:
+        }
+        else {
             logLevel = .None
         }
 
