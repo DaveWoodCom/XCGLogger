@@ -12,10 +12,10 @@ import XCGLogger
 
 class ViewController: UIViewController {
 
-    @IBOutlet var logLevelLabel : UILabel
-    @IBOutlet var currentLogLevelLabel : UILabel
-    @IBOutlet var logLevelSlider : UISlider
-    @IBOutlet var generateLabel : UILabel
+    @IBOutlet var logLevelLabel : UILabel!
+    @IBOutlet var currentLogLevelLabel : UILabel!
+    @IBOutlet var logLevelSlider : UISlider!
+    @IBOutlet var generateLabel : UILabel!
 
     override func viewDidLoad() {
         super.viewDidLoad()

@@ -14,13 +14,13 @@ let log = XCGLogger.defaultInstance()
 
 class AppDelegate: NSObject, NSApplicationDelegate {
 
-    @IBOutlet var window: NSWindow
     // MARK: - Properties
+    @IBOutlet var window: NSWindow!
 
-    @IBOutlet var logLevelTextField : NSTextField
-    @IBOutlet var currentLogLevelTextField : NSTextField
-    @IBOutlet var generateTestLogTextField : NSTextField
-    @IBOutlet var logLevelSlider : NSSlider
+    @IBOutlet var logLevelTextField : NSTextField!
+    @IBOutlet var currentLogLevelTextField : NSTextField!
+    @IBOutlet var generateTestLogTextField : NSTextField!
+    @IBOutlet var logLevelSlider : NSSlider!
 
     // MARK: - Life cycle methods
     func applicationDidFinishLaunching(aNotification: NSNotification?) {
