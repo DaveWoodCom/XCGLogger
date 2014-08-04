@@ -218,15 +218,15 @@ public class XCGFileLogDestination : XCGLogDestinationProtocol, DebugPrintable {
     }
 
     private func openFile() {
-        if logFileHandle {
+        if logFileHandle != nil {
             closeFile()
         }
 
-        if writeToFileURL {
+        if writeToFileURL != nil {
             NSFileManager.defaultManager().createFileAtPath(writeToFileURL?.path, contents: nil, attributes: nil)
             var fileError : NSError? = nil
             logFileHandle = NSFileHandle.fileHandleForWritingToURL(writeToFileURL!, error: &fileError)
-            if !logFileHandle {
+            if logFileHandle == nil {
                 owner._logln("Attempt to open log file for writing failed: \(fileError?.localizedDescription!)", logLevel: .Error)
             }
             else {
@@ -380,7 +380,7 @@ public class XCGLogger : DebugPrintable {
         var logDetails: XCGLogDetails? = nil
         for logDestination in self.logDestinations {
             if (logDestination.isEnabledForLogLevel(logLevel)) {
-                if !logDetails {
+                if logDetails == nil {
                     logDetails = XCGLogDetails(logLevel: logLevel, date: date, logMessage: logMessage, functionName: realFunctionName, fileName: fileName, lineNumber: lineNumber)
                 }
 
@@ -412,7 +412,7 @@ public class XCGLogger : DebugPrintable {
         let logDetails: Array<XCGLogDetails> = [XCGLogDetails(logLevel: .Info, date: date, logMessage: "\(processInfo.processName!) (\(CFBundleShortVersionString) Build: \(CFBundleVersion)) PID: \(processInfo.processIdentifier)", functionName: "", fileName: "", lineNumber: 0),
             XCGLogDetails(logLevel: .Info, date: date, logMessage: "XCGLogger Version: \(XCGLoggerVersionNumber) - LogLevel: \(outputLogLevel.description())", functionName: "", fileName: "", lineNumber: 0)]
 
-        for logDestination in (selectedLogDestination ? [selectedLogDestination!] : logDestinations) {
+        for logDestination in (selectedLogDestination != nil ? [selectedLogDestination!] : logDestinations) {
             for logDetail in logDetails {
                 if !logDestination.isEnabledForLogLevel(.Info) {
                     continue;
@@ -521,7 +521,7 @@ public class XCGLogger : DebugPrintable {
 
     public func addLogDestination(logDestination: XCGLogDestinationProtocol) -> Bool {
         let existingLogDestination: XCGLogDestinationProtocol? = self.logDestination(logDestination.identifier)
-        if existingLogDestination {
+        if existingLogDestination != nil {
             return false
         }
 
@@ -544,7 +544,7 @@ public class XCGLogger : DebugPrintable {
         var logDetails: XCGLogDetails? = nil
         for logDestination in self.logDestinations {
             if (logDestination.isEnabledForLogLevel(logLevel)) {
-                if !logDetails {
+                if logDetails == nil {
                     logDetails = XCGLogDetails(logLevel: logLevel, date: date, logMessage: logMessage, functionName: "", fileName: "", lineNumber: 0)
                 }
 
