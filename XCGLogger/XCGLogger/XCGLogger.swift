@@ -249,7 +249,7 @@ public class XCGLogger : DebugPrintable {
         public static let defaultInstanceIdentifier = "com.cerebralgardens.xcglogger.defaultInstance"
         public static let baseConsoleLogDestinationIdentifier = "com.cerebralgardens.xcglogger.logdestination.console"
         public static let baseFileLogDestinationIdentifier = "com.cerebralgardens.xcglogger.logdestination.file"
-        public static let versionString = "1.3"
+        public static let versionString = "1.4"
     }
 
     // MARK: - Enums
