@@ -113,6 +113,7 @@ Briefs: http://giveabrief.com/
 
 ###Change Log
 
+* **Version 1.5**: *(2014/08/23)* - Updated for Xcode 6 Beta 6
 * **Version 1.4**: *(2014/08/04)* - Updated for Xcode 6 Beta 5, removed __FUNCTION__ workaround
 * **Version 1.3**: *(2014/07/27)* - Updated to use public/internal/private access modifiers
 * **Version 1.2**: *(2014/07/01)* - Added exec methods to selectively execute code

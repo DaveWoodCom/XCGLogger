@@ -180,7 +180,9 @@ public class XCGFileLogDestination : XCGLogDestinationProtocol, DebugPrintable {
 
         var fullLogMessage: String =  "\(formattedDate) \(extendedDetails)\(logDetails.functionName): \(logDetails.logMessage)\n"
 
-        logFileHandle?.writeData(fullLogMessage.dataUsingEncoding(NSUTF8StringEncoding))
+        if let encodedData = fullLogMessage.dataUsingEncoding(NSUTF8StringEncoding) {
+            logFileHandle?.writeData(encodedData)
+        }
     }
 
     public func processInternalLogDetails(logDetails: XCGLogDetails) {
@@ -196,7 +198,9 @@ public class XCGFileLogDestination : XCGLogDestinationProtocol, DebugPrintable {
 
         var fullLogMessage: String =  "\(formattedDate) \(extendedDetails): \(logDetails.logMessage)\n"
 
-        logFileHandle?.writeData(fullLogMessage.dataUsingEncoding(NSUTF8StringEncoding))
+        if let encodedData = fullLogMessage.dataUsingEncoding(NSUTF8StringEncoding) {
+            logFileHandle?.writeData(encodedData)
+        }
     }
 
     // MARK: - Misc methods
@@ -209,28 +213,28 @@ public class XCGFileLogDestination : XCGLogDestinationProtocol, DebugPrintable {
             closeFile()
         }
 
-        if writeToFileURL != nil {
-            NSFileManager.defaultManager().createFileAtPath(writeToFileURL?.path, contents: nil, attributes: nil)
-            var fileError : NSError? = nil
-            logFileHandle = NSFileHandle.fileHandleForWritingToURL(writeToFileURL!, error: &fileError)
-            if logFileHandle == nil {
-                owner._logln("Attempt to open log file for writing failed: \(fileError?.localizedDescription!)", logLevel: .Error)
-            }
-            else {
-                owner.logAppDetails(selectedLogDestination: self)
+        if let unwrappedWriteToFileURL = writeToFileURL {
+            if let path = unwrappedWriteToFileURL.path {
+                NSFileManager.defaultManager().createFileAtPath(path, contents: nil, attributes: nil)
+                var fileError : NSError? = nil
+                logFileHandle = NSFileHandle.fileHandleForWritingToURL(unwrappedWriteToFileURL, error: &fileError)
+                if logFileHandle == nil {
+                    owner._logln("Attempt to open log file for writing failed: \(fileError?.localizedDescription)", logLevel: .Error)
+                }
+                else {
+                    owner.logAppDetails(selectedLogDestination: self)
 
-                let logDetails = XCGLogDetails(logLevel: .Info, date: NSDate.date(), logMessage: "XCGLogger writing to log to: \(writeToFileURL!)", functionName: "", fileName: "", lineNumber: 0)
-                owner._logln(logDetails.logMessage, logLevel: logDetails.logLevel)
-                processInternalLogDetails(logDetails)
+                    let logDetails = XCGLogDetails(logLevel: .Info, date: NSDate.date(), logMessage: "XCGLogger writing to log to: \(unwrappedWriteToFileURL)", functionName: "", fileName: "", lineNumber: 0)
+                    owner._logln(logDetails.logMessage, logLevel: logDetails.logLevel)
+                    processInternalLogDetails(logDetails)
+                }
             }
-        }
-        else {
-            logFileHandle = nil
         }
     }
 
     private func closeFile() {
         logFileHandle?.closeFile()
+        logFileHandle = nil
     }
 
     // MARK: - DebugPrintable
@@ -249,7 +253,7 @@ public class XCGLogger : DebugPrintable {
         public static let defaultInstanceIdentifier = "com.cerebralgardens.xcglogger.defaultInstance"
         public static let baseConsoleLogDestinationIdentifier = "com.cerebralgardens.xcglogger.logdestination.console"
         public static let baseFileLogDestinationIdentifier = "com.cerebralgardens.xcglogger.logdestination.file"
-        public static let versionString = "1.4"
+        public static let versionString = "1.5"
     }
 
     // MARK: - Enums
@@ -386,7 +390,7 @@ public class XCGLogger : DebugPrintable {
         let CFBundleVersion = infoDictionary["CFBundleVersion"] as String
         let XCGLoggerVersionNumber = XCGLogger.constants.versionString
 
-        let logDetails: Array<XCGLogDetails> = [XCGLogDetails(logLevel: .Info, date: date, logMessage: "\(processInfo.processName!) (\(CFBundleShortVersionString) Build: \(CFBundleVersion)) PID: \(processInfo.processIdentifier)", functionName: "", fileName: "", lineNumber: 0),
+        let logDetails: Array<XCGLogDetails> = [XCGLogDetails(logLevel: .Info, date: date, logMessage: "\(processInfo.processName) (\(CFBundleShortVersionString) Build: \(CFBundleVersion)) PID: \(processInfo.processIdentifier)", functionName: "", fileName: "", lineNumber: 0),
             XCGLogDetails(logLevel: .Info, date: date, logMessage: "XCGLogger Version: \(XCGLoggerVersionNumber) - LogLevel: \(outputLogLevel.description())", functionName: "", fileName: "", lineNumber: 0)]
 
         for logDestination in (selectedLogDestination != nil ? [selectedLogDestination!] : logDestinations) {
