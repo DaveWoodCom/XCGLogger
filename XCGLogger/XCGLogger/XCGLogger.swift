@@ -224,7 +224,7 @@ public class XCGFileLogDestination : XCGLogDestinationProtocol, DebugPrintable {
                 else {
                     owner.logAppDetails(selectedLogDestination: self)
 
-                    let logDetails = XCGLogDetails(logLevel: .Info, date: NSDate.date(), logMessage: "XCGLogger writing to log to: \(unwrappedWriteToFileURL)", functionName: "", fileName: "", lineNumber: 0)
+                    let logDetails = XCGLogDetails(logLevel: .Info, date: NSDate(), logMessage: "XCGLogger writing to log to: \(unwrappedWriteToFileURL)", functionName: "", fileName: "", lineNumber: 0)
                     owner._logln(logDetails.logMessage, logLevel: logDetails.logLevel)
                     processInternalLogDetails(logDetails)
                 }
@@ -253,7 +253,7 @@ public class XCGLogger : DebugPrintable {
         public static let defaultInstanceIdentifier = "com.cerebralgardens.xcglogger.defaultInstance"
         public static let baseConsoleLogDestinationIdentifier = "com.cerebralgardens.xcglogger.logdestination.console"
         public static let baseFileLogDestinationIdentifier = "com.cerebralgardens.xcglogger.logdestination.file"
-        public static let versionString = "1.5"
+        public static let versionString = "1.6"
     }
 
     // MARK: - Enums
@@ -356,7 +356,7 @@ public class XCGLogger : DebugPrintable {
     }
 
     public func logln(logMessage: String, logLevel: LogLevel = .Debug, functionName: String = __FUNCTION__, fileName: String = __FILE__, lineNumber: Int = __LINE__) {
-        let date = NSDate.date()
+        let date = NSDate()
 
         var logDetails: XCGLogDetails? = nil
         for logDestination in self.logDestinations {
@@ -383,7 +383,7 @@ public class XCGLogger : DebugPrintable {
     }
 
     public func logAppDetails(selectedLogDestination: XCGLogDestinationProtocol? = nil) {
-        let date = NSDate.date()
+        let date = NSDate()
         var infoDictionary: NSDictionary = NSBundle.mainBundle().infoDictionary
         var processInfo: NSProcessInfo = NSProcessInfo.processInfo()
         let CFBundleShortVersionString = infoDictionary["CFBundleShortVersionString"] as String
@@ -520,7 +520,7 @@ public class XCGLogger : DebugPrintable {
 
     // MARK: - Private methods
     private func _logln(logMessage: String, logLevel: LogLevel = .Debug) {
-        let date = NSDate.date()
+        let date = NSDate()
 
         var logDetails: XCGLogDetails? = nil
         for logDestination in self.logDestinations {
