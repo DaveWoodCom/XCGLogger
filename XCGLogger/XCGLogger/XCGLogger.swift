@@ -103,7 +103,7 @@ public class XCGConsoleLogDestination : XCGLogDestinationProtocol, DebugPrintabl
 
     // MARK: - Misc methods
     public func isEnabledForLogLevel (logLevel: XCGLogger.LogLevel) -> Bool {
-        return logLevel.toRaw() >= self.outputLogLevel.toRaw()
+        return logLevel.rawValue >= self.outputLogLevel.rawValue
     }
 
     // MARK: - DebugPrintable
@@ -205,7 +205,7 @@ public class XCGFileLogDestination : XCGLogDestinationProtocol, DebugPrintable {
 
     // MARK: - Misc methods
     public func isEnabledForLogLevel (logLevel: XCGLogger.LogLevel) -> Bool {
-        return logLevel.toRaw() >= self.outputLogLevel.toRaw()
+        return logLevel.rawValue >= self.outputLogLevel.rawValue
     }
 
     private func openFile() {
@@ -217,7 +217,7 @@ public class XCGFileLogDestination : XCGLogDestinationProtocol, DebugPrintable {
             if let path = unwrappedWriteToFileURL.path {
                 NSFileManager.defaultManager().createFileAtPath(path, contents: nil, attributes: nil)
                 var fileError : NSError? = nil
-                logFileHandle = NSFileHandle.fileHandleForWritingToURL(unwrappedWriteToFileURL, error: &fileError)
+                logFileHandle = NSFileHandle(forWritingToURL: unwrappedWriteToFileURL, error: &fileError)
                 if logFileHandle == nil {
                     owner._logln("Attempt to open log file for writing failed: \(fileError?.localizedDescription)", logLevel: .Error)
                 }
@@ -487,7 +487,7 @@ public class XCGLogger : DebugPrintable {
 
     // MARK: - Misc methods
     public func isEnabledForLogLevel (logLevel: XCGLogger.LogLevel) -> Bool {
-        return logLevel.toRaw() >= self.outputLogLevel.toRaw()
+        return logLevel.rawValue >= self.outputLogLevel.rawValue
     }
 
     public func logDestination(identifier: String) -> XCGLogDestinationProtocol? {
