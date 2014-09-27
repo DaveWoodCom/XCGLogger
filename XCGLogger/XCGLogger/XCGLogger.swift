@@ -103,7 +103,7 @@ public class XCGConsoleLogDestination : XCGLogDestinationProtocol, DebugPrintabl
 
     // MARK: - Misc methods
     public func isEnabledForLogLevel (logLevel: XCGLogger.LogLevel) -> Bool {
-        return logLevel.rawValue >= self.outputLogLevel.rawValue
+        return logLevel >= self.outputLogLevel
     }
 
     // MARK: - DebugPrintable
@@ -205,7 +205,7 @@ public class XCGFileLogDestination : XCGLogDestinationProtocol, DebugPrintable {
 
     // MARK: - Misc methods
     public func isEnabledForLogLevel (logLevel: XCGLogger.LogLevel) -> Bool {
-        return logLevel.rawValue >= self.outputLogLevel.rawValue
+        return logLevel >= self.outputLogLevel
     }
 
     private func openFile() {
@@ -257,8 +257,30 @@ public class XCGLogger : DebugPrintable {
     }
 
     // MARK: - Enums
-    public enum LogLevel: Int {
-        case Verbose = 1, Debug, Info, Error, Severe, None
+    public enum LogLevel: Comparable {
+        case Verbose
+        case Debug
+        case Info
+        case Error
+        case Severe
+        case None
+
+        public var comparableValue: Int {
+            switch self {
+            case .Verbose:
+                return 1
+            case .Debug:
+                return 2
+            case .Info:
+                return 3
+            case .Error:
+                return 4
+            case .Severe:
+                return 5
+            case .None:
+                return 6
+            }
+        }
 
         public func description() -> String {
             switch self {
@@ -274,8 +296,6 @@ public class XCGLogger : DebugPrintable {
                     return "Severe"
                 case .None:
                     return "None"
-                default:
-                    return "Unknown"
             }
         }
     }
@@ -487,7 +507,7 @@ public class XCGLogger : DebugPrintable {
 
     // MARK: - Misc methods
     public func isEnabledForLogLevel (logLevel: XCGLogger.LogLevel) -> Bool {
-        return logLevel.rawValue >= self.outputLogLevel.rawValue
+        return logLevel >= self.outputLogLevel
     }
 
     public func logDestination(identifier: String) -> XCGLogDestinationProtocol? {
@@ -545,4 +565,9 @@ public class XCGLogger : DebugPrintable {
             return description
         }
     }
+}
+
+// Implement Comparable for XCGLogger.LogLevel
+public func < (lhs:XCGLogger.LogLevel, rhs:XCGLogger.LogLevel) -> Bool {
+    return lhs.comparableValue < rhs.comparableValue
 }
