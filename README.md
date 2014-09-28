@@ -104,7 +104,6 @@ There are convenience methods for each log level:
 ```verboseExec```, ```debugExec```, ```infoExec```, ```errorExec```, ```severeExec```
 
 ###To Do
-- Access NSDateFormatters in a thread safe manner
 - Add examples of some advanced use cases
 - Add additional log destination types
 

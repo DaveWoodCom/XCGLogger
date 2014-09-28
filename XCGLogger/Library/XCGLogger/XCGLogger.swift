@@ -9,6 +9,36 @@
 
 import Foundation
 
+private extension NSThread {
+    class func dateFormatter(format: String, locale: NSLocale? = nil) -> NSDateFormatter? {
+
+        let localeToUse = locale ?? NSLocale.currentLocale()
+
+        if let threadDictionary = NSThread.currentThread().threadDictionary {
+            var dataFormatterCache: [String:NSDateFormatter]? = threadDictionary.objectForKey(XCGLogger.constants.nsdataFormatterCacheIdentifier) as? [String:NSDateFormatter]
+            if dataFormatterCache == nil {
+                dataFormatterCache = [String:NSDateFormatter]()
+            }
+
+            let formatterKey = format + "_" + localeToUse.localeIdentifier
+            if let formatter = dataFormatterCache?[formatterKey] {
+                return formatter
+            }
+
+            var formatter = NSDateFormatter()
+            formatter.locale = localeToUse
+            formatter.dateFormat = format
+            dataFormatterCache?[formatterKey] = formatter
+
+            threadDictionary[XCGLogger.constants.nsdataFormatterCacheIdentifier] = dataFormatterCache
+
+            return formatter
+        }
+
+        return nil
+    }
+}
+
 // MARK: - XCGLogDetails
 // - Data structure to hold all info about a log message, passed to log destination classes
 public struct XCGLogDetails {
@@ -51,15 +81,13 @@ public class XCGConsoleLogDestination : XCGLogDestinationProtocol, DebugPrintabl
     public var showFileName: Bool = true
     public var showLineNumber: Bool = true
     public var showLogLevel: Bool = true
-    public var dateFormatter: NSDateFormatter? = nil
+    public var dateFormatter: NSDateFormatter? {
+        return NSThread.dateFormatter("yyyy-MM-dd HH:mm:ss.SSS")
+    }
 
     public init(owner: XCGLogger, identifier: String = "") {
         self.owner = owner
         self.identifier = identifier
-
-        dateFormatter = NSDateFormatter()
-        dateFormatter!.locale = NSLocale.currentLocale()
-        dateFormatter!.dateFormat = "yyyy-MM-dd HH:mm:ss.SSS"
     }
 
     public func processLogDetails(logDetails: XCGLogDetails) {
@@ -82,7 +110,9 @@ public class XCGConsoleLogDestination : XCGLogDestinationProtocol, DebugPrintabl
 
         var fullLogMessage: String =  "\(formattedDate) \(extendedDetails)\(logDetails.functionName): \(logDetails.logMessage)\n"
 
-        print(fullLogMessage)
+        dispatch_async(XCGLogger.logQueue) {
+            print(fullLogMessage)
+        }
     }
 
     public func processInternalLogDetails(logDetails: XCGLogDetails) {
@@ -98,7 +128,9 @@ public class XCGConsoleLogDestination : XCGLogDestinationProtocol, DebugPrintabl
 
         var fullLogMessage: String =  "\(formattedDate) \(extendedDetails): \(logDetails.logMessage)\n"
 
-        print(fullLogMessage)
+        dispatch_async(XCGLogger.logQueue) {
+            print(fullLogMessage)
+        }
     }
 
     // MARK: - Misc methods
@@ -124,7 +156,9 @@ public class XCGFileLogDestination : XCGLogDestinationProtocol, DebugPrintable {
     public var showFileName: Bool = true
     public var showLineNumber: Bool = true
     public var showLogLevel: Bool = true
-    public var dateFormatter: NSDateFormatter? = nil
+    public var dateFormatter: NSDateFormatter? {
+        return NSThread.dateFormatter("yyyy-MM-dd HH:mm:ss.SSS")
+    }
 
     private var writeToFileURL : NSURL? = nil {
         didSet {
@@ -136,10 +170,6 @@ public class XCGFileLogDestination : XCGLogDestinationProtocol, DebugPrintable {
     public init(owner: XCGLogger, writeToFile: AnyObject, identifier: String = "") {
         self.owner = owner
         self.identifier = identifier
-
-        dateFormatter = NSDateFormatter()
-        dateFormatter!.locale = NSLocale.currentLocale()
-        dateFormatter!.dateFormat = "yyyy-MM-dd HH:mm:ss.SSS"
 
         if writeToFile is NSString {
             writeToFileURL = NSURL.fileURLWithPath(writeToFile as String)
@@ -254,6 +284,8 @@ public class XCGLogger : DebugPrintable {
         public static let defaultInstanceIdentifier = "com.cerebralgardens.xcglogger.defaultInstance"
         public static let baseConsoleLogDestinationIdentifier = "com.cerebralgardens.xcglogger.logdestination.console"
         public static let baseFileLogDestinationIdentifier = "com.cerebralgardens.xcglogger.logdestination.file"
+        public static let nsdataFormatterCacheIdentifier = "com.cerebralgardens.xcglogger.nsdataFormatterCache"
+        public static let logQueueIdentifier = "com.cerebralgardens.xcglogger.queue"
         public static let versionString = "1.6"
     }
 
@@ -295,14 +327,20 @@ public class XCGLogger : DebugPrintable {
     }
 
     // MARK: - Properties
-    public var dateFormatter: NSDateFormatter? = nil
+    public class var logQueue : dispatch_queue_t {
+        struct Statics {
+            static var logQueue = dispatch_queue_create(XCGLogger.constants.logQueueIdentifier, nil)
+        }
+
+        return Statics.logQueue
+    }
+
+    public var dateFormatter: NSDateFormatter? {
+        return NSThread.dateFormatter("yyyy-MM-dd HH:mm:ss.SSS")
+    }
     public var logDestinations: Array<XCGLogDestinationProtocol> = []
 
     public init() {
-        dateFormatter = NSDateFormatter()
-        dateFormatter!.locale = NSLocale.currentLocale()
-        dateFormatter!.dateFormat = "yyyy-MM-dd HH:mm:ss.SSS"
-
         // Setup a standard console log destination
         addLogDestination(XCGConsoleLogDestination(owner: self, identifier: XCGLogger.constants.baseConsoleLogDestinationIdentifier))
     }
