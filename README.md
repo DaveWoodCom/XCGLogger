@@ -20,6 +20,8 @@ XCGLogger works in both iOS and OS X projects. It is a Swift library intended fo
 
 Swift does away with the C preprocessor, which kills the ability to use ```#define``` macros. This means our traditional way of generating nice debug logs is dead. Resorting to just plain old ```println``` calls means you lose a lot of helpful information, or requires you to type a lot more code.
 
+**Note:** There are a few differences in Swift between 1.0 (Xcode 6) and 1.1 (Xcode 6.1), the code in this repo should work on (and will be updated for) the latest version of Swift by default. If you're using Xcode 6.0.1, I've added a file ```XCGLogger_Xcode601.swift``` to the project that makes XCGLogger backwards compatible. You just need to include the file in the three targets: XCGLogger (iOS), XCGLogger (OS X), and XCGLoggerTests in the XCGLogger project.
+
 ###How to Use
 
 Add the XCGLogger project as a subproject to your project.

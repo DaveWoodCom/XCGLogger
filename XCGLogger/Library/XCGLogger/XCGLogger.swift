@@ -247,8 +247,7 @@ public class XCGFileLogDestination : XCGLogDestinationProtocol, DebugPrintable {
             if let path = unwrappedWriteToFileURL.path {
                 NSFileManager.defaultManager().createFileAtPath(path, contents: nil, attributes: nil)
                 var fileError : NSError? = nil
-                logFileHandle = NSFileHandle(forWritingToURL: unwrappedWriteToFileURL, error: &fileError) // Xcode 6.1
-                // logFileHandle = NSFileHandle.fileHandleForWritingToURL(unwrappedWriteToFileURL, error: &fileError) // Xcode 6.0.1
+                logFileHandle = NSFileHandle(forWritingToURL: unwrappedWriteToFileURL, error: &fileError)
                 if logFileHandle == nil {
                     owner._logln("Attempt to open log file for writing failed: \(fileError?.localizedDescription)", logLevel: .Error)
                 }
@@ -591,6 +590,5 @@ public class XCGLogger : DebugPrintable {
 
 // Implement Comparable for XCGLogger.LogLevel
 public func < (lhs:XCGLogger.LogLevel, rhs:XCGLogger.LogLevel) -> Bool {
-    return lhs.rawValue < rhs.rawValue // Xcode 6.1
-    // return lhs.toRaw() < rhs.toRaw() // Xcode 6.0.1
+    return lhs.rawValue < rhs.rawValue
 }
