@@ -24,9 +24,9 @@ Swift does away with the C preprocessor, which kills the ability to use ```#defi
 
 ###How to Use
 
-Add the XCGLogger project as a subproject to your project.
+Add the XCGLogger project as a subproject to your project, and add either the iOS or OS X library as a dependancy of your target(s).
 
-In each source file:
+Then, in each source file:
 
 ```Swift
 import XCGLogger
