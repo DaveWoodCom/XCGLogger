@@ -425,7 +425,7 @@ public class XCGLogger : DebugPrintable {
 
     public func logAppDetails(selectedLogDestination: XCGLogDestinationProtocol? = nil) {
         let date = NSDate()
-        var infoDictionary: NSDictionary = NSBundle.mainBundle().infoDictionary
+        var infoDictionary: NSDictionary = NSBundle.mainBundle().infoDictionary!
         var processInfo: NSProcessInfo = NSProcessInfo.processInfo()
         let CFBundleShortVersionString = infoDictionary["CFBundleShortVersionString"] as String
         let CFBundleVersion = infoDictionary["CFBundleVersion"] as String
