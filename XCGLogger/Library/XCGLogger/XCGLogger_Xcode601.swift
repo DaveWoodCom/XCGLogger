@@ -21,8 +21,15 @@ public extension XCGLogger.LogLevel {
 
 public extension NSFileHandle {
     convenience init(forWritingToURL url: NSURL, error: NSErrorPointer) {
-        self.init()
-        NSFileHandle.fileHandleForWritingToURL(url, error: error)
+        if let path = url.path {
+            self.init(forWritingAtPath: url.path!)
+        }
+        else {
+            if error != nil {
+                error.memory = NSError(domain: NSCocoaErrorDomain, code: 21, userInfo: [NSLocalizedDescriptionKey: "Invalid URL"])
+            }
+            self.init()
+        }
     }
 }
 
