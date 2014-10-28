@@ -1,7 +1,7 @@
 #XCGLogger
 #####By: Dave Wood
 - Cerebral Gardens http://www.cerebralgardens.com/
-- Twitter: [@CerebralGardens](https://twitter.com/CerebralGardens)
+- Twitter: [@DaveWoodX](https://twitter.com/DaveWoodX)
 
 ###tl;dr
 A debug log module for use in Swift projects. Allows you to log details to the console (and optionally a file), just like you would have with NSLog or println, but with additional information such as the date, function name, filename and line number.
