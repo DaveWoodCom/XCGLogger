@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		553EEA8F19FF86A200EE60AF /* XCGLogger.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 555FFCD719D77B3400F62246 /* XCGLogger.framework */; };
+		553EEA9019FF86A200EE60AF /* XCGLogger.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 555FFCD719D77B3400F62246 /* XCGLogger.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		555FFCB319D77B1800F62246 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 555FFCB219D77B1800F62246 /* AppDelegate.swift */; };
 		555FFCB519D77B1800F62246 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 555FFCB419D77B1800F62246 /* Images.xcassets */; };
 		555FFCB819D77B1800F62246 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 555FFCB619D77B1800F62246 /* MainMenu.xib */; };
@@ -15,6 +17,13 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
+		553EEA9119FF86A200EE60AF /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 555FFCCE19D77B3400F62246 /* XCGLogger.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 554DF41619D76FE7005708BE;
+			remoteInfo = "XCGLogger (OS X)";
+		};
 		555FFCBE19D77B1800F62246 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 555FFCA519D77B1800F62246 /* Project object */;
@@ -52,6 +61,20 @@
 		};
 /* End PBXContainerItemProxy section */
 
+/* Begin PBXCopyFilesBuildPhase section */
+		553EEA9319FF86A200EE60AF /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				553EEA9019FF86A200EE60AF /* XCGLogger.framework in Embed Frameworks */,
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
 /* Begin PBXFileReference section */
 		555FFCAD19D77B1800F62246 /* OSXDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = OSXDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		555FFCB119D77B1800F62246 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -70,6 +93,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				55D5C34A19D77C9B00A47D22 /* XCGLogger.framework in Frameworks */,
+				553EEA8F19FF86A200EE60AF /* XCGLogger.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -166,11 +190,13 @@
 				555FFCA919D77B1800F62246 /* Sources */,
 				555FFCAA19D77B1800F62246 /* Frameworks */,
 				555FFCAB19D77B1800F62246 /* Resources */,
+				553EEA9319FF86A200EE60AF /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
 			dependencies = (
 				55D5C34919D77C6000A47D22 /* PBXTargetDependency */,
+				553EEA9219FF86A200EE60AF /* PBXTargetDependency */,
 			);
 			name = OSXDemo;
 			productName = OSXDemo;
@@ -301,6 +327,11 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
+		553EEA9219FF86A200EE60AF /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = "XCGLogger (OS X)";
+			targetProxy = 553EEA9119FF86A200EE60AF /* PBXContainerItemProxy */;
+		};
 		555FFCBF19D77B1800F62246 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = 555FFCAC19D77B1800F62246 /* OSXDemo */;
@@ -409,6 +440,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				COMBINE_HIDPI_IMAGES = YES;
+				EMBEDDED_CONTENT_CONTAINS_SWIFT = YES;
 				INFOPLIST_FILE = OSXDemo/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -420,6 +452,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				COMBINE_HIDPI_IMAGES = YES;
+				EMBEDDED_CONTENT_CONTAINS_SWIFT = YES;
 				INFOPLIST_FILE = OSXDemo/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";

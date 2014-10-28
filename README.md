@@ -25,6 +25,7 @@ Swift does away with the C preprocessor, which kills the ability to use ```#defi
 ###How to Use
 
 Add the XCGLogger project as a subproject to your project, and add either the iOS or OS X library as a dependancy of your target(s).
+Under the General tab of your target, add the XCGLogger.framework to the Embedded Binaries.
 
 Then, in each source file:
 
@@ -40,7 +41,7 @@ let log = XCGLogger.defaultInstance()
 
 **Note**: previously this was ```XCGLogger.sharedInstance()```, but it was changed to better reflect that you can create multiple instances.
 
-In the 
+In the
 ```Swift
 application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: NSDictionary?) // iOS
 ```
@@ -96,7 +97,7 @@ log.debugExec {
     for receipt in receipts {
 	    total += receipt.total
     }
-    
+
     log.debug("Total of all receipts: \(total)")
 }
 

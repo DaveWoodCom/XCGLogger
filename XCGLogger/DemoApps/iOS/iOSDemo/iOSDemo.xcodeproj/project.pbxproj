@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		553EEA8719FF860800EE60AF /* XCGLogger.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 558C64AF19D777B100D6D507 /* XCGLogger.framework */; };
+		553EEA8819FF860800EE60AF /* XCGLogger.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 558C64AF19D777B100D6D507 /* XCGLogger.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		558C648819D7770100D6D507 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 558C648719D7770100D6D507 /* AppDelegate.swift */; };
 		558C648A19D7770100D6D507 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 558C648919D7770100D6D507 /* ViewController.swift */; };
 		558C648D19D7770100D6D507 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 558C648B19D7770100D6D507 /* Main.storyboard */; };
@@ -16,6 +18,13 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
+		553EEA8919FF860800EE60AF /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 558C64A819D777B100D6D507 /* XCGLogger.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 55E3EE4419D76F280068C3A7;
+			remoteInfo = "XCGLogger (iOS)";
+		};
 		558C649819D7770100D6D507 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 558C647A19D7770100D6D507 /* Project object */;
@@ -53,6 +62,20 @@
 		};
 /* End PBXContainerItemProxy section */
 
+/* Begin PBXCopyFilesBuildPhase section */
+		553EEA8B19FF860900EE60AF /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				553EEA8819FF860800EE60AF /* XCGLogger.framework in Embed Frameworks */,
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
 /* Begin PBXFileReference section */
 		558C648219D7770100D6D507 /* iOSDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = iOSDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		558C648619D7770100D6D507 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -72,6 +95,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				553EEA8719FF860800EE60AF /* XCGLogger.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -170,11 +194,13 @@
 				558C647E19D7770100D6D507 /* Sources */,
 				558C647F19D7770100D6D507 /* Frameworks */,
 				558C648019D7770100D6D507 /* Resources */,
+				553EEA8B19FF860900EE60AF /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
 			dependencies = (
 				558C64B519D777D100D6D507 /* PBXTargetDependency */,
+				553EEA8A19FF860800EE60AF /* PBXTargetDependency */,
 			);
 			name = iOSDemo;
 			productName = iOSDemo;
@@ -307,6 +333,11 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
+		553EEA8A19FF860800EE60AF /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = "XCGLogger (iOS)";
+			targetProxy = 553EEA8919FF860800EE60AF /* PBXContainerItemProxy */;
+		};
 		558C649919D7770100D6D507 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = 558C648119D7770100D6D507 /* iOSDemo */;
@@ -424,6 +455,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				EMBEDDED_CONTENT_CONTAINS_SWIFT = YES;
 				INFOPLIST_FILE = iOSDemo/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -434,6 +466,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				EMBEDDED_CONTENT_CONTAINS_SWIFT = YES;
 				INFOPLIST_FILE = iOSDemo/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
