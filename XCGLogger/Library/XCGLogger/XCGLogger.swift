@@ -426,17 +426,20 @@ public class XCGLogger : DebugPrintable {
     public func logAppDetails(selectedLogDestination: XCGLogDestinationProtocol? = nil) {
         let date = NSDate()
 
-        var CFBundleShortVersionString: String?
-        var CFBundleVersion: String?
+        var buildString = ""
         if let infoDictionary = NSBundle.mainBundle().infoDictionary {
-            CFBundleShortVersionString = infoDictionary["CFBundleShortVersionString"] as? String
-            CFBundleVersion = infoDictionary["CFBundleVersion"] as? String
+            if let CFBundleShortVersionString = infoDictionary["CFBundleShortVersionString"] as? String {
+                buildString = "Version: \(CFBundleShortVersionString) "
+            }
+            if let CFBundleVersion = infoDictionary["CFBundleVersion"] as? String {
+                buildString += "Build: \(CFBundleVersion) "
+            }
         }
 
-        var processInfo: NSProcessInfo = NSProcessInfo.processInfo()
+        let processInfo: NSProcessInfo = NSProcessInfo.processInfo()
         let XCGLoggerVersionNumber = XCGLogger.constants.versionString
 
-        let logDetails: Array<XCGLogDetails> = [XCGLogDetails(logLevel: .Info, date: date, logMessage: "\(processInfo.processName) (\(CFBundleShortVersionString) Build: \(CFBundleVersion)) PID: \(processInfo.processIdentifier)", functionName: "", fileName: "", lineNumber: 0),
+        let logDetails: Array<XCGLogDetails> = [XCGLogDetails(logLevel: .Info, date: date, logMessage: "\(processInfo.processName) \(buildString)PID: \(processInfo.processIdentifier)", functionName: "", fileName: "", lineNumber: 0),
             XCGLogDetails(logLevel: .Info, date: date, logMessage: "XCGLogger Version: \(XCGLoggerVersionNumber) - LogLevel: \(outputLogLevel.description())", functionName: "", fileName: "", lineNumber: 0)]
 
         for logDestination in (selectedLogDestination != nil ? [selectedLogDestination!] : logDestinations) {
