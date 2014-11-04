@@ -425,11 +425,15 @@ public class XCGLogger : DebugPrintable {
 
     public func logAppDetails(selectedLogDestination: XCGLogDestinationProtocol? = nil) {
         let date = NSDate()
-        // var infoDictionary: NSDictionary = NSBundle.mainBundle().infoDictionary // Xcode 6.0.1
-        var infoDictionary: NSDictionary = NSBundle.mainBundle().infoDictionary! // Xcode 6.1
+
+        var CFBundleShortVersionString: String?
+        var CFBundleVersion: String?
+        if let infoDictionary = NSBundle.mainBundle().infoDictionary {
+            CFBundleShortVersionString = infoDictionary["CFBundleShortVersionString"] as? String
+            CFBundleVersion = infoDictionary["CFBundleVersion"] as? String
+        }
+
         var processInfo: NSProcessInfo = NSProcessInfo.processInfo()
-        let CFBundleShortVersionString = infoDictionary["CFBundleShortVersionString"] as String
-        let CFBundleVersion = infoDictionary["CFBundleVersion"] as String
         let XCGLoggerVersionNumber = XCGLogger.constants.versionString
 
         let logDetails: Array<XCGLogDetails> = [XCGLogDetails(logLevel: .Info, date: date, logMessage: "\(processInfo.processName) (\(CFBundleShortVersionString) Build: \(CFBundleVersion)) PID: \(processInfo.processIdentifier)", functionName: "", fileName: "", lineNumber: 0),
