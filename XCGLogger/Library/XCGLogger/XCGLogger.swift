@@ -14,7 +14,11 @@ private extension NSThread {
 
         let localeToUse = locale ?? NSLocale.currentLocale()
 
-        if let threadDictionary = NSThread.currentThread().threadDictionary {
+        // These next two lines are a bit of a hack to handle the fact that .threadDictionary changed from an optional to a non-optional between Xcode 6.1 and 6.1.1
+        // This lets us use the same (albeit ugly) code in both cases.
+        // TODO: Clean up at some point after 6.1.1 is officially released.
+        let threadDictionary: NSMutableDictionary? = NSThread.currentThread().threadDictionary
+        if let threadDictionary = threadDictionary {
             var dataFormatterCache: [String:NSDateFormatter]? = threadDictionary.objectForKey(XCGLogger.constants.nsdataFormatterCacheIdentifier) as? [String:NSDateFormatter]
             if dataFormatterCache == nil {
                 dataFormatterCache = [String:NSDateFormatter]()
