@@ -297,6 +297,7 @@ public class XCGLogger : DebugPrintable {
         case Verbose
         case Debug
         case Info
+        case Warning
         case Error
         case Severe
         case None
@@ -309,6 +310,8 @@ public class XCGLogger : DebugPrintable {
                     return "Debug"
                 case .Info:
                     return "Info"
+                case .Warning:
+                    return "Warning"
                 case .Error:
                     return "Error"
                 case .Severe:
@@ -482,6 +485,14 @@ public class XCGLogger : DebugPrintable {
         self.logln(logMessage, logLevel: .Info, functionName: functionName, fileName: fileName, lineNumber: lineNumber)
     }
 
+    public class func warning(logMessage: String, functionName: String = __FUNCTION__, fileName: String = __FILE__, lineNumber: Int = __LINE__) {
+        self.defaultInstance().warning(logMessage, functionName: functionName, fileName: fileName, lineNumber: lineNumber)
+    }
+
+    public func warning(logMessage: String, functionName: String = __FUNCTION__, fileName: String = __FILE__, lineNumber: Int = __LINE__) {
+        self.logln(logMessage, logLevel: .Warning, functionName: functionName, fileName: fileName, lineNumber: lineNumber)
+    }
+    
     public class func error(logMessage: String, functionName: String = __FUNCTION__, fileName: String = __FILE__, lineNumber: Int = __LINE__) {
         self.defaultInstance().error(logMessage, functionName: functionName, fileName: fileName, lineNumber: lineNumber)
     }
@@ -522,6 +533,14 @@ public class XCGLogger : DebugPrintable {
         self.exec(logLevel: XCGLogger.LogLevel.Info, closure: closure)
     }
     
+    public class func warningExec(closure: () -> () = {}) {
+        self.defaultInstance().exec(logLevel: XCGLogger.LogLevel.Warning, closure: closure)
+    }
+
+    public func warningExec(closure: () -> () = {}) {
+        self.exec(logLevel: XCGLogger.LogLevel.Warning, closure: closure)
+    }
+
     public class func errorExec(closure: () -> () = {}) {
         self.defaultInstance().exec(logLevel: XCGLogger.LogLevel.Error, closure: closure)
     }

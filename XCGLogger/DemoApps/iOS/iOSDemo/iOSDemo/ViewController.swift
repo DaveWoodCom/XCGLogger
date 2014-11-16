@@ -45,6 +45,13 @@ class ViewController: UIViewController {
         }
     }
 
+    @IBAction func warningButtonTouchUpInside(sender : AnyObject) {
+        log.warning("Warning button tapped")
+        log.warningExec {
+            log.warning("Executed warning code block")
+        }
+    }
+
     @IBAction func errorButtonTouchUpInside(sender : AnyObject) {
         log.error("Error button tapped")
         log.errorExec {
@@ -72,9 +79,12 @@ class ViewController: UIViewController {
             logLevel = .Info
         }
         else if (3 <= logLevelSlider.value && logLevelSlider.value < 4) {
-            logLevel = .Error
+            logLevel = .Warning
         }
         else if (4 <= logLevelSlider.value && logLevelSlider.value < 5) {
+            logLevel = .Error
+        }
+        else if (5 <= logLevelSlider.value && logLevelSlider.value < 6) {
             logLevel = .Severe
         }
         else {
@@ -86,26 +96,8 @@ class ViewController: UIViewController {
     }
 
     func updateView() {
-        switch (log.outputLogLevel) {
-        case .Verbose:
-            logLevelSlider.value = 0
-            currentLogLevelLabel.text = "Verbose"
-        case .Debug:
-            logLevelSlider.value = 1
-            currentLogLevelLabel.text = "Debug"
-        case .Info:
-            logLevelSlider.value = 2
-            currentLogLevelLabel.text = "Info"
-        case .Error:
-            logLevelSlider.value = 3
-            currentLogLevelLabel.text = "Error"
-        case .Severe:
-            logLevelSlider.value = 4
-            currentLogLevelLabel.text = "Severe"
-        case .None:
-            logLevelSlider.value = 5
-            currentLogLevelLabel.text = "None"
-        }
+        logLevelSlider.value = Float(log.outputLogLevel.rawValue)
+        currentLogLevelLabel.text = log.outputLogLevel.description()
     }
 }
 

@@ -58,6 +58,13 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         }
     }
 
+    @IBAction func warningButtonTouchUpInside(sender : AnyObject) {
+        log.warning("Warning button tapped")
+        log.warningExec {
+            log.warning("Executed warning code block")
+        }
+    }
+
     @IBAction func errorButtonTouchUpInside(sender : AnyObject) {
         log.error("Error button tapped")
         log.errorExec {
@@ -85,9 +92,12 @@ class AppDelegate: NSObject, NSApplicationDelegate {
             logLevel = .Info
         }
         else if (3 <= logLevelSlider.floatValue && logLevelSlider.floatValue < 4) {
-            logLevel = .Error
+            logLevel = .Warning
         }
         else if (4 <= logLevelSlider.floatValue && logLevelSlider.floatValue < 5) {
+            logLevel = .Error
+        }
+        else if (5 <= logLevelSlider.floatValue && logLevelSlider.floatValue < 6) {
             logLevel = .Severe
         }
         else {
@@ -99,26 +109,8 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     }
 
     func updateView() {
-        switch (log.outputLogLevel) {
-        case .Verbose:
-            logLevelSlider.floatValue = 0
-            currentLogLevelTextField.stringValue = "Verbose"
-        case .Debug:
-            logLevelSlider.floatValue = 1
-            currentLogLevelTextField.stringValue = "Debug"
-        case .Info:
-            logLevelSlider.floatValue = 2
-            currentLogLevelTextField.stringValue = "Info"
-        case .Error:
-            logLevelSlider.floatValue = 3
-            currentLogLevelTextField.stringValue = "Error"
-        case .Severe:
-            logLevelSlider.floatValue = 4
-            currentLogLevelTextField.stringValue = "Severe"
-        case .None:
-            logLevelSlider.floatValue = 5
-            currentLogLevelTextField.stringValue = "None"
-        }
+        logLevelSlider.floatValue = Float(log.outputLogLevel.rawValue)
+        currentLogLevelTextField.stringValue = log.outputLogLevel.description()
     }
 }
 
