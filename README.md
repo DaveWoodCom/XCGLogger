@@ -116,7 +116,7 @@ If you find this library helpful, you'll definitely find these other tools helpf
 
 Watchdog: http://watchdogforxcode.com/
 
-Slender: http://dragonforged.com/slender/
+Slender: http://martiancraft.com/products/slender
 
 Briefs: http://giveabrief.com/
 
