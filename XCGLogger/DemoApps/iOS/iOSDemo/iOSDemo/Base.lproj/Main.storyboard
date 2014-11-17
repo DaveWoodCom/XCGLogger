@@ -44,7 +44,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Whp-6F-VJf">
-                                <rect key="frame" x="20" y="116" width="560" height="44"/>
+                                <rect key="frame" x="20" y="116" width="560" height="51"/>
                                 <color key="backgroundColor" red="0.86274509799999999" green="0.86666666670000003" blue="0.87450980389999999" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="44" id="chq-fA-bP9"/>
@@ -52,12 +52,17 @@
                                 <state key="normal" title="Verbose">
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
+                                <variation key="default">
+                                    <mask key="constraints">
+                                        <exclude reference="chq-fA-bP9"/>
+                                    </mask>
+                                </variation>
                                 <connections>
                                     <action selector="verboseButtonTouchUpInside:" destination="BYZ-38-t0r" eventType="touchUpInside" id="x8A-Nm-bet"/>
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="8IW-wu-eS0">
-                                <rect key="frame" x="20" y="168" width="560" height="44"/>
+                                <rect key="frame" x="20" y="175" width="560" height="52"/>
                                 <color key="backgroundColor" red="0.86274509799999999" green="0.86666666670000003" blue="0.87450980389999999" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="44" id="PHl-IC-bzm"/>
@@ -65,12 +70,17 @@
                                 <state key="normal" title="Debug">
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
+                                <variation key="default">
+                                    <mask key="constraints">
+                                        <exclude reference="PHl-IC-bzm"/>
+                                    </mask>
+                                </variation>
                                 <connections>
                                     <action selector="debugButtonTouchUpInside:" destination="BYZ-38-t0r" eventType="touchUpInside" id="J6B-w6-zf0"/>
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="7Th-pb-mc6">
-                                <rect key="frame" x="20" y="220" width="560" height="44"/>
+                                <rect key="frame" x="20" y="235" width="560" height="51"/>
                                 <color key="backgroundColor" red="0.86274509799999999" green="0.86666666670000003" blue="0.87450980389999999" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="44" id="s1v-E6-IPb"/>
@@ -78,12 +88,17 @@
                                 <state key="normal" title="Info">
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
+                                <variation key="default">
+                                    <mask key="constraints">
+                                        <exclude reference="s1v-E6-IPb"/>
+                                    </mask>
+                                </variation>
                                 <connections>
                                     <action selector="infoButtonTouchUpInside:" destination="BYZ-38-t0r" eventType="touchUpInside" id="2BI-a0-XQi"/>
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Qlo-FC-GNh">
-                                <rect key="frame" x="20" y="324" width="560" height="44"/>
+                                <rect key="frame" x="20" y="353" width="560" height="52"/>
                                 <color key="backgroundColor" red="0.86274509799999999" green="0.86666666670000003" blue="0.87450980389999999" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="44" id="nFj-cw-PYe"/>
@@ -91,12 +106,17 @@
                                 <state key="normal" title="Error">
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
+                                <variation key="default">
+                                    <mask key="constraints">
+                                        <exclude reference="nFj-cw-PYe"/>
+                                    </mask>
+                                </variation>
                                 <connections>
                                     <action selector="errorButtonTouchUpInside:" destination="BYZ-38-t0r" eventType="touchUpInside" id="j9O-hN-W0d"/>
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="csa-Jy-lFF">
-                                <rect key="frame" x="20" y="376" width="560" height="44"/>
+                                <rect key="frame" x="20" y="413" width="560" height="51"/>
                                 <color key="backgroundColor" red="0.86274509799999999" green="0.86666666670000003" blue="0.87450980389999999" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="44" id="nR0-hM-NNM"/>
@@ -104,12 +124,17 @@
                                 <state key="normal" title="Severe">
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
+                                <variation key="default">
+                                    <mask key="constraints">
+                                        <exclude reference="nR0-hM-NNM"/>
+                                    </mask>
+                                </variation>
                                 <connections>
                                     <action selector="severeButtonTouchUpInside:" destination="BYZ-38-t0r" eventType="touchUpInside" id="D0f-Nb-teQ"/>
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="UEf-4I-iHz">
-                                <rect key="frame" x="20" y="272" width="560" height="44"/>
+                                <rect key="frame" x="20" y="294" width="560" height="51"/>
                                 <color key="backgroundColor" red="0.86274509799999999" green="0.86666666670000003" blue="0.87450980389999999" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="44" id="Osl-ob-RXy"/>
@@ -117,6 +142,11 @@
                                 <state key="normal" title="Warning">
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
+                                <variation key="default">
+                                    <mask key="constraints">
+                                        <exclude reference="Osl-ob-RXy"/>
+                                    </mask>
+                                </variation>
                                 <connections>
                                     <action selector="warningButtonTouchUpInside:" destination="BYZ-38-t0r" eventType="touchUpInside" id="hv5-Lk-8dh"/>
                                 </connections>
@@ -131,8 +161,11 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <textView clipsSubviews="YES" multipleTouchEnabled="YES" userInteractionEnabled="NO" contentMode="scaleToFill" editable="NO" selectable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qJe-QA-vau">
-                                <rect key="frame" x="20" y="428" width="560" height="164"/>
+                                <rect key="frame" x="20" y="472" width="560" height="120"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="120" id="qzM-1D-7WA"/>
+                                </constraints>
                                 <string key="text">XCGLogger will only log messages that are set for the same or higher log level. So when the current log level is set to Info for example, neither Verbose nor Debug logs will be displayed, but Info, Warning, Error and Severe logs will be displayed.</string>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
@@ -146,11 +179,13 @@
                             <constraint firstAttribute="trailing" secondItem="qJe-QA-vau" secondAttribute="trailing" constant="20" symbolic="YES" id="5mt-sQ-u7F"/>
                             <constraint firstItem="SjH-ki-WTR" firstAttribute="top" secondItem="dIL-ul-q6u" secondAttribute="bottom" constant="8" symbolic="YES" id="6b5-dG-xq8"/>
                             <constraint firstItem="1zy-OP-hRV" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" constant="20" symbolic="YES" id="7bZ-JW-TZx"/>
+                            <constraint firstItem="UEf-4I-iHz" firstAttribute="height" secondItem="7Th-pb-mc6" secondAttribute="height" id="7zG-gS-3oW"/>
                             <constraint firstAttribute="trailing" secondItem="Qlo-FC-GNh" secondAttribute="trailing" constant="20" symbolic="YES" id="HqA-ww-RNJ"/>
                             <constraint firstItem="qJe-QA-vau" firstAttribute="top" secondItem="csa-Jy-lFF" secondAttribute="bottom" constant="8" symbolic="YES" id="HuD-LF-tv6"/>
                             <constraint firstItem="8IW-wu-eS0" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" constant="20" symbolic="YES" id="K4W-Th-sAB"/>
                             <constraint firstItem="7Th-pb-mc6" firstAttribute="top" secondItem="8IW-wu-eS0" secondAttribute="bottom" constant="8" symbolic="YES" id="M6j-c6-6Ae"/>
                             <constraint firstItem="MdE-sg-fKw" firstAttribute="leading" secondItem="dIL-ul-q6u" secondAttribute="trailing" constant="8" symbolic="YES" id="P3Q-bN-53m"/>
+                            <constraint firstItem="7Th-pb-mc6" firstAttribute="height" secondItem="8IW-wu-eS0" secondAttribute="height" id="PcK-3N-xMs"/>
                             <constraint firstAttribute="trailing" secondItem="SjH-ki-WTR" secondAttribute="trailing" constant="20" symbolic="YES" id="RbT-B8-3ak"/>
                             <constraint firstAttribute="trailing" secondItem="UEf-4I-iHz" secondAttribute="trailing" constant="20" symbolic="YES" id="Sia-Gj-AbA"/>
                             <constraint firstItem="UEf-4I-iHz" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" constant="20" symbolic="YES" id="TfB-a9-kNq"/>
@@ -158,6 +193,7 @@
                             <constraint firstItem="csa-Jy-lFF" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" constant="20" symbolic="YES" id="aKg-f5-vdb"/>
                             <constraint firstAttribute="trailing" secondItem="1zy-OP-hRV" secondAttribute="trailing" constant="20" symbolic="YES" id="as1-cv-lX7"/>
                             <constraint firstItem="Qlo-FC-GNh" firstAttribute="top" secondItem="UEf-4I-iHz" secondAttribute="bottom" constant="8" symbolic="YES" id="b7W-0j-EE7"/>
+                            <constraint firstItem="UEf-4I-iHz" firstAttribute="height" secondItem="Qlo-FC-GNh" secondAttribute="height" id="bAb-Zu-eMe"/>
                             <constraint firstItem="Whp-6F-VJf" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" constant="20" symbolic="YES" id="f4R-sy-fUx"/>
                             <constraint firstAttribute="trailing" secondItem="csa-Jy-lFF" secondAttribute="trailing" constant="20" symbolic="YES" id="g2c-Sx-p8f"/>
                             <constraint firstItem="Whp-6F-VJf" firstAttribute="top" secondItem="1zy-OP-hRV" secondAttribute="bottom" constant="8" symbolic="YES" id="grq-Yg-Bye"/>
@@ -165,12 +201,14 @@
                             <constraint firstItem="1zy-OP-hRV" firstAttribute="top" secondItem="SjH-ki-WTR" secondAttribute="bottom" constant="8" symbolic="YES" id="m9S-0r-AhK"/>
                             <constraint firstItem="dIL-ul-q6u" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" constant="20" symbolic="YES" id="mIk-QJ-GHV"/>
                             <constraint firstItem="qJe-QA-vau" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" constant="20" symbolic="YES" id="mnH-60-0g6"/>
+                            <constraint firstItem="csa-Jy-lFF" firstAttribute="height" secondItem="Qlo-FC-GNh" secondAttribute="height" id="ncx-i3-DjJ"/>
                             <constraint firstAttribute="trailing" secondItem="7Th-pb-mc6" secondAttribute="trailing" constant="20" symbolic="YES" id="rUN-Fd-udd"/>
                             <constraint firstItem="8IW-wu-eS0" firstAttribute="top" secondItem="Whp-6F-VJf" secondAttribute="bottom" constant="8" symbolic="YES" id="tvJ-TX-QT5"/>
                             <constraint firstItem="MdE-sg-fKw" firstAttribute="top" secondItem="8bC-Xf-vdC" secondAttribute="top" constant="20" symbolic="YES" id="u2D-fW-wBS"/>
                             <constraint firstItem="UEf-4I-iHz" firstAttribute="top" secondItem="7Th-pb-mc6" secondAttribute="bottom" constant="8" symbolic="YES" id="usC-hm-v59"/>
                             <constraint firstItem="dIL-ul-q6u" firstAttribute="top" secondItem="8bC-Xf-vdC" secondAttribute="top" constant="20" symbolic="YES" id="wV0-Mo-fZX"/>
                             <constraint firstAttribute="trailing" secondItem="8IW-wu-eS0" secondAttribute="trailing" constant="20" symbolic="YES" id="xE5-dt-x9o"/>
+                            <constraint firstItem="Whp-6F-VJf" firstAttribute="height" secondItem="8IW-wu-eS0" secondAttribute="height" id="zYm-du-BHo"/>
                             <constraint firstItem="SjH-ki-WTR" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" constant="20" symbolic="YES" id="ziX-KE-RTc"/>
                             <constraint firstItem="csa-Jy-lFF" firstAttribute="top" secondItem="Qlo-FC-GNh" secondAttribute="bottom" constant="8" symbolic="YES" id="zjd-Xg-5mb"/>
                         </constraints>
