@@ -124,6 +124,7 @@ Briefs: http://giveabrief.com/
 
 ###Change Log
 
+* **Version 1.8**: *(2014/11/16)* - Added warning log level (Issue #16)
 * **Version 1.7**: *(2014/09/27)* - Reorganized to be used as a subproject instead of a framework, fixed threading
 * **Version 1.6**: *(2014/09/09)* - Updated for Xcode 6.1 Beta 1
 * **Version 1.5**: *(2014/08/23)* - Updated for Xcode 6 Beta 6
