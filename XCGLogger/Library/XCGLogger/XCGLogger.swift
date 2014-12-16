@@ -423,7 +423,10 @@ public class XCGLogger : DebugPrintable {
     }
 
     public func exec(logLevel: LogLevel = .Debug, closure: () -> () = {}) {
-        if (!isEnabledForLogLevel(logLevel)) {
+        // Don't call isEnabledForLogLevel() here, causes compiler crash when
+        // optimization level is set to Fastest [-O]. See issues #10, #17, #26.
+        // Inlined the method here as a workaround.
+        if (!(logLevel >= self.outputLogLevel)) {
             return
         }
 
