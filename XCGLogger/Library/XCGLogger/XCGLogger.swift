@@ -423,10 +423,7 @@ public class XCGLogger : DebugPrintable {
     }
 
     public func exec(logLevel: LogLevel = .Debug, closure: () -> () = {}) {
-        // Don't call isEnabledForLogLevel() here, causes compiler crash when
-        // optimization level is set to Fastest [-O]. See issues #10, #17, #26.
-        // Inlined the method here as a workaround.
-        if (!(logLevel >= self.outputLogLevel)) {
+        if (!isEnabledForLogLevel(logLevel)) {
             return
         }
 
@@ -625,4 +622,11 @@ public class XCGLogger : DebugPrintable {
 // Implement Comparable for XCGLogger.LogLevel
 public func < (lhs:XCGLogger.LogLevel, rhs:XCGLogger.LogLevel) -> Bool {
     return lhs.rawValue < rhs.rawValue
+}
+
+// This operation shouldn't be required, since providing < is all that is needed, however, the compiler crashes when optimization is enabled.
+// Adding this operator works around the optimization bug.
+// Thanks to @beltex https://github.com/beltex for helping to narrow this down.
+public func >= (lhs:XCGLogger.LogLevel, rhs:XCGLogger.LogLevel) -> Bool {
+    return lhs.rawValue > rhs.rawValue || lhs.rawValue == rhs.rawValue
 }
