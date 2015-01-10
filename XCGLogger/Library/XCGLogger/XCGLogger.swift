@@ -477,6 +477,14 @@ public class XCGLogger : DebugPrintable {
         self.logln(logMessage, logLevel: .Debug, functionName: functionName, fileName: fileName, lineNumber: lineNumber)
     }
 
+    public class func trace(functionName: String = __FUNCTION__, fileName: String = __FILE__, lineNumber: Int = __LINE__) {
+        self.defaultInstance().debug("", functionName: functionName, fileName: fileName, lineNumber: lineNumber)
+    }
+
+    public func trace(functionName: String = __FUNCTION__, fileName: String = __FILE__, lineNumber: Int = __LINE__) {
+        self.logln("", logLevel: .Debug, functionName: functionName, fileName: fileName, lineNumber: lineNumber)
+    }
+    
     public class func info(logMessage: String, functionName: String = __FUNCTION__, fileName: String = __FILE__, lineNumber: Int = __LINE__) {
         self.defaultInstance().info(logMessage, functionName: functionName, fileName: fileName, lineNumber: lineNumber)
     }
