@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		553EEA8F19FF86A200EE60AF /* XCGLogger.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 555FFCD719D77B3400F62246 /* XCGLogger.framework */; };
 		553EEA9019FF86A200EE60AF /* XCGLogger.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 555FFCD719D77B3400F62246 /* XCGLogger.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		555FFCB319D77B1800F62246 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 555FFCB219D77B1800F62246 /* AppDelegate.swift */; };
 		555FFCB519D77B1800F62246 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 555FFCB419D77B1800F62246 /* Images.xcassets */; };
@@ -93,7 +92,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				55D5C34A19D77C9B00A47D22 /* XCGLogger.framework in Frameworks */,
-				553EEA8F19FF86A200EE60AF /* XCGLogger.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -227,7 +225,7 @@
 		555FFCA519D77B1800F62246 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0610;
+				LastUpgradeCheck = 0630;
 				ORGANIZATIONNAME = "Cerebral Gardens";
 				TargetAttributes = {
 					555FFCAC19D77B1800F62246 = {

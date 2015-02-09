@@ -24,7 +24,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     @IBOutlet var logLevelSlider : NSSlider!
 
     // MARK: - Life cycle methods
-    func applicationDidFinishLaunching(aNotification: NSNotification?) {
+    func applicationDidFinishLaunching(aNotification: NSNotification) {
         // Insert code here to initialize your application
 
         // Setup XCGLogger
@@ -32,7 +32,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         log.setup(logLevel: .Debug, showLogLevel: true, showFileNames: true, showLineNumbers: true, writeToFile: logPath)
     }
 
-    func applicationWillTerminate(aNotification: NSNotification?) {
+    func applicationWillTerminate(aNotification: NSNotification) {
         // Insert code here to tear down your application
     }
 
