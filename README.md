@@ -115,20 +115,21 @@ There are convenience methods for each log level:
 
 If you find this library helpful, you'll definitely find these other tools helpful:
 
-Watchdog: http://watchdogforxcode.com/
+Watchdog: http://watchdogforxcode.com/  
+Slender: http://martiancraft.com/products/slender  
+Briefs: http://giveabrief.com/  
 
-Slender: http://martiancraft.com/products/slender
-
-Briefs: http://giveabrief.com/
+Also, please check out my book **Swift for the Really Impatient** http://swiftforthereallyimpatient.com/
 
 
 ###Change Log
 
+* **Version 1.8.1**: *(2014/12/31)* - Added a workaround to the Swift compiler's optimization bug, restored optimization level back to Fastest
 * **Version 1.8**: *(2014/11/16)* - Added warning log level (Issue #16)
 * **Version 1.7**: *(2014/09/27)* - Reorganized to be used as a subproject instead of a framework, fixed threading
 * **Version 1.6**: *(2014/09/09)* - Updated for Xcode 6.1 Beta 1
 * **Version 1.5**: *(2014/08/23)* - Updated for Xcode 6 Beta 6
-* **Version 1.4**: *(2014/08/04)* - Updated for Xcode 6 Beta 5, removed __FUNCTION__ workaround
+* **Version 1.4**: *(2014/08/04)* - Updated for Xcode 6 Beta 5, removed `__FUNCTION__` workaround
 * **Version 1.3**: *(2014/07/27)* - Updated to use public/internal/private access modifiers
 * **Version 1.2**: *(2014/07/01)* - Added exec methods to selectively execute code
 * **Version 1.1**: *(2014/06/22)* - Changed the internal architecture to allow for more flexibility

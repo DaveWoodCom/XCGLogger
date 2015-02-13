@@ -340,7 +340,7 @@ public class XCGLogger : DebugPrintable {
         public static let baseFileLogDestinationIdentifier = "com.cerebralgardens.xcglogger.logdestination.file"
         public static let nsdataFormatterCacheIdentifier = "com.cerebralgardens.xcglogger.nsdataFormatterCache"
         public static let logQueueIdentifier = "com.cerebralgardens.xcglogger.queue"
-        public static let versionString = "1.8"
+        public static let versionString = "1.8.1"
     }
 
     // MARK: - Enums
@@ -700,4 +700,11 @@ public class XCGLogger : DebugPrintable {
 // Implement Comparable for XCGLogger.LogLevel
 public func < (lhs:XCGLogger.LogLevel, rhs:XCGLogger.LogLevel) -> Bool {
     return lhs.rawValue < rhs.rawValue
+}
+
+// This operation shouldn't be required, since providing < is all that is needed, however, the compiler crashes when optimization is enabled.
+// Adding this operator works around the optimization bug.
+// Thanks to @beltex https://github.com/beltex for helping to narrow this down.
+public func >= (lhs:XCGLogger.LogLevel, rhs:XCGLogger.LogLevel) -> Bool {
+    return lhs.rawValue > rhs.rawValue || lhs.rawValue == rhs.rawValue
 }
