@@ -335,7 +335,7 @@ public class XCGLogger : DebugPrintable {
     // MARK: - Properties
     public class var logQueue : dispatch_queue_t {
         struct Statics {
-            static var logQueue = dispatch_queue_create(XCGLogger.constants.logQueueIdentifier, nil)
+            static let logQueue = dispatch_queue_create(XCGLogger.constants.logQueueIdentifier, nil)
         }
 
         return Statics.logQueue
@@ -352,12 +352,22 @@ public class XCGLogger : DebugPrintable {
     }
 
     // MARK: - Default instance
-    public class func defaultInstance() -> XCGLogger {
-        struct statics {
-            static let instance: XCGLogger = XCGLogger()
+    public class func defaultInstance() -> XCGLogger
+    {
+        struct Static
+        {
+            static var onceToken    : dispatch_once_t = 0
+            static let instance     : XCGLogger = XCGLogger()
         }
-        statics.instance.identifier = XCGLogger.constants.defaultInstanceIdentifier
-        return statics.instance
+
+        dispatch_once(&Static.onceToken,
+        {
+            () -> Void in
+
+            Static.instance.identifier = XCGLogger.constants.defaultInstanceIdentifier
+        })
+
+        return Static.instance
     }
     public class func sharedInstance() -> XCGLogger {
         self.defaultInstance()._logln("sharedInstance() has been renamed to defaultInstance() to better reflect that it is not a true singleton. Please update your code, sharedInstance() will be removed in a future version.", logLevel: .Info)
