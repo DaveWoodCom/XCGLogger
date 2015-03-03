@@ -114,8 +114,9 @@ public class XCGConsoleLogDestination : XCGLogDestinationProtocol, DebugPrintabl
 
         var fullLogMessage: String =  "\(formattedDate) \(extendedDetails)\(logDetails.functionName): \(logDetails.logMessage)\n"
 
+
         dispatch_async(XCGLogger.logQueue) {
-            print(fullLogMessage)
+            NSLog(fullLogMessage)
         }
     }
 
@@ -133,7 +134,7 @@ public class XCGConsoleLogDestination : XCGLogDestinationProtocol, DebugPrintabl
         var fullLogMessage: String =  "\(formattedDate) \(extendedDetails): \(logDetails.logMessage)\n"
 
         dispatch_async(XCGLogger.logQueue) {
-            print(fullLogMessage)
+            NSLog(fullLogMessage)
         }
     }
 
