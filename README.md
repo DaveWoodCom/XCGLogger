@@ -81,6 +81,17 @@ log.severe("A severe error occurred, we are likely about to crash now")
 
 The different methods set the log level of the message. XCGLogger will only print messages with a log level that is >= its current log level setting.
 
+By using Swift build flags, different log levels can be used in debugging versus staging/production.
+Go to Build settings -> Swift Compiler - Custom Flags -> Other Swift Flags and add **-D DEBUG** to the Debug entry.
+
+```Swift
+#if DEBUG
+    log.setup(logLevel: .Debug, showLogLevel: true, showFileNames: true, showLineNumbers: true, writeToFile: nil)
+#else
+    log.setup(logLevel: .Severe, showLogLevel: true, showFileNames: true, showLineNumbers: true, writeToFile: nil)
+#endif
+```
+
 ###Advanced Use
 
 It's possible to create multiple instances of XCGLogger with different options. For example, you only want to log a specific section of your app to a file, perhaps to diagnose a specific issue a user is seeing. In that case, create alternate instances like this:
