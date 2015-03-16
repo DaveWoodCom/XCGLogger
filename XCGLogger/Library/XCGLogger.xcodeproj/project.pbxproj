@@ -318,7 +318,6 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				BUNDLE_IDENTIFIER = com.cerebralgardens.xcglogger;
-				CODE_SIGN_IDENTITY = "Developer ID Application";
 				COMBINE_HIDPI_IMAGES = YES;
 				DEFINES_MODULE = YES;
 				DYLIB_COMPATIBILITY_VERSION = 1;
@@ -343,7 +342,6 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				BUNDLE_IDENTIFIER = com.cerebralgardens.xcglogger;
-				CODE_SIGN_IDENTITY = "Developer ID Application";
 				COMBINE_HIDPI_IMAGES = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEFINES_MODULE = YES;
