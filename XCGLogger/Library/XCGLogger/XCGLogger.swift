@@ -175,11 +175,11 @@ public class XCGFileLogDestination : XCGLogDestinationProtocol, DebugPrintable {
         self.owner = owner
         self.identifier = identifier
 
-        if writeToFile is NSString {
-            writeToFileURL = NSURL.fileURLWithPath(writeToFile as String)
+        if let filePath = writeToFile as? String {
+            writeToFileURL = NSURL.fileURLWithPath(filePath)
         }
-        else if writeToFile is NSURL {
-            writeToFileURL = writeToFile as? NSURL
+        else if let fileURL = writeToFile as? NSURL {
+            writeToFileURL = fileURL
         }
         else {
             writeToFileURL = nil
@@ -373,9 +373,7 @@ public class XCGLogger : DebugPrintable {
         outputLogLevel = logLevel;
 
         if let unwrappedLogDestination: XCGLogDestinationProtocol = logDestination(XCGLogger.constants.baseConsoleLogDestinationIdentifier) {
-            if unwrappedLogDestination is XCGConsoleLogDestination {
-                let standardConsoleLogDestination = unwrappedLogDestination as XCGConsoleLogDestination
-
+            if let standardConsoleLogDestination = unwrappedLogDestination as? XCGConsoleLogDestination {
                 standardConsoleLogDestination.showLogLevel = showLogLevel
                 standardConsoleLogDestination.showFileName = showFileNames
                 standardConsoleLogDestination.showLineNumber = showLineNumbers
