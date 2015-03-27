@@ -93,6 +93,26 @@ class XCGLoggerTests: XCTestCase {
         XCTAssert(logDestinationCountAfterAddition == logDestinationCountAfterAddition2, "Failed to prevent adding additional logger with a duplicate identifier")
     }
 
+    func testAvoidStringInterpolationWithAutoclosure() {
+        var log: XCGLogger = XCGLogger()
+        log.identifier = "com.cerebralgardens.xcglogger.testAvoidStringInterpolationWithAutoclosure"
+        log.outputLogLevel = .Debug
+
+        class ObjectWithExpensiveDescription: Printable {
+            var descriptionInvoked = false
+
+            var description: String {
+                descriptionInvoked = true
+                return "expensive"
+            }
+        }
+
+        let thisObject = ObjectWithExpensiveDescription()
+
+        log.verbose("The description of \(thisObject) is really expensive to create" )
+        XCTAssert(!thisObject.descriptionInvoked, "Fail: String was interpolated when it shouldn't have been")
+    }
+
     func testExecExecutes() {
         var log: XCGLogger = XCGLogger()
         log.identifier = "com.cerebralgardens.xcglogger.testExecExecutes"

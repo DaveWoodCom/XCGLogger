@@ -88,24 +88,28 @@ You can create alternate log destinations (besides the two built in ones for the
 Each log destination can have its own log level. Setting the log level on the log object itself will pass that level to each destination. Then set the destinations that need to be different.
 
 ###Selectively Executing Code
-As of version 1.2, you can now also selectively execute code based on the log level. This is useful for cases where you have to do some work in order to generate a log message, but don't want to do that work when the log messages won't be printed anyway.
+As of version 1.9, all log methods operate on closures. Using the same syntactic sugar as Swift's ```assert()``` function, this approach ensures we don't waste resources building log messages that won't be printed anyway, while at the same time preserving a clean call site.
 
-For example, if you have to iterate through a loop in order to do some calculation before logging the result. In Objective-C, you could put that code block between ```#if``` ```#endif```, and prevent the code from running. But in Swift, previously you would need to still process that loop, wasting resources.
+For example, the following log statement won't waste resources if the debug log level is suppressed:
 
 ```Swift
-log.debugExec {
-    var total = 0.0
-    for receipt in receipts {
-	    total += receipt.total
-    }
-
-    log.debug("Total of all receipts: \(total)")
-}
-
+log.debug("The description of \(thisObject) is really expensive to create")
 ```
 
-There are convenience methods for each log level:
-```verboseExec```, ```debugExec```, ```infoExec```, ```warningExec```, ```errorExec```, ```severeExec```
+Similarly, let's say you have to iterate through a loop in order to do some calculation before logging the result. In Objective-C, you could put that code block between ```#if``` ```#endif```, and prevent the code from running. But in Swift, previously you would need to still process that loop, wasting resources. With ```XCGLogger``` it's as simple as:
+
+```Swift
+log.debug {
+    var total = 0.0
+    for receipt in receipts {
+        total += receipt.total
+    }
+
+    return "Total of all receipts: \(total)"
+}
+```
+
+Version 1.2 introduced ```verboseExec```, ```debugExec```, ```infoExec```, ```warningExec```, ```errorExec```, and ```severeExec``` to solve this problem. As of version 1.9, that approach has been deprecated.
 
 ###To Do
 - Add examples of some advanced use cases
@@ -134,5 +138,4 @@ Also, please check out my book **Swift for the Really Impatient** http://swiftfo
 * **Version 1.2**: *(2014/07/01)* - Added exec methods to selectively execute code
 * **Version 1.1**: *(2014/06/22)* - Changed the internal architecture to allow for more flexibility
 * **Version 1.0**: *(2014/06/09)* - Initial Release
-
 
