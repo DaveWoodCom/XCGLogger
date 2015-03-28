@@ -29,7 +29,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
 
         // Setup XCGLogger
         let logPath : NSString = "~/Desktop/XCGLogger_Log.txt".stringByExpandingTildeInPath
-        log.setup(logLevel: .Debug, showLogLevel: true, showFileNames: true, showLineNumbers: true, writeToFile: logPath)
+        log.setup(logLevel: .Debug, showThreadName: true, showLogLevel: true, showFileNames: true, showLineNumbers: true, writeToFile: logPath)
     }
 
     func applicationWillTerminate(aNotification: NSNotification?) {
