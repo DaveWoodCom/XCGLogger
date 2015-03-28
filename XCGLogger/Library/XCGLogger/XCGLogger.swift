@@ -48,6 +48,7 @@ public class XCGConsoleLogDestination : XCGLogDestinationProtocol, DebugPrintabl
     public var identifier: String
     public var outputLogLevel: XCGLogger.LogLevel = .Debug
 
+    public var showThreadName: Bool = false
     public var showFileName: Bool = true
     public var showLineNumber: Bool = true
     public var showLogLevel: Bool = true
@@ -59,6 +60,12 @@ public class XCGConsoleLogDestination : XCGLogDestinationProtocol, DebugPrintabl
 
     public func processLogDetails(logDetails: XCGLogDetails) {
         var extendedDetails: String = ""
+
+        if showThreadName {
+            let threadName = NSThread.isMainThread() ? "main" : NSThread.currentThread().name
+            extendedDetails += "[" + threadName + "] "
+        }
+
         if showLogLevel {
             extendedDetails += "[" + logDetails.logLevel.description() + "] "
         }
@@ -108,7 +115,7 @@ public class XCGConsoleLogDestination : XCGLogDestinationProtocol, DebugPrintabl
     // MARK: - DebugPrintable
     public var debugDescription: String {
         get {
-            return "XCGConsoleLogDestination: \(identifier) - LogLevel: \(outputLogLevel.description()) showLogLevel: \(showLogLevel) showFileName: \(showFileName) showLineNumber: \(showLineNumber)"
+            return "XCGConsoleLogDestination: \(identifier) - LogLevel: \(outputLogLevel.description()) showThreadName: \(showThreadName) showLogLevel: \(showLogLevel) showFileName: \(showFileName) showLineNumber: \(showLineNumber)"
         }
     }
 }
@@ -120,6 +127,7 @@ public class XCGFileLogDestination : XCGLogDestinationProtocol, DebugPrintable {
     public var identifier: String
     public var outputLogLevel: XCGLogger.LogLevel = .Debug
 
+    public var showThreadName: Bool = false
     public var showFileName: Bool = true
     public var showLineNumber: Bool = true
     public var showLogLevel: Bool = true
@@ -156,6 +164,12 @@ public class XCGFileLogDestination : XCGLogDestinationProtocol, DebugPrintable {
     // MARK: - Logging methods
     public func processLogDetails(logDetails: XCGLogDetails) {
         var extendedDetails: String = ""
+
+        if showThreadName {
+            let threadName = NSThread.isMainThread() ? "main" : NSThread.currentThread().name
+            extendedDetails += "[" + threadName + "] "
+        }
+
         if showLogLevel {
             extendedDetails += "[" + logDetails.logLevel.description() + "] "
         }
@@ -234,7 +248,7 @@ public class XCGFileLogDestination : XCGLogDestinationProtocol, DebugPrintable {
     // MARK: - DebugPrintable
     public var debugDescription: String {
         get {
-            return "XCGFileLogDestination: \(identifier) - LogLevel: \(outputLogLevel.description()) showLogLevel: \(showLogLevel) showFileName: \(showFileName) showLineNumber: \(showLineNumber)"
+            return "XCGFileLogDestination: \(identifier) - LogLevel: \(outputLogLevel.description()) showThreadName: \(showThreadName)  showLogLevel: \(showLogLevel) showFileName: \(showFileName) showLineNumber: \(showLineNumber)"
         }
     }
 }
@@ -336,17 +350,18 @@ public class XCGLogger : DebugPrintable {
     }
 
     // MARK: - Setup methods
-    public class func setup(logLevel: LogLevel = .Debug, showLogLevel: Bool = true, showFileNames: Bool = true, showLineNumbers: Bool = true, writeToFile: AnyObject? = nil) {
-        defaultInstance().setup(logLevel: logLevel, showLogLevel: showLogLevel, showFileNames: showFileNames, showLineNumbers: showLineNumbers, writeToFile: writeToFile)
+    public class func setup(logLevel: LogLevel = .Debug, showThreadName: Bool = false, showLogLevel: Bool = true, showFileNames: Bool = true, showLineNumbers: Bool = true, writeToFile: AnyObject? = nil) {
+        defaultInstance().setup(logLevel: logLevel, showThreadName: showThreadName, showLogLevel: showLogLevel, showFileNames: showFileNames, showLineNumbers: showLineNumbers, writeToFile: writeToFile)
     }
 
-    public func setup(logLevel: LogLevel = .Debug, showLogLevel: Bool = true, showFileNames: Bool = true, showLineNumbers: Bool = true, writeToFile: AnyObject? = nil) {
+    public func setup(logLevel: LogLevel = .Debug, showThreadName: Bool = false, showLogLevel: Bool = true, showFileNames: Bool = true, showLineNumbers: Bool = true, writeToFile: AnyObject? = nil) {
         outputLogLevel = logLevel;
 
         if let logDestination: XCGLogDestinationProtocol = logDestination(XCGLogger.constants.baseConsoleLogDestinationIdentifier) {
             if logDestination is XCGConsoleLogDestination {
                 let standardConsoleLogDestination = logDestination as! XCGConsoleLogDestination
 
+                standardConsoleLogDestination.showThreadName = showThreadName
                 standardConsoleLogDestination.showLogLevel = showLogLevel
                 standardConsoleLogDestination.showFileName = showFileNames
                 standardConsoleLogDestination.showLineNumber = showLineNumbers
@@ -360,6 +375,7 @@ public class XCGLogger : DebugPrintable {
             // We've been passed a file to use for logging, set up a file logger
             let standardFileLogDestination: XCGFileLogDestination = XCGFileLogDestination(owner: self, writeToFile: writeToFile, identifier: XCGLogger.constants.baseFileLogDestinationIdentifier)
 
+            standardFileLogDestination.showThreadName = showThreadName
             standardFileLogDestination.showLogLevel = showLogLevel
             standardFileLogDestination.showFileName = showFileNames
             standardFileLogDestination.showLineNumber = showLineNumbers
