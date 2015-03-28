@@ -93,6 +93,26 @@ class XCGLoggerTests: XCTestCase {
         XCTAssert(logDestinationCountAfterAddition == logDestinationCountAfterAddition2, "Failed to prevent adding additional logger with a duplicate identifier")
     }
 
+    func testAvoidStringInterpolationWithAutoclosure() {
+        var log: XCGLogger = XCGLogger()
+        log.identifier = "com.cerebralgardens.xcglogger.testAvoidStringInterpolationWithAutoclosure"
+        log.outputLogLevel = .Debug
+
+        class ObjectWithExpensiveDescription: Printable {
+            var descriptionInvoked = false
+
+            var description: String {
+                descriptionInvoked = true
+                return "expensive"
+            }
+        }
+
+        let thisObject = ObjectWithExpensiveDescription()
+
+        log.verbose("The description of \(thisObject) is really expensive to create" )
+        XCTAssert(!thisObject.descriptionInvoked, "Fail: String was interpolated when it shouldn't have been")
+    }
+
     func testExecExecutes() {
         var log: XCGLogger = XCGLogger()
         log.identifier = "com.cerebralgardens.xcglogger.testExecExecutes"
@@ -135,4 +155,43 @@ class XCGLoggerTests: XCTestCase {
             log.debug(linesToLog[Int(index)])
         }
     }
+
+    func testDateFormattersAreCached() {
+        var log: XCGLogger = XCGLogger()
+        log.identifier = "com.cerebralgardens.xcglogger.testDateFormattersAreCached"
+        log.outputLogLevel = .Debug
+
+        XCTAssertNotNil(log.dateFormatter)
+        XCTAssertEqual(log.dateFormatter!.description, log.dateFormatter!.description, "Fail: successive calls to log.dateFormatter didn't return the same instance")
+    }
+
+    func testDateFormatterCanBeCleared() {
+        var log: XCGLogger = XCGLogger()
+        log.identifier = "com.cerebralgardens.xcglogger.testDateFormatterCanBeCleared"
+        log.outputLogLevel = .Debug
+
+        log.dateFormatterFactory = nil
+        XCTAssertNil(log.dateFormatter)
+    }
+
+    func testCustomDateFormatter() {
+        var log: XCGLogger = XCGLogger()
+        log.identifier = "com.cerebralgardens.xcglogger.testCustomDateFormatter"
+        log.outputLogLevel = .Debug
+
+        let dateFormat = "yyyy-MM-dd HH:mm:ss.SSSZZZZZ"
+        log.dateFormatterFactory = {
+            var formatter = NSDateFormatter()
+
+            formatter.dateFormat = dateFormat
+            formatter.locale = NSLocale(localeIdentifier: "en_US_POSIX")
+            formatter.timeZone = NSTimeZone(abbreviation: "UTC")
+
+            return formatter
+        }
+
+        XCTAssertNotNil(log.dateFormatter)
+        XCTAssertEqual(log.dateFormatter!.dateFormat, dateFormat)
+    }
+
 }
