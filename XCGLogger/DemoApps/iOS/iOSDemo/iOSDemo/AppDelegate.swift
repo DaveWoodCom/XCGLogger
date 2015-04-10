@@ -20,23 +20,21 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var documentsDirectory: NSURL {
         let urls = NSFileManager.defaultManager().URLsForDirectory(.DocumentDirectory, inDomains: .UserDomainMask)
-        return urls[urls.endIndex-1] as NSURL
+        return urls[urls.endIndex-1] as! NSURL
     }
 
     var cacheDirectory: NSURL {
         let urls = NSFileManager.defaultManager().URLsForDirectory(.CachesDirectory, inDomains: .UserDomainMask)
-        return urls[urls.endIndex-1] as NSURL
+        return urls[urls.endIndex-1] as! NSURL
     }
 
     // MARK: - Life cycle methods
-    func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: NSDictionary?) -> Bool {
+    func applicationDidFinishLaunching(application: UIApplication) {
         // Override point for customization after application launch.
 
         // Setup XCGLogger
         let logPath : NSURL = self.cacheDirectory.URLByAppendingPathComponent("XCGLogger_Log.txt")
         log.setup(logLevel: .Debug, showLogLevel: true, showFileNames: true, showLineNumbers: true, writeToFile: logPath)
-
-        return true
     }
 
     func applicationWillResignActive(application: UIApplication) {

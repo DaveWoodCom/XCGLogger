@@ -93,13 +93,33 @@ class XCGLoggerTests: XCTestCase {
         XCTAssert(logDestinationCountAfterAddition == logDestinationCountAfterAddition2, "Failed to prevent adding additional logger with a duplicate identifier")
     }
 
+    func testAvoidStringInterpolationWithAutoclosure() {
+        var log: XCGLogger = XCGLogger()
+        log.identifier = "com.cerebralgardens.xcglogger.testAvoidStringInterpolationWithAutoclosure"
+        log.outputLogLevel = .Debug
+
+        class ObjectWithExpensiveDescription: Printable {
+            var descriptionInvoked = false
+
+            var description: String {
+                descriptionInvoked = true
+                return "expensive"
+            }
+        }
+
+        let thisObject = ObjectWithExpensiveDescription()
+
+        log.verbose("The description of \(thisObject) is really expensive to create")
+        XCTAssert(!thisObject.descriptionInvoked, "Fail: String was interpolated when it shouldn't have been")
+    }
+
     func testExecExecutes() {
         var log: XCGLogger = XCGLogger()
         log.identifier = "com.cerebralgardens.xcglogger.testExecExecutes"
         log.outputLogLevel = .Debug
 
         var executed: Bool = false
-        log.debugExec {
+        log.internalExec {
             log.debug("executed closure correctly")
             executed = true
         }
@@ -114,7 +134,7 @@ class XCGLoggerTests: XCTestCase {
         log.outputLogLevel = .Error
 
         var executed: Bool = false
-        log.debugExec {
+        log.internalExec {
             log.debug("executed closure incorrectly")
             executed = true
         }
@@ -131,7 +151,7 @@ class XCGLoggerTests: XCTestCase {
 
         let linesToLog = ["One", "Two", "Three", "Four", "Five", "Six", "Seven", "Eight", "Nine", "Ten"]
         let myConcurrentQueue = dispatch_queue_create("com.cerebralgardens.xcglogger.testMultiThreaded.queue", DISPATCH_QUEUE_CONCURRENT)
-        dispatch_apply(UInt(linesToLog.count), myConcurrentQueue) { (index: UInt) in
+        dispatch_apply(linesToLog.count, myConcurrentQueue) { (index: Int) in
             log.debug(linesToLog[Int(index)])
         }
     }
