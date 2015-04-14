@@ -433,12 +433,10 @@ public class XCGLogger : DebugPrintable {
         }
     }
 
-    @availability(*, deprecated = 1.9)
     public class func exec(logLevel: LogLevel = .Debug, closure: () -> () = {}) {
         self.defaultInstance().exec(logLevel: logLevel, closure: closure)
     }
 
-    @availability(*, deprecated = 1.9)
     public func exec(logLevel: LogLevel = .Debug, closure: () -> () = {}) {
         if (!isEnabledForLogLevel(logLevel)) {
             return
