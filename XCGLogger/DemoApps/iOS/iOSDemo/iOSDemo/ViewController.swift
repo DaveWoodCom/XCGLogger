@@ -112,4 +112,3 @@ class ViewController: UIViewController {
         currentLogLevelLabel.text = log.outputLogLevel.description()
     }
 }
-
