@@ -55,10 +55,10 @@ applicationDidFinishLaunching(aNotification: NSNotification?) // OS X
 function, configure the options you need:
 
 ```Swift
-log.setup(logLevel: .Debug, showLogLevel: true, showFileNames: true, showLineNumbers: true, writeToFile: "path/to/file")
+log.setup(logLevel: .Debug, showLogLevel: true, showFileNames: true, showLineNumbers: true, writeToFile: "path/to/file", fileLogLevel: .Debug)
 ```
 
-The value for ```writeToFile:``` can be a ```String``` or ```NSURL```. If the file already exists, it will be cleared before we use it. Omit a value or set it to nil to log to the console only.
+The value for ```writeToFile:``` can be a ```String``` or ```NSURL```. If the file already exists, it will be cleared before we use it. Omit a value or set it to ```nil``` to log to the console only. You can optionally set a different log level for the file output using the ```fileLogLevel``` parameter. Set it to ```nil``` or omit it to use the same log level as the console.
 
 Then, whenever you'd like to log something, use one of the convenience methods:
 
@@ -79,7 +79,7 @@ It's possible to create multiple instances of XCGLogger with different options. 
 
 ```Swift
 let fileLog = XCGLogger()
-fileLog.setup(logLevel: .Debug, showLogLevel: true, showFileNames: true, showLineNumbers: true, writeToFile: "path/to/file")
+fileLog.setup(logLevel: .None, showLogLevel: true, showFileNames: true, showLineNumbers: true, writeToFile: "path/to/file", fileLogLevel: .Debug)
 fileLog.info("Have a second instance for special use")
 ```
 
