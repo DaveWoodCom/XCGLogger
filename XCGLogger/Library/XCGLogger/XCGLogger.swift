@@ -359,12 +359,6 @@ public class XCGLogger : DebugPrintable {
         statics.instance.identifier = XCGLogger.constants.defaultInstanceIdentifier
         return statics.instance
     }
-    
-    @availability(*, renamed="defaultInstance")
-    public class func sharedInstance() -> XCGLogger {
-        self.defaultInstance()._logln("sharedInstance() has been renamed to defaultInstance() to better reflect that it is not a true singleton. Please update your code, sharedInstance() will be removed in a future version.", logLevel: .Info)
-        return self.defaultInstance()
-    }
 
     // MARK: - Setup methods
     public class func setup(logLevel: LogLevel = .Debug, showLogLevel: Bool = true, showFileNames: Bool = true, showLineNumbers: Bool = true, writeToFile: AnyObject? = nil) {
