@@ -71,8 +71,8 @@ public class XCGConsoleLogDestination : XCGLogDestinationProtocol, DebugPrintabl
         }
 
         var formattedDate: String = logDetails.date.description
-        if let unwrappedDataFormatter = owner.dateFormatter {
-            formattedDate = unwrappedDataFormatter.stringFromDate(logDetails.date)
+        if let dateFormatter = owner.dateFormatter {
+            formattedDate = dateFormatter.stringFromDate(logDetails.date)
         }
 
         var fullLogMessage: String =  "\(formattedDate) \(extendedDetails)\(logDetails.functionName): \(logDetails.logMessage)\n"
@@ -89,8 +89,8 @@ public class XCGConsoleLogDestination : XCGLogDestinationProtocol, DebugPrintabl
         }
 
         var formattedDate: String = logDetails.date.description
-        if let unwrappedDataFormatter = owner.dateFormatter {
-            formattedDate = unwrappedDataFormatter.stringFromDate(logDetails.date)
+        if let dateFormatter = owner.dateFormatter {
+            formattedDate = dateFormatter.stringFromDate(logDetails.date)
         }
 
         var fullLogMessage: String =  "\(formattedDate) \(extendedDetails): \(logDetails.logMessage)\n"
@@ -168,8 +168,8 @@ public class XCGFileLogDestination : XCGLogDestinationProtocol, DebugPrintable {
         }
 
         var formattedDate: String = logDetails.date.description
-        if let unwrappedDataFormatter = owner.dateFormatter {
-            formattedDate = unwrappedDataFormatter.stringFromDate(logDetails.date)
+        if let dateFormatter = owner.dateFormatter {
+            formattedDate = dateFormatter.stringFromDate(logDetails.date)
         }
 
         var fullLogMessage: String =  "\(formattedDate) \(extendedDetails)\(logDetails.functionName): \(logDetails.logMessage)\n"
@@ -186,8 +186,8 @@ public class XCGFileLogDestination : XCGLogDestinationProtocol, DebugPrintable {
         }
 
         var formattedDate: String = logDetails.date.description
-        if let unwrappedDataFormatter = owner.dateFormatter {
-            formattedDate = unwrappedDataFormatter.stringFromDate(logDetails.date)
+        if let dateFormatter = owner.dateFormatter {
+            formattedDate = dateFormatter.stringFromDate(logDetails.date)
         }
 
         var fullLogMessage: String =  "\(formattedDate) \(extendedDetails): \(logDetails.logMessage)\n"
@@ -207,18 +207,18 @@ public class XCGFileLogDestination : XCGLogDestinationProtocol, DebugPrintable {
             closeFile()
         }
 
-        if let unwrappedWriteToFileURL = writeToFileURL {
-            if let path = unwrappedWriteToFileURL.path {
+        if let writeToFileURL = writeToFileURL {
+            if let path = writeToFileURL.path {
                 NSFileManager.defaultManager().createFileAtPath(path, contents: nil, attributes: nil)
                 var fileError : NSError? = nil
-                logFileHandle = NSFileHandle(forWritingToURL: unwrappedWriteToFileURL, error: &fileError)
+                logFileHandle = NSFileHandle(forWritingToURL: writeToFileURL, error: &fileError)
                 if logFileHandle == nil {
                     owner._logln("Attempt to open log file for writing failed: \(fileError?.localizedDescription)", logLevel: .Error)
                 }
                 else {
                     owner.logAppDetails(selectedLogDestination: self)
 
-                    let logDetails = XCGLogDetails(logLevel: .Info, date: NSDate(), logMessage: "XCGLogger writing to log to: \(unwrappedWriteToFileURL)", functionName: "", fileName: "", lineNumber: 0)
+                    let logDetails = XCGLogDetails(logLevel: .Info, date: NSDate(), logMessage: "XCGLogger writing to log to: \(writeToFileURL)", functionName: "", fileName: "", lineNumber: 0)
                     owner._logln(logDetails.logMessage, logLevel: logDetails.logLevel)
                     processInternalLogDetails(logDetails)
                 }
@@ -343,9 +343,9 @@ public class XCGLogger : DebugPrintable {
     public func setup(logLevel: LogLevel = .Debug, showLogLevel: Bool = true, showFileNames: Bool = true, showLineNumbers: Bool = true, writeToFile: AnyObject? = nil) {
         outputLogLevel = logLevel;
 
-        if let unwrappedLogDestination: XCGLogDestinationProtocol = logDestination(XCGLogger.constants.baseConsoleLogDestinationIdentifier) {
-            if unwrappedLogDestination is XCGConsoleLogDestination {
-                let standardConsoleLogDestination = unwrappedLogDestination as! XCGConsoleLogDestination
+        if let logDestination: XCGLogDestinationProtocol = logDestination(XCGLogger.constants.baseConsoleLogDestinationIdentifier) {
+            if logDestination is XCGConsoleLogDestination {
+                let standardConsoleLogDestination = logDestination as! XCGConsoleLogDestination
 
                 standardConsoleLogDestination.showLogLevel = showLogLevel
                 standardConsoleLogDestination.showFileName = showFileNames
@@ -356,9 +356,9 @@ public class XCGLogger : DebugPrintable {
 
         logAppDetails()
 
-        if let unwrappedWriteToFile : AnyObject = writeToFile {
+        if let writeToFile : AnyObject = writeToFile {
             // We've been passed a file to use for logging, set up a file logger
-            let standardFileLogDestination: XCGFileLogDestination = XCGFileLogDestination(owner: self, writeToFile: unwrappedWriteToFile, identifier: XCGLogger.constants.baseFileLogDestinationIdentifier)
+            let standardFileLogDestination: XCGFileLogDestination = XCGFileLogDestination(owner: self, writeToFile: writeToFile, identifier: XCGLogger.constants.baseFileLogDestinationIdentifier)
 
             standardFileLogDestination.showLogLevel = showLogLevel
             standardFileLogDestination.showFileName = showFileNames
