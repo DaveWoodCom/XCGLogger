@@ -62,8 +62,7 @@ public class XCGConsoleLogDestination : XCGLogDestinationProtocol, DebugPrintabl
         var extendedDetails: String = ""
 
         if showThreadName {
-            let threadName = NSThread.isMainThread() ? "main" : NSThread.currentThread().name
-            extendedDetails += "[" + threadName + "] "
+            extendedDetails += "[" + (NSThread.isMainThread() ? "main" : (NSThread.currentThread().name != "" ? NSThread.currentThread().name : String(format:"%p", NSThread.currentThread()))) + "] "
         }
 
         if showLogLevel {
@@ -166,8 +165,7 @@ public class XCGFileLogDestination : XCGLogDestinationProtocol, DebugPrintable {
         var extendedDetails: String = ""
 
         if showThreadName {
-            let threadName = NSThread.isMainThread() ? "main" : NSThread.currentThread().name
-            extendedDetails += "[" + threadName + "] "
+            extendedDetails += "[" + (NSThread.isMainThread() ? "main" : (NSThread.currentThread().name != "" ? NSThread.currentThread().name : String(format:"%p", NSThread.currentThread()))) + "] "
         }
 
         if showLogLevel {
