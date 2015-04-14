@@ -118,30 +118,45 @@ class XCGLoggerTests: XCTestCase {
         log.identifier = "com.cerebralgardens.xcglogger.testExecExecutes"
         log.outputLogLevel = .Debug
 
-        var executed: Bool = false
-        log.debugExec {
-            log.debug("executed closure correctly")
-            executed = true
+        var numberOfTimes: Int = 0
+        log.debug {
+            ++numberOfTimes
+            return "executed closure correctly"
         }
 
-        log.debug("executed: \(executed)")
-        XCTAssert(executed, "Fail: Didn't execute the closure when it should have")
+        log.debug("executed: \(numberOfTimes) time(s)")
+        XCTAssert(numberOfTimes == 1, "Fail: Didn't execute the closure when it should have")
     }
 
+    func testExecExecutesExactlyOnceWithNilReturnAndMultipleDestinations() {
+        var log: XCGLogger = XCGLogger()
+        log.setup(logLevel: .Debug, showLogLevel: true, showFileNames: true, showLineNumbers: true, writeToFile: "/tmp/test.log")
+        log.identifier = "com.cerebralgardens.xcglogger.testExecExecutesExactlyOnceWithNilReturnAndMultipleDestinations"
+        
+        var numberOfTimes: Int = 0
+        log.debug {
+            ++numberOfTimes
+            return nil
+        }
+        
+        log.debug("executed: \(numberOfTimes) time(s)")
+        XCTAssert(numberOfTimes == 1, "Fail: Didn't execute the closure exactly once")
+    }
+    
     func testExecDoesntExecute() {
         var log: XCGLogger = XCGLogger()
         log.identifier = "com.cerebralgardens.xcglogger.testExecDoesntExecute"
         log.outputLogLevel = .Error
 
-        var executed: Bool = false
-        log.debugExec {
-            log.debug("executed closure incorrectly")
-            executed = true
+        var numberOfTimes: Int = 0
+        log.debug {
+            ++numberOfTimes
+            return "executed closure incorrectly"
         }
 
         log.outputLogLevel = .Debug
-        log.debug("executed: \(executed)")
-        XCTAssert(!executed, "Fail: Executed the closure when it shouldn't have")
+        log.debug("executed: \(numberOfTimes) time(s)")
+        XCTAssert(numberOfTimes == 0, "Fail: Didn't execute the closure when it should have")
     }
 
     func testMultiThreaded() {

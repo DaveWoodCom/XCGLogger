@@ -24,7 +24,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     @IBOutlet var logLevelSlider : NSSlider!
 
     // MARK: - Life cycle methods
-    func applicationDidFinishLaunching(aNotification: NSNotification?) {
+    func applicationDidFinishLaunching(aNotification: NSNotification) {
         // Insert code here to initialize your application
 
         // Setup XCGLogger
@@ -32,7 +32,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         log.setup(logLevel: .Debug, showLogLevel: true, showFileNames: true, showLineNumbers: true, writeToFile: logPath)
     }
 
-    func applicationWillTerminate(aNotification: NSNotification?) {
+    func applicationWillTerminate(aNotification: NSNotification) {
         // Insert code here to tear down your application
     }
 
@@ -40,42 +40,48 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     @IBAction func verboseButtonTouchUpInside(sender : AnyObject) {
         log.verbose("Verbose button tapped")
         log.verbose {
-            "Executed verbose code block"
+            // add expensive code required only for logging, then return an optional String
+            return "Executed verbose code block" // or nil
         }
     }
 
     @IBAction func debugButtonTouchUpInside(sender : AnyObject) {
         log.debug("Debug button tapped")
         log.debug {
-            "Executed debug code block"
+            // add expensive code required only for logging, then return an optional String
+            return "Executed debug code block" // or nil
         }
     }
 
     @IBAction func infoButtonTouchUpInside(sender : AnyObject) {
         log.info("Info button tapped")
         log.info {
-            "Executed info code block"
+            // add expensive code required only for logging, then return an optional String
+            return "Executed info code block" // or nil
         }
     }
 
     @IBAction func warningButtonTouchUpInside(sender : AnyObject) {
         log.warning("Warning button tapped")
         log.warning {
-            "Executed warning code block"
+            // add expensive code required only for logging, then return an optional String
+            return "Executed warning code block" // or nil
         }
     }
 
     @IBAction func errorButtonTouchUpInside(sender : AnyObject) {
         log.error("Error button tapped")
         log.error {
-            "Executed error code block"
+            // add expensive code required only for logging, then return an optional String
+            return "Executed error code block" // or nil
         }
     }
 
     @IBAction func severeButtonTouchUpInside(sender : AnyObject) {
         log.severe("Severe button tapped")
         log.severe {
-            "Executed severe code block"
+            // add expensive code required only for logging, then return an optional String
+            return "Executed severe code block" // or nil
         }
     }
 
@@ -114,3 +120,6 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     }
 }
 
+func noop() {
+    // Global no operation function, useful for doing nothing in a switch option, and examples
+}

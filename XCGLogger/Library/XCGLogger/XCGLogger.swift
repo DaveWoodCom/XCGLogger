@@ -401,31 +401,31 @@ public class XCGLogger : DebugPrintable {
     }
 
     // MARK: - Logging methods
-    public class func logln(closure: @autoclosure () -> String, logLevel: LogLevel = .Debug, functionName: String = __FUNCTION__, fileName: String = __FILE__, lineNumber: Int = __LINE__) {
-        self.defaultInstance().logln(closure: closure, logLevel: logLevel, functionName: functionName, fileName: fileName, lineNumber: lineNumber)
+    public class func logln(closure: @autoclosure () -> String?, logLevel: LogLevel = .Debug, functionName: String = __FUNCTION__, fileName: String = __FILE__, lineNumber: Int = __LINE__) {
+        self.defaultInstance().logln(logLevel: logLevel, functionName: functionName, fileName: fileName, lineNumber: lineNumber, closure: closure)
     }
 
-    public class func logln(closure: () -> String, logLevel: LogLevel = .Debug, functionName: String = __FUNCTION__, fileName: String = __FILE__, lineNumber: Int = __LINE__) {
-        self.defaultInstance().logln(closure: closure, logLevel: logLevel, functionName: functionName, fileName: fileName, lineNumber: lineNumber)
+    public class func logln(logLevel: LogLevel = .Debug, functionName: String = __FUNCTION__, fileName: String = __FILE__, lineNumber: Int = __LINE__, closure: () -> String?) {
+        self.defaultInstance().logln(logLevel: logLevel, functionName: functionName, fileName: fileName, lineNumber: lineNumber, closure: closure)
     }
 
-    public func logln(closure: @autoclosure () -> String, logLevel: LogLevel = .Debug, functionName: String = __FUNCTION__, fileName: String = __FILE__, lineNumber: Int = __LINE__) {
-        self.logln(closure: closure, logLevel: logLevel, functionName: functionName, fileName: fileName, lineNumber: lineNumber)
+    public func logln(closure: @autoclosure () -> String?, logLevel: LogLevel = .Debug, functionName: String = __FUNCTION__, fileName: String = __FILE__, lineNumber: Int = __LINE__) {
+        self.logln(logLevel: logLevel, functionName: functionName, fileName: fileName, lineNumber: lineNumber, closure: closure)
     }
 
-    public func logln(closure: () -> String, logLevel: LogLevel = .Debug, functionName: String = __FUNCTION__, fileName: String = __FILE__, lineNumber: Int = __LINE__) {
-        self.logln(closure: closure, logLevel: logLevel, functionName: functionName, fileName: fileName, lineNumber: lineNumber)
-    }
-
-    private func logln(#closure: () -> String, logLevel: LogLevel = .Debug, functionName: String = __FUNCTION__, fileName: String = __FILE__, lineNumber: Int = __LINE__) {
+    public func logln(logLevel: LogLevel = .Debug, functionName: String = __FUNCTION__, fileName: String = __FILE__, lineNumber: Int = __LINE__, closure: () -> String?) {
         let date = NSDate()
 
         var logDetails: XCGLogDetails? = nil
         for logDestination in self.logDestinations {
             if (logDestination.isEnabledForLogLevel(logLevel)) {
                 if logDetails == nil {
-                    let logMessage = closure()
-                    logDetails = XCGLogDetails(logLevel: logLevel, date: date, logMessage: logMessage, functionName: functionName, fileName: fileName, lineNumber: lineNumber)
+                    if let logMessage = closure() {
+                        logDetails = XCGLogDetails(logLevel: logLevel, date: date, logMessage: logMessage, functionName: functionName, fileName: fileName, lineNumber: lineNumber)
+                    }
+                    else {
+                        break
+                    }
                 }
 
                 logDestination.processLogDetails(logDetails!)
@@ -476,158 +476,171 @@ public class XCGLogger : DebugPrintable {
     }
 
     // MARK: - Convenience logging methods
-    public class func verbose(closure: @autoclosure () -> String, functionName: String = __FUNCTION__, fileName: String = __FILE__, lineNumber: Int = __LINE__) {
-        self.defaultInstance().verbose(closure, functionName: functionName, fileName: fileName, lineNumber: lineNumber)
+    // MARK: * Verbose
+    public class func verbose(closure: @autoclosure () -> String?, functionName: String = __FUNCTION__, fileName: String = __FILE__, lineNumber: Int = __LINE__) {
+        self.defaultInstance().logln(logLevel: .Verbose, functionName: functionName, fileName: fileName, lineNumber: lineNumber, closure: closure)
     }
 
-    public class func verbose(closure: () -> String, functionName: String = __FUNCTION__, fileName: String = __FILE__, lineNumber: Int = __LINE__) {
-        self.defaultInstance().verbose(closure, functionName: functionName, fileName: fileName, lineNumber: lineNumber)
+    public class func verbose(functionName: String = __FUNCTION__, fileName: String = __FILE__, lineNumber: Int = __LINE__, closure: () -> String?) {
+        self.defaultInstance().logln(logLevel: .Verbose, functionName: functionName, fileName: fileName, lineNumber: lineNumber, closure: closure)
+    }
+    
+    public func verbose(closure: @autoclosure () -> String?, functionName: String = __FUNCTION__, fileName: String = __FILE__, lineNumber: Int = __LINE__) {
+        self.logln(logLevel: .Verbose, functionName: functionName, fileName: fileName, lineNumber: lineNumber, closure: closure)
     }
 
-    public func verbose(closure: @autoclosure () -> String, functionName: String = __FUNCTION__, fileName: String = __FILE__, lineNumber: Int = __LINE__) {
-        self.logln(closure: closure, logLevel: .Verbose, functionName: functionName, fileName: fileName, lineNumber: lineNumber)
+    public func verbose(functionName: String = __FUNCTION__, fileName: String = __FILE__, lineNumber: Int = __LINE__, closure: () -> String?) {
+        self.logln(logLevel: .Verbose, functionName: functionName, fileName: fileName, lineNumber: lineNumber, closure: closure)
+    }
+    
+    // MARK: * Debug
+    public class func debug(closure: @autoclosure () -> String?, functionName: String = __FUNCTION__, fileName: String = __FILE__, lineNumber: Int = __LINE__) {
+        self.defaultInstance().logln(logLevel: .Debug, functionName: functionName, fileName: fileName, lineNumber: lineNumber, closure: closure)
+    }
+    
+    public class func debug(functionName: String = __FUNCTION__, fileName: String = __FILE__, lineNumber: Int = __LINE__, closure: () -> String?) {
+        self.defaultInstance().logln(logLevel: .Debug, functionName: functionName, fileName: fileName, lineNumber: lineNumber, closure: closure)
+    }
+    
+    public func debug(closure: @autoclosure () -> String?, functionName: String = __FUNCTION__, fileName: String = __FILE__, lineNumber: Int = __LINE__) {
+        self.logln(logLevel: .Debug, functionName: functionName, fileName: fileName, lineNumber: lineNumber, closure: closure)
+    }
+    
+    public func debug(functionName: String = __FUNCTION__, fileName: String = __FILE__, lineNumber: Int = __LINE__, closure: () -> String?) {
+        self.logln(logLevel: .Debug, functionName: functionName, fileName: fileName, lineNumber: lineNumber, closure: closure)
+    }
+    
+    // MARK: * Info
+    public class func info(closure: @autoclosure () -> String?, functionName: String = __FUNCTION__, fileName: String = __FILE__, lineNumber: Int = __LINE__) {
+        self.defaultInstance().logln(logLevel: .Info, functionName: functionName, fileName: fileName, lineNumber: lineNumber, closure: closure)
+    }
+    
+    public class func info(functionName: String = __FUNCTION__, fileName: String = __FILE__, lineNumber: Int = __LINE__, closure: () -> String?) {
+        self.defaultInstance().logln(logLevel: .Info, functionName: functionName, fileName: fileName, lineNumber: lineNumber, closure: closure)
+    }
+    
+    public func info(closure: @autoclosure () -> String?, functionName: String = __FUNCTION__, fileName: String = __FILE__, lineNumber: Int = __LINE__) {
+        self.logln(logLevel: .Info, functionName: functionName, fileName: fileName, lineNumber: lineNumber, closure: closure)
+    }
+    
+    public func info(functionName: String = __FUNCTION__, fileName: String = __FILE__, lineNumber: Int = __LINE__, closure: () -> String?) {
+        self.logln(logLevel: .Info, functionName: functionName, fileName: fileName, lineNumber: lineNumber, closure: closure)
+    }
+    
+    // MARK: * Warning
+    public class func warning(closure: @autoclosure () -> String?, functionName: String = __FUNCTION__, fileName: String = __FILE__, lineNumber: Int = __LINE__) {
+        self.defaultInstance().logln(logLevel: .Warning, functionName: functionName, fileName: fileName, lineNumber: lineNumber, closure: closure)
+    }
+    
+    public class func warning(functionName: String = __FUNCTION__, fileName: String = __FILE__, lineNumber: Int = __LINE__, closure: () -> String?) {
+        self.defaultInstance().logln(logLevel: .Warning, functionName: functionName, fileName: fileName, lineNumber: lineNumber, closure: closure)
+    }
+    
+    public func warning(closure: @autoclosure () -> String?, functionName: String = __FUNCTION__, fileName: String = __FILE__, lineNumber: Int = __LINE__) {
+        self.logln(logLevel: .Warning, functionName: functionName, fileName: fileName, lineNumber: lineNumber, closure: closure)
+    }
+    
+    public func warning(functionName: String = __FUNCTION__, fileName: String = __FILE__, lineNumber: Int = __LINE__, closure: () -> String?) {
+        self.logln(logLevel: .Warning, functionName: functionName, fileName: fileName, lineNumber: lineNumber, closure: closure)
+    }
+    
+    // MARK: * Error
+    public class func error(closure: @autoclosure () -> String?, functionName: String = __FUNCTION__, fileName: String = __FILE__, lineNumber: Int = __LINE__) {
+        self.defaultInstance().logln(logLevel: .Error, functionName: functionName, fileName: fileName, lineNumber: lineNumber, closure: closure)
+    }
+    
+    public class func error(functionName: String = __FUNCTION__, fileName: String = __FILE__, lineNumber: Int = __LINE__, closure: () -> String?) {
+        self.defaultInstance().logln(logLevel: .Error, functionName: functionName, fileName: fileName, lineNumber: lineNumber, closure: closure)
+    }
+    
+    public func error(closure: @autoclosure () -> String?, functionName: String = __FUNCTION__, fileName: String = __FILE__, lineNumber: Int = __LINE__) {
+        self.logln(logLevel: .Error, functionName: functionName, fileName: fileName, lineNumber: lineNumber, closure: closure)
+    }
+    
+    public func error(functionName: String = __FUNCTION__, fileName: String = __FILE__, lineNumber: Int = __LINE__, closure: () -> String?) {
+        self.logln(logLevel: .Error, functionName: functionName, fileName: fileName, lineNumber: lineNumber, closure: closure)
+    }
+    
+    // MARK: * Severe
+    public class func severe(closure: @autoclosure () -> String?, functionName: String = __FUNCTION__, fileName: String = __FILE__, lineNumber: Int = __LINE__) {
+        self.defaultInstance().logln(logLevel: .Severe, functionName: functionName, fileName: fileName, lineNumber: lineNumber, closure: closure)
+    }
+    
+    public class func severe(functionName: String = __FUNCTION__, fileName: String = __FILE__, lineNumber: Int = __LINE__, closure: () -> String?) {
+        self.defaultInstance().logln(logLevel: .Severe, functionName: functionName, fileName: fileName, lineNumber: lineNumber, closure: closure)
+    }
+    
+    public func severe(closure: @autoclosure () -> String?, functionName: String = __FUNCTION__, fileName: String = __FILE__, lineNumber: Int = __LINE__) {
+        self.logln(logLevel: .Severe, functionName: functionName, fileName: fileName, lineNumber: lineNumber, closure: closure)
+    }
+    
+    public func severe(functionName: String = __FUNCTION__, fileName: String = __FILE__, lineNumber: Int = __LINE__, closure: () -> String?) {
+        self.logln(logLevel: .Severe, functionName: functionName, fileName: fileName, lineNumber: lineNumber, closure: closure)
     }
 
-    public func verbose(closure: () -> String, functionName: String = __FUNCTION__, fileName: String = __FILE__, lineNumber: Int = __LINE__) {
-        self.logln(closure: closure, logLevel: .Verbose, functionName: functionName, fileName: fileName, lineNumber: lineNumber)
-    }
-
-    public class func debug(closure: @autoclosure () -> String, functionName: String = __FUNCTION__, fileName: String = __FILE__, lineNumber: Int = __LINE__) {
-        self.defaultInstance().debug(closure, functionName: functionName, fileName: fileName, lineNumber: lineNumber)
-    }
-
-    public class func debug(closure: () -> String, functionName: String = __FUNCTION__, fileName: String = __FILE__, lineNumber: Int = __LINE__) {
-        self.defaultInstance().debug(closure, functionName: functionName, fileName: fileName, lineNumber: lineNumber)
-    }
-
-    public func debug(closure: @autoclosure () -> String, functionName: String = __FUNCTION__, fileName: String = __FILE__, lineNumber: Int = __LINE__) {
-        self.logln(closure: closure, logLevel: .Debug, functionName: functionName, fileName: fileName, lineNumber: lineNumber)
-    }
-
-    public func debug(closure: () -> String, functionName: String = __FUNCTION__, fileName: String = __FILE__, lineNumber: Int = __LINE__) {
-        self.logln(closure: closure, logLevel: .Debug, functionName: functionName, fileName: fileName, lineNumber: lineNumber)
-    }
-
-    public class func info(closure: @autoclosure () -> String, functionName: String = __FUNCTION__, fileName: String = __FILE__, lineNumber: Int = __LINE__) {
-        self.defaultInstance().info(closure, functionName: functionName, fileName: fileName, lineNumber: lineNumber)
-    }
-
-    public class func info(closure: () -> String, functionName: String = __FUNCTION__, fileName: String = __FILE__, lineNumber: Int = __LINE__) {
-        self.defaultInstance().info(closure, functionName: functionName, fileName: fileName, lineNumber: lineNumber)
-    }
-
-    public func info(closure: @autoclosure () -> String, functionName: String = __FUNCTION__, fileName: String = __FILE__, lineNumber: Int = __LINE__) {
-        self.logln(closure: closure, logLevel: .Info, functionName: functionName, fileName: fileName, lineNumber: lineNumber)
-    }
-
-    public func info(closure: () -> String, functionName: String = __FUNCTION__, fileName: String = __FILE__, lineNumber: Int = __LINE__) {
-        self.logln(closure: closure, logLevel: .Info, functionName: functionName, fileName: fileName, lineNumber: lineNumber)
-    }
-
-    public class func warning(closure: @autoclosure () -> String, functionName: String = __FUNCTION__, fileName: String = __FILE__, lineNumber: Int = __LINE__) {
-        self.defaultInstance().warning(closure, functionName: functionName, fileName: fileName, lineNumber: lineNumber)
-    }
-
-    public class func warning(closure: () -> String, functionName: String = __FUNCTION__, fileName: String = __FILE__, lineNumber: Int = __LINE__) {
-        self.defaultInstance().warning(closure, functionName: functionName, fileName: fileName, lineNumber: lineNumber)
-    }
-
-    public func warning(closure: @autoclosure () -> String, functionName: String = __FUNCTION__, fileName: String = __FILE__, lineNumber: Int = __LINE__) {
-        self.logln(closure: closure, logLevel: .Warning, functionName: functionName, fileName: fileName, lineNumber: lineNumber)
-    }
-
-    public func warning(closure: () -> String, functionName: String = __FUNCTION__, fileName: String = __FILE__, lineNumber: Int = __LINE__) {
-        self.logln(closure: closure, logLevel: .Warning, functionName: functionName, fileName: fileName, lineNumber: lineNumber)
-    }
-
-    public class func error(closure: @autoclosure () -> String, functionName: String = __FUNCTION__, fileName: String = __FILE__, lineNumber: Int = __LINE__) {
-        self.defaultInstance().error(closure, functionName: functionName, fileName: fileName, lineNumber: lineNumber)
-    }
-
-    public class func error(closure: () -> String, functionName: String = __FUNCTION__, fileName: String = __FILE__, lineNumber: Int = __LINE__) {
-        self.defaultInstance().error(closure, functionName: functionName, fileName: fileName, lineNumber: lineNumber)
-    }
-
-    public func error(closure: @autoclosure () -> String, functionName: String = __FUNCTION__, fileName: String = __FILE__, lineNumber: Int = __LINE__) {
-        self.logln(closure: closure, logLevel: .Error, functionName: functionName, fileName: fileName, lineNumber: lineNumber)
-    }
-
-    public func error(closure: () -> String, functionName: String = __FUNCTION__, fileName: String = __FILE__, lineNumber: Int = __LINE__) {
-        self.logln(closure: closure, logLevel: .Error, functionName: functionName, fileName: fileName, lineNumber: lineNumber)
-    }
-
-    public class func severe(closure: @autoclosure () -> String, functionName: String = __FUNCTION__, fileName: String = __FILE__, lineNumber: Int = __LINE__) {
-        self.defaultInstance().severe(closure, functionName: functionName, fileName: fileName, lineNumber: lineNumber)
-    }
-
-    public class func severe(closure: () -> String, functionName: String = __FUNCTION__, fileName: String = __FILE__, lineNumber: Int = __LINE__) {
-        self.defaultInstance().severe(closure, functionName: functionName, fileName: fileName, lineNumber: lineNumber)
-    }
-
-    public func severe(closure: @autoclosure () -> String, functionName: String = __FUNCTION__, fileName: String = __FILE__, lineNumber: Int = __LINE__) {
-        self.logln(closure: closure, logLevel: .Severe, functionName: functionName, fileName: fileName, lineNumber: lineNumber)
-    }
-
-    public func severe(closure: () -> String, functionName: String = __FUNCTION__, fileName: String = __FILE__, lineNumber: Int = __LINE__) {
-        self.logln(closure: closure, logLevel: .Severe, functionName: functionName, fileName: fileName, lineNumber: lineNumber)
-    }
-
-    @availability(*, deprecated = 1.9)
+    // MARK: - Exec Methods
+    // MARK: * Verbose
+    @availability(*, deprecated=1.9)
     public class func verboseExec(closure: () -> () = {}) {
         self.defaultInstance().exec(logLevel: XCGLogger.LogLevel.Verbose, closure: closure)
     }
-
-    @availability(*, deprecated = 1.9)
+    
+    @availability(*, deprecated=1.9)
     public func verboseExec(closure: () -> () = {}) {
         self.exec(logLevel: XCGLogger.LogLevel.Verbose, closure: closure)
     }
     
-    @availability(*, deprecated = 1.9)
+    // MARK: * Debug
+    @availability(*, deprecated=1.9)
     public class func debugExec(closure: () -> () = {}) {
         self.defaultInstance().exec(logLevel: XCGLogger.LogLevel.Debug, closure: closure)
     }
 
-    @availability(*, deprecated = 1.9)
+    @availability(*, deprecated=1.9)
     public func debugExec(closure: () -> () = {}) {
         self.exec(logLevel: XCGLogger.LogLevel.Debug, closure: closure)
     }
     
-    @availability(*, deprecated = 1.9)
+    // MARK: * Info
+    @availability(*, deprecated=1.9)
     public class func infoExec(closure: () -> () = {}) {
         self.defaultInstance().exec(logLevel: XCGLogger.LogLevel.Info, closure: closure)
     }
 
-    @availability(*, deprecated = 1.9)
+    @availability(*, deprecated=1.9)
     public func infoExec(closure: () -> () = {}) {
         self.exec(logLevel: XCGLogger.LogLevel.Info, closure: closure)
     }
     
-    @availability(*, deprecated = 1.9)
+    // MARK: * Warning
+    @availability(*, deprecated=1.9)
     public class func warningExec(closure: () -> () = {}) {
         self.defaultInstance().exec(logLevel: XCGLogger.LogLevel.Warning, closure: closure)
     }
 
-    @availability(*, deprecated = 1.9)
+    @availability(*, deprecated=1.9)
     public func warningExec(closure: () -> () = {}) {
         self.exec(logLevel: XCGLogger.LogLevel.Warning, closure: closure)
     }
 
-    @availability(*, deprecated = 1.9)
+    // MARK: * Error
+    @availability(*, deprecated=1.9)
     public class func errorExec(closure: () -> () = {}) {
         self.defaultInstance().exec(logLevel: XCGLogger.LogLevel.Error, closure: closure)
     }
 
-    @availability(*, deprecated = 1.9)
+    @availability(*, deprecated=1.9)
     public func errorExec(closure: () -> () = {}) {
         self.exec(logLevel: XCGLogger.LogLevel.Error, closure: closure)
     }
     
-    @availability(*, deprecated = 1.9)
+    // MARK: * Severe
+    @availability(*, deprecated=1.9)
     public class func severeExec(closure: () -> () = {}) {
         self.defaultInstance().exec(logLevel: XCGLogger.LogLevel.Severe, closure: closure)
     }
 
-    @availability(*, deprecated = 1.9)
+    @availability(*, deprecated=1.9)
     public func severeExec(closure: () -> () = {}) {
         self.exec(logLevel: XCGLogger.LogLevel.Severe, closure: closure)
     }
