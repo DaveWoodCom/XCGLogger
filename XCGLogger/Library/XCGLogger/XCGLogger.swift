@@ -9,40 +9,6 @@
 
 import Foundation
 
-private extension NSThread {
-    class func dateFormatter(format: String, locale: NSLocale? = nil) -> NSDateFormatter? {
-
-        let localeToUse = locale ?? NSLocale.currentLocale()
-
-        // These next two lines are a bit of a hack to handle the fact that .threadDictionary changed from an optional to a non-optional between Xcode 6.1 and 6.1.1
-        // This lets us use the same (albeit ugly) code in both cases.
-        // TODO: Clean up at some point after 6.1.1 is officially released.
-        let threadDictionary: NSMutableDictionary? = NSThread.currentThread().threadDictionary
-        if let threadDictionary = threadDictionary {
-            var dataFormatterCache: [String:NSDateFormatter]? = threadDictionary.objectForKey(XCGLogger.constants.nsdataFormatterCacheIdentifier) as? [String:NSDateFormatter]
-            if dataFormatterCache == nil {
-                dataFormatterCache = [String:NSDateFormatter]()
-            }
-
-            let formatterKey = format + "_" + localeToUse.localeIdentifier
-            if let formatter = dataFormatterCache?[formatterKey] {
-                return formatter
-            }
-
-            var formatter = NSDateFormatter()
-            formatter.locale = localeToUse
-            formatter.dateFormat = format
-            dataFormatterCache?[formatterKey] = formatter
-
-            threadDictionary[XCGLogger.constants.nsdataFormatterCacheIdentifier] = dataFormatterCache
-
-            return formatter
-        }
-
-        return nil
-    }
-}
-
 // MARK: - XCGLogDetails
 // - Data structure to hold all info about a log message, passed to log destination classes
 public struct XCGLogDetails {
@@ -85,9 +51,6 @@ public class XCGConsoleLogDestination : XCGLogDestinationProtocol, DebugPrintabl
     public var showFileName: Bool = true
     public var showLineNumber: Bool = true
     public var showLogLevel: Bool = true
-    public var dateFormatter: NSDateFormatter? {
-        return NSThread.dateFormatter("yyyy-MM-dd HH:mm:ss.SSS")
-    }
 
     public init(owner: XCGLogger, identifier: String = "") {
         self.owner = owner
@@ -108,7 +71,7 @@ public class XCGConsoleLogDestination : XCGLogDestinationProtocol, DebugPrintabl
         }
 
         var formattedDate: String = logDetails.date.description
-        if let unwrappedDataFormatter = dateFormatter {
+        if let unwrappedDataFormatter = owner.dateFormatter {
             formattedDate = unwrappedDataFormatter.stringFromDate(logDetails.date)
         }
 
@@ -126,7 +89,7 @@ public class XCGConsoleLogDestination : XCGLogDestinationProtocol, DebugPrintabl
         }
 
         var formattedDate: String = logDetails.date.description
-        if let unwrappedDataFormatter = dateFormatter {
+        if let unwrappedDataFormatter = owner.dateFormatter {
             formattedDate = unwrappedDataFormatter.stringFromDate(logDetails.date)
         }
 
@@ -160,9 +123,6 @@ public class XCGFileLogDestination : XCGLogDestinationProtocol, DebugPrintable {
     public var showFileName: Bool = true
     public var showLineNumber: Bool = true
     public var showLogLevel: Bool = true
-    public var dateFormatter: NSDateFormatter? {
-        return NSThread.dateFormatter("yyyy-MM-dd HH:mm:ss.SSS")
-    }
 
     private var writeToFileURL : NSURL? = nil {
         didSet {
@@ -208,7 +168,7 @@ public class XCGFileLogDestination : XCGLogDestinationProtocol, DebugPrintable {
         }
 
         var formattedDate: String = logDetails.date.description
-        if let unwrappedDataFormatter = dateFormatter {
+        if let unwrappedDataFormatter = owner.dateFormatter {
             formattedDate = unwrappedDataFormatter.stringFromDate(logDetails.date)
         }
 
@@ -226,7 +186,7 @@ public class XCGFileLogDestination : XCGLogDestinationProtocol, DebugPrintable {
         }
 
         var formattedDate: String = logDetails.date.description
-        if let unwrappedDataFormatter = dateFormatter {
+        if let unwrappedDataFormatter = owner.dateFormatter {
             formattedDate = unwrappedDataFormatter.stringFromDate(logDetails.date)
         }
 
@@ -341,8 +301,23 @@ public class XCGLogger : DebugPrintable {
         return Statics.logQueue
     }
 
+    private var _dateFormatter: NSDateFormatter? = nil
     public var dateFormatter: NSDateFormatter? {
-        return NSThread.dateFormatter("yyyy-MM-dd HH:mm:ss.SSS")
+        get {
+            if _dateFormatter != nil {
+                return _dateFormatter
+            }
+
+            let defaultDateFormatter = NSDateFormatter()
+            defaultDateFormatter.locale = NSLocale.currentLocale()
+            defaultDateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss.SSS"
+            _dateFormatter = defaultDateFormatter
+
+            return _dateFormatter
+        }
+        set {
+            _dateFormatter = newValue
+        }
     }
     public var logDestinations: Array<XCGLogDestinationProtocol> = []
 

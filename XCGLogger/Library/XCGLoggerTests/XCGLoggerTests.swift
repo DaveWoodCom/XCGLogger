@@ -170,4 +170,35 @@ class XCGLoggerTests: XCTestCase {
             log.debug(linesToLog[Int(index)])
         }
     }
+    
+    func testDateFormatterIsCached() {
+        var log: XCGLogger = XCGLogger()
+        log.identifier = "com.cerebralgardens.xcglogger.testDateFormatterIsCached"
+        
+        let dateFormatter1 = log.dateFormatter
+        let dateFormatter2 = log.dateFormatter
+        
+        XCTAssert(dateFormatter1 == dateFormatter2, "Fail: Received two different date formatter objects")
+    }
+    
+    func testCustomDateFormatter() {
+        var log: XCGLogger = XCGLogger()
+        log.identifier = "com.cerebralgardens.xcglogger.testCustomDateFormatter"
+        log.outputLogLevel = .Debug
+        
+        let defaultDateFormatter = log.dateFormatter
+        
+        let dateFormat = "MM/dd/yyyy hh:mma"
+
+        var dateFormatter = NSDateFormatter()
+        dateFormatter.dateFormat = dateFormat
+
+        log.dateFormatter = dateFormatter
+        
+        log.debug("Test date format is different than our default")
+        
+        XCTAssertNotNil(log.dateFormatter, "Fail: date formatter is nil")
+        XCTAssertEqual(log.dateFormatter!.dateFormat, dateFormat, "Fail: date format doesn't match our custom date format")
+        XCTAssert(defaultDateFormatter != dateFormatter, "Fail: Did not assign a custom date formatter")
+    }
 }
