@@ -9,40 +9,6 @@
 
 import Foundation
 
-private extension NSThread {
-    class func dateFormatter(format: String, locale: NSLocale? = nil) -> NSDateFormatter? {
-
-        let localeToUse = locale ?? NSLocale.currentLocale()
-
-        // These next two lines are a bit of a hack to handle the fact that .threadDictionary changed from an optional to a non-optional between Xcode 6.1 and 6.1.1
-        // This lets us use the same (albeit ugly) code in both cases.
-        // TODO: Clean up at some point after 6.1.1 is officially released.
-        let threadDictionary: NSMutableDictionary? = NSThread.currentThread().threadDictionary
-        if let threadDictionary = threadDictionary {
-            var dataFormatterCache: [String:NSDateFormatter]? = threadDictionary.objectForKey(XCGLogger.constants.nsdataFormatterCacheIdentifier) as? [String:NSDateFormatter]
-            if dataFormatterCache == nil {
-                dataFormatterCache = [String:NSDateFormatter]()
-            }
-
-            let formatterKey = format + "_" + localeToUse.localeIdentifier
-            if let formatter = dataFormatterCache?[formatterKey] {
-                return formatter
-            }
-
-            var formatter = NSDateFormatter()
-            formatter.locale = localeToUse
-            formatter.dateFormat = format
-            dataFormatterCache?[formatterKey] = formatter
-
-            threadDictionary[XCGLogger.constants.nsdataFormatterCacheIdentifier] = dataFormatterCache
-
-            return formatter
-        }
-
-        return nil
-    }
-}
-
 // MARK: - XCGLogDetails
 // - Data structure to hold all info about a log message, passed to log destination classes
 public struct XCGLogDetails {
@@ -82,12 +48,10 @@ public class XCGConsoleLogDestination : XCGLogDestinationProtocol, DebugPrintabl
     public var identifier: String
     public var outputLogLevel: XCGLogger.LogLevel = .Debug
 
+    public var showThreadName: Bool = false
     public var showFileName: Bool = true
     public var showLineNumber: Bool = true
     public var showLogLevel: Bool = true
-    public var dateFormatter: NSDateFormatter? {
-        return NSThread.dateFormatter("yyyy-MM-dd HH:mm:ss.SSS")
-    }
 
     public init(owner: XCGLogger, identifier: String = "") {
         self.owner = owner
@@ -96,6 +60,11 @@ public class XCGConsoleLogDestination : XCGLogDestinationProtocol, DebugPrintabl
 
     public func processLogDetails(logDetails: XCGLogDetails) {
         var extendedDetails: String = ""
+
+        if showThreadName {
+            extendedDetails += "[" + (NSThread.isMainThread() ? "main" : (NSThread.currentThread().name != "" ? NSThread.currentThread().name : String(format:"%p", NSThread.currentThread()))) + "] "
+        }
+
         if showLogLevel {
             extendedDetails += "[" + logDetails.logLevel.description() + "] "
         }
@@ -108,8 +77,8 @@ public class XCGConsoleLogDestination : XCGLogDestinationProtocol, DebugPrintabl
         }
 
         var formattedDate: String = logDetails.date.description
-        if let unwrappedDataFormatter = dateFormatter {
-            formattedDate = unwrappedDataFormatter.stringFromDate(logDetails.date)
+        if let dateFormatter = owner.dateFormatter {
+            formattedDate = dateFormatter.stringFromDate(logDetails.date)
         }
 
         var fullLogMessage: String =  "\(formattedDate) \(extendedDetails)\(logDetails.functionName): \(logDetails.logMessage)\n"
@@ -126,8 +95,8 @@ public class XCGConsoleLogDestination : XCGLogDestinationProtocol, DebugPrintabl
         }
 
         var formattedDate: String = logDetails.date.description
-        if let unwrappedDataFormatter = dateFormatter {
-            formattedDate = unwrappedDataFormatter.stringFromDate(logDetails.date)
+        if let dateFormatter = owner.dateFormatter {
+            formattedDate = dateFormatter.stringFromDate(logDetails.date)
         }
 
         var fullLogMessage: String =  "\(formattedDate) \(extendedDetails): \(logDetails.logMessage)\n"
@@ -145,7 +114,7 @@ public class XCGConsoleLogDestination : XCGLogDestinationProtocol, DebugPrintabl
     // MARK: - DebugPrintable
     public var debugDescription: String {
         get {
-            return "XCGConsoleLogDestination: \(identifier) - LogLevel: \(outputLogLevel.description()) showLogLevel: \(showLogLevel) showFileName: \(showFileName) showLineNumber: \(showLineNumber)"
+            return "XCGConsoleLogDestination: \(identifier) - LogLevel: \(outputLogLevel.description()) showThreadName: \(showThreadName) showLogLevel: \(showLogLevel) showFileName: \(showFileName) showLineNumber: \(showLineNumber)"
         }
     }
 }
@@ -157,12 +126,10 @@ public class XCGFileLogDestination : XCGLogDestinationProtocol, DebugPrintable {
     public var identifier: String
     public var outputLogLevel: XCGLogger.LogLevel = .Debug
 
+    public var showThreadName: Bool = false
     public var showFileName: Bool = true
     public var showLineNumber: Bool = true
     public var showLogLevel: Bool = true
-    public var dateFormatter: NSDateFormatter? {
-        return NSThread.dateFormatter("yyyy-MM-dd HH:mm:ss.SSS")
-    }
 
     private var writeToFileURL : NSURL? = nil {
         didSet {
@@ -196,6 +163,11 @@ public class XCGFileLogDestination : XCGLogDestinationProtocol, DebugPrintable {
     // MARK: - Logging methods
     public func processLogDetails(logDetails: XCGLogDetails) {
         var extendedDetails: String = ""
+
+        if showThreadName {
+            extendedDetails += "[" + (NSThread.isMainThread() ? "main" : (NSThread.currentThread().name != "" ? NSThread.currentThread().name : String(format:"%p", NSThread.currentThread()))) + "] "
+        }
+
         if showLogLevel {
             extendedDetails += "[" + logDetails.logLevel.description() + "] "
         }
@@ -208,8 +180,8 @@ public class XCGFileLogDestination : XCGLogDestinationProtocol, DebugPrintable {
         }
 
         var formattedDate: String = logDetails.date.description
-        if let unwrappedDataFormatter = dateFormatter {
-            formattedDate = unwrappedDataFormatter.stringFromDate(logDetails.date)
+        if let dateFormatter = owner.dateFormatter {
+            formattedDate = dateFormatter.stringFromDate(logDetails.date)
         }
 
         var fullLogMessage: String =  "\(formattedDate) \(extendedDetails)\(logDetails.functionName): \(logDetails.logMessage)\n"
@@ -226,8 +198,8 @@ public class XCGFileLogDestination : XCGLogDestinationProtocol, DebugPrintable {
         }
 
         var formattedDate: String = logDetails.date.description
-        if let unwrappedDataFormatter = dateFormatter {
-            formattedDate = unwrappedDataFormatter.stringFromDate(logDetails.date)
+        if let dateFormatter = owner.dateFormatter {
+            formattedDate = dateFormatter.stringFromDate(logDetails.date)
         }
 
         var fullLogMessage: String =  "\(formattedDate) \(extendedDetails): \(logDetails.logMessage)\n"
@@ -247,18 +219,18 @@ public class XCGFileLogDestination : XCGLogDestinationProtocol, DebugPrintable {
             closeFile()
         }
 
-        if let unwrappedWriteToFileURL = writeToFileURL {
-            if let path = unwrappedWriteToFileURL.path {
+        if let writeToFileURL = writeToFileURL {
+            if let path = writeToFileURL.path {
                 NSFileManager.defaultManager().createFileAtPath(path, contents: nil, attributes: nil)
                 var fileError : NSError? = nil
-                logFileHandle = NSFileHandle(forWritingToURL: unwrappedWriteToFileURL, error: &fileError)
+                logFileHandle = NSFileHandle(forWritingToURL: writeToFileURL, error: &fileError)
                 if logFileHandle == nil {
                     owner._logln("Attempt to open log file for writing failed: \(fileError?.localizedDescription)", logLevel: .Error)
                 }
                 else {
                     owner.logAppDetails(selectedLogDestination: self)
 
-                    let logDetails = XCGLogDetails(logLevel: .Info, date: NSDate(), logMessage: "XCGLogger writing to log to: \(unwrappedWriteToFileURL)", functionName: "", fileName: "", lineNumber: 0)
+                    let logDetails = XCGLogDetails(logLevel: .Info, date: NSDate(), logMessage: "XCGLogger writing to log to: \(writeToFileURL)", functionName: "", fileName: "", lineNumber: 0)
                     owner._logln(logDetails.logMessage, logLevel: logDetails.logLevel)
                     processInternalLogDetails(logDetails)
                 }
@@ -274,7 +246,7 @@ public class XCGFileLogDestination : XCGLogDestinationProtocol, DebugPrintable {
     // MARK: - DebugPrintable
     public var debugDescription: String {
         get {
-            return "XCGFileLogDestination: \(identifier) - LogLevel: \(outputLogLevel.description()) showLogLevel: \(showLogLevel) showFileName: \(showFileName) showLineNumber: \(showLineNumber)"
+            return "XCGFileLogDestination: \(identifier) - LogLevel: \(outputLogLevel.description()) showThreadName: \(showThreadName)  showLogLevel: \(showLogLevel) showFileName: \(showFileName) showLineNumber: \(showLineNumber)"
         }
     }
 }
@@ -289,7 +261,7 @@ public class XCGLogger : DebugPrintable {
         public static let baseFileLogDestinationIdentifier = "com.cerebralgardens.xcglogger.logdestination.file"
         public static let nsdataFormatterCacheIdentifier = "com.cerebralgardens.xcglogger.nsdataFormatterCache"
         public static let logQueueIdentifier = "com.cerebralgardens.xcglogger.queue"
-        public static let versionString = "1.8.1"
+        public static let versionString = "2.0"
     }
 
     // MARK: - Enums
@@ -341,8 +313,23 @@ public class XCGLogger : DebugPrintable {
         return Statics.logQueue
     }
 
+    private var _dateFormatter: NSDateFormatter? = nil
     public var dateFormatter: NSDateFormatter? {
-        return NSThread.dateFormatter("yyyy-MM-dd HH:mm:ss.SSS")
+        get {
+            if _dateFormatter != nil {
+                return _dateFormatter
+            }
+
+            let defaultDateFormatter = NSDateFormatter()
+            defaultDateFormatter.locale = NSLocale.currentLocale()
+            defaultDateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss.SSS"
+            _dateFormatter = defaultDateFormatter
+
+            return _dateFormatter
+        }
+        set {
+            _dateFormatter = newValue
+        }
     }
     public var logDestinations: Array<XCGLogDestinationProtocol> = []
 
@@ -359,23 +346,20 @@ public class XCGLogger : DebugPrintable {
         statics.instance.identifier = XCGLogger.constants.defaultInstanceIdentifier
         return statics.instance
     }
-    public class func sharedInstance() -> XCGLogger {
-        self.defaultInstance()._logln("sharedInstance() has been renamed to defaultInstance() to better reflect that it is not a true singleton. Please update your code, sharedInstance() will be removed in a future version.", logLevel: .Info)
-        return self.defaultInstance()
-    }
 
     // MARK: - Setup methods
-    public class func setup(logLevel: LogLevel = .Debug, showLogLevel: Bool = true, showFileNames: Bool = true, showLineNumbers: Bool = true, writeToFile: AnyObject? = nil) {
-        defaultInstance().setup(logLevel: logLevel, showLogLevel: showLogLevel, showFileNames: showFileNames, showLineNumbers: showLineNumbers, writeToFile: writeToFile)
+    public class func setup(logLevel: LogLevel = .Debug, showThreadName: Bool = false, showLogLevel: Bool = true, showFileNames: Bool = true, showLineNumbers: Bool = true, writeToFile: AnyObject? = nil, fileLogLevel: LogLevel? = nil) {
+        defaultInstance().setup(logLevel: logLevel, showThreadName: showThreadName, showLogLevel: showLogLevel, showFileNames: showFileNames, showLineNumbers: showLineNumbers, writeToFile: writeToFile)
     }
 
-    public func setup(logLevel: LogLevel = .Debug, showLogLevel: Bool = true, showFileNames: Bool = true, showLineNumbers: Bool = true, writeToFile: AnyObject? = nil) {
+    public func setup(logLevel: LogLevel = .Debug, showThreadName: Bool = false, showLogLevel: Bool = true, showFileNames: Bool = true, showLineNumbers: Bool = true, writeToFile: AnyObject? = nil, fileLogLevel: LogLevel? = nil) {
         outputLogLevel = logLevel;
 
-        if let unwrappedLogDestination: XCGLogDestinationProtocol = logDestination(XCGLogger.constants.baseConsoleLogDestinationIdentifier) {
-            if unwrappedLogDestination is XCGConsoleLogDestination {
-                let standardConsoleLogDestination = unwrappedLogDestination as! XCGConsoleLogDestination
+        if let logDestination: XCGLogDestinationProtocol = logDestination(XCGLogger.constants.baseConsoleLogDestinationIdentifier) {
+            if logDestination is XCGConsoleLogDestination {
+                let standardConsoleLogDestination = logDestination as! XCGConsoleLogDestination
 
+                standardConsoleLogDestination.showThreadName = showThreadName
                 standardConsoleLogDestination.showLogLevel = showLogLevel
                 standardConsoleLogDestination.showFileName = showFileNames
                 standardConsoleLogDestination.showLineNumber = showLineNumbers
@@ -385,32 +369,46 @@ public class XCGLogger : DebugPrintable {
 
         logAppDetails()
 
-        if let unwrappedWriteToFile : AnyObject = writeToFile {
+        if let writeToFile : AnyObject = writeToFile {
             // We've been passed a file to use for logging, set up a file logger
-            let standardFileLogDestination: XCGFileLogDestination = XCGFileLogDestination(owner: self, writeToFile: unwrappedWriteToFile, identifier: XCGLogger.constants.baseFileLogDestinationIdentifier)
+            let standardFileLogDestination: XCGFileLogDestination = XCGFileLogDestination(owner: self, writeToFile: writeToFile, identifier: XCGLogger.constants.baseFileLogDestinationIdentifier)
 
+            standardFileLogDestination.showThreadName = showThreadName
             standardFileLogDestination.showLogLevel = showLogLevel
             standardFileLogDestination.showFileName = showFileNames
             standardFileLogDestination.showLineNumber = showLineNumbers
-            standardFileLogDestination.outputLogLevel = logLevel
+            standardFileLogDestination.outputLogLevel = fileLogLevel ?? logLevel
 
             addLogDestination(standardFileLogDestination)
         }
     }
 
     // MARK: - Logging methods
-    public class func logln(logMessage: String, logLevel: LogLevel = .Debug, functionName: String = __FUNCTION__, fileName: String = __FILE__, lineNumber: Int = __LINE__) {
-        self.defaultInstance().logln(logMessage, logLevel: logLevel, functionName: functionName, fileName: fileName, lineNumber: lineNumber)
+    public class func logln(@autoclosure(escaping) closure: () -> String?, logLevel: LogLevel = .Debug, functionName: String = __FUNCTION__, fileName: String = __FILE__, lineNumber: Int = __LINE__) {
+        self.defaultInstance().logln(logLevel: logLevel, functionName: functionName, fileName: fileName, lineNumber: lineNumber, closure: closure)
     }
 
-    public func logln(logMessage: String, logLevel: LogLevel = .Debug, functionName: String = __FUNCTION__, fileName: String = __FILE__, lineNumber: Int = __LINE__) {
+    public class func logln(logLevel: LogLevel = .Debug, functionName: String = __FUNCTION__, fileName: String = __FILE__, lineNumber: Int = __LINE__, closure: () -> String?) {
+        self.defaultInstance().logln(logLevel: logLevel, functionName: functionName, fileName: fileName, lineNumber: lineNumber, closure: closure)
+    }
+
+    public func logln(@autoclosure(escaping) closure: () -> String?, logLevel: LogLevel = .Debug, functionName: String = __FUNCTION__, fileName: String = __FILE__, lineNumber: Int = __LINE__) {
+        self.logln(logLevel: logLevel, functionName: functionName, fileName: fileName, lineNumber: lineNumber, closure: closure)
+    }
+
+    public func logln(logLevel: LogLevel = .Debug, functionName: String = __FUNCTION__, fileName: String = __FILE__, lineNumber: Int = __LINE__, closure: () -> String?) {
         let date = NSDate()
 
         var logDetails: XCGLogDetails? = nil
         for logDestination in self.logDestinations {
             if (logDestination.isEnabledForLogLevel(logLevel)) {
                 if logDetails == nil {
-                    logDetails = XCGLogDetails(logLevel: logLevel, date: date, logMessage: logMessage, functionName: functionName, fileName: fileName, lineNumber: lineNumber)
+                    if let logMessage = closure() {
+                        logDetails = XCGLogDetails(logLevel: logLevel, date: date, logMessage: logMessage, functionName: functionName, fileName: fileName, lineNumber: lineNumber)
+                    }
+                    else {
+                        break
+                    }
                 }
 
                 logDestination.processLogDetails(logDetails!)
@@ -461,98 +459,171 @@ public class XCGLogger : DebugPrintable {
     }
 
     // MARK: - Convenience logging methods
-    public class func verbose(logMessage: String, functionName: String = __FUNCTION__, fileName: String = __FILE__, lineNumber: Int = __LINE__) {
-        self.defaultInstance().verbose(logMessage, functionName: functionName, fileName: fileName, lineNumber: lineNumber)
+    // MARK: * Verbose
+    public class func verbose(@autoclosure(escaping) closure: () -> String?, functionName: String = __FUNCTION__, fileName: String = __FILE__, lineNumber: Int = __LINE__) {
+        self.defaultInstance().logln(logLevel: .Verbose, functionName: functionName, fileName: fileName, lineNumber: lineNumber, closure: closure)
     }
 
-    public func verbose(logMessage: String, functionName: String = __FUNCTION__, fileName: String = __FILE__, lineNumber: Int = __LINE__) {
-        self.logln(logMessage, logLevel: .Verbose, functionName: functionName, fileName: fileName, lineNumber: lineNumber)
-    }
-
-    public class func debug(logMessage: String, functionName: String = __FUNCTION__, fileName: String = __FILE__, lineNumber: Int = __LINE__) {
-        self.defaultInstance().debug(logMessage, functionName: functionName, fileName: fileName, lineNumber: lineNumber)
-    }
-
-    public func debug(logMessage: String, functionName: String = __FUNCTION__, fileName: String = __FILE__, lineNumber: Int = __LINE__) {
-        self.logln(logMessage, logLevel: .Debug, functionName: functionName, fileName: fileName, lineNumber: lineNumber)
-    }
-
-    public class func info(logMessage: String, functionName: String = __FUNCTION__, fileName: String = __FILE__, lineNumber: Int = __LINE__) {
-        self.defaultInstance().info(logMessage, functionName: functionName, fileName: fileName, lineNumber: lineNumber)
-    }
-
-    public func info(logMessage: String, functionName: String = __FUNCTION__, fileName: String = __FILE__, lineNumber: Int = __LINE__) {
-        self.logln(logMessage, logLevel: .Info, functionName: functionName, fileName: fileName, lineNumber: lineNumber)
-    }
-
-    public class func warning(logMessage: String, functionName: String = __FUNCTION__, fileName: String = __FILE__, lineNumber: Int = __LINE__) {
-        self.defaultInstance().warning(logMessage, functionName: functionName, fileName: fileName, lineNumber: lineNumber)
-    }
-
-    public func warning(logMessage: String, functionName: String = __FUNCTION__, fileName: String = __FILE__, lineNumber: Int = __LINE__) {
-        self.logln(logMessage, logLevel: .Warning, functionName: functionName, fileName: fileName, lineNumber: lineNumber)
+    public class func verbose(functionName: String = __FUNCTION__, fileName: String = __FILE__, lineNumber: Int = __LINE__, closure: () -> String?) {
+        self.defaultInstance().logln(logLevel: .Verbose, functionName: functionName, fileName: fileName, lineNumber: lineNumber, closure: closure)
     }
     
-    public class func error(logMessage: String, functionName: String = __FUNCTION__, fileName: String = __FILE__, lineNumber: Int = __LINE__) {
-        self.defaultInstance().error(logMessage, functionName: functionName, fileName: fileName, lineNumber: lineNumber)
+    public func verbose(@autoclosure(escaping) closure: () -> String?, functionName: String = __FUNCTION__, fileName: String = __FILE__, lineNumber: Int = __LINE__) {
+        self.logln(logLevel: .Verbose, functionName: functionName, fileName: fileName, lineNumber: lineNumber, closure: closure)
     }
 
-    public func error(logMessage: String, functionName: String = __FUNCTION__, fileName: String = __FILE__, lineNumber: Int = __LINE__) {
-        self.logln(logMessage, logLevel: .Error, functionName: functionName, fileName: fileName, lineNumber: lineNumber)
+    public func verbose(functionName: String = __FUNCTION__, fileName: String = __FILE__, lineNumber: Int = __LINE__, closure: () -> String?) {
+        self.logln(logLevel: .Verbose, functionName: functionName, fileName: fileName, lineNumber: lineNumber, closure: closure)
     }
     
-    public class func severe(logMessage: String, functionName: String = __FUNCTION__, fileName: String = __FILE__, lineNumber: Int = __LINE__) {
-        self.defaultInstance().severe(logMessage, functionName: functionName, fileName: fileName, lineNumber: lineNumber)
+    // MARK: * Debug
+    public class func debug(@autoclosure(escaping) closure: () -> String?, functionName: String = __FUNCTION__, fileName: String = __FILE__, lineNumber: Int = __LINE__) {
+        self.defaultInstance().logln(logLevel: .Debug, functionName: functionName, fileName: fileName, lineNumber: lineNumber, closure: closure)
+    }
+    
+    public class func debug(functionName: String = __FUNCTION__, fileName: String = __FILE__, lineNumber: Int = __LINE__, closure: () -> String?) {
+        self.defaultInstance().logln(logLevel: .Debug, functionName: functionName, fileName: fileName, lineNumber: lineNumber, closure: closure)
+    }
+    
+    public func debug(@autoclosure(escaping) closure: () -> String?, functionName: String = __FUNCTION__, fileName: String = __FILE__, lineNumber: Int = __LINE__) {
+        self.logln(logLevel: .Debug, functionName: functionName, fileName: fileName, lineNumber: lineNumber, closure: closure)
+    }
+    
+    public func debug(functionName: String = __FUNCTION__, fileName: String = __FILE__, lineNumber: Int = __LINE__, closure: () -> String?) {
+        self.logln(logLevel: .Debug, functionName: functionName, fileName: fileName, lineNumber: lineNumber, closure: closure)
+    }
+    
+    // MARK: * Info
+    public class func info(@autoclosure(escaping) closure: () -> String?, functionName: String = __FUNCTION__, fileName: String = __FILE__, lineNumber: Int = __LINE__) {
+        self.defaultInstance().logln(logLevel: .Info, functionName: functionName, fileName: fileName, lineNumber: lineNumber, closure: closure)
+    }
+    
+    public class func info(functionName: String = __FUNCTION__, fileName: String = __FILE__, lineNumber: Int = __LINE__, closure: () -> String?) {
+        self.defaultInstance().logln(logLevel: .Info, functionName: functionName, fileName: fileName, lineNumber: lineNumber, closure: closure)
+    }
+    
+    public func info(@autoclosure(escaping) closure: () -> String?, functionName: String = __FUNCTION__, fileName: String = __FILE__, lineNumber: Int = __LINE__) {
+        self.logln(logLevel: .Info, functionName: functionName, fileName: fileName, lineNumber: lineNumber, closure: closure)
+    }
+    
+    public func info(functionName: String = __FUNCTION__, fileName: String = __FILE__, lineNumber: Int = __LINE__, closure: () -> String?) {
+        self.logln(logLevel: .Info, functionName: functionName, fileName: fileName, lineNumber: lineNumber, closure: closure)
+    }
+    
+    // MARK: * Warning
+    public class func warning(@autoclosure(escaping) closure: () -> String?, functionName: String = __FUNCTION__, fileName: String = __FILE__, lineNumber: Int = __LINE__) {
+        self.defaultInstance().logln(logLevel: .Warning, functionName: functionName, fileName: fileName, lineNumber: lineNumber, closure: closure)
+    }
+    
+    public class func warning(functionName: String = __FUNCTION__, fileName: String = __FILE__, lineNumber: Int = __LINE__, closure: () -> String?) {
+        self.defaultInstance().logln(logLevel: .Warning, functionName: functionName, fileName: fileName, lineNumber: lineNumber, closure: closure)
+    }
+    
+    public func warning(@autoclosure(escaping) closure: () -> String?, functionName: String = __FUNCTION__, fileName: String = __FILE__, lineNumber: Int = __LINE__) {
+        self.logln(logLevel: .Warning, functionName: functionName, fileName: fileName, lineNumber: lineNumber, closure: closure)
+    }
+    
+    public func warning(functionName: String = __FUNCTION__, fileName: String = __FILE__, lineNumber: Int = __LINE__, closure: () -> String?) {
+        self.logln(logLevel: .Warning, functionName: functionName, fileName: fileName, lineNumber: lineNumber, closure: closure)
+    }
+    
+    // MARK: * Error
+    public class func error(@autoclosure(escaping) closure: () -> String?, functionName: String = __FUNCTION__, fileName: String = __FILE__, lineNumber: Int = __LINE__) {
+        self.defaultInstance().logln(logLevel: .Error, functionName: functionName, fileName: fileName, lineNumber: lineNumber, closure: closure)
+    }
+    
+    public class func error(functionName: String = __FUNCTION__, fileName: String = __FILE__, lineNumber: Int = __LINE__, closure: () -> String?) {
+        self.defaultInstance().logln(logLevel: .Error, functionName: functionName, fileName: fileName, lineNumber: lineNumber, closure: closure)
+    }
+    
+    public func error(@autoclosure(escaping) closure: () -> String?, functionName: String = __FUNCTION__, fileName: String = __FILE__, lineNumber: Int = __LINE__) {
+        self.logln(logLevel: .Error, functionName: functionName, fileName: fileName, lineNumber: lineNumber, closure: closure)
+    }
+    
+    public func error(functionName: String = __FUNCTION__, fileName: String = __FILE__, lineNumber: Int = __LINE__, closure: () -> String?) {
+        self.logln(logLevel: .Error, functionName: functionName, fileName: fileName, lineNumber: lineNumber, closure: closure)
+    }
+    
+    // MARK: * Severe
+    public class func severe(@autoclosure(escaping) closure: () -> String?, functionName: String = __FUNCTION__, fileName: String = __FILE__, lineNumber: Int = __LINE__) {
+        self.defaultInstance().logln(logLevel: .Severe, functionName: functionName, fileName: fileName, lineNumber: lineNumber, closure: closure)
+    }
+    
+    public class func severe(functionName: String = __FUNCTION__, fileName: String = __FILE__, lineNumber: Int = __LINE__, closure: () -> String?) {
+        self.defaultInstance().logln(logLevel: .Severe, functionName: functionName, fileName: fileName, lineNumber: lineNumber, closure: closure)
+    }
+    
+    public func severe(@autoclosure(escaping) closure: () -> String?, functionName: String = __FUNCTION__, fileName: String = __FILE__, lineNumber: Int = __LINE__) {
+        self.logln(logLevel: .Severe, functionName: functionName, fileName: fileName, lineNumber: lineNumber, closure: closure)
+    }
+    
+    public func severe(functionName: String = __FUNCTION__, fileName: String = __FILE__, lineNumber: Int = __LINE__, closure: () -> String?) {
+        self.logln(logLevel: .Severe, functionName: functionName, fileName: fileName, lineNumber: lineNumber, closure: closure)
     }
 
-    public func severe(logMessage: String, functionName: String = __FUNCTION__, fileName: String = __FILE__, lineNumber: Int = __LINE__) {
-        self.logln(logMessage, logLevel: .Severe, functionName: functionName, fileName: fileName, lineNumber: lineNumber)
-    }
-
+    // MARK: - Exec Methods
+    // MARK: * Verbose
+    @availability(*, deprecated=1.9)
     public class func verboseExec(closure: () -> () = {}) {
         self.defaultInstance().exec(logLevel: XCGLogger.LogLevel.Verbose, closure: closure)
     }
-
+    
+    @availability(*, deprecated=1.9)
     public func verboseExec(closure: () -> () = {}) {
         self.exec(logLevel: XCGLogger.LogLevel.Verbose, closure: closure)
     }
     
+    // MARK: * Debug
+    @availability(*, deprecated=1.9)
     public class func debugExec(closure: () -> () = {}) {
         self.defaultInstance().exec(logLevel: XCGLogger.LogLevel.Debug, closure: closure)
     }
 
+    @availability(*, deprecated=1.9)
     public func debugExec(closure: () -> () = {}) {
         self.exec(logLevel: XCGLogger.LogLevel.Debug, closure: closure)
     }
     
+    // MARK: * Info
+    @availability(*, deprecated=1.9)
     public class func infoExec(closure: () -> () = {}) {
         self.defaultInstance().exec(logLevel: XCGLogger.LogLevel.Info, closure: closure)
     }
 
+    @availability(*, deprecated=1.9)
     public func infoExec(closure: () -> () = {}) {
         self.exec(logLevel: XCGLogger.LogLevel.Info, closure: closure)
     }
     
+    // MARK: * Warning
+    @availability(*, deprecated=1.9)
     public class func warningExec(closure: () -> () = {}) {
         self.defaultInstance().exec(logLevel: XCGLogger.LogLevel.Warning, closure: closure)
     }
 
+    @availability(*, deprecated=1.9)
     public func warningExec(closure: () -> () = {}) {
         self.exec(logLevel: XCGLogger.LogLevel.Warning, closure: closure)
     }
 
+    // MARK: * Error
+    @availability(*, deprecated=1.9)
     public class func errorExec(closure: () -> () = {}) {
         self.defaultInstance().exec(logLevel: XCGLogger.LogLevel.Error, closure: closure)
     }
 
+    @availability(*, deprecated=1.9)
     public func errorExec(closure: () -> () = {}) {
         self.exec(logLevel: XCGLogger.LogLevel.Error, closure: closure)
     }
     
+    // MARK: * Severe
+    @availability(*, deprecated=1.9)
     public class func severeExec(closure: () -> () = {}) {
         self.defaultInstance().exec(logLevel: XCGLogger.LogLevel.Severe, closure: closure)
     }
 
+    @availability(*, deprecated=1.9)
     public func severeExec(closure: () -> () = {}) {
         self.exec(logLevel: XCGLogger.LogLevel.Severe, closure: closure)
     }
@@ -622,11 +693,4 @@ public class XCGLogger : DebugPrintable {
 // Implement Comparable for XCGLogger.LogLevel
 public func < (lhs:XCGLogger.LogLevel, rhs:XCGLogger.LogLevel) -> Bool {
     return lhs.rawValue < rhs.rawValue
-}
-
-// This operation shouldn't be required, since providing < is all that is needed, however, the compiler crashes when optimization is enabled.
-// Adding this operator works around the optimization bug.
-// Thanks to @beltex https://github.com/beltex for helping to narrow this down.
-public func >= (lhs:XCGLogger.LogLevel, rhs:XCGLogger.LogLevel) -> Bool {
-    return lhs.rawValue > rhs.rawValue || lhs.rawValue == rhs.rawValue
 }
