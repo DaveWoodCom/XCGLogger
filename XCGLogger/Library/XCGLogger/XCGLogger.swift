@@ -711,10 +711,3 @@ public class XCGLogger : DebugPrintable {
 public func < (lhs:XCGLogger.LogLevel, rhs:XCGLogger.LogLevel) -> Bool {
     return lhs.rawValue < rhs.rawValue
 }
-
-// This operation shouldn't be required, since providing < is all that is needed, however, the compiler crashes when optimization is enabled.
-// Adding this operator works around the optimization bug.
-// Thanks to @beltex https://github.com/beltex for helping to narrow this down.
-public func >= (lhs:XCGLogger.LogLevel, rhs:XCGLogger.LogLevel) -> Bool {
-    return lhs.rawValue > rhs.rawValue || lhs.rawValue == rhs.rawValue
-}
