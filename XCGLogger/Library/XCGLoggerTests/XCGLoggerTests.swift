@@ -178,7 +178,7 @@ class XCGLoggerTests: XCTestCase {
         let dateFormatter1 = log.dateFormatter
         let dateFormatter2 = log.dateFormatter
         
-        XCTAssert(dateFormatter1 == dateFormatter2, "Fail: Received two different date formatter objects")
+        XCTAssert(dateFormatter1 === dateFormatter2, "Fail: Received two different date formatter objects")
     }
     
     func testCustomDateFormatter() {
