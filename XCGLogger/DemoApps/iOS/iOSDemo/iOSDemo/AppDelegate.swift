@@ -34,7 +34,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
         // Setup XCGLogger
         let logPath : NSURL = self.cacheDirectory.URLByAppendingPathComponent("XCGLogger_Log.txt")
-        log.setup(logLevel: .Debug, showThreadName: true, showLogLevel: true, showFileNames: true, showLineNumbers: true, writeToFile: logPath)
+        log.setup(logLevel: .Debug, showThreadName: true, showLogLevel: true, showFileNames: true, showLineNumbers: true, showFunctionName: true, writeToFile: logPath)
 
         return true
     }
