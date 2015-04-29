@@ -131,7 +131,7 @@ public class XCGFileLogDestination : XCGLogDestinationProtocol, DebugPrintable {
     public var showLineNumber: Bool = true
     public var showLogLevel: Bool = true
 
-    private var writeToFileURL : NSURL? = nil {
+    private(set) var writeToFileURL : NSURL? = nil {
         didSet {
             openFile()
         }
@@ -221,6 +221,13 @@ public class XCGFileLogDestination : XCGLogDestinationProtocol, DebugPrintable {
 
         if let writeToFileURL = writeToFileURL {
             if let path = writeToFileURL.path {
+                let backupPath = path + ".bak"
+                if NSFileManager.defaultManager().fileExistsAtPath(backupPath) {
+                    NSFileManager.defaultManager().removeItemAtPath(backupPath, error: nil)
+                }
+                if NSFileManager.defaultManager().fileExistsAtPath(path) {
+                    NSFileManager.defaultManager().moveItemAtPath(path, toPath: backupPath, error: nil)
+                }
                 NSFileManager.defaultManager().createFileAtPath(path, contents: nil, attributes: nil)
                 var fileError : NSError? = nil
                 logFileHandle = NSFileHandle(forWritingToURL: writeToFileURL, error: &fileError)
