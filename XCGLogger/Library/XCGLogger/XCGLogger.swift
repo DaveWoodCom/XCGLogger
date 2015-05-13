@@ -47,14 +47,17 @@ private extension NSThread {
 // - Data structure to hold all info about a log message, passed to log destination classes
 public struct XCGLogDetails {
     public var logLevel: XCGLogger.LogLevel
+	public var logIndentation: Int
     public var date: NSDate
     public var logMessage: String
     public var functionName: String
     public var fileName: String
     public var lineNumber: Int
+	
 
-    public init(logLevel: XCGLogger.LogLevel, date: NSDate, logMessage: String, functionName: String, fileName: String, lineNumber: Int) {
+	public init(logLevel: XCGLogger.LogLevel, logIndentation: Int, date: NSDate, logMessage: String, functionName: String, fileName: String, lineNumber: Int) {
         self.logLevel = logLevel
+		self.logIndentation = logIndentation
         self.date = date
         self.logMessage = logMessage
         self.functionName = functionName
@@ -93,8 +96,17 @@ public class XCGConsoleLogDestination : XCGLogDestinationProtocol, DebugPrintabl
         self.owner = owner
         self.identifier = identifier
     }
-
+	
+	public var maxPrefixLength=0
+	
     public func processLogDetails(logDetails: XCGLogDetails) {
+		var indentation:String = ""
+		var ind=logDetails.logIndentation
+		for (;ind>=0;ind--)
+		{
+			indentation+="\t"
+		}
+		
         var extendedDetails: String = ""
         if showLogLevel {
             extendedDetails += "[" + logDetails.logLevel.description() + "] "
@@ -111,8 +123,24 @@ public class XCGConsoleLogDestination : XCGLogDestinationProtocol, DebugPrintabl
         if let unwrappedDataFormatter = dateFormatter {
             formattedDate = unwrappedDataFormatter.stringFromDate(logDetails.date)
         }
-
-        var fullLogMessage: String =  "\(formattedDate) \(extendedDetails)\(logDetails.functionName): \(logDetails.logMessage)\n"
+		
+		var prefix="\(formattedDate) \(extendedDetails)\(logDetails.functionName)"
+		var padding=""
+		var prefixLength=prefix.lengthOfBytesUsingEncoding(NSUTF8StringEncoding)
+		if prefixLength>=maxPrefixLength
+		{
+			maxPrefixLength=prefixLength
+		}
+		else
+		{
+			while maxPrefixLength-prefixLength>0
+			{
+				padding += " "
+				prefixLength++
+			}
+		}
+		
+		var fullLogMessage: String =  "\(prefix)\(padding): \(indentation)\(logDetails.logMessage)\n"
 
         dispatch_async(XCGLogger.logQueue) {
             print(fullLogMessage)
@@ -258,7 +286,7 @@ public class XCGFileLogDestination : XCGLogDestinationProtocol, DebugPrintable {
                 else {
                     owner.logAppDetails(selectedLogDestination: self)
 
-                    let logDetails = XCGLogDetails(logLevel: .Info, date: NSDate(), logMessage: "XCGLogger writing to log to: \(unwrappedWriteToFileURL)", functionName: "", fileName: "", lineNumber: 0)
+					let logDetails = XCGLogDetails(logLevel: .Info, logIndentation: 0, date: NSDate(), logMessage: "XCGLogger writing to log to: \(unwrappedWriteToFileURL)", functionName: "", fileName: "", lineNumber: 0)
                     owner._logln(logDetails.logMessage, logLevel: logDetails.logLevel)
                     processInternalLogDetails(logDetails)
                 }
@@ -277,6 +305,29 @@ public class XCGFileLogDestination : XCGLogDestinationProtocol, DebugPrintable {
             return "XCGFileLogDestination: \(identifier) - LogLevel: \(outputLogLevel.description()) showLogLevel: \(showLogLevel) showFileName: \(showFileName) showLineNumber: \(showLineNumber)"
         }
     }
+}
+public class Indenter
+{
+	var logger:XCGLogger
+	var runAfter:((logger:XCGLogger)->())?
+	init(logger:XCGLogger,runBefore:((logger:XCGLogger)->())?=nil,runAfter:((logger:XCGLogger)->())?=nil)
+	{
+		self.logger=logger
+		self.runAfter=runAfter
+		if let runBefore=runBefore
+		{
+			runBefore(logger:logger)
+		}
+		logger.indentationLevel++
+	}
+	deinit
+	{
+		logger.indentationLevel--
+		if let runAfter=runAfter
+		{
+			runAfter(logger:logger)
+		}
+	}
 }
 
 // MARK: - XCGLogger
@@ -340,6 +391,8 @@ public class XCGLogger : DebugPrintable {
 
         return Statics.logQueue
     }
+	
+	private var indentationLevel: Int = 0
 
     public var dateFormatter: NSDateFormatter? {
         return NSThread.dateFormatter("yyyy-MM-dd HH:mm:ss.SSS")
@@ -402,7 +455,7 @@ public class XCGLogger : DebugPrintable {
     public class func logln(logMessage: String, logLevel: LogLevel = .Debug, functionName: String = __FUNCTION__, fileName: String = __FILE__, lineNumber: Int = __LINE__) {
         self.defaultInstance().logln(logMessage, logLevel: logLevel, functionName: functionName, fileName: fileName, lineNumber: lineNumber)
     }
-
+	
     public func logln(logMessage: String, logLevel: LogLevel = .Debug, functionName: String = __FUNCTION__, fileName: String = __FILE__, lineNumber: Int = __LINE__) {
         let date = NSDate()
 
@@ -410,7 +463,7 @@ public class XCGLogger : DebugPrintable {
         for logDestination in self.logDestinations {
             if (logDestination.isEnabledForLogLevel(logLevel)) {
                 if logDetails == nil {
-                    logDetails = XCGLogDetails(logLevel: logLevel, date: date, logMessage: logMessage, functionName: functionName, fileName: fileName, lineNumber: lineNumber)
+					logDetails = XCGLogDetails(logLevel: logLevel, logIndentation: indentationLevel, date: date, logMessage: logMessage, functionName: functionName, fileName: fileName, lineNumber: lineNumber)
                 }
 
                 logDestination.processLogDetails(logDetails!)
@@ -418,6 +471,23 @@ public class XCGLogger : DebugPrintable {
         }
     }
 
+	
+	public class func logFunc(logLevel: LogLevel = .Debug, functionName: String = __FUNCTION__, fileName: String = __FILE__, lineNumber: Int = __LINE__)->Indenter
+	{
+		return defaultInstance().logFunc(logLevel: logLevel, functionName: functionName, fileName: fileName, lineNumber: lineNumber)
+	}
+
+	public func logFunc(logLevel: LogLevel = .Debug, functionName: String = __FUNCTION__, fileName: String = __FILE__, lineNumber: Int = __LINE__)->Indenter
+	{
+		return Indenter(logger: self, runBefore: { (logger) -> () in
+			XCGLogger.logln("\(functionName)(...) {", logLevel: logLevel, functionName: functionName, fileName: fileName, lineNumber: lineNumber)
+			
+			}, runAfter: { (logger) -> () in
+				XCGLogger.logln("}", logLevel: logLevel, functionName: functionName, fileName: fileName, lineNumber: lineNumber)
+		})
+	}
+	
+	
     public class func exec(logLevel: LogLevel = .Debug, closure: () -> () = {}) {
         self.defaultInstance().exec(logLevel: logLevel, closure: closure)
     }
@@ -446,8 +516,8 @@ public class XCGLogger : DebugPrintable {
         let processInfo: NSProcessInfo = NSProcessInfo.processInfo()
         let XCGLoggerVersionNumber = XCGLogger.constants.versionString
 
-        let logDetails: Array<XCGLogDetails> = [XCGLogDetails(logLevel: .Info, date: date, logMessage: "\(processInfo.processName) \(buildString)PID: \(processInfo.processIdentifier)", functionName: "", fileName: "", lineNumber: 0),
-            XCGLogDetails(logLevel: .Info, date: date, logMessage: "XCGLogger Version: \(XCGLoggerVersionNumber) - LogLevel: \(outputLogLevel.description())", functionName: "", fileName: "", lineNumber: 0)]
+		let logDetails: Array<XCGLogDetails> = [XCGLogDetails(logLevel: .Info, logIndentation: 0, date: date, logMessage: "\(processInfo.processName) \(buildString)PID: \(processInfo.processIdentifier)", functionName: "", fileName: "", lineNumber: 0),
+			XCGLogDetails(logLevel: .Info, logIndentation:0, date: date, logMessage: "XCGLogger Version: \(XCGLoggerVersionNumber) - LogLevel: \(outputLogLevel.description())", functionName: "", fileName: "", lineNumber: 0)]
 
         for logDestination in (selectedLogDestination != nil ? [selectedLogDestination!] : logDestinations) {
             for logDetail in logDetails {
@@ -476,6 +546,14 @@ public class XCGLogger : DebugPrintable {
     public func debug(logMessage: String, functionName: String = __FUNCTION__, fileName: String = __FILE__, lineNumber: Int = __LINE__) {
         self.logln(logMessage, logLevel: .Debug, functionName: functionName, fileName: fileName, lineNumber: lineNumber)
     }
+
+	public class func debug(logMessage: Printable, functionName: String = __FUNCTION__, fileName: String = __FILE__, lineNumber: Int = __LINE__) {
+		self.defaultInstance().debug(logMessage.description, functionName: functionName, fileName: fileName, lineNumber: lineNumber)
+	}
+	
+	public func debug(logMessage: Printable, functionName: String = __FUNCTION__, fileName: String = __FILE__, lineNumber: Int = __LINE__) {
+		self.logln(logMessage.description, logLevel: .Debug, functionName: functionName, fileName: fileName, lineNumber: lineNumber)
+	}
 
     public class func info(logMessage: String, functionName: String = __FUNCTION__, fileName: String = __FILE__, lineNumber: Int = __LINE__) {
         self.defaultInstance().info(logMessage, functionName: functionName, fileName: fileName, lineNumber: lineNumber)
@@ -598,7 +676,7 @@ public class XCGLogger : DebugPrintable {
         for logDestination in self.logDestinations {
             if (logDestination.isEnabledForLogLevel(logLevel)) {
                 if logDetails == nil {
-                    logDetails = XCGLogDetails(logLevel: logLevel, date: date, logMessage: logMessage, functionName: "", fileName: "", lineNumber: 0)
+					logDetails = XCGLogDetails(logLevel: logLevel, logIndentation: 0, date: date, logMessage: logMessage, functionName: "", fileName: "", lineNumber: 0)
                 }
 
                 logDestination.processInternalLogDetails(logDetails!)
