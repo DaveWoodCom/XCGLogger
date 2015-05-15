@@ -137,6 +137,8 @@ public class XCGFileLogDestination : XCGLogDestinationProtocol, DebugPrintable {
             openFile()
         }
     }
+    public var fileURL:NSURL?  { get{ return writeToFileURL } }
+
     private var logFileHandle: NSFileHandle? = nil
 
     public init(owner: XCGLogger, writeToFile: AnyObject, identifier: String = "") {
