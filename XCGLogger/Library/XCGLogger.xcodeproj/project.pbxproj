@@ -27,7 +27,6 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		5504722119D7C10D002E6721 /* XCGLogger_Xcode601.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = XCGLogger_Xcode601.swift; sourceTree = "<group>"; };
 		554DF40F19D76FA9005708BE /* XCGLogger.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = XCGLogger.swift; sourceTree = "<group>"; };
 		554DF41719D76FE7005708BE /* XCGLogger.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = XCGLogger.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		55DA396519D7737B0032F026 /* XCGLogger.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XCGLogger.h; sourceTree = "<group>"; };
@@ -106,7 +105,6 @@
 				55DA396419D7737B0032F026 /* iOS */,
 				55DA396619D7737B0032F026 /* OSX */,
 				554DF40F19D76FA9005708BE /* XCGLogger.swift */,
-				5504722119D7C10D002E6721 /* XCGLogger_Xcode601.swift */,
 				55E3EE4819D76F280068C3A7 /* Supporting Files */,
 			);
 			path = XCGLogger;
@@ -379,7 +377,7 @@
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
-				CURRENT_PROJECT_VERSION = 1.8.1;
+				CURRENT_PROJECT_VERSION = 2.0;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_DYNAMIC_NO_PIC = NO;
@@ -425,7 +423,7 @@
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = YES;
-				CURRENT_PROJECT_VERSION = 1.8.1;
+				CURRENT_PROJECT_VERSION = 2.0;
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
@@ -448,6 +446,7 @@
 		55E3EE5C19D76F280068C3A7 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				APPLICATION_EXTENSION_API_ONLY = YES;
 				BUNDLE_IDENTIFIER = com.cerebralgardens.xcglogger;
 				CLANG_ENABLE_MODULES = YES;
 				DEFINES_MODULE = YES;
@@ -467,6 +466,7 @@
 		55E3EE5D19D76F280068C3A7 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				APPLICATION_EXTENSION_API_ONLY = YES;
 				BUNDLE_IDENTIFIER = com.cerebralgardens.xcglogger;
 				CLANG_ENABLE_MODULES = YES;
 				DEFINES_MODULE = YES;

@@ -26,43 +26,55 @@ class ViewController: UIViewController {
 
     @IBAction func verboseButtonTouchUpInside(sender : AnyObject) {
         log.verbose("Verbose button tapped")
-        log.verboseExec {
-            log.verbose("Executed verbose code block")
+        log.verbose {
+            // add expensive code required only for logging, then return an optional String
+            noop()
+            return "Executed verbose code block" // or nil
         }
     }
 
     @IBAction func debugButtonTouchUpInside(sender : AnyObject) {
         log.debug("Debug button tapped")
-        log.debugExec {
-            log.debug("Executed debug code block")
+        log.debug {
+            // add expensive code required only for logging, then return an optional String
+            noop()
+            return "Executed debug code block" // or nil
         }
     }
 
     @IBAction func infoButtonTouchUpInside(sender : AnyObject) {
         log.info("Info button tapped")
-        log.infoExec {
-            log.info("Executed info code block")
+        log.info {
+            // add expensive code required only for logging, then return an optional String
+            noop()
+            return "Executed info code block" // or nil
         }
     }
 
     @IBAction func warningButtonTouchUpInside(sender : AnyObject) {
         log.warning("Warning button tapped")
-        log.warningExec {
-            log.warning("Executed warning code block")
+        log.warning {
+            // add expensive code required only for logging, then return an optional String
+            noop()
+            return "Executed warning code block" // or nil
         }
     }
 
     @IBAction func errorButtonTouchUpInside(sender : AnyObject) {
         log.error("Error button tapped")
-        log.errorExec {
-            log.error("Executed error code block")
+        log.error {
+            // add expensive code required only for logging, then return an optional String
+            noop()
+            return "Executed error code block" // or nil
         }
     }
 
     @IBAction func severeButtonTouchUpInside(sender : AnyObject) {
         log.severe("Severe button tapped")
-        log.severeExec {
-            log.severe("Executed severe code block")
+        log.severe {
+            // add expensive code required only for logging, then return an optional String
+            noop()
+            return "Executed severe code block" // or nil
         }
     }
 
@@ -100,4 +112,3 @@ class ViewController: UIViewController {
         currentLogLevelLabel.text = log.outputLogLevel.description()
     }
 }
-
