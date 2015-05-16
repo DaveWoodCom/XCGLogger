@@ -214,26 +214,36 @@ public class XCGFileLogDestination : XCGLogDestinationProtocol, DebugPrintable {
         return logLevel >= self.outputLogLevel
     }
 
+    public func loggingHandleForFileURL(fileURL: NSURL) -> (handle: NSFileHandle?, error: NSError?) {
+        // This causes a new/empty log file to be created every time a file log is opened (which will
+        // minimally happen on every app launch).
+        if let path = fileURL.path {
+            NSFileManager.defaultManager().createFileAtPath(path, contents: nil, attributes: nil)
+        }
+        
+        var handleError : NSError? = nil
+        let result = NSFileHandle(forWritingToURL: fileURL, error: &handleError)
+        
+        return (result, handleError)
+    }
+    
     private func openFile() {
         if logFileHandle != nil {
             closeFile()
         }
 
         if let writeToFileURL = writeToFileURL {
-            if let path = writeToFileURL.path {
-                NSFileManager.defaultManager().createFileAtPath(path, contents: nil, attributes: nil)
-                var fileError : NSError? = nil
-                logFileHandle = NSFileHandle(forWritingToURL: writeToFileURL, error: &fileError)
-                if logFileHandle == nil {
-                    owner._logln("Attempt to open log file for writing failed: \(fileError?.localizedDescription)", logLevel: .Error)
-                }
-                else {
-                    owner.logAppDetails(selectedLogDestination: self)
+            let fileHandleResult = loggingHandleForFileURL(writeToFileURL)
+            logFileHandle = fileHandleResult.handle
+            if logFileHandle == nil {
+                owner._logln("Attempt to open log file for writing failed: \(fileHandleResult.error?.localizedDescription)", logLevel: .Error)
+            }
+            else {
+                owner.logAppDetails(selectedLogDestination: self)
 
-                    let logDetails = XCGLogDetails(logLevel: .Info, date: NSDate(), logMessage: "XCGLogger writing to log to: \(writeToFileURL)", functionName: "", fileName: "", lineNumber: 0)
-                    owner._logln(logDetails.logMessage, logLevel: logDetails.logLevel)
-                    processInternalLogDetails(logDetails)
-                }
+                let logDetails = XCGLogDetails(logLevel: .Info, date: NSDate(), logMessage: "XCGLogger writing to log to: \(writeToFileURL)", functionName: "", fileName: "", lineNumber: 0)
+                owner._logln(logDetails.logMessage, logLevel: logDetails.logLevel)
+                processInternalLogDetails(logDetails)
             }
         }
     }
