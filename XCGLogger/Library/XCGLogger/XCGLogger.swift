@@ -252,7 +252,7 @@ public class XCGFileLogDestination : XCGLogDestinationProtocol, DebugPrintable {
             }
 
             let defaultManager  = NSFileManager.defaultManager()
-            let formattedDate   = owner.dateFormatter!.stringFromDate(NSDate())
+            let formattedDate   = owner.dateFormatter!.stringFromDate(NSDate()).stringByReplacingOccurrencesOfString(":", withString: ".", options: .LiteralSearch, range: nil)
             let logFileNameURL  = logFileBaseNameURL.URLByAppendingPathExtension("\(formattedDate).\(logFileExtention)")
 
 
