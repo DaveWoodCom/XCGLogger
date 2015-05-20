@@ -127,10 +127,12 @@ public class XCGFileLogDestination : XCGLogDestinationProtocol, DebugPrintable {
     public var identifier: String
     public var outputLogLevel: XCGLogger.LogLevel = .Debug
 
-    public var showThreadName: Bool = false
-    public var showFileName: Bool = true
-    public var showLineNumber: Bool = true
-    public var showLogLevel: Bool = true
+    public var showThreadName: Bool     = false
+    public var showFileName: Bool       = true
+    public var showLineNumber: Bool     = true
+    public var showLogLevel: Bool       = true
+    public var logrotate: Bool          = true
+    public var accumulatedsize:UInt64   = 100_000_000
 
     private var writeToFileURL : NSURL? = nil {
         didSet {
@@ -157,6 +159,14 @@ public class XCGFileLogDestination : XCGLogDestinationProtocol, DebugPrintable {
 
         openFile()
     }
+
+    public convenience init(owner: XCGLogger, writeToFile: AnyObject, identifier: String = "",logrotate:Bool, accumulatedsize:UInt64 = 100_000_000 )
+    {
+        self.init(owner:owner, writeToFile:writeToFile, identifier:identifier)
+        self.logrotate          = logrotate
+        self.accumulatedsize    = accumulatedsize
+    }
+
 
     deinit {
         // close file stream if open
@@ -217,26 +227,81 @@ public class XCGFileLogDestination : XCGLogDestinationProtocol, DebugPrintable {
         return logLevel >= self.outputLogLevel
     }
 
-    private func openFile() {
-        if logFileHandle != nil {
+    private func openFile()
+    {
+        if logFileHandle != nil
+        {
             closeFile()
         }
 
-        if let writeToFileURL = writeToFileURL {
-            if let path = writeToFileURL.path {
-                NSFileManager.defaultManager().createFileAtPath(path, contents: nil, attributes: nil)
-                var fileError : NSError? = nil
-                logFileHandle = NSFileHandle(forWritingToURL: writeToFileURL, error: &fileError)
-                if logFileHandle == nil {
-                    owner._logln("Attempt to open log file for writing failed: \(fileError?.localizedDescription)", logLevel: .Error)
-                }
-                else {
-                    owner.logAppDetails(selectedLogDestination: self)
+        if  let originalFileStandardizedURL = writeToFileURL?.URLByStandardizingPath,
+            let logFileDirectoryURL = originalFileStandardizedURL.URLByDeletingLastPathComponent
+        {
+            let logFileBaseNameURL:NSURL
+            let logFileExtention:String
 
-                    let logDetails = XCGLogDetails(logLevel: .Info, date: NSDate(), logMessage: "XCGLogger writing to log to: \(writeToFileURL)", functionName: "", fileName: "", lineNumber: 0)
-                    owner._logln(logDetails.logMessage, logLevel: logDetails.logLevel)
-                    processInternalLogDetails(logDetails)
+            if let fileExtension = originalFileStandardizedURL.pathExtension
+            {
+                logFileBaseNameURL  = originalFileStandardizedURL.URLByDeletingPathExtension!
+                logFileExtention    = originalFileStandardizedURL.pathExtension!
+            }
+            else
+            {
+                logFileBaseNameURL  = originalFileStandardizedURL
+                logFileExtention    = "log"
+            }
+
+            let defaultManager  = NSFileManager.defaultManager()
+            let formattedDate   = owner.dateFormatter!.stringFromDate(NSDate())
+            let logFileNameURL  = logFileBaseNameURL.URLByAppendingPathExtension("\(formattedDate).\(logFileExtention)")
+
+
+            if self.logrotate
+            {
+                if  let directoryEnumerator = defaultManager.enumeratorAtURL(logFileDirectoryURL, includingPropertiesForKeys: [NSFileSize], options: .SkipsSubdirectoryDescendants | .SkipsPackageDescendants | .SkipsHiddenFiles, errorHandler: nil)
+                {
+                    var logfileSizeDictionary   = [String:UInt64]()
+
+                    while var directoryEntry = (directoryEnumerator.nextObject()) as! NSURL?
+                    {
+                        if  let url = directoryEntry as? NSURL where url.pathExtension == logFileExtention,
+                            let attributes = defaultManager.attributesOfItemAtPath(url.path!, error: nil),
+                            let size = attributes[NSFileSize] as? NSNumber
+                        {
+                            logfileSizeDictionary[url.path!]=size.unsignedLongLongValue
+                        }
+                    }
+
+                    var sumofsizes:UInt64   = 0
+                    let reversepaths        = sorted(logfileSizeDictionary.keys,{ $0 > $1 })
+
+                    for path in reversepaths
+                    {
+                        if sumofsizes >= self.accumulatedsize
+                        {
+                            defaultManager.removeItemAtPath(path, error: nil)
+                        }
+                        else
+                        {
+                            sumofsizes += logfileSizeDictionary[path]!
+                        }
+                    }
                 }
+            }
+            defaultManager.createFileAtPath(logFileNameURL.path!, contents: nil, attributes: nil)
+            var fileError : NSError? = nil
+            logFileHandle = NSFileHandle(forWritingToURL: logFileNameURL, error: &fileError)
+            if logFileHandle == nil
+            {
+                owner._logln("Attempt to open log file for writing failed: \(fileError?.localizedDescription)", logLevel: .Error)
+            }
+            else
+            {
+                owner.logAppDetails(selectedLogDestination: self)
+
+                let logDetails = XCGLogDetails(logLevel: .Info, date: NSDate(), logMessage: "XCGLogger writing to log to: \(writeToFileURL)", functionName: "", fileName: "", lineNumber: 0)
+                owner._logln(logDetails.logMessage, logLevel: logDetails.logLevel)
+                processInternalLogDetails(logDetails)
             }
         }
     }
@@ -316,24 +381,31 @@ public class XCGLogger : DebugPrintable {
         return Statics.logQueue
     }
 
+    public var logtimeisgmt:Bool        = true
     private var _dateFormatter: NSDateFormatter? = nil
-    public var dateFormatter: NSDateFormatter? {
-        get {
-            if _dateFormatter != nil {
-                return _dateFormatter
-            }
+    public var dateFormatter: NSDateFormatter? {    get {   struct dispatchonce  { static var token : dispatch_once_t = 0  }
+                                                            dispatch_once(&dispatchonce.token,
+                                                            {
+                                                                let dateFormatter   = NSDateFormatter()
 
-            let defaultDateFormatter = NSDateFormatter()
-            defaultDateFormatter.locale = NSLocale.currentLocale()
-            defaultDateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss.SSS"
-            _dateFormatter = defaultDateFormatter
+                                                                if self.logtimeisgmt
+                                                                {
+                                                                    dateFormatter.dateFormat    = "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'"
+                                                                    dateFormatter.timeZone      = NSTimeZone(forSecondsFromGMT: 0)
+                                                                }
+                                                                else
+                                                                {
+                                                                    dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSSZ"
+                                                                }
+                                                                self._dateFormatter = dateFormatter
+                                                            })
+                                                            return _dateFormatter
+                                                        }
+                                                    set {
+                                                            _dateFormatter = newValue
+                                                        }
+                                                }
 
-            return _dateFormatter
-        }
-        set {
-            _dateFormatter = newValue
-        }
-    }
     public var logDestinations: Array<XCGLogDestinationProtocol> = []
 
     public init() {
