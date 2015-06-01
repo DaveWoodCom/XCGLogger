@@ -201,4 +201,15 @@ class XCGLoggerTests: XCTestCase {
         XCTAssertEqual(log.dateFormatter!.dateFormat, dateFormat, "Fail: date format doesn't match our custom date format")
         XCTAssert(defaultDateFormatter != dateFormatter, "Fail: Did not assign a custom date formatter")
     }
+
+    func testGetLogFilePathReturnsPathProvidedBySetup() {
+        var log: XCGLogger = XCGLogger()
+        var logsDest = XCGFileLogDestination(owner: log,
+            writeToFile: "/tmp/test.log")
+
+        let logFile:String? = logsDest.getLogFilePath()
+        XCTAssert(logFile != nil, "Log file path is nil")
+        XCTAssert(logFile! == "/tmp/test.log", "Log file path is not the "
+            + "same as provided by setup()")
+    }
 }
