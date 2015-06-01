@@ -232,17 +232,24 @@ public class XCGFileLogDestination : XCGLogDestinationProtocol, DebugPrintable {
 
         if let writeToFileURL = writeToFileURL {
             if let path = writeToFileURL.path {
-                NSFileManager.defaultManager().createFileAtPath(path, contents: nil, attributes: nil)
+                NSFileManager.defaultManager().createFileAtPath(path,
+                    contents: nil, attributes: nil)
                 var fileError : NSError? = nil
-                logFileHandle = NSFileHandle(forWritingToURL: writeToFileURL, error: &fileError)
+                logFileHandle = NSFileHandle(forWritingToURL: writeToFileURL,
+                    error: &fileError)
                 if logFileHandle == nil {
-                    owner._logln("Attempt to open log file for writing failed: \(fileError?.localizedDescription)", logLevel: .Error)
+                    owner._logln("Attempt to open log file for writing failed: "
+                        + "\(fileError?.localizedDescription)", logLevel: .Error)
                 }
                 else {
                     owner.logAppDetails(selectedLogDestination: self)
 
-                    let logDetails = XCGLogDetails(logLevel: .Info, date: NSDate(), logMessage: "XCGLogger writing to log to: \(writeToFileURL)", functionName: "", fileName: "", lineNumber: 0)
-                    owner._logln(logDetails.logMessage, logLevel: logDetails.logLevel)
+                    let logDetails = XCGLogDetails(logLevel: .Info,
+                       date: NSDate(), logMessage: "XCGLogger writing to log "
+                           + "to: \(writeToFileURL)", functionName: "",
+                           fileName: "", lineNumber: 0)
+                    owner._logln(logDetails.logMessage,
+                        logLevel: logDetails.logLevel)
                     processInternalLogDetails(logDetails)
                 }
             }
