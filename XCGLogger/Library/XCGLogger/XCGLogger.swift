@@ -198,7 +198,7 @@ public class XCGFileLogDestination : XCGLogDestinationProtocol, DebugPrintable {
         var fullLogMessage: String =  "\(formattedDate) \(extendedDetails)\(logDetails.functionName): \(logDetails.logMessage)\n"
 
         if let encodedData = fullLogMessage.dataUsingEncoding(NSUTF8StringEncoding) {
-            logFileHandle?.writeData(encodedData)
+            self.logFileHandle?.writeData(encodedData)
         }
     }
 
@@ -216,7 +216,7 @@ public class XCGFileLogDestination : XCGLogDestinationProtocol, DebugPrintable {
         var fullLogMessage: String =  "\(formattedDate) \(extendedDetails): \(logDetails.logMessage)\n"
 
         if let encodedData = fullLogMessage.dataUsingEncoding(NSUTF8StringEncoding) {
-            logFileHandle?.writeData(encodedData)
+            self.logFileHandle?.writeData(encodedData)
         }
     }
 
@@ -226,18 +226,18 @@ public class XCGFileLogDestination : XCGLogDestinationProtocol, DebugPrintable {
     }
 
     private func openFile() {
-        if logFileHandle != nil {
+        if self.logFileHandle != nil {
             closeFile()
         }
 
-        if let writeToFileURL = writeToFileURL {
+        if let writeToFileURL = self.writeToFileURL {
             if let path = writeToFileURL.path {
                 NSFileManager.defaultManager().createFileAtPath(path,
                     contents: nil, attributes: nil)
                 var fileError : NSError? = nil
-                logFileHandle = NSFileHandle(forWritingToURL: writeToFileURL,
+                self.logFileHandle = NSFileHandle(forWritingToURL: writeToFileURL,
                     error: &fileError)
-                if logFileHandle == nil {
+                if self.logFileHandle == nil {
                     owner._logln("Attempt to open log file for writing failed: "
                         + "\(fileError?.localizedDescription)", logLevel: .Error)
                 }
@@ -257,8 +257,8 @@ public class XCGFileLogDestination : XCGLogDestinationProtocol, DebugPrintable {
     }
 
     private func closeFile() {
-        logFileHandle?.closeFile()
-        logFileHandle = nil
+        self.logFileHandle?.closeFile()
+        self.logFileHandle = nil
     }
 
     // MARK: - DebugPrintable
