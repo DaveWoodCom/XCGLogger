@@ -20,6 +20,20 @@
                ReferencedContainer = "container:XCGLogger.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
+         <BuildActionEntry
+            buildForTesting = "YES"
+            buildForRunning = "YES"
+            buildForProfiling = "NO"
+            buildForArchiving = "NO"
+            buildForAnalyzing = "YES">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "55E3EE4F19D76F280068C3A7"
+               BuildableName = "XCGLoggerTests.xctest"
+               BlueprintName = "XCGLoggerTests"
+               ReferencedContainer = "container:XCGLogger.xcodeproj">
+            </BuildableReference>
+         </BuildActionEntry>
       </BuildActionEntries>
    </BuildAction>
    <TestAction
@@ -28,7 +42,26 @@
       shouldUseLaunchSchemeArgsEnv = "YES"
       buildConfiguration = "Debug">
       <Testables>
+         <TestableReference
+            skipped = "NO">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "55E3EE4F19D76F280068C3A7"
+               BuildableName = "XCGLoggerTests.xctest"
+               BlueprintName = "XCGLoggerTests"
+               ReferencedContainer = "container:XCGLogger.xcodeproj">
+            </BuildableReference>
+         </TestableReference>
       </Testables>
+      <MacroExpansion>
+         <BuildableReference
+            BuildableIdentifier = "primary"
+            BlueprintIdentifier = "554DF41619D76FE7005708BE"
+            BuildableName = "XCGLogger.framework"
+            BlueprintName = "XCGLogger (OS X)"
+            ReferencedContainer = "container:XCGLogger.xcodeproj">
+         </BuildableReference>
+      </MacroExpansion>
    </TestAction>
    <LaunchAction
       selectedDebuggerIdentifier = "Xcode.DebuggerFoundation.Debugger.LLDB"
