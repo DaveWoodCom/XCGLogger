@@ -98,7 +98,7 @@ class XCGLoggerTests: XCTestCase {
         log.identifier = "com.cerebralgardens.xcglogger.testAvoidStringInterpolationWithAutoclosure"
         log.outputLogLevel = .Debug
 
-        class ObjectWithExpensiveDescription: Printable {
+        class ObjectWithExpensiveDescription: CustomStringConvertible {
             var descriptionInvoked = false
 
             var description: String {
@@ -130,7 +130,7 @@ class XCGLoggerTests: XCTestCase {
 
     func testExecExecutesExactlyOnceWithNilReturnAndMultipleDestinations() {
         var log: XCGLogger = XCGLogger()
-        log.setup(logLevel: .Debug, showLogLevel: true, showFileNames: true, showLineNumbers: true, writeToFile: "/tmp/test.log")
+        log.setup(.Debug, showLogLevel: true, showFileNames: true, showLineNumbers: true, writeToFile: "/tmp/test.log")
         log.identifier = "com.cerebralgardens.xcglogger.testExecExecutesExactlyOnceWithNilReturnAndMultipleDestinations"
         
         var numberOfTimes: Int = 0
@@ -162,7 +162,7 @@ class XCGLoggerTests: XCTestCase {
     func testMultiThreaded() {
         var log: XCGLogger = XCGLogger()
         log.identifier = "com.cerebralgardens.xcglogger.testMultiThreaded"
-        log.setup(logLevel: .Debug, showThreadName: true, showLogLevel: true, showFileNames: true, showLineNumbers: true, writeToFile: nil)
+        log.setup(.Debug, showThreadName: true, showLogLevel: true, showFileNames: true, showLineNumbers: true, writeToFile: nil)
 
         let linesToLog = ["One", "Two", "Three", "Four", "Five", "Six", "Seven", "Eight", "Nine", "Ten"]
         let myConcurrentQueue = dispatch_queue_create("com.cerebralgardens.xcglogger.testMultiThreaded.queue", DISPATCH_QUEUE_CONCURRENT)
