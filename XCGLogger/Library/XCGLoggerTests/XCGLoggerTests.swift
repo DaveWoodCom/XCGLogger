@@ -77,7 +77,6 @@ class XCGLoggerTests: XCTestCase {
         let testIdentifier = "second.console"
 
         let log = XCGLogger.defaultInstance()
-        let logDestinationCountAtStart = log.logDestinations.count
 
         let additionalConsoleLogger = XCGConsoleLogDestination(owner: log, identifier: testIdentifier)
         let additionalConsoleLogger2 = XCGConsoleLogDestination(owner: log, identifier: testIdentifier)
@@ -94,11 +93,11 @@ class XCGLoggerTests: XCTestCase {
     }
 
     func testAvoidStringInterpolationWithAutoclosure() {
-        var log: XCGLogger = XCGLogger()
+        let log: XCGLogger = XCGLogger()
         log.identifier = "com.cerebralgardens.xcglogger.testAvoidStringInterpolationWithAutoclosure"
         log.outputLogLevel = .Debug
 
-        class ObjectWithExpensiveDescription: Printable {
+        class ObjectWithExpensiveDescription: CustomStringConvertible {
             var descriptionInvoked = false
 
             var description: String {
@@ -114,7 +113,7 @@ class XCGLoggerTests: XCTestCase {
     }
 
     func testExecExecutes() {
-        var log: XCGLogger = XCGLogger()
+        let log: XCGLogger = XCGLogger()
         log.identifier = "com.cerebralgardens.xcglogger.testExecExecutes"
         log.outputLogLevel = .Debug
 
@@ -129,8 +128,8 @@ class XCGLoggerTests: XCTestCase {
     }
 
     func testExecExecutesExactlyOnceWithNilReturnAndMultipleDestinations() {
-        var log: XCGLogger = XCGLogger()
-        log.setup(logLevel: .Debug, showLogLevel: true, showFileNames: true, showLineNumbers: true, writeToFile: "/tmp/test.log")
+        let log: XCGLogger = XCGLogger()
+        log.setup(.Debug, showLogLevel: true, showFileNames: true, showLineNumbers: true, writeToFile: "/tmp/test.log")
         log.identifier = "com.cerebralgardens.xcglogger.testExecExecutesExactlyOnceWithNilReturnAndMultipleDestinations"
         
         var numberOfTimes: Int = 0
@@ -144,7 +143,7 @@ class XCGLoggerTests: XCTestCase {
     }
     
     func testExecDoesntExecute() {
-        var log: XCGLogger = XCGLogger()
+        let log: XCGLogger = XCGLogger()
         log.identifier = "com.cerebralgardens.xcglogger.testExecDoesntExecute"
         log.outputLogLevel = .Error
 
@@ -156,13 +155,13 @@ class XCGLoggerTests: XCTestCase {
 
         log.outputLogLevel = .Debug
         log.debug("executed: \(numberOfTimes) time(s)")
-        XCTAssert(numberOfTimes == 0, "Fail: Executed the closure when it shouldn't have")
+        XCTAssert(numberOfTimes == 0, "Fail: Didn't execute the closure when it should have")
     }
 
     func testMultiThreaded() {
-        var log: XCGLogger = XCGLogger()
+        let log: XCGLogger = XCGLogger()
         log.identifier = "com.cerebralgardens.xcglogger.testMultiThreaded"
-        log.setup(logLevel: .Debug, showThreadName: true, showLogLevel: true, showFileNames: true, showLineNumbers: true, writeToFile: nil)
+        log.setup(.Debug, showThreadName: true, showLogLevel: true, showFileNames: true, showLineNumbers: true, writeToFile: nil)
 
         let linesToLog = ["One", "Two", "Three", "Four", "Five", "Six", "Seven", "Eight", "Nine", "Ten"]
         let myConcurrentQueue = dispatch_queue_create("com.cerebralgardens.xcglogger.testMultiThreaded.queue", DISPATCH_QUEUE_CONCURRENT)
@@ -172,7 +171,7 @@ class XCGLoggerTests: XCTestCase {
     }
     
     func testDateFormatterIsCached() {
-        var log: XCGLogger = XCGLogger()
+        let log: XCGLogger = XCGLogger()
         log.identifier = "com.cerebralgardens.xcglogger.testDateFormatterIsCached"
         
         let dateFormatter1 = log.dateFormatter
@@ -182,7 +181,7 @@ class XCGLoggerTests: XCTestCase {
     }
     
     func testCustomDateFormatter() {
-        var log: XCGLogger = XCGLogger()
+        let log: XCGLogger = XCGLogger()
         log.identifier = "com.cerebralgardens.xcglogger.testCustomDateFormatter"
         log.outputLogLevel = .Debug
         
@@ -190,7 +189,7 @@ class XCGLoggerTests: XCTestCase {
         
         let dateFormat = "MM/dd/yyyy hh:mma"
 
-        var dateFormatter = NSDateFormatter()
+        let dateFormatter = NSDateFormatter()
         dateFormatter.dateFormat = dateFormat
 
         log.dateFormatter = dateFormatter
