@@ -1,7 +1,7 @@
 Pod::Spec.new do |s|
 
   s.name         = "XCGLogger"
-  s.version      = "2.1"
+  s.version      = "3.0"
   s.summary      = "A debug log module for use in Swift projects."
 
   s.description  = <<-DESC
