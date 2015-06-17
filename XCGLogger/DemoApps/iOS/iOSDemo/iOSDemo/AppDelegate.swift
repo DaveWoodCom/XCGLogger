@@ -35,7 +35,16 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Setup XCGLogger
         let logPath : NSURL = self.cacheDirectory.URLByAppendingPathComponent("XCGLogger_Log.txt")
         log.setup(logLevel: .Debug, showThreadName: true, showLogLevel: true, showFileNames: true, showLineNumbers: true, writeToFile: logPath)
-
+        log.xcodeColorsEnabled = true // Or set the XcodeColors environment variable in your scheme to YES
+        log.xcodeColors = [
+            .Verbose: .lightGrey,
+            .Debug: .darkGrey,
+            .Info: .darkGreen,
+            .Warning: .orange,
+            .Error: XCGLogger.XcodeColor(fg: UIColor.redColor(), bg: UIColor.whiteColor()), // Optionally use a UIColor
+            .Severe: XCGLogger.XcodeColor(fg: (255, 255, 255), bg: (255, 0, 0)) // Optionally use RGB values directly
+        ]
+        
         return true
     }
 

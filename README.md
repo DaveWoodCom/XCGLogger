@@ -118,7 +118,7 @@ log.debug {
 }
 ```
 
-Version 1.2 introduced ```verboseExec```, ```debugExec```, ```infoExec```, ```warningExec```, ```errorExec```, and ```severeExec``` to solve this problem. As of version 1.9, that approach has been deprecated.
+In cases where you wish to selectively execute code without generating a log line, you can use the methods: ```verboseExec```, ```debugExec```, ```infoExec```, ```warningExec```, ```errorExec```, and ```severeExec```.
 
 #####Custom Date Formats
 
@@ -130,6 +130,10 @@ dateFormatter.dateFormat = "MM/dd/yyyy hh:mma"
 dateFormatter.locale = NSLocale.currentLocale()
 log.dateFormatter = dateFormatter
 ```
+
+#####Enhancing log messages with color
+
+XCGLogger now supports the XcodeColors plug-in (https://github.com/robbiehanson/XcodeColors). Once installed, each log level will have it's own colour. These colours can be customized as desired. See the sample projects for examples. If using multiple logger's, you could alternatively set each logger to its own colour.
 
 ###To Do
 
@@ -148,6 +152,7 @@ Also, please check out my book **Swift for the Really Impatient** http://swiftfo
 
 ###Change Log
 
+* **Version 2.1**: *(2015/06/17)* - Added support for XcodeColors (https://github.com/robbiehanson/XcodeColors). Undeprecated the \*Exec() methods.
 * **Version 2.0**: *(2015/04/14)* - Requires Swift 1.2. Removed some workarounds/hacks for older versions of Xcode. Removed thread based caching of NSDateFormatter objects since they're now thread safe. You can now use the default date formatter, or create and assign your own and it'll be used. Added Thread name option (Thanks to Nick Strecker https://github.com/tekknick ). Add experimental support for CocoaPods. 
 * **Version 1.9**: *(2015/04/14)* - Deprecated the \*Exec() methods in favour of just using a trailing closure on the logging methods (Thanks to Nick Strecker https://github.com/tekknick ). This will be the last version for Swift 1.1.
 * **Version 1.8.1**: *(2014/12/31)* - Added a workaround to the Swift compiler's optimization bug, restored optimization level back to Fastest

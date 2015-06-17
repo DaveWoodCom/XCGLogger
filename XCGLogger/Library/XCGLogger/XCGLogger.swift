@@ -8,6 +8,9 @@
 //
 
 import Foundation
+#if os(iOS)
+    import UIKit
+#endif
 
 // MARK: - XCGLogDetails
 // - Data structure to hold all info about a log message, passed to log destination classes
@@ -53,6 +56,8 @@ public class XCGConsoleLogDestination : XCGLogDestinationProtocol, DebugPrintabl
     public var showLineNumber: Bool = true
     public var showLogLevel: Bool = true
 
+    public var xcodeColors: [XCGLogger.LogLevel: XCGLogger.XcodeColor]? = nil
+    
     public init(owner: XCGLogger, identifier: String = "") {
         self.owner = owner
         self.identifier = identifier
@@ -83,6 +88,12 @@ public class XCGConsoleLogDestination : XCGLogDestinationProtocol, DebugPrintabl
 
         var fullLogMessage: String =  "\(formattedDate) \(extendedDetails)\(logDetails.functionName): \(logDetails.logMessage)\n"
 
+        if owner.xcodeColorsEnabled,
+            let xcodeColor = (xcodeColors ?? owner.xcodeColors)[logDetails.logLevel] {
+                
+            fullLogMessage = "\(xcodeColor.format())\(fullLogMessage)\(XCGLogger.XcodeColor.reset)"
+        }
+        
         dispatch_async(XCGLogger.logQueue) {
             print(fullLogMessage)
         }
@@ -261,7 +272,7 @@ public class XCGLogger : DebugPrintable {
         public static let baseFileLogDestinationIdentifier = "com.cerebralgardens.xcglogger.logdestination.file"
         public static let nsdataFormatterCacheIdentifier = "com.cerebralgardens.xcglogger.nsdataFormatterCache"
         public static let logQueueIdentifier = "com.cerebralgardens.xcglogger.queue"
-        public static let versionString = "2.0"
+        public static let versionString = "2.1"
     }
 
     // MARK: - Enums
@@ -293,7 +304,116 @@ public class XCGLogger : DebugPrintable {
             }
         }
     }
+    
+    public struct XcodeColor {
+        public static let escape = "\u{001b}["
+        public static let resetFg = "\u{001b}[fg;"
+        public static let resetBg = "\u{001b}[bg;"
+        public static let reset = "\u{001b}[;"
+        
+        public var fg: (Int, Int, Int)? = nil
+        public var bg: (Int, Int, Int)? = nil
+        
+        public func format() -> String {
+            var format: String = ""
+            
+            if fg == nil && bg == nil {
+                // neither set, return reset value
+                return XcodeColor.reset
+            }
+            
+            if let fg = fg {
+                format += "\(XcodeColor.escape)fg\(fg.0),\(fg.1),\(fg.2);"
+            }
+            else {
+                format += XcodeColor.resetFg
+            }
 
+            if let bg = bg {
+                format += "\(XcodeColor.escape)bg\(bg.0),\(bg.1),\(bg.2);"
+            }
+            else {
+                format += XcodeColor.resetBg
+            }
+
+            return format
+        }
+        
+        public init(fg: (Int, Int, Int)? = nil, bg: (Int, Int, Int)? = nil) {
+            self.fg = fg
+            self.bg = bg
+        }
+
+#if os(iOS)
+        public init(fg: UIColor, bg: UIColor? = nil) {
+            var redComponent: CGFloat = 0
+            var greenComponent: CGFloat = 0
+            var blueComponent: CGFloat = 0
+            var alphaComponent: CGFloat = 0
+            
+            fg.getRed(&redComponent, green: &greenComponent, blue: &blueComponent, alpha:&alphaComponent)
+            self.fg = (Int(redComponent * 255), Int(greenComponent * 255), Int(blueComponent * 255))
+            if let bg = bg {
+                bg.getRed(&redComponent, green: &greenComponent, blue: &blueComponent, alpha:&alphaComponent)
+                self.bg = (Int(redComponent * 255), Int(greenComponent * 255), Int(blueComponent * 255))
+            }
+            else {
+                self.bg = nil
+            }
+        }
+#else
+        public init(fg: NSColor, bg: NSColor? = nil) {
+            self.fg = (Int(fg.redComponent * 255), Int(fg.greenComponent * 255), Int(fg.blueComponent * 255))
+            if let bg = bg {
+                self.bg = (Int(bg.redComponent * 255), Int(bg.greenComponent * 255), Int(bg.blueComponent * 255))
+            }
+            else {
+                self.bg = nil
+            }
+        }
+#endif
+        
+        public static let red: XcodeColor = {
+            return XcodeColor(fg: (255, 0, 0))
+        }()
+        
+        public static let green: XcodeColor = {
+            return XcodeColor(fg: (0, 255, 0))
+        }()
+
+        public static let blue: XcodeColor = {
+            return XcodeColor(fg: (0, 0, 255))
+        }()
+        
+        public static let black: XcodeColor = {
+            return XcodeColor(fg: (0, 0, 0))
+        }()
+        
+        public static let white: XcodeColor = {
+            return XcodeColor(fg: (255, 255, 255))
+        }()
+        
+        public static let lightGrey: XcodeColor = {
+            return XcodeColor(fg: (211, 211, 211))
+        }()
+        
+        public static let darkGrey: XcodeColor = {
+            return XcodeColor(fg: (169, 169, 169))
+        }()
+        
+        public static let orange: XcodeColor = {
+            return XcodeColor(fg: (255, 165, 0))
+        }()
+
+        public static let whiteOnRed: XcodeColor = {
+            return XcodeColor(fg: (255, 255, 255), bg: (255, 0, 0))
+        }()
+
+        public static let darkGreen: XcodeColor = {
+            return XcodeColor(fg: (0, 128, 0))
+        }()
+    }
+    
     // MARK: - Properties (Options)
     public var identifier: String = ""
     public var outputLogLevel: LogLevel = .Debug {
@@ -304,6 +424,16 @@ public class XCGLogger : DebugPrintable {
         }
     }
 
+    public var xcodeColorsEnabled: Bool = false
+    public var xcodeColors: [XCGLogger.LogLevel: XCGLogger.XcodeColor] = [
+        .Verbose: .lightGrey,
+        .Debug: .darkGrey,
+        .Info: .blue,
+        .Warning: .orange,
+        .Error: .red,
+        .Severe: .whiteOnRed
+    ]
+    
     // MARK: - Properties
     public class var logQueue : dispatch_queue_t {
         struct Statics {
@@ -331,9 +461,16 @@ public class XCGLogger : DebugPrintable {
             _dateFormatter = newValue
         }
     }
-    public var logDestinations: Array<XCGLogDestinationProtocol> = []
 
+    public var logDestinations: Array<XCGLogDestinationProtocol> = []
+    
+    // MARK: - Life Cycle
     public init() {
+        // Check if XcodeColors is installed and enabled
+        if let xcodeColors = NSProcessInfo.processInfo().environment["XcodeColors"] as? String {
+            xcodeColorsEnabled = xcodeColors == "YES"
+        }
+        
         // Setup a standard console log destination
         addLogDestination(XCGConsoleLogDestination(owner: self, identifier: XCGLogger.constants.baseConsoleLogDestinationIdentifier))
     }

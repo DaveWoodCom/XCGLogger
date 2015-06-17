@@ -30,6 +30,14 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         // Setup XCGLogger
         let logPath : NSString = "~/Desktop/XCGLogger_Log.txt".stringByExpandingTildeInPath
         log.setup(logLevel: .Debug, showThreadName: true, showLogLevel: true, showFileNames: true, showLineNumbers: true, writeToFile: logPath)
+        log.xcodeColors = [
+            .Verbose: .lightGrey,
+            .Debug: .darkGrey,
+            .Info: .darkGreen,
+            .Warning: .orange,
+            .Error: XCGLogger.XcodeColor(fg: NSColor.redColor(), bg: NSColor.whiteColor()), // Optionally use an NSColor
+            .Severe: XCGLogger.XcodeColor(fg: (255, 255, 255), bg: (255, 0, 0)) // Optionally use RGB values directly
+        ]
     }
 
     func applicationWillTerminate(aNotification: NSNotification) {
