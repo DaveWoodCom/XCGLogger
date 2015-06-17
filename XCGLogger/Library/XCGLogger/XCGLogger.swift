@@ -563,67 +563,55 @@ public class XCGLogger : DebugPrintable {
 
     // MARK: - Exec Methods
     // MARK: * Verbose
-    @availability(*, deprecated=1.9)
     public class func verboseExec(closure: () -> () = {}) {
         self.defaultInstance().exec(logLevel: XCGLogger.LogLevel.Verbose, closure: closure)
     }
     
-    @availability(*, deprecated=1.9)
     public func verboseExec(closure: () -> () = {}) {
         self.exec(logLevel: XCGLogger.LogLevel.Verbose, closure: closure)
     }
     
     // MARK: * Debug
-    @availability(*, deprecated=1.9)
     public class func debugExec(closure: () -> () = {}) {
         self.defaultInstance().exec(logLevel: XCGLogger.LogLevel.Debug, closure: closure)
     }
 
-    @availability(*, deprecated=1.9)
     public func debugExec(closure: () -> () = {}) {
         self.exec(logLevel: XCGLogger.LogLevel.Debug, closure: closure)
     }
     
     // MARK: * Info
-    @availability(*, deprecated=1.9)
     public class func infoExec(closure: () -> () = {}) {
         self.defaultInstance().exec(logLevel: XCGLogger.LogLevel.Info, closure: closure)
     }
 
-    @availability(*, deprecated=1.9)
     public func infoExec(closure: () -> () = {}) {
         self.exec(logLevel: XCGLogger.LogLevel.Info, closure: closure)
     }
     
     // MARK: * Warning
-    @availability(*, deprecated=1.9)
     public class func warningExec(closure: () -> () = {}) {
         self.defaultInstance().exec(logLevel: XCGLogger.LogLevel.Warning, closure: closure)
     }
 
-    @availability(*, deprecated=1.9)
     public func warningExec(closure: () -> () = {}) {
         self.exec(logLevel: XCGLogger.LogLevel.Warning, closure: closure)
     }
 
     // MARK: * Error
-    @availability(*, deprecated=1.9)
     public class func errorExec(closure: () -> () = {}) {
         self.defaultInstance().exec(logLevel: XCGLogger.LogLevel.Error, closure: closure)
     }
 
-    @availability(*, deprecated=1.9)
     public func errorExec(closure: () -> () = {}) {
         self.exec(logLevel: XCGLogger.LogLevel.Error, closure: closure)
     }
     
     // MARK: * Severe
-    @availability(*, deprecated=1.9)
     public class func severeExec(closure: () -> () = {}) {
         self.defaultInstance().exec(logLevel: XCGLogger.LogLevel.Severe, closure: closure)
     }
 
-    @availability(*, deprecated=1.9)
     public func severeExec(closure: () -> () = {}) {
         self.exec(logLevel: XCGLogger.LogLevel.Severe, closure: closure)
     }
