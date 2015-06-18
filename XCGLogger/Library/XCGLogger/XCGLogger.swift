@@ -250,24 +250,24 @@ public class XCGFileLogDestination: XCGLogDestinationProtocol, CustomDebugString
             closeFile()
         }
 
-        if let writeToFileURL = writeToFileURL {
-            if let path = writeToFileURL.path {
-                NSFileManager.defaultManager().createFileAtPath(path, contents: nil, attributes: nil)
-                do {
-                    logFileHandle = try NSFileHandle(forWritingToURL: writeToFileURL)
-                }
-                catch let error as NSError {
-                    owner._logln("Attempt to open log file for writing failed: \(error.localizedDescription)", logLevel: .Error)
-                    logFileHandle = nil
-                    return
-                }
-
-                owner.logAppDetails(self)
-
-                let logDetails = XCGLogDetails(logLevel: .Info, date: NSDate(), logMessage: "XCGLogger writing to log to: \(writeToFileURL)", functionName: "", fileName: "", lineNumber: 0)
-                owner._logln(logDetails.logMessage, logLevel: logDetails.logLevel)
-                processInternalLogDetails(logDetails)
+        if let writeToFileURL = writeToFileURL,
+            let path = writeToFileURL.path {
+                
+            NSFileManager.defaultManager().createFileAtPath(path, contents: nil, attributes: nil)
+            do {
+                logFileHandle = try NSFileHandle(forWritingToURL: writeToFileURL)
             }
+            catch let error as NSError {
+                owner._logln("Attempt to open log file for writing failed: \(error.localizedDescription)", logLevel: .Error)
+                logFileHandle = nil
+                return
+            }
+
+            owner.logAppDetails(self)
+
+            let logDetails = XCGLogDetails(logLevel: .Info, date: NSDate(), logMessage: "XCGLogger writing to log to: \(writeToFileURL)", functionName: "", fileName: "", lineNumber: 0)
+            owner._logln(logDetails.logMessage, logLevel: logDetails.logLevel)
+            processInternalLogDetails(logDetails)
         }
     }
 
