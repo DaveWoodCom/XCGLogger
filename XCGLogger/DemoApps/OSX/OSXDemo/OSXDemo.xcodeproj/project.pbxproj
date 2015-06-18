@@ -227,6 +227,7 @@
 		555FFCA519D77B1800F62246 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
+				LastSwiftUpdateCheck = 0700;
 				LastUpgradeCheck = 0610;
 				ORGANIZATIONNAME = "Cerebral Gardens";
 				TargetAttributes = {
