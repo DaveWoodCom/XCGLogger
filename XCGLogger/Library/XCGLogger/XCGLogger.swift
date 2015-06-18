@@ -337,12 +337,12 @@ public class XCGLogger: CustomDebugStringConvertible {
         public var bg: (Int, Int, Int)? = nil
         
         public func format() -> String {
-            var format: String = ""
-            
-            if fg == nil && bg == nil {
+            guard fg != nil || bg != nil else {
                 // neither set, return reset value
                 return XcodeColor.reset
             }
+
+            var format: String = ""
             
             if let fg = fg {
                 format += "\(XcodeColor.escape)fg\(fg.0),\(fg.1),\(fg.2);"
