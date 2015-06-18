@@ -363,9 +363,17 @@ public class XCGLogger : DebugPrintable {
         }
 #else
         public init(fg: NSColor, bg: NSColor? = nil) {
-            self.fg = (Int(fg.redComponent * 255), Int(fg.greenComponent * 255), Int(fg.blueComponent * 255))
-            if let bg = bg {
-                self.bg = (Int(bg.redComponent * 255), Int(bg.greenComponent * 255), Int(bg.blueComponent * 255))
+            if let fgColorSpaceCorrected = fg.colorUsingColorSpaceName(NSCalibratedRGBColorSpace) {
+                self.fg = (Int(fgColorSpaceCorrected.redComponent * 255), Int(fgColorSpaceCorrected.greenComponent * 255), Int(fgColorSpaceCorrected.blueComponent * 255))
+            }
+            else {
+                self.fg = nil
+            }
+            
+            if let bg = bg,
+                let bgColorSpaceCorrected = bg.colorUsingColorSpaceName(NSCalibratedRGBColorSpace) {
+                    
+                    self.bg = (Int(bgColorSpaceCorrected.redComponent * 255), Int(bgColorSpaceCorrected.greenComponent * 255), Int(bgColorSpaceCorrected.blueComponent * 255))
             }
             else {
                 self.bg = nil
