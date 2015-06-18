@@ -294,7 +294,7 @@ public class XCGLogger : CustomDebugStringConvertible {
         public static let baseFileLogDestinationIdentifier = "com.cerebralgardens.xcglogger.logdestination.file"
         public static let nsdataFormatterCacheIdentifier = "com.cerebralgardens.xcglogger.nsdataFormatterCache"
         public static let logQueueIdentifier = "com.cerebralgardens.xcglogger.queue"
-        public static let versionString = "2.1"
+        public static let versionString = "3.0b1"
     }
 
     // MARK: - Enums
