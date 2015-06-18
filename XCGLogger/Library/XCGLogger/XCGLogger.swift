@@ -46,7 +46,7 @@ public protocol XCGLogDestinationProtocol: CustomDebugStringConvertible {
 
 // MARK: - XCGConsoleLogDestination
 // - A standard log destination that outputs log details to the console
-public class XCGConsoleLogDestination : XCGLogDestinationProtocol, CustomDebugStringConvertible {
+public class XCGConsoleLogDestination: XCGLogDestinationProtocol, CustomDebugStringConvertible {
     public var owner: XCGLogger
     public var identifier: String
     public var outputLogLevel: XCGLogger.LogLevel = .Debug
@@ -142,7 +142,7 @@ public class XCGConsoleLogDestination : XCGLogDestinationProtocol, CustomDebugSt
 
 // MARK: - XCGFileLogDestination
 // - A standard log destination that outputs log details to a file
-public class XCGFileLogDestination : XCGLogDestinationProtocol, CustomDebugStringConvertible {
+public class XCGFileLogDestination: XCGLogDestinationProtocol, CustomDebugStringConvertible {
     public var owner: XCGLogger
     public var identifier: String
     public var outputLogLevel: XCGLogger.LogLevel = .Debug
@@ -152,7 +152,7 @@ public class XCGFileLogDestination : XCGLogDestinationProtocol, CustomDebugStrin
     public var showLineNumber: Bool = true
     public var showLogLevel: Bool = true
 
-    private var writeToFileURL : NSURL? = nil {
+    private var writeToFileURL: NSURL? = nil {
         didSet {
             openFile()
         }
@@ -286,7 +286,7 @@ public class XCGFileLogDestination : XCGLogDestinationProtocol, CustomDebugStrin
 
 // MARK: - XCGLogger
 // - The main logging class
-public class XCGLogger : CustomDebugStringConvertible {
+public class XCGLogger: CustomDebugStringConvertible {
     // MARK: - Constants
     public struct constants {
         public static let defaultInstanceIdentifier = "com.cerebralgardens.xcglogger.defaultInstance"
@@ -309,20 +309,20 @@ public class XCGLogger : CustomDebugStringConvertible {
 
         public func description() -> String {
             switch self {
-                case .Verbose:
-                    return "Verbose"
-                case .Debug:
-                    return "Debug"
-                case .Info:
-                    return "Info"
-                case .Warning:
-                    return "Warning"
-                case .Error:
-                    return "Error"
-                case .Severe:
-                    return "Severe"
-                case .None:
-                    return "None"
+            case .Verbose:
+                return "Verbose"
+            case .Debug:
+                return "Debug"
+            case .Info:
+                return "Info"
+            case .Warning:
+                return "Warning"
+            case .Error:
+                return "Error"
+            case .Severe:
+                return "Severe"
+            case .None:
+                return "None"
             }
         }
     }
@@ -395,7 +395,7 @@ public class XCGLogger : CustomDebugStringConvertible {
             if let bg = bg,
                 let bgColorSpaceCorrected = bg.colorUsingColorSpaceName(NSCalibratedRGBColorSpace) {
                     
-                    self.bg = (Int(bgColorSpaceCorrected.redComponent * 255), Int(bgColorSpaceCorrected.greenComponent * 255), Int(bgColorSpaceCorrected.blueComponent * 255))
+                self.bg = (Int(bgColorSpaceCorrected.redComponent * 255), Int(bgColorSpaceCorrected.greenComponent * 255), Int(bgColorSpaceCorrected.blueComponent * 255))
             }
             else {
                 self.bg = nil
@@ -465,7 +465,7 @@ public class XCGLogger : CustomDebugStringConvertible {
     ]
     
     // MARK: - Properties
-    public class var logQueue : dispatch_queue_t {
+    public class var logQueue: dispatch_queue_t {
         struct Statics {
             static var logQueue = dispatch_queue_create(XCGLogger.constants.logQueueIdentifier, nil)
         }
@@ -536,7 +536,7 @@ public class XCGLogger : CustomDebugStringConvertible {
 
         logAppDetails()
 
-        if let writeToFile : AnyObject = writeToFile {
+        if let writeToFile: AnyObject = writeToFile {
             // We've been passed a file to use for logging, set up a file logger
             let standardFileLogDestination: XCGFileLogDestination = XCGFileLogDestination(owner: self, writeToFile: writeToFile, identifier: XCGLogger.constants.baseFileLogDestinationIdentifier)
 
