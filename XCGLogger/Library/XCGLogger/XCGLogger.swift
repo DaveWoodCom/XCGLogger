@@ -67,7 +67,17 @@ public class XCGConsoleLogDestination : XCGLogDestinationProtocol, CustomDebugSt
         var extendedDetails: String = ""
 
         if showThreadName {
-            extendedDetails += "[" + (NSThread.isMainThread() ? "main" : (NSThread.currentThread().name != "" ? NSThread.currentThread().name : String(format:"%p", NSThread.currentThread()))) + "] "
+            if NSThread.isMainThread() {
+                extendedDetails += "[main] "
+            }
+            else {
+                if let threadName = NSThread.currentThread().name where threadName != "" {
+                    extendedDetails += "[" + threadName + "] "
+                }
+                else {
+                    extendedDetails += "[" + String(format:"%p", NSThread.currentThread()) + "] "
+                }
+            }
         }
 
         if showLogLevel {
@@ -176,7 +186,17 @@ public class XCGFileLogDestination : XCGLogDestinationProtocol, CustomDebugStrin
         var extendedDetails: String = ""
 
         if showThreadName {
-            extendedDetails += "[" + (NSThread.isMainThread() ? "main" : (NSThread.currentThread().name != "" ? NSThread.currentThread().name : String(format:"%p", NSThread.currentThread()))) + "] "
+            if NSThread.isMainThread() {
+                extendedDetails += "[main] "
+            }
+            else {
+                if let threadName = NSThread.currentThread().name where threadName != "" {
+                    extendedDetails += "[" + threadName + "] "
+                }
+                else {
+                    extendedDetails += "[" + String(format:"%p", NSThread.currentThread()) + "] "
+                }
+            }
         }
 
         if showLogLevel {
