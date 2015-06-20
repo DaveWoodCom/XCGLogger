@@ -9,28 +9,16 @@
 import XCTest
 
 class XCGLoggerTests: XCTestCase {
-    
+
     override func setUp() {
         super.setUp()
         // Put setup code here. This method is called before the invocation of each test method in the class.
     }
-    
+
     override func tearDown() {
         // Put teardown code here. This method is called after the invocation of each test method in the class.
         super.tearDown()
     }
-    
-    //    func testExample() {
-    //        // This is an example of a functional test case.
-    //        XCTAssert(true, "Pass")
-    //    }
-    //    
-    //    func testPerformanceExample() {
-    //        // This is an example of a performance test case.
-    //        self.measureBlock() {
-    //            // Put the code you want to measure the time of here.
-    //        }
-    //    }
 
     func testDefaultInstance() {
         // Test that if we request the default instance multiple times, we always get the same instance
@@ -132,17 +120,17 @@ class XCGLoggerTests: XCTestCase {
         var log: XCGLogger = XCGLogger()
         log.setup(logLevel: .Debug, showLogLevel: true, showFileNames: true, showLineNumbers: true, writeToFile: "/tmp/test.log")
         log.identifier = "com.cerebralgardens.xcglogger.testExecExecutesExactlyOnceWithNilReturnAndMultipleDestinations"
-        
+
         var numberOfTimes: Int = 0
         log.debug {
             ++numberOfTimes
             return nil
         }
-        
+
         log.debug("executed: \(numberOfTimes) time(s)")
         XCTAssert(numberOfTimes == 1, "Fail: Didn't execute the closure exactly once")
     }
-    
+
     func testExecDoesntExecute() {
         var log: XCGLogger = XCGLogger()
         log.identifier = "com.cerebralgardens.xcglogger.testExecDoesntExecute"
@@ -170,35 +158,46 @@ class XCGLoggerTests: XCTestCase {
             log.debug(linesToLog[Int(index)])
         }
     }
-    
+
     func testDateFormatterIsCached() {
         var log: XCGLogger = XCGLogger()
         log.identifier = "com.cerebralgardens.xcglogger.testDateFormatterIsCached"
-        
+
         let dateFormatter1 = log.dateFormatter
         let dateFormatter2 = log.dateFormatter
-        
+
         XCTAssert(dateFormatter1 == dateFormatter2, "Fail: Received two different date formatter objects")
     }
-    
+
     func testCustomDateFormatter() {
         var log: XCGLogger = XCGLogger()
         log.identifier = "com.cerebralgardens.xcglogger.testCustomDateFormatter"
         log.outputLogLevel = .Debug
-        
+
         let defaultDateFormatter = log.dateFormatter
-        
+
         let dateFormat = "MM/dd/yyyy hh:mma"
 
         var dateFormatter = NSDateFormatter()
         dateFormatter.dateFormat = dateFormat
 
         log.dateFormatter = dateFormatter
-        
+
         log.debug("Test date format is different than our default")
-        
+
         XCTAssertNotNil(log.dateFormatter, "Fail: date formatter is nil")
         XCTAssertEqual(log.dateFormatter!.dateFormat, dateFormat, "Fail: date format doesn't match our custom date format")
         XCTAssert(defaultDateFormatter != dateFormatter, "Fail: Did not assign a custom date formatter")
+    }
+
+    func testGetLogFilePathReturnsPathProvidedBySetup() {
+        var log: XCGLogger = XCGLogger()
+        var logsDest = XCGFileLogDestination(owner: log,
+            writeToFile: "/tmp/test.log")
+
+        let logFile:String? = logsDest.getLogFilePath()
+        XCTAssert(logFile != nil, "Log file path is nil")
+        XCTAssert(logFile! == "/tmp/test.log", "Log file path is not the "
+            + "same as provided by setup()")
     }
 }
