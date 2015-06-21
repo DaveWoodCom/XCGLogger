@@ -156,7 +156,7 @@ class XCGLoggerTests: XCTestCase {
 
         log.outputLogLevel = .Debug
         log.debug("executed: \(numberOfTimes) time(s)")
-        XCTAssert(numberOfTimes == 0, "Fail: Didn't execute the closure when it should have")
+        XCTAssert(numberOfTimes == 0, "Fail: Executed the closure when it shouldn't have")
     }
 
     func testMultiThreaded() {
@@ -178,7 +178,7 @@ class XCGLoggerTests: XCTestCase {
         let dateFormatter1 = log.dateFormatter
         let dateFormatter2 = log.dateFormatter
         
-        XCTAssert(dateFormatter1 == dateFormatter2, "Fail: Received two different date formatter objects")
+        XCTAssert(dateFormatter1 === dateFormatter2, "Fail: Received two different date formatter objects")
     }
     
     func testCustomDateFormatter() {
