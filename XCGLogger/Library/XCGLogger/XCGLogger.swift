@@ -55,12 +55,17 @@ public class XCGConsoleLogDestination : XCGLogDestinationProtocol, DebugPrintabl
     public var showFileName: Bool = true
     public var showLineNumber: Bool = true
     public var showLogLevel: Bool = true
+    public var showDate: Bool = true
 
     public var xcodeColors: [XCGLogger.LogLevel: XCGLogger.XcodeColor]? = nil
     
     public init(owner: XCGLogger, identifier: String = "") {
         self.owner = owner
         self.identifier = identifier
+    }
+
+    public func output(text: String) {
+        print(text)
     }
 
     public func processLogDetails(logDetails: XCGLogDetails) {
@@ -81,12 +86,16 @@ public class XCGConsoleLogDestination : XCGLogDestinationProtocol, DebugPrintabl
             extendedDetails += "[" + String(logDetails.lineNumber) + "] "
         }
 
-        var formattedDate: String = logDetails.date.description
-        if let dateFormatter = owner.dateFormatter {
-            formattedDate = dateFormatter.stringFromDate(logDetails.date)
+        if showDate {
+            var formattedDate: String = logDetails.date.description
+            if let dateFormatter = owner.dateFormatter {
+                formattedDate = dateFormatter.stringFromDate(logDetails.date)
+            }
+
+            extendedDetails = "\(formattedDate) \(extendedDetails)"
         }
 
-        var fullLogMessage: String =  "\(formattedDate) \(extendedDetails)\(logDetails.functionName): \(logDetails.logMessage)\n"
+        var fullLogMessage: String =  "\(extendedDetails)\(logDetails.functionName): \(logDetails.logMessage)\n"
 
         if owner.xcodeColorsEnabled,
             let xcodeColor = (xcodeColors ?? owner.xcodeColors)[logDetails.logLevel] {
@@ -95,7 +104,7 @@ public class XCGConsoleLogDestination : XCGLogDestinationProtocol, DebugPrintabl
         }
         
         dispatch_async(XCGLogger.logQueue) {
-            print(fullLogMessage)
+            self.output(fullLogMessage)
         }
     }
 
@@ -105,15 +114,19 @@ public class XCGConsoleLogDestination : XCGLogDestinationProtocol, DebugPrintabl
             extendedDetails += "[" + logDetails.logLevel.description() + "] "
         }
 
-        var formattedDate: String = logDetails.date.description
-        if let dateFormatter = owner.dateFormatter {
-            formattedDate = dateFormatter.stringFromDate(logDetails.date)
+        if showDate {
+            var formattedDate: String = logDetails.date.description
+            if let dateFormatter = owner.dateFormatter {
+                formattedDate = dateFormatter.stringFromDate(logDetails.date)
+            }
+
+            extendedDetails = "\(formattedDate) \(extendedDetails)"
         }
 
-        var fullLogMessage: String =  "\(formattedDate) \(extendedDetails): \(logDetails.logMessage)\n"
+        var fullLogMessage: String =  "\(extendedDetails): \(logDetails.logMessage)\n"
 
         dispatch_async(XCGLogger.logQueue) {
-            print(fullLogMessage)
+            self.output(fullLogMessage)
         }
     }
 
@@ -125,7 +138,7 @@ public class XCGConsoleLogDestination : XCGLogDestinationProtocol, DebugPrintabl
     // MARK: - DebugPrintable
     public var debugDescription: String {
         get {
-            return "XCGConsoleLogDestination: \(identifier) - LogLevel: \(outputLogLevel.description()) showThreadName: \(showThreadName) showLogLevel: \(showLogLevel) showFileName: \(showFileName) showLineNumber: \(showLineNumber)"
+            return "XCGConsoleLogDestination: \(identifier) - LogLevel: \(outputLogLevel.description()) showThreadName: \(showThreadName) showLogLevel: \(showLogLevel) showFileName: \(showFileName) showLineNumber: \(showLineNumber) showDate: \(showDate)"
         }
     }
 }
