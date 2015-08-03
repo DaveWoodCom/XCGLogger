@@ -81,6 +81,21 @@ log.severe("A severe error occurred, we are likely about to crash now")
 
 The different methods set the log level of the message. XCGLogger will only print messages with a log level that is >= its current log level setting.
 
+###Initialization using Closure
+
+Alternatively you can use closure, to initialise your global variable, so that all initialization is done in one place
+```Swift
+let log: XCGLogger = {
+    var log = XCGLogger.defaultInstance()
+    log.setup(logLevel: .Debug, showLogLevel: true, showFileNames: true, showLineNumbers: true, writeToFile: nil, fileLogLevel: .Debug)
+    var dateFormatter = NSDateFormatter()
+    dateFormatter.dateFormat = "hh:mm"
+    log.dateFormatter = dateFormatter
+    return log
+    }()
+```
+
+
 ###Advanced Use
 
 It's possible to create multiple instances of XCGLogger with different options. For example, you only want to log a specific section of your app to a file, perhaps to diagnose a specific issue a user is seeing. In that case, create alternate instances like this:
