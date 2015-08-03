@@ -148,6 +148,23 @@ log.dateFormatter = dateFormatter
 
 XCGLogger now supports the XcodeColors plug-in (https://github.com/robbiehanson/XcodeColors). Once installed, each log level will have its own colour. These colours can be customized as desired. See the sample projects for examples. If using multiple logger's, you could alternatively set each logger to its own colour.
 
+#####Initialization using Closure
+
+Alternatively you can use a closure to initialize your global variable, so that all initialization is done in one place
+```Swift
+let log: XCGLogger = {
+    let log = XCGLogger.defaultInstance()
+    log.setup(logLevel: .Debug, showThreadName: true, showLogLevel: true, showFileNames: true, showLineNumbers: true, writeToFile: nil, fileLogLevel: .Debug)
+    
+    let dateFormatter = NSDateFormatter()
+    dateFormatter.dateFormat = "MM/dd/yyyy hh:mma"
+    dateFormatter.locale = NSLocale.currentLocale()
+    log.dateFormatter = dateFormatter
+    
+    return log
+}()
+```
+
 ###To Do
 
 - Add examples of some advanced use cases
