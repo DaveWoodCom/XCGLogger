@@ -60,6 +60,13 @@
 			remoteGlobalIDString = 55E3EE4419D76F280068C3A7;
 			remoteInfo = XCGLogger;
 		};
+		55D4395A1B7AAC16001370EC /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 558C64A819D777B100D6D507 /* XCGLogger.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 55BB1F011B79DC7500709779;
+			remoteInfo = "XCGLoggerTests (OS X)";
+		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -179,7 +186,8 @@
 			children = (
 				558C64AF19D777B100D6D507 /* XCGLogger.framework */,
 				558C64B119D777B100D6D507 /* XCGLogger.framework */,
-				558C64B319D777B100D6D507 /* XCGLoggerTests.xctest */,
+				558C64B319D777B100D6D507 /* XCGLoggerTests (iOS).xctest */,
+				55D4395B1B7AAC16001370EC /* XCGLoggerTests (OS X).xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -283,11 +291,18 @@
 			remoteRef = 558C64B019D777B100D6D507 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
-		558C64B319D777B100D6D507 /* XCGLoggerTests.xctest */ = {
+		558C64B319D777B100D6D507 /* XCGLoggerTests (iOS).xctest */ = {
 			isa = PBXReferenceProxy;
 			fileType = wrapper.cfbundle;
-			path = XCGLoggerTests.xctest;
+			path = "XCGLoggerTests (iOS).xctest";
 			remoteRef = 558C64B219D777B100D6D507 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		55D4395B1B7AAC16001370EC /* XCGLoggerTests (OS X).xctest */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.cfbundle;
+			path = "XCGLoggerTests (OS X).xctest";
+			remoteRef = 55D4395A1B7AAC16001370EC /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 /* End PBXReferenceProxy section */
