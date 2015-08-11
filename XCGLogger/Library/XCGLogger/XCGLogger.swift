@@ -162,6 +162,35 @@ public class XCGConsoleLogDestination: XCGBaseLogDestination {
     }
 }
 
+// MARK: - XCGNSLogDestination
+// - A standard log destination that outputs log details to the console using NSLog instead of println
+public class XCGNSLogDestination: XCGBaseLogDestination {
+    // MARK: - Properties
+    public var xcodeColors: [XCGLogger.LogLevel: XCGLogger.XcodeColor]? = nil
+
+    public override var showDate: Bool {
+        get {
+            return false
+        }
+        set {
+            // ignored, NSLog adds the date, so we always want showDate to be false in this subclass
+        }
+    }
+
+    // MARK: - Misc Methods
+    public override func output(logDetails: XCGLogDetails, text: String) {
+        let adjustedText: String
+        if let xcodeColor = (xcodeColors ?? owner.xcodeColors)[logDetails.logLevel] where owner.xcodeColorsEnabled {
+            adjustedText = "\(xcodeColor.format())\(text)\(XCGLogger.XcodeColor.reset)"
+        }
+        else {
+            adjustedText = text
+        }
+
+        NSLog(adjustedText)
+    }
+}
+
 // MARK: - XCGFileLogDestination
 // - A standard log destination that outputs log details to a file
 public class XCGFileLogDestination: XCGBaseLogDestination {
