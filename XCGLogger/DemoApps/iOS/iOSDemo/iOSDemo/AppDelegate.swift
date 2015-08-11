@@ -33,9 +33,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Override point for customization after application launch.
 
         // Setup XCGLogger
-        let logPath : NSURL = self.cacheDirectory.URLByAppendingPathComponent("XCGLogger_Log.txt")
-        log.setup(logLevel: .Debug, showThreadName: true, showLogLevel: true, showFileNames: true, showLineNumbers: true, writeToFile: logPath)
-        // log.xcodeColorsEnabled = true // Or set the XcodeColors environment variable in your scheme to YES
+        log.xcodeColorsEnabled = true // Or set the XcodeColors environment variable in your scheme to YES
         log.xcodeColors = [
             .Verbose: .lightGrey,
             .Debug: .darkGrey,
@@ -44,7 +42,16 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             .Error: XCGLogger.XcodeColor(fg: UIColor.redColor(), bg: UIColor.whiteColor()), // Optionally use a UIColor
             .Severe: XCGLogger.XcodeColor(fg: (255, 255, 255), bg: (255, 0, 0)) // Optionally use RGB values directly
         ]
-        
+
+#if USE_NSLOG // Set via Build Settings, under Other Swift Flags
+        log.logDestinations.removeAll(keepCapacity: true)
+        log.addLogDestination(XCGNSLogDestination(owner: log, identifier: XCGLogger.constants.nslogDestinationIdentifier))
+        log.logAppDetails()
+#else
+        let logPath : NSURL = self.cacheDirectory.URLByAppendingPathComponent("XCGLogger_Log.txt")
+        log.setup(logLevel: .Debug, showThreadName: true, showLogLevel: true, showFileNames: true, showLineNumbers: true, writeToFile: logPath)
+#endif
+
         return true
     }
 

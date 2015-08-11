@@ -458,6 +458,7 @@
 				EMBEDDED_CONTENT_CONTAINS_SWIFT = YES;
 				INFOPLIST_FILE = iOSDemo/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				OTHER_SWIFT_FLAGS = "-DUSE_NSLOG";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Debug;
