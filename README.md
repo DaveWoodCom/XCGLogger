@@ -92,6 +92,8 @@ Go to Build settings -> Swift Compiler - Custom Flags -> Other Swift Flags and a
 #endif
 ```
 
+You can set any number of options up in a similar fashion. See the updated iOSDemo app for an example of using different log destinations based on options, search for ```USE_NSLOG```.
+
 ###Advanced Use
 
 It's possible to create multiple instances of XCGLogger with different options. For example, you only want to log a specific section of your app to a file, perhaps to diagnose a specific issue a user is seeing. In that case, create alternate instances like this:
