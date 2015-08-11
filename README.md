@@ -144,9 +144,9 @@ dateFormatter.locale = NSLocale.currentLocale()
 log.dateFormatter = dateFormatter
 ```
 
-#####Enhancing log messages with color
+#####Enhancing log messages with colour
 
-XCGLogger now supports the XcodeColors plug-in (https://github.com/robbiehanson/XcodeColors). Once installed, each log level will have it's own colour. These colours can be customized as desired. See the sample projects for examples. If using multiple logger's, you could alternatively set each logger to its own colour.
+XCGLogger now supports the XcodeColors plug-in (https://github.com/robbiehanson/XcodeColors). Once installed, each log level will have its own colour. These colours can be customized as desired. See the sample projects for examples. If using multiple logger's, you could alternatively set each logger to its own colour.
 
 ###To Do
 
