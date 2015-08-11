@@ -494,11 +494,11 @@ public class XCGLogger: DebugPrintable {
     }
 
     // MARK: - Setup methods
-    public class func setup(logLevel: LogLevel = .Debug, showFunctionName: Bool = true, showThreadName: Bool = false, showLogLevel: Bool = true, showFileNames: Bool = true, showLineNumbers: Bool = true, writeToFile: AnyObject? = nil, fileLogLevel: LogLevel? = nil) {
-        defaultInstance().setup(logLevel: logLevel, showThreadName: showThreadName, showLogLevel: showLogLevel, showFileNames: showFileNames, showLineNumbers: showLineNumbers, writeToFile: writeToFile)
+    public class func setup(logLevel: LogLevel = .Debug, showFunctionName: Bool = true, showThreadName: Bool = false, showLogLevel: Bool = true, showFileNames: Bool = true, showLineNumbers: Bool = true, showDate: Bool = true, writeToFile: AnyObject? = nil, fileLogLevel: LogLevel? = nil) {
+        defaultInstance().setup(logLevel: logLevel, showFunctionName: showFunctionName, showThreadName: showThreadName, showLogLevel: showLogLevel, showFileNames: showFileNames, showLineNumbers: showLineNumbers, showDate: showDate, writeToFile: writeToFile)
     }
 
-    public func setup(logLevel: LogLevel = .Debug, showFunctionName: Bool = true, showThreadName: Bool = false, showLogLevel: Bool = true, showFileNames: Bool = true, showLineNumbers: Bool = true, writeToFile: AnyObject? = nil, fileLogLevel: LogLevel? = nil) {
+    public func setup(logLevel: LogLevel = .Debug, showFunctionName: Bool = true, showThreadName: Bool = false, showLogLevel: Bool = true, showFileNames: Bool = true, showLineNumbers: Bool = true, showDate: Bool = true, writeToFile: AnyObject? = nil, fileLogLevel: LogLevel? = nil) {
         outputLogLevel = logLevel;
 
         if let standardConsoleLogDestination = logDestination(XCGLogger.constants.baseConsoleLogDestinationIdentifier) as? XCGConsoleLogDestination {
@@ -507,6 +507,7 @@ public class XCGLogger: DebugPrintable {
             standardConsoleLogDestination.showLogLevel = showLogLevel
             standardConsoleLogDestination.showFileName = showFileNames
             standardConsoleLogDestination.showLineNumber = showLineNumbers
+            standardConsoleLogDestination.showDate = showDate
             standardConsoleLogDestination.outputLogLevel = logLevel
         }
 
@@ -521,6 +522,7 @@ public class XCGLogger: DebugPrintable {
             standardFileLogDestination.showLogLevel = showLogLevel
             standardFileLogDestination.showFileName = showFileNames
             standardFileLogDestination.showLineNumber = showLineNumbers
+            standardFileLogDestination.showDate = showDate
             standardFileLogDestination.outputLogLevel = fileLogLevel ?? logLevel
 
             addLogDestination(standardFileLogDestination)
