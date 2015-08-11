@@ -501,16 +501,12 @@ public class XCGLogger: DebugPrintable {
     public func setup(logLevel: LogLevel = .Debug, showThreadName: Bool = false, showLogLevel: Bool = true, showFileNames: Bool = true, showLineNumbers: Bool = true, writeToFile: AnyObject? = nil, fileLogLevel: LogLevel? = nil) {
         outputLogLevel = logLevel;
 
-        if let logDestination: XCGLogDestinationProtocol = logDestination(XCGLogger.constants.baseConsoleLogDestinationIdentifier) {
-            if logDestination is XCGConsoleLogDestination {
-                let standardConsoleLogDestination = logDestination as! XCGConsoleLogDestination
-
-                standardConsoleLogDestination.showThreadName = showThreadName
-                standardConsoleLogDestination.showLogLevel = showLogLevel
-                standardConsoleLogDestination.showFileName = showFileNames
-                standardConsoleLogDestination.showLineNumber = showLineNumbers
-                standardConsoleLogDestination.outputLogLevel = logLevel
-            }
+        if let standardConsoleLogDestination = logDestination(XCGLogger.constants.baseConsoleLogDestinationIdentifier) as? XCGConsoleLogDestination {
+            standardConsoleLogDestination.showThreadName = showThreadName
+            standardConsoleLogDestination.showLogLevel = showLogLevel
+            standardConsoleLogDestination.showFileName = showFileNames
+            standardConsoleLogDestination.showLineNumber = showLineNumbers
+            standardConsoleLogDestination.outputLogLevel = logLevel
         }
 
         logAppDetails()
