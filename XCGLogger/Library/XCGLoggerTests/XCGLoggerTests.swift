@@ -171,6 +171,20 @@ class XCGLoggerTests: XCTestCase {
         }
     }
     
+    func testMultiThreaded2() {
+        var log: XCGLogger = XCGLogger()
+        log.identifier = "com.cerebralgardens.xcglogger.testMultiThreaded2"
+        log.setup(logLevel: .Debug, showThreadName: true, showLogLevel: true, showFileNames: true, showLineNumbers: true, writeToFile: nil)
+
+        let linesToLog = ["One", "Two", "Three", "Four", "Five", "Six", "Seven", "Eight", "Nine", "Ten"]
+        let myConcurrentQueue = dispatch_queue_create("com.cerebralgardens.xcglogger.testMultiThreaded2.queue", DISPATCH_QUEUE_CONCURRENT)
+        dispatch_apply(linesToLog.count, myConcurrentQueue) { (index: Int) in
+            log.debug {
+                return "\(linesToLog[Int(index)])"
+            }
+        }
+    }
+
     func testDateFormatterIsCached() {
         var log: XCGLogger = XCGLogger()
         log.identifier = "com.cerebralgardens.xcglogger.testDateFormatterIsCached"
