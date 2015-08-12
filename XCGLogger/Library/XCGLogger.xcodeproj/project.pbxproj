@@ -257,7 +257,7 @@
 			attributes = {
 				LastSwiftMigration = 0700;
 				LastSwiftUpdateCheck = 0700;
-				LastUpgradeCheck = 0640;
+				LastUpgradeCheck = 0700;
 				ORGANIZATIONNAME = "Cerebral Gardens";
 				TargetAttributes = {
 					554DF41619D76FE7005708BE = {
@@ -376,7 +376,6 @@
 		554DF42B19D76FE7005708BE /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				BUNDLE_IDENTIFIER = com.cerebralgardens.xcglogger;
 				COMBINE_HIDPI_IMAGES = YES;
 				DEFINES_MODULE = YES;
 				DYLIB_COMPATIBILITY_VERSION = 1;
@@ -391,6 +390,7 @@
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @loader_path/../Frameworks";
 				MACOSX_DEPLOYMENT_TARGET = 10.9;
+				PRODUCT_BUNDLE_IDENTIFIER = com.cerebralgardens.xcglogger;
 				PRODUCT_NAME = XCGLogger;
 				SDKROOT = macosx;
 				SKIP_INSTALL = YES;
@@ -400,7 +400,6 @@
 		554DF42C19D76FE7005708BE /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				BUNDLE_IDENTIFIER = com.cerebralgardens.xcglogger;
 				COMBINE_HIDPI_IMAGES = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEFINES_MODULE = YES;
@@ -412,6 +411,7 @@
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @loader_path/../Frameworks";
 				MACOSX_DEPLOYMENT_TARGET = 10.9;
+				PRODUCT_BUNDLE_IDENTIFIER = com.cerebralgardens.xcglogger;
 				PRODUCT_NAME = XCGLogger;
 				SDKROOT = macosx;
 				SKIP_INSTALL = YES;
@@ -430,6 +430,7 @@
 				);
 				INFOPLIST_FILE = "$(SRCROOT)/XCGLoggerTests/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @loader_path/../Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.cerebralgardens.xcglogger.tests;
 				PRODUCT_NAME = "XCGLoggerTests (OS X)";
 				SDKROOT = macosx;
 			};
@@ -443,6 +444,7 @@
 				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
 				INFOPLIST_FILE = "$(SRCROOT)/XCGLoggerTests/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @loader_path/../Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.cerebralgardens.xcglogger.tests;
 				PRODUCT_NAME = "XCGLoggerTests (OS X)";
 				SDKROOT = macosx;
 			};
@@ -469,6 +471,7 @@
 				COPY_PHASE_STRIP = NO;
 				CURRENT_PROJECT_VERSION = 2.2;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_OPTIMIZATION_LEVEL = 0;
@@ -537,7 +540,6 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				APPLICATION_EXTENSION_API_ONLY = YES;
-				BUNDLE_IDENTIFIER = com.cerebralgardens.xcglogger;
 				CLANG_ENABLE_MODULES = YES;
 				DEFINES_MODULE = YES;
 				DYLIB_COMPATIBILITY_VERSION = 1;
@@ -546,6 +548,7 @@
 				INFOPLIST_FILE = "$(SRCROOT)/XCGLogger/Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.cerebralgardens.xcglogger;
 				PRODUCT_MODULE_NAME = XCGLogger;
 				PRODUCT_NAME = XCGLogger;
 				SKIP_INSTALL = YES;
@@ -557,7 +560,6 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				APPLICATION_EXTENSION_API_ONLY = YES;
-				BUNDLE_IDENTIFIER = com.cerebralgardens.xcglogger;
 				CLANG_ENABLE_MODULES = YES;
 				DEFINES_MODULE = YES;
 				DYLIB_COMPATIBILITY_VERSION = 1;
@@ -566,6 +568,7 @@
 				INFOPLIST_FILE = "$(SRCROOT)/XCGLogger/Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.cerebralgardens.xcglogger;
 				PRODUCT_MODULE_NAME = XCGLogger;
 				PRODUCT_NAME = XCGLogger;
 				SKIP_INSTALL = YES;
@@ -586,6 +589,7 @@
 				);
 				INFOPLIST_FILE = "$(SRCROOT)/XCGLoggerTests/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.cerebralgardens.xcglogger.tests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Debug;
@@ -599,6 +603,7 @@
 				);
 				INFOPLIST_FILE = "$(SRCROOT)/XCGLoggerTests/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.cerebralgardens.xcglogger.tests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Release;
