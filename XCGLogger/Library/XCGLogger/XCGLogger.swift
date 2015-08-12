@@ -288,20 +288,20 @@ public class XCGLogger: DebugPrintable {
 
         public func description() -> String {
             switch self {
-                case .Verbose:
-                    return "Verbose"
-                case .Debug:
-                    return "Debug"
-                case .Info:
-                    return "Info"
-                case .Warning:
-                    return "Warning"
-                case .Error:
-                    return "Error"
-                case .Severe:
-                    return "Severe"
-                case .None:
-                    return "None"
+            case .Verbose:
+                return "Verbose"
+            case .Debug:
+                return "Debug"
+            case .Info:
+                return "Info"
+            case .Warning:
+                return "Warning"
+            case .Error:
+                return "Error"
+            case .Severe:
+                return "Severe"
+            case .None:
+                return "None"
             }
         }
     }
