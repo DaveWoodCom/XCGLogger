@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		054B948D1B7BEF2D0081423A /* XCGLogger+Crashlytics.swift in Sources */ = {isa = PBXBuildFile; fileRef = 054B948B1B7BED850081423A /* XCGLogger+Crashlytics.swift */; };
+		054B948E1B7BEF2E0081423A /* XCGLogger+Crashlytics.swift in Sources */ = {isa = PBXBuildFile; fileRef = 054B948B1B7BED850081423A /* XCGLogger+Crashlytics.swift */; };
 		554DF41019D76FA9005708BE /* XCGLogger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 554DF40F19D76FA9005708BE /* XCGLogger.swift */; };
 		554DF41119D76FA9005708BE /* XCGLogger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 554DF40F19D76FA9005708BE /* XCGLogger.swift */; };
 		554DF43319D77155005708BE /* XCGLogger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 554DF40F19D76FA9005708BE /* XCGLogger.swift */; };
@@ -37,6 +39,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		054B948B1B7BED850081423A /* XCGLogger+Crashlytics.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "XCGLogger+Crashlytics.swift"; sourceTree = "<group>"; };
 		554DF40F19D76FA9005708BE /* XCGLogger.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = XCGLogger.swift; sourceTree = "<group>"; };
 		554DF41719D76FE7005708BE /* XCGLogger.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = XCGLogger.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		55BB1F011B79DC7500709779 /* XCGLoggerTests (OS X).xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "XCGLoggerTests (OS X).xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -125,6 +128,7 @@
 				55DA396419D7737B0032F026 /* iOS */,
 				55DA396619D7737B0032F026 /* OSX */,
 				554DF40F19D76FA9005708BE /* XCGLogger.swift */,
+				054B948B1B7BED850081423A /* XCGLogger+Crashlytics.swift */,
 				55E3EE4819D76F280068C3A7 /* Supporting Files */,
 			);
 			path = XCGLogger;
@@ -335,6 +339,7 @@
 			files = (
 				55BB1EF91B79DC7500709779 /* XCGLogger.swift in Sources */,
 				55BB1EFA1B79DC7500709779 /* XCGLoggerTests.swift in Sources */,
+				054B948E1B7BEF2E0081423A /* XCGLogger+Crashlytics.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -352,6 +357,7 @@
 			files = (
 				554DF41119D76FA9005708BE /* XCGLogger.swift in Sources */,
 				55E3EE5819D76F280068C3A7 /* XCGLoggerTests.swift in Sources */,
+				054B948D1B7BEF2D0081423A /* XCGLogger+Crashlytics.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -389,6 +395,7 @@
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @loader_path/../Frameworks";
 				MACOSX_DEPLOYMENT_TARGET = 10.9;
+				OTHER_SWIFT_FLAGS = "-DDEBUG";
 				PRODUCT_NAME = XCGLogger;
 				SDKROOT = macosx;
 				SKIP_INSTALL = YES;
@@ -410,6 +417,7 @@
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @loader_path/../Frameworks";
 				MACOSX_DEPLOYMENT_TARGET = 10.9;
+				OTHER_SWIFT_FLAGS = "";
 				PRODUCT_NAME = XCGLogger;
 				SDKROOT = macosx;
 				SKIP_INSTALL = YES;
@@ -428,6 +436,7 @@
 				);
 				INFOPLIST_FILE = "$(SRCROOT)/XCGLoggerTests/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @loader_path/../Frameworks";
+				OTHER_SWIFT_FLAGS = "-DDEBUG -DTEST";
 				PRODUCT_NAME = "XCGLoggerTests (OS X)";
 				SDKROOT = macosx;
 			};
@@ -544,6 +553,7 @@
 				INFOPLIST_FILE = "$(SRCROOT)/XCGLogger/Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @loader_path/Frameworks";
+				"OTHER_SWIFT_FLAGS[arch=*]" = "-DDEBUG";
 				PRODUCT_MODULE_NAME = XCGLogger;
 				PRODUCT_NAME = XCGLogger;
 				SKIP_INSTALL = YES;
@@ -564,6 +574,7 @@
 				INFOPLIST_FILE = "$(SRCROOT)/XCGLogger/Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @loader_path/Frameworks";
+				OTHER_SWIFT_FLAGS = "";
 				PRODUCT_MODULE_NAME = XCGLogger;
 				PRODUCT_NAME = XCGLogger;
 				SKIP_INSTALL = YES;
@@ -584,6 +595,8 @@
 				);
 				INFOPLIST_FILE = "$(SRCROOT)/XCGLoggerTests/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @loader_path/Frameworks";
+				OTHER_SWIFT_FLAGS = "-DDEBUG -DTEST";
+				"OTHER_SWIFT_FLAGS[arch=*]" = "-DTEST";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Debug;
@@ -597,6 +610,7 @@
 				);
 				INFOPLIST_FILE = "$(SRCROOT)/XCGLoggerTests/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @loader_path/Frameworks";
+				OTHER_SWIFT_FLAGS = "-DTEST";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Release;
