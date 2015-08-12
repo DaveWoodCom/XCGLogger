@@ -18,15 +18,15 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     // MARK: - Properties
     var window: UIWindow?
 
-    var documentsDirectory: NSURL {
+    let documentsDirectory: NSURL = {
         let urls = NSFileManager.defaultManager().URLsForDirectory(.DocumentDirectory, inDomains: .UserDomainMask)
         return urls[urls.endIndex-1] as! NSURL
-    }
+    }()
 
-    var cacheDirectory: NSURL {
+    let cacheDirectory: NSURL = {
         let urls = NSFileManager.defaultManager().URLsForDirectory(.CachesDirectory, inDomains: .UserDomainMask)
         return urls[urls.endIndex-1] as! NSURL
-    }
+    }()
 
     // MARK: - Life cycle methods
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject : AnyObject]?) -> Bool {
