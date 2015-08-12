@@ -10,7 +10,30 @@
 import UIKit
 import XCGLogger
 
-let log = XCGLogger.defaultInstance()
+let log: XCGLogger = {
+    // Setup XCGLogger
+    let log = XCGLogger.defaultInstance()
+    log.xcodeColorsEnabled = true // Or set the XcodeColors environment variable in your scheme to YES
+    log.xcodeColors = [
+        .Verbose: .lightGrey,
+        .Debug: .darkGrey,
+        .Info: .darkGreen,
+        .Warning: .orange,
+        .Error: XCGLogger.XcodeColor(fg: UIColor.redColor(), bg: UIColor.whiteColor()), // Optionally use a UIColor
+        .Severe: XCGLogger.XcodeColor(fg: (255, 255, 255), bg: (255, 0, 0)) // Optionally use RGB values directly
+    ]
+
+#if USE_NSLOG // Set via Build Settings, under Other Swift Flags
+    log.removeLogDestination(XCGLogger.constants.baseConsoleLogDestinationIdentifier)
+    log.addLogDestination(XCGNSLogDestination(owner: log, identifier: XCGLogger.constants.nslogDestinationIdentifier))
+    log.logAppDetails()
+#else
+    let logPath : NSURL = self.cacheDirectory.URLByAppendingPathComponent("XCGLogger_Log.txt")
+    log.setup(logLevel: .Debug, showThreadName: true, showLogLevel: true, showFileNames: true, showLineNumbers: true, writeToFile: logPath)
+#endif
+
+    return log
+}()
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -31,27 +54,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     // MARK: - Life cycle methods
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject : AnyObject]?) -> Bool {
         // Override point for customization after application launch.
-
-        // Setup XCGLogger
-        log.xcodeColorsEnabled = true // Or set the XcodeColors environment variable in your scheme to YES
-        log.xcodeColors = [
-            .Verbose: .lightGrey,
-            .Debug: .darkGrey,
-            .Info: .darkGreen,
-            .Warning: .orange,
-            .Error: XCGLogger.XcodeColor(fg: UIColor.redColor(), bg: UIColor.whiteColor()), // Optionally use a UIColor
-            .Severe: XCGLogger.XcodeColor(fg: (255, 255, 255), bg: (255, 0, 0)) // Optionally use RGB values directly
-        ]
-
-#if USE_NSLOG // Set via Build Settings, under Other Swift Flags
-        log.logDestinations.removeAll(keepCapacity: true)
-        log.addLogDestination(XCGNSLogDestination(owner: log, identifier: XCGLogger.constants.nslogDestinationIdentifier))
-        log.logAppDetails()
-#else
-        let logPath : NSURL = self.cacheDirectory.URLByAppendingPathComponent("XCGLogger_Log.txt")
-        log.setup(logLevel: .Debug, showThreadName: true, showLogLevel: true, showFileNames: true, showLineNumbers: true, writeToFile: logPath)
-#endif
-
         return true
     }
 
