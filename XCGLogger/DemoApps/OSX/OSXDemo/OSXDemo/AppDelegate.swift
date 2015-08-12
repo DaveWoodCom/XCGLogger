@@ -10,7 +10,22 @@
 import Cocoa
 import XCGLogger
 
-let log = XCGLogger.defaultInstance()
+let log: XCGLogger = {
+    // Setup XCGLogger
+    let log = XCGLogger.defaultInstance()
+    let logPath: NSString = ("~/Desktop/XCGLogger_Log.txt" as NSString).stringByExpandingTildeInPath
+    log.xcodeColors = [
+        .Verbose: .lightGrey,
+        .Debug: .darkGrey,
+        .Info: .darkGreen,
+        .Warning: .orange,
+        .Error: XCGLogger.XcodeColor(fg: NSColor.redColor(), bg: NSColor.whiteColor()), // Optionally use an NSColor
+        .Severe: XCGLogger.XcodeColor(fg: (255, 255, 255), bg: (255, 0, 0)) // Optionally use RGB values directly
+    ]
+    log.setup(.Debug, showThreadName: true, showLogLevel: true, showFileNames: true, showLineNumbers: true, writeToFile: logPath)
+
+    return log
+}()
 
 @NSApplicationMain
 class AppDelegate: NSObject, NSApplicationDelegate {
@@ -26,18 +41,6 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     // MARK: - Life cycle methods
     func applicationDidFinishLaunching(aNotification: NSNotification) {
         // Insert code here to initialize your application
-
-        // Setup XCGLogger
-        let logPath: NSString = "~/Desktop/XCGLogger_Log.txt".stringByExpandingTildeInPath
-        log.setup(logLevel: .Debug, showThreadName: true, showLogLevel: true, showFileNames: true, showLineNumbers: true, writeToFile: logPath)
-        log.xcodeColors = [
-            .Verbose: .lightGrey,
-            .Debug: .darkGrey,
-            .Info: .darkGreen,
-            .Warning: .orange,
-            .Error: XCGLogger.XcodeColor(fg: NSColor.redColor(), bg: NSColor.whiteColor()), // Optionally use an NSColor
-            .Severe: XCGLogger.XcodeColor(fg: (255, 255, 255), bg: (255, 0, 0)) // Optionally use RGB values directly
-        ]
     }
 
     func applicationWillTerminate(aNotification: NSNotification) {

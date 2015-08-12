@@ -239,6 +239,8 @@
 		558C647A19D7770100D6D507 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
+				LastSwiftMigration = 0700;
+				LastSwiftUpdateCheck = 0700;
 				LastUpgradeCheck = 0610;
 				ORGANIZATIONNAME = "Cerebral Gardens";
 				TargetAttributes = {

@@ -43,12 +43,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     let documentsDirectory: NSURL = {
         let urls = NSFileManager.defaultManager().URLsForDirectory(.DocumentDirectory, inDomains: .UserDomainMask)
-        return urls[urls.endIndex-1] as! NSURL
+        return urls[urls.endIndex - 1]
     }()
 
     let cacheDirectory: NSURL = {
         let urls = NSFileManager.defaultManager().URLsForDirectory(.CachesDirectory, inDomains: .UserDomainMask)
-        return urls[urls.endIndex-1] as! NSURL
+        return urls[urls.endIndex - 1] 
     }()
 
     // MARK: - Life cycle methods
