@@ -446,7 +446,7 @@ public class XCGLogger: DebugPrintable {
     // MARK: - Properties
     public class var logQueue: dispatch_queue_t {
         struct Statics {
-            static var logQueue = dispatch_queue_create(XCGLogger.constants.logQueueIdentifier, nil)
+            static let logQueue = dispatch_queue_create(XCGLogger.constants.logQueueIdentifier, nil)
         }
 
         return Statics.logQueue
