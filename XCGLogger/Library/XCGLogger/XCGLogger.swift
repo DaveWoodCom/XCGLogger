@@ -474,7 +474,9 @@ public class XCGLogger: DebugPrintable {
     public var logDestinations: Array<XCGLogDestinationProtocol> = []
     
     // MARK: - Life Cycle
-    public init() {
+    public init(identifier: String = "") {
+        self.identifier = identifier
+
         // Check if XcodeColors is installed and enabled
         if let xcodeColors = NSProcessInfo.processInfo().environment["XcodeColors"] as? String {
             xcodeColorsEnabled = xcodeColors == "YES"
@@ -487,9 +489,9 @@ public class XCGLogger: DebugPrintable {
     // MARK: - Default instance
     public class func defaultInstance() -> XCGLogger {
         struct statics {
-            static let instance: XCGLogger = XCGLogger()
+            static let instance: XCGLogger = XCGLogger(identifier: XCGLogger.constants.defaultInstanceIdentifier)
         }
-        statics.instance.identifier = XCGLogger.constants.defaultInstanceIdentifier
+
         return statics.instance
     }
 
