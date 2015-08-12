@@ -138,7 +138,7 @@ In cases where you wish to selectively execute code without generating a log lin
 As of version 2.0, you can create your own NSDateFormatter object and assign it to the logger.
 
 ```Swift
-var dateFormatter = NSDateFormatter()
+let dateFormatter = NSDateFormatter()
 dateFormatter.dateFormat = "MM/dd/yyyy hh:mma"
 dateFormatter.locale = NSLocale.currentLocale()
 log.dateFormatter = dateFormatter
