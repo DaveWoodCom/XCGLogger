@@ -108,7 +108,7 @@ class XCGLoggerTests: XCTestCase {
 
         let thisObject = ObjectWithExpensiveDescription()
 
-        log.verbose("The description of \(thisObject) is really expensive to create" )
+        log.verbose("The description of \(thisObject) is really expensive to create")
         XCTAssert(!thisObject.descriptionInvoked, "Fail: String was interpolated when it shouldn't have been")
     }
 
