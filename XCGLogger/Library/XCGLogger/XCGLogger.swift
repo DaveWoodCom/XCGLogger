@@ -54,6 +54,7 @@ public class XCGBaseLogDestination: XCGLogDestinationProtocol, CustomDebugString
     public var identifier: String
     public var outputLogLevel: XCGLogger.LogLevel = .Debug
 
+    public var showLogIdentifier: Bool = false
     public var showFunctionName: Bool = true
     public var showThreadName: Bool = false
     public var showFileName: Bool = true
@@ -64,7 +65,7 @@ public class XCGBaseLogDestination: XCGLogDestinationProtocol, CustomDebugString
     // MARK: - DebugPrintable
     public var debugDescription: String {
         get {
-            return "\(extractClassName(self)): \(identifier) - LogLevel: \(outputLogLevel) showFunctionName: \(showFunctionName) showThreadName: \(showThreadName) showLogLevel: \(showLogLevel) showFileName: \(showFileName) showLineNumber: \(showLineNumber) showDate: \(showDate)"
+            return "\(extractClassName(self)): \(identifier) - LogLevel: \(outputLogLevel) showLogIdentifier: \(showLogIdentifier) showFunctionName: \(showFunctionName) showThreadName: \(showThreadName) showLogLevel: \(showLogLevel) showFileName: \(showFileName) showLineNumber: \(showLineNumber) showDate: \(showDate)"
         }
     }
 
@@ -89,6 +90,10 @@ public class XCGBaseLogDestination: XCGLogDestinationProtocol, CustomDebugString
 
         if showLogLevel {
             extendedDetails += "[\(logDetails.logLevel)] "
+        }
+
+        if showLogIdentifier {
+            extendedDetails += "[\(owner.identifier)] "
         }
 
         if showThreadName {
@@ -133,6 +138,10 @@ public class XCGBaseLogDestination: XCGLogDestinationProtocol, CustomDebugString
 
         if showLogLevel {
             extendedDetails += "[\(logDetails.logLevel)] "
+        }
+
+        if showLogIdentifier {
+            extendedDetails += "[\(owner.identifier)] "
         }
 
         output(logDetails, text: "\(extendedDetails)> \(logDetails.logMessage)")
@@ -497,14 +506,15 @@ public class XCGLogger: CustomDebugStringConvertible {
     }
 
     // MARK: - Setup methods
-    public class func setup(logLevel: LogLevel = .Debug, showFunctionName: Bool = true, showThreadName: Bool = false, showLogLevel: Bool = true, showFileNames: Bool = true, showLineNumbers: Bool = true, showDate: Bool = true, writeToFile: AnyObject? = nil, fileLogLevel: LogLevel? = nil) {
-        defaultInstance().setup(logLevel, showFunctionName: showFunctionName, showThreadName: showThreadName, showLogLevel: showLogLevel, showFileNames: showFileNames, showLineNumbers: showLineNumbers, showDate: showDate, writeToFile: writeToFile)
+    public class func setup(logLevel: LogLevel = .Debug, showLogIdentifier: Bool = false, showFunctionName: Bool = true, showThreadName: Bool = false, showLogLevel: Bool = true, showFileNames: Bool = true, showLineNumbers: Bool = true, showDate: Bool = true, writeToFile: AnyObject? = nil, fileLogLevel: LogLevel? = nil) {
+        defaultInstance().setup(logLevel, showLogIdentifier: showLogIdentifier, showFunctionName: showFunctionName, showThreadName: showThreadName, showLogLevel: showLogLevel, showFileNames: showFileNames, showLineNumbers: showLineNumbers, showDate: showDate, writeToFile: writeToFile)
     }
 
-    public func setup(logLevel: LogLevel = .Debug, showFunctionName: Bool = true, showThreadName: Bool = false, showLogLevel: Bool = true, showFileNames: Bool = true, showLineNumbers: Bool = true, showDate: Bool = true, writeToFile: AnyObject? = nil, fileLogLevel: LogLevel? = nil) {
+    public func setup(logLevel: LogLevel = .Debug, showLogIdentifier: Bool = false, showFunctionName: Bool = true, showThreadName: Bool = false, showLogLevel: Bool = true, showFileNames: Bool = true, showLineNumbers: Bool = true, showDate: Bool = true, writeToFile: AnyObject? = nil, fileLogLevel: LogLevel? = nil) {
         outputLogLevel = logLevel;
 
         if let standardConsoleLogDestination = logDestination(XCGLogger.constants.baseConsoleLogDestinationIdentifier) as? XCGConsoleLogDestination {
+            standardConsoleLogDestination.showLogIdentifier = showLogIdentifier
             standardConsoleLogDestination.showFunctionName = showFunctionName
             standardConsoleLogDestination.showThreadName = showThreadName
             standardConsoleLogDestination.showLogLevel = showLogLevel
@@ -520,6 +530,7 @@ public class XCGLogger: CustomDebugStringConvertible {
             // We've been passed a file to use for logging, set up a file logger
             let standardFileLogDestination: XCGFileLogDestination = XCGFileLogDestination(owner: self, writeToFile: writeToFile, identifier: XCGLogger.constants.baseFileLogDestinationIdentifier)
 
+            standardFileLogDestination.showLogIdentifier = showLogIdentifier
             standardFileLogDestination.showFunctionName = showFunctionName
             standardFileLogDestination.showThreadName = showThreadName
             standardFileLogDestination.showLogLevel = showLogLevel
