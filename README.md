@@ -20,7 +20,7 @@ XCGLogger works in both iOS and OS X projects. It is a Swift library intended fo
 
 Swift does away with the C preprocessor, which kills the ability to use ```#define``` macros. This means our traditional way of generating nice debug logs is dead. Resorting to just plain old ```println``` calls means you lose a lot of helpful information, or requires you to type a lot more code.
 
-Use version 2.0 or above for Swift 1.2, and version 1.9 for Swift 1.1.
+Use XCGLogger version 3.x for Swift 2.0, XCGLogger version 2.x for Swift 1.2, and XCGLogger version 1.x for Swift 1.1 and below.
 
 ###Communication _(Hat Tip AlamoFire)_
 
@@ -170,8 +170,10 @@ You can set any number of options up in a similar fashion. See the updated iOSDe
 
 ###To Do
 
-- Add examples of some advanced use cases
+- Add more examples of some advanced use cases
 - Add additional log destination types
+- Add Objective-C support
+- Add log file rotation options
 
 ###More
 
@@ -185,6 +187,7 @@ Also, please check out my book **Swift for the Really Impatient** http://swiftfo
 
 ###Change Log
 
+* **Version 2.3**: *(2015/08/24)* - Added option to include the log identifier in log messages #79 
 * **Version 2.2**: *(2015/08/11)* - Internal restructuring, easier to create new log destination subclasses. Can disable function names, and/or dates. Added optional new log destination that uses NSLog instead of println().
 * **Version 2.1.1**: *(2015/06/18)* - Fixed two minor bugs wrt XcodeColors.
 * **Version 2.1**: *(2015/06/17)* - Added support for XcodeColors (https://github.com/robbiehanson/XcodeColors). Undeprecated the \*Exec() methods.
