@@ -64,7 +64,7 @@ public class XCGBaseLogDestination: XCGLogDestinationProtocol, CustomDebugString
     // MARK: - DebugPrintable
     public var debugDescription: String {
         get {
-            return "\(extractClassName(self)): \(identifier) - LogLevel: \(outputLogLevel.description()) showFunctionName: \(showFunctionName) showThreadName: \(showThreadName) showLogLevel: \(showLogLevel) showFileName: \(showFileName) showLineNumber: \(showLineNumber) showDate: \(showDate)"
+            return "\(extractClassName(self)): \(identifier) - LogLevel: \(outputLogLevel) showFunctionName: \(showFunctionName) showThreadName: \(showThreadName) showLogLevel: \(showLogLevel) showFileName: \(showFileName) showLineNumber: \(showLineNumber) showDate: \(showDate)"
         }
     }
 
@@ -88,7 +88,7 @@ public class XCGBaseLogDestination: XCGLogDestinationProtocol, CustomDebugString
         }
 
         if showLogLevel {
-            extendedDetails += "[" + logDetails.logLevel.description() + "] "
+            extendedDetails += "[\(logDetails.logLevel)] "
         }
 
         if showThreadName {
@@ -132,7 +132,7 @@ public class XCGBaseLogDestination: XCGLogDestinationProtocol, CustomDebugString
         }
 
         if showLogLevel {
-            extendedDetails += "[" + logDetails.logLevel.description() + "] "
+            extendedDetails += "[\(logDetails.logLevel)] "
         }
 
         output(logDetails, text: "\(extendedDetails)> \(logDetails.logMessage)")
@@ -286,7 +286,7 @@ public class XCGLogger: CustomDebugStringConvertible {
     }
 
     // MARK: - Enums
-    public enum LogLevel: Int, Comparable {
+    public enum LogLevel: Int, Comparable, CustomStringConvertible {
         case Verbose
         case Debug
         case Info
@@ -295,7 +295,7 @@ public class XCGLogger: CustomDebugStringConvertible {
         case Severe
         case None
 
-        public func description() -> String {
+        public var description: String {
             switch self {
             case .Verbose:
                 return "Verbose"
@@ -594,7 +594,7 @@ public class XCGLogger: CustomDebugStringConvertible {
         let XCGLoggerVersionNumber = XCGLogger.constants.versionString
 
         let logDetails: Array<XCGLogDetails> = [XCGLogDetails(logLevel: .Info, date: date, logMessage: "\(processInfo.processName) \(buildString)PID: \(processInfo.processIdentifier)", functionName: "", fileName: "", lineNumber: 0),
-            XCGLogDetails(logLevel: .Info, date: date, logMessage: "XCGLogger Version: \(XCGLoggerVersionNumber) - LogLevel: \(outputLogLevel.description())", functionName: "", fileName: "", lineNumber: 0)]
+            XCGLogDetails(logLevel: .Info, date: date, logMessage: "XCGLogger Version: \(XCGLoggerVersionNumber) - LogLevel: \(outputLogLevel)", functionName: "", fileName: "", lineNumber: 0)]
 
         for logDestination in (selectedLogDestination != nil ? [selectedLogDestination!] : logDestinations) {
             for logDetail in logDetails {

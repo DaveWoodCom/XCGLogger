@@ -109,6 +109,6 @@ class ViewController: UIViewController {
 
     func updateView() {
         logLevelSlider.value = Float(log.outputLogLevel.rawValue)
-        currentLogLevelLabel.text = log.outputLogLevel.description()
+        currentLogLevelLabel.text = "\(log.outputLogLevel)"
     }
 }

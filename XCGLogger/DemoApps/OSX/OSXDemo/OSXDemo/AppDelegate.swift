@@ -127,7 +127,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
 
     func updateView() {
         logLevelSlider.floatValue = Float(log.outputLogLevel.rawValue)
-        currentLogLevelTextField.stringValue = log.outputLogLevel.description()
+        currentLogLevelTextField.stringValue = "\(log.outputLogLevel)"
     }
 }
 
