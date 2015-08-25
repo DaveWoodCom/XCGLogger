@@ -42,6 +42,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     // MARK: - Life cycle methods
     func applicationDidFinishLaunching(aNotification: NSNotification) {
         // Insert code here to initialize your application
+        updateView()
     }
 
     func applicationWillTerminate(aNotification: NSNotification) {
