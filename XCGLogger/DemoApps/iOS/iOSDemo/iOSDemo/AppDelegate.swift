@@ -29,7 +29,7 @@ let log: XCGLogger = {
     log.addLogDestination(XCGNSLogDestination(owner: log, identifier: XCGLogger.constants.nslogDestinationIdentifier))
     log.logAppDetails()
 #else
-    let logPath: NSURL = self.cacheDirectory.URLByAppendingPathComponent("XCGLogger_Log.txt")
+    let logPath: NSURL = appDelegate.cacheDirectory.URLByAppendingPathComponent("XCGLogger_Log.txt")
     log.setup(logLevel: .Debug, showThreadName: true, showLogLevel: true, showFileNames: true, showLineNumbers: true, writeToFile: logPath)
 #endif
 
