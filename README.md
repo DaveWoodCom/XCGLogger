@@ -63,7 +63,7 @@ applicationDidFinishLaunching(aNotification: NSNotification) // OS X
 function, configure the options you need:
 
 ```Swift
-log.setup(logLevel: .Debug, showThreadName: true, showLogLevel: true, showFileNames: true, showLineNumbers: true, writeToFile: "path/to/file", fileLogLevel: .Debug)
+log.setup(.Debug, showThreadName: true, showLogLevel: true, showFileNames: true, showLineNumbers: true, writeToFile: "path/to/file", fileLogLevel: .Debug)
 ```
 
 The value for ```writeToFile:``` can be a ```String``` or ```NSURL```. If the file already exists, it will be cleared before we use it. Omit a value or set it to ```nil``` to log to the console only. You can optionally set a different log level for the file output using the ```fileLogLevel``` parameter. Set it to ```nil``` or omit it to use the same log level as the console.
@@ -87,7 +87,7 @@ It's possible to create multiple instances of XCGLogger with different options. 
 
 ```Swift
 let fileLog = XCGLogger()
-fileLog.setup(logLevel: .None, showThreadName: true, showLogLevel: true, showFileNames: true, showLineNumbers: true, writeToFile: "path/to/file", fileLogLevel: .Debug)
+fileLog.setup(.None, showThreadName: true, showLogLevel: true, showFileNames: true, showLineNumbers: true, writeToFile: "path/to/file", fileLogLevel: .Debug)
 fileLog.info("Have a second instance for special use")
 ```
 
@@ -141,7 +141,7 @@ Alternatively you can use a closure to initialize your global variable, so that 
 ```Swift
 let log: XCGLogger = {
     let log = XCGLogger.defaultInstance()
-    log.setup(logLevel: .Debug, showThreadName: true, showLogLevel: true, showFileNames: true, showLineNumbers: true, writeToFile: nil, fileLogLevel: .Debug)
+    log.setup(.Debug, showThreadName: true, showLogLevel: true, showFileNames: true, showLineNumbers: true, writeToFile: nil, fileLogLevel: .Debug)
     
     let dateFormatter = NSDateFormatter()
     dateFormatter.dateFormat = "MM/dd/yyyy hh:mma"
@@ -159,9 +159,9 @@ Go to Build settings -> Swift Compiler - Custom Flags -> Other Swift Flags and a
 
 ```Swift
 #if DEBUG
-    log.setup(logLevel: .Debug, showThreadName: true, showLogLevel: true, showFileNames: true, showLineNumbers: true, writeToFile: nil)
+    log.setup(.Debug, showThreadName: true, showLogLevel: true, showFileNames: true, showLineNumbers: true, writeToFile: nil)
 #else
-    log.setup(logLevel: .Severe, showThreadName: true, showLogLevel: true, showFileNames: true, showLineNumbers: true, writeToFile: nil)
+    log.setup(.Severe, showThreadName: true, showLogLevel: true, showFileNames: true, showLineNumbers: true, writeToFile: nil)
 #endif
 ```
 
