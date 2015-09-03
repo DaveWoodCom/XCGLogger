@@ -5,9 +5,18 @@
 #
 #    15564624 - what does the xccheckout file in Xcode5 do? Where's the documentation?
 #
-# Version 2.1
+# Version 2.6
 # For latest version, see: http://stackoverflow.com/questions/49478/git-ignore-file-for-xcode-projects
 #
+# 2015 updates:
+# - Fixed typo in "xccheckout" line - thanks to @lyck for pointing it out!
+# - Fixed the .idea optional ignore. Thanks to @hashier for pointing this out
+# - Finally added "xccheckout" to the ignore. Apple still refuses to answer support requests about this, but in practice it seems you should ignore it.
+# - minor tweaks from Jona and Coeur (slightly more precise xc* filtering/names)
+# 2014 updates:
+# - appended non-standard items DISABLED by default (uncomment if you use those tools)
+# - removed the edit that an SO.com moderator made without bothering to ask me
+# - researched CocoaPods .lock more carefully, thanks to Gokhan Celiker
 # 2013 updates:
 # - fixed the broken "save personal Schemes"
 # - added line-by-line explanations for EVERYTHING (some were missing)
@@ -34,20 +43,25 @@
 
 *.swp
 
+#
 # *.lock - this is used and abused by many editors for many different things.
-#    For the main ones I use (e.g. Eclipse), it should be excluded
-#    from source-control, but YMMV
-
+#    For the main ones I use (e.g. Eclipse), it should be excluded 
+#    from source-control, but YMMV.
+#   (lock files are usually local-only file-synchronization on the local FS that should NOT go in git)
+# c.f. the "OPTIONAL" section at bottom though, for tool-specific variations!
+#
+# In particular, if you're using CocoaPods, you'll want to comment-out this line:
 *.lock
 
+
 #
-# profile - REMOVED temporarily (on double-checking, this seems incorrect; I can't find it in OS X docs?)
+# profile - REMOVED temporarily (on double-checking, I can't find it in OS X docs?)
 #profile
 
 
 ####
 # Xcode temporary files that should never be committed
-#
+# 
 # NB: NIB/XIB files still exist even on Storyboard projects, so we want this...
 
 *~.nib
@@ -102,13 +116,22 @@ build/
 ####
 # Xcode 4 - semi-personal settings
 #
+# Apple Shared data that Apple put in the wrong folder
+# c.f. http://stackoverflow.com/a/19260712/153422
+#     FROM ANSWER: Apple says "don't ignore it"
+#     FROM COMMENTS: Apple is wrong; Apple code is too buggy to trust; there are no known negative side-effects to ignoring Apple's unofficial advice and instead doing the thing that actively fixes bugs in Xcode
+# Up to you, but ... current advice: ignore it.
+*.xccheckout
+
+#
 #
 # OPTION 1: ---------------------------------
 #     throw away ALL personal settings (including custom schemes!
 #     - unless they are "shared")
+# As per build/ and DerivedData/, this ought to have a trailing slash
 #
 # NB: this is exclusive with OPTION 2 below
-xcuserdata
+xcuserdata/
 
 # OPTION 2: ---------------------------------
 #     get rid of ALL personal settings, but KEEP SOME OF THEM
@@ -139,7 +162,7 @@ xcuserdata
 #       /xcuserdata/
 #         /(your name)/xcuserdatad/
 #           UserInterfaceState.xcuserstate
-#     /xcsshareddata/
+#     /xcshareddata/
 #       /xcschemes/
 #         (shared scheme name).xcscheme
 #     /xcuserdata/
@@ -159,20 +182,47 @@ xcuserdata
 *.moved-aside
 
 ####
-# Xcode 5 - VCS file
-# The data in this file not represent state of your project.
-# If you'll leave this file in git - you will have merge conflicts during
-# pull your changes to other's repo
+# OPTIONAL: Some well-known tools that people use side-by-side with Xcode / iOS development
 #
-*.xccheckout
+# NB: I'd rather not include these here, but gitignore's design is weak and doesn't allow
+#     modular gitignore: you have to put EVERYTHING in one file.
+#
+# COCOAPODS:
+#
+# c.f. http://guides.cocoapods.org/using/using-cocoapods.html#what-is-a-podfilelock
+# c.f. http://guides.cocoapods.org/using/using-cocoapods.html#should-i-ignore-the-pods-directory-in-source-control
+#
+!Podfile.lock
+#
+# RUBY:
+#
+# c.f. http://yehudakatz.com/2010/12/16/clarifying-the-roles-of-the-gemspec-and-gemfile/
+#
+!Gemfile.lock
+#
+# IDEA:
+#
+# c.f. https://www.jetbrains.com/objc/help/managing-projects-under-version-control.html?search=workspace.xml
+# 
+.idea/workspace.xml
+#
+# TEXTMATE:
+#
+# -- UNVERIFIED: c.f. http://stackoverflow.com/a/50283/153422
+#
+#tm_build_errors
 
 ####
 # UNKNOWN: recommended by others, but I can't discover what these files are
 #
-# ...none. Everything is now explained.
 
 #### Dave Wood additions
 # Other source code version systems
 .hg
 .svn
 CVS
+
+# Sensitive files
+.ssh/*
+id_rsa*
+id_dsa*
