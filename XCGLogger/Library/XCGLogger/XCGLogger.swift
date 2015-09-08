@@ -196,7 +196,7 @@ public class XCGNSLogDestination: XCGBaseLogDestination {
             adjustedText = text
         }
 
-        NSLog(adjustedText)
+        NSLog("%@", adjustedText)
     }
 }
 
