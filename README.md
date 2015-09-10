@@ -187,6 +187,8 @@ Also, please check out my book **Swift for the Really Impatient** http://swiftfo
 
 ###Change Log
 
+* **Version 3.0**: *(2015/09/09)* - Bug fix, and WatchOS 2 suppport (thanks @ymyzk)
+* **Version 2.4**: *(2015/09/09)* - Minor bug fix, likely the last release for Swift 1.x
 * **Version 3.0b3**: *(2015/08/24)* - Added option to include the log identifier in log messages #79
 * **Version 2.3**: *(2015/08/24)* - Added option to include the log identifier in log messages #79
 * **Version 3.0b2**: *(2015/08/11)* - Updated for Swift 2.0 (Xcode 7 Beta 5)

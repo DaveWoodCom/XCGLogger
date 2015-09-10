@@ -23,6 +23,13 @@
 			remoteGlobalIDString = 554DF41619D76FE7005708BE;
 			remoteInfo = "XCGLogger (OS X)";
 		};
+		555CA5E41BA1120A00A5AA95 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 555FFCCE19D77B3400F62246 /* XCGLogger.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 70CB94201B99E728007802FF;
+			remoteInfo = "XCGLogger (watchOS)";
+		};
 		555FFCBE19D77B1800F62246 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 555FFCA519D77B1800F62246 /* Project object */;
@@ -180,6 +187,7 @@
 			children = (
 				555FFCD519D77B3400F62246 /* XCGLogger.framework */,
 				555FFCD719D77B3400F62246 /* XCGLogger.framework */,
+				555CA5E51BA1120A00A5AA95 /* XCGLogger.framework */,
 				555FFCD919D77B3400F62246 /* XCGLoggerTests (iOS).xctest */,
 				5562CA971B7B25DD00F36DD8 /* XCGLoggerTests (OS X).xctest */,
 			);
@@ -272,6 +280,13 @@
 /* End PBXProject section */
 
 /* Begin PBXReferenceProxy section */
+		555CA5E51BA1120A00A5AA95 /* XCGLogger.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = XCGLogger.framework;
+			remoteRef = 555CA5E41BA1120A00A5AA95 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
 		555FFCD519D77B3400F62246 /* XCGLogger.framework */ = {
 			isa = PBXReferenceProxy;
 			fileType = wrapper.framework;
@@ -389,7 +404,7 @@
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				CODE_SIGN_IDENTITY = "-";
 				COPY_PHASE_STRIP = NO;
-				CURRENT_PROJECT_VERSION = 3.0b3;
+				CURRENT_PROJECT_VERSION = 3.0;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
@@ -433,7 +448,7 @@
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				CODE_SIGN_IDENTITY = "-";
 				COPY_PHASE_STRIP = YES;
-				CURRENT_PROJECT_VERSION = 3.0b3;
+				CURRENT_PROJECT_VERSION = 3.0;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
