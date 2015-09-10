@@ -10,6 +10,7 @@
 import Cocoa
 import XCGLogger
 
+let appDelegate = NSApplication.sharedApplication().delegate as! AppDelegate
 let log = XCGLogger.defaultInstance()
 
 @NSApplicationMain
@@ -18,18 +19,26 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     // MARK: - Properties
     @IBOutlet var window: NSWindow!
 
-    @IBOutlet var logLevelTextField : NSTextField!
-    @IBOutlet var currentLogLevelTextField : NSTextField!
-    @IBOutlet var generateTestLogTextField : NSTextField!
-    @IBOutlet var logLevelSlider : NSSlider!
+    @IBOutlet var logLevelTextField: NSTextField!
+    @IBOutlet var currentLogLevelTextField: NSTextField!
+    @IBOutlet var generateTestLogTextField: NSTextField!
+    @IBOutlet var logLevelSlider: NSSlider!
 
     // MARK: - Life cycle methods
     func applicationDidFinishLaunching(aNotification: NSNotification) {
         // Insert code here to initialize your application
 
         // Setup XCGLogger
-        let logPath : NSString = "~/Desktop/XCGLogger_Log.txt".stringByExpandingTildeInPath
+        let logPath: NSString = "~/Desktop/XCGLogger_Log.txt".stringByExpandingTildeInPath
         log.setup(logLevel: .Debug, showThreadName: true, showLogLevel: true, showFileNames: true, showLineNumbers: true, writeToFile: logPath)
+        log.xcodeColors = [
+            .Verbose: .lightGrey,
+            .Debug: .darkGrey,
+            .Info: .darkGreen,
+            .Warning: .orange,
+            .Error: XCGLogger.XcodeColor(fg: NSColor.redColor(), bg: NSColor.whiteColor()), // Optionally use an NSColor
+            .Severe: XCGLogger.XcodeColor(fg: (255, 255, 255), bg: (255, 0, 0)) // Optionally use RGB values directly
+        ]
     }
 
     func applicationWillTerminate(aNotification: NSNotification) {
@@ -37,7 +46,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     }
 
     // MARK: - Main View
-    @IBAction func verboseButtonTouchUpInside(sender : AnyObject) {
+    @IBAction func verboseButtonTouchUpInside(sender: AnyObject) {
         log.verbose("Verbose button tapped")
         log.verbose {
             // add expensive code required only for logging, then return an optional String
@@ -45,7 +54,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         }
     }
 
-    @IBAction func debugButtonTouchUpInside(sender : AnyObject) {
+    @IBAction func debugButtonTouchUpInside(sender: AnyObject) {
         log.debug("Debug button tapped")
         log.debug {
             // add expensive code required only for logging, then return an optional String
@@ -53,7 +62,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         }
     }
 
-    @IBAction func infoButtonTouchUpInside(sender : AnyObject) {
+    @IBAction func infoButtonTouchUpInside(sender: AnyObject) {
         log.info("Info button tapped")
         log.info {
             // add expensive code required only for logging, then return an optional String
@@ -61,7 +70,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         }
     }
 
-    @IBAction func warningButtonTouchUpInside(sender : AnyObject) {
+    @IBAction func warningButtonTouchUpInside(sender: AnyObject) {
         log.warning("Warning button tapped")
         log.warning {
             // add expensive code required only for logging, then return an optional String
@@ -69,7 +78,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         }
     }
 
-    @IBAction func errorButtonTouchUpInside(sender : AnyObject) {
+    @IBAction func errorButtonTouchUpInside(sender: AnyObject) {
         log.error("Error button tapped")
         log.error {
             // add expensive code required only for logging, then return an optional String
@@ -77,7 +86,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         }
     }
 
-    @IBAction func severeButtonTouchUpInside(sender : AnyObject) {
+    @IBAction func severeButtonTouchUpInside(sender: AnyObject) {
         log.severe("Severe button tapped")
         log.severe {
             // add expensive code required only for logging, then return an optional String
@@ -85,7 +94,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         }
     }
 
-    @IBAction func logLevelSliderValueChanged(sender : AnyObject) {
+    @IBAction func logLevelSliderValueChanged(sender: AnyObject) {
         var logLevel: XCGLogger.LogLevel = .Verbose
 
         if (0 <= logLevelSlider.floatValue && logLevelSlider.floatValue < 1) {
@@ -116,7 +125,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
 
     func updateView() {
         logLevelSlider.floatValue = Float(log.outputLogLevel.rawValue)
-        currentLogLevelTextField.stringValue = log.outputLogLevel.description()
+        currentLogLevelTextField.stringValue = "\(log.outputLogLevel)"
     }
 }
 

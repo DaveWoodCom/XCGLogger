@@ -12,10 +12,10 @@ import XCGLogger
 
 class ViewController: UIViewController {
 
-    @IBOutlet var logLevelLabel : UILabel!
-    @IBOutlet var currentLogLevelLabel : UILabel!
-    @IBOutlet var logLevelSlider : UISlider!
-    @IBOutlet var generateLabel : UILabel!
+    @IBOutlet var logLevelLabel: UILabel!
+    @IBOutlet var currentLogLevelLabel: UILabel!
+    @IBOutlet var logLevelSlider: UISlider!
+    @IBOutlet var generateLabel: UILabel!
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -24,7 +24,7 @@ class ViewController: UIViewController {
         updateView()
     }
 
-    @IBAction func verboseButtonTouchUpInside(sender : AnyObject) {
+    @IBAction func verboseButtonTouchUpInside(sender: AnyObject) {
         log.verbose("Verbose button tapped")
         log.verbose {
             // add expensive code required only for logging, then return an optional String
@@ -33,7 +33,7 @@ class ViewController: UIViewController {
         }
     }
 
-    @IBAction func debugButtonTouchUpInside(sender : AnyObject) {
+    @IBAction func debugButtonTouchUpInside(sender: AnyObject) {
         log.debug("Debug button tapped")
         log.debug {
             // add expensive code required only for logging, then return an optional String
@@ -42,7 +42,7 @@ class ViewController: UIViewController {
         }
     }
 
-    @IBAction func infoButtonTouchUpInside(sender : AnyObject) {
+    @IBAction func infoButtonTouchUpInside(sender: AnyObject) {
         log.info("Info button tapped")
         log.info {
             // add expensive code required only for logging, then return an optional String
@@ -51,7 +51,7 @@ class ViewController: UIViewController {
         }
     }
 
-    @IBAction func warningButtonTouchUpInside(sender : AnyObject) {
+    @IBAction func warningButtonTouchUpInside(sender: AnyObject) {
         log.warning("Warning button tapped")
         log.warning {
             // add expensive code required only for logging, then return an optional String
@@ -60,7 +60,7 @@ class ViewController: UIViewController {
         }
     }
 
-    @IBAction func errorButtonTouchUpInside(sender : AnyObject) {
+    @IBAction func errorButtonTouchUpInside(sender: AnyObject) {
         log.error("Error button tapped")
         log.error {
             // add expensive code required only for logging, then return an optional String
@@ -69,7 +69,7 @@ class ViewController: UIViewController {
         }
     }
 
-    @IBAction func severeButtonTouchUpInside(sender : AnyObject) {
+    @IBAction func severeButtonTouchUpInside(sender: AnyObject) {
         log.severe("Severe button tapped")
         log.severe {
             // add expensive code required only for logging, then return an optional String
@@ -78,7 +78,7 @@ class ViewController: UIViewController {
         }
     }
 
-    @IBAction func logLevelSliderValueChanged(sender : AnyObject) {
+    @IBAction func logLevelSliderValueChanged(sender: AnyObject) {
         var logLevel: XCGLogger.LogLevel = .Verbose
 
         if (0 <= logLevelSlider.value && logLevelSlider.value < 1) {
@@ -109,6 +109,6 @@ class ViewController: UIViewController {
 
     func updateView() {
         logLevelSlider.value = Float(log.outputLogLevel.rawValue)
-        currentLogLevelLabel.text = log.outputLogLevel.description()
+        currentLogLevelLabel.text = "\(log.outputLogLevel)"
     }
 }

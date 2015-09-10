@@ -20,7 +20,7 @@ XCGLogger works in both iOS and OS X projects. It is a Swift library intended fo
 
 Swift does away with the C preprocessor, which kills the ability to use ```#define``` macros. This means our traditional way of generating nice debug logs is dead. Resorting to just plain old ```println``` calls means you lose a lot of helpful information, or requires you to type a lot more code.
 
-Use version 2.0 or above for Swift 1.2, and version 1.9 for Swift 1.1.
+Use XCGLogger version 3.x for Swift 2.0, XCGLogger version 2.x for Swift 1.2, and XCGLogger version 1.x for Swift 1.1 and below.
 
 ###Communication _(Hat Tip AlamoFire)_
 
@@ -63,7 +63,7 @@ applicationDidFinishLaunching(aNotification: NSNotification) // OS X
 function, configure the options you need:
 
 ```Swift
-log.setup(logLevel: .Debug, showLogLevel: true, showFileNames: true, showLineNumbers: true, writeToFile: "path/to/file", fileLogLevel: .Debug)
+log.setup(logLevel: .Debug, showThreadName: true, showLogLevel: true, showFileNames: true, showLineNumbers: true, writeToFile: "path/to/file", fileLogLevel: .Debug)
 ```
 
 The value for ```writeToFile:``` can be a ```String``` or ```NSURL```. If the file already exists, it will be cleared before we use it. Omit a value or set it to ```nil``` to log to the console only. You can optionally set a different log level for the file output using the ```fileLogLevel``` parameter. Set it to ```nil``` or omit it to use the same log level as the console.
@@ -87,7 +87,7 @@ It's possible to create multiple instances of XCGLogger with different options. 
 
 ```Swift
 let fileLog = XCGLogger()
-fileLog.setup(logLevel: .None, showLogLevel: true, showFileNames: true, showLineNumbers: true, writeToFile: "path/to/file", fileLogLevel: .Debug)
+fileLog.setup(logLevel: .None, showThreadName: true, showLogLevel: true, showFileNames: true, showLineNumbers: true, writeToFile: "path/to/file", fileLogLevel: .Debug)
 fileLog.info("Have a second instance for special use")
 ```
 
@@ -118,23 +118,62 @@ log.debug {
 }
 ```
 
-Version 1.2 introduced ```verboseExec```, ```debugExec```, ```infoExec```, ```warningExec```, ```errorExec```, and ```severeExec``` to solve this problem. As of version 1.9, that approach has been deprecated.
+In cases where you wish to selectively execute code without generating a log line, you can use the methods: ```verboseExec```, ```debugExec```, ```infoExec```, ```warningExec```, ```errorExec```, and ```severeExec```.
 
 #####Custom Date Formats
 
 As of version 2.0, you can create your own NSDateFormatter object and assign it to the logger.
 
 ```Swift
-var dateFormatter = NSDateFormatter()
+let dateFormatter = NSDateFormatter()
 dateFormatter.dateFormat = "MM/dd/yyyy hh:mma"
 dateFormatter.locale = NSLocale.currentLocale()
 log.dateFormatter = dateFormatter
 ```
 
+#####Enhancing log messages with colour
+
+XCGLogger now supports the XcodeColors plug-in (https://github.com/robbiehanson/XcodeColors). Once installed, each log level will have its own colour. These colours can be customized as desired. See the sample projects for examples. If using multiple logger's, you could alternatively set each logger to its own colour.
+
+#####Initialization using Closure
+
+Alternatively you can use a closure to initialize your global variable, so that all initialization is done in one place
+```Swift
+let log: XCGLogger = {
+    let log = XCGLogger.defaultInstance()
+    log.setup(logLevel: .Debug, showThreadName: true, showLogLevel: true, showFileNames: true, showLineNumbers: true, writeToFile: nil, fileLogLevel: .Debug)
+    
+    let dateFormatter = NSDateFormatter()
+    dateFormatter.dateFormat = "MM/dd/yyyy hh:mma"
+    dateFormatter.locale = NSLocale.currentLocale()
+    log.dateFormatter = dateFormatter
+    
+    return log
+}()
+```
+
+#####Alternate Configurations
+
+By using Swift build flags, different log levels can be used in debugging versus staging/production.
+Go to Build settings -> Swift Compiler - Custom Flags -> Other Swift Flags and add ```-DDEBUG``` to the Debug entry.
+
+```Swift
+#if DEBUG
+    log.setup(logLevel: .Debug, showThreadName: true, showLogLevel: true, showFileNames: true, showLineNumbers: true, writeToFile: nil)
+#else
+    log.setup(logLevel: .Severe, showThreadName: true, showLogLevel: true, showFileNames: true, showLineNumbers: true, writeToFile: nil)
+#endif
+```
+
+You can set any number of options up in a similar fashion. See the updated iOSDemo app for an example of using different log destinations based on options, search for ```USE_NSLOG```.
+
+
 ###To Do
 
-- Add examples of some advanced use cases
+- Add more examples of some advanced use cases
 - Add additional log destination types
+- Add Objective-C support
+- Add log file rotation options
 
 ###More
 
@@ -148,6 +187,11 @@ Also, please check out my book **Swift for the Really Impatient** http://swiftfo
 
 ###Change Log
 
+* **Version 2.4**: *(2015/09/09)* - Minor bug fix, likely the last release for Swift 1.x
+* **Version 2.3**: *(2015/08/24)* - Added option to include the log identifier in log messages #79 
+* **Version 2.2**: *(2015/08/11)* - Internal restructuring, easier to create new log destination subclasses. Can disable function names, and/or dates. Added optional new log destination that uses NSLog instead of println().
+* **Version 2.1.1**: *(2015/06/18)* - Fixed two minor bugs wrt XcodeColors.
+* **Version 2.1**: *(2015/06/17)* - Added support for XcodeColors (https://github.com/robbiehanson/XcodeColors). Undeprecated the \*Exec() methods.
 * **Version 2.0**: *(2015/04/14)* - Requires Swift 1.2. Removed some workarounds/hacks for older versions of Xcode. Removed thread based caching of NSDateFormatter objects since they're now thread safe. You can now use the default date formatter, or create and assign your own and it'll be used. Added Thread name option (Thanks to Nick Strecker https://github.com/tekknick ). Add experimental support for CocoaPods. 
 * **Version 1.9**: *(2015/04/14)* - Deprecated the \*Exec() methods in favour of just using a trailing closure on the logging methods (Thanks to Nick Strecker https://github.com/tekknick ). This will be the last version for Swift 1.1.
 * **Version 1.8.1**: *(2014/12/31)* - Added a workaround to the Swift compiler's optimization bug, restored optimization level back to Fastest

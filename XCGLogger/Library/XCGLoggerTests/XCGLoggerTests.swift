@@ -9,22 +9,22 @@
 import XCTest
 
 class XCGLoggerTests: XCTestCase {
-    
+
     override func setUp() {
         super.setUp()
         // Put setup code here. This method is called before the invocation of each test method in the class.
     }
-    
+
     override func tearDown() {
         // Put teardown code here. This method is called after the invocation of each test method in the class.
         super.tearDown()
     }
-    
+
     //    func testExample() {
     //        // This is an example of a functional test case.
     //        XCTAssert(true, "Pass")
     //    }
-    //    
+    //
     //    func testPerformanceExample() {
     //        // This is an example of a performance test case.
     //        self.measureBlock() {
@@ -109,7 +109,7 @@ class XCGLoggerTests: XCTestCase {
 
         let thisObject = ObjectWithExpensiveDescription()
 
-        log.verbose("The description of \(thisObject) is really expensive to create" )
+        log.verbose("The description of \(thisObject) is really expensive to create")
         XCTAssert(!thisObject.descriptionInvoked, "Fail: String was interpolated when it shouldn't have been")
     }
 
@@ -132,17 +132,17 @@ class XCGLoggerTests: XCTestCase {
         var log: XCGLogger = XCGLogger()
         log.setup(logLevel: .Debug, showLogLevel: true, showFileNames: true, showLineNumbers: true, writeToFile: "/tmp/test.log")
         log.identifier = "com.cerebralgardens.xcglogger.testExecExecutesExactlyOnceWithNilReturnAndMultipleDestinations"
-        
+
         var numberOfTimes: Int = 0
         log.debug {
             ++numberOfTimes
             return nil
         }
-        
+
         log.debug("executed: \(numberOfTimes) time(s)")
         XCTAssert(numberOfTimes == 1, "Fail: Didn't execute the closure exactly once")
     }
-    
+
     func testExecDoesntExecute() {
         var log: XCGLogger = XCGLogger()
         log.identifier = "com.cerebralgardens.xcglogger.testExecDoesntExecute"
@@ -170,33 +170,47 @@ class XCGLoggerTests: XCTestCase {
             log.debug(linesToLog[Int(index)])
         }
     }
-    
+
+    func testMultiThreaded2() {
+        var log: XCGLogger = XCGLogger()
+        log.identifier = "com.cerebralgardens.xcglogger.testMultiThreaded2"
+        log.setup(logLevel: .Debug, showThreadName: true, showLogLevel: true, showFileNames: true, showLineNumbers: true, writeToFile: nil)
+
+        let linesToLog = ["One", "Two", "Three", "Four", "Five", "Six", "Seven", "Eight", "Nine", "Ten"]
+        let myConcurrentQueue = dispatch_queue_create("com.cerebralgardens.xcglogger.testMultiThreaded2.queue", DISPATCH_QUEUE_CONCURRENT)
+        dispatch_apply(linesToLog.count, myConcurrentQueue) { (index: Int) in
+            log.debug {
+                return "\(linesToLog[Int(index)])"
+            }
+        }
+    }
+
     func testDateFormatterIsCached() {
         var log: XCGLogger = XCGLogger()
         log.identifier = "com.cerebralgardens.xcglogger.testDateFormatterIsCached"
-        
+
         let dateFormatter1 = log.dateFormatter
         let dateFormatter2 = log.dateFormatter
-        
+
         XCTAssert(dateFormatter1 == dateFormatter2, "Fail: Received two different date formatter objects")
     }
-    
+
     func testCustomDateFormatter() {
         var log: XCGLogger = XCGLogger()
         log.identifier = "com.cerebralgardens.xcglogger.testCustomDateFormatter"
         log.outputLogLevel = .Debug
-        
+
         let defaultDateFormatter = log.dateFormatter
-        
+
         let dateFormat = "MM/dd/yyyy hh:mma"
 
         var dateFormatter = NSDateFormatter()
         dateFormatter.dateFormat = dateFormat
 
         log.dateFormatter = dateFormatter
-        
+
         log.debug("Test date format is different than our default")
-        
+
         XCTAssertNotNil(log.dateFormatter, "Fail: date formatter is nil")
         XCTAssertEqual(log.dateFormatter!.dateFormat, dateFormat, "Fail: date format doesn't match our custom date format")
         XCTAssert(defaultDateFormatter != dateFormatter, "Fail: Did not assign a custom date formatter")

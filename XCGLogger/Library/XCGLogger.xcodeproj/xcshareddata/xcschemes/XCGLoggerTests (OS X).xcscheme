@@ -9,14 +9,14 @@
          <BuildActionEntry
             buildForTesting = "YES"
             buildForRunning = "YES"
-            buildForProfiling = "YES"
-            buildForArchiving = "YES"
+            buildForProfiling = "NO"
+            buildForArchiving = "NO"
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "554DF41619D76FE7005708BE"
-               BuildableName = "XCGLogger.framework"
-               BlueprintName = "XCGLogger (OS X)"
+               BlueprintIdentifier = "55BB1EF51B79DC7500709779"
+               BuildableName = "XCGLoggerTests (OS X).xctest"
+               BlueprintName = "XCGLoggerTests (OS X)"
                ReferencedContainer = "container:XCGLogger.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
@@ -42,9 +42,9 @@
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "554DF41619D76FE7005708BE"
-            BuildableName = "XCGLogger.framework"
-            BlueprintName = "XCGLogger (OS X)"
+            BlueprintIdentifier = "55BB1EF51B79DC7500709779"
+            BuildableName = "XCGLoggerTests (OS X).xctest"
+            BlueprintName = "XCGLoggerTests (OS X)"
             ReferencedContainer = "container:XCGLogger.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
@@ -61,9 +61,9 @@
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "554DF41619D76FE7005708BE"
-            BuildableName = "XCGLogger.framework"
-            BlueprintName = "XCGLogger (OS X)"
+            BlueprintIdentifier = "55BB1EF51B79DC7500709779"
+            BuildableName = "XCGLoggerTests (OS X).xctest"
+            BlueprintName = "XCGLoggerTests (OS X)"
             ReferencedContainer = "container:XCGLogger.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
@@ -79,9 +79,9 @@
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "554DF41619D76FE7005708BE"
-            BuildableName = "XCGLogger.framework"
-            BlueprintName = "XCGLogger (OS X)"
+            BlueprintIdentifier = "55BB1EF51B79DC7500709779"
+            BuildableName = "XCGLoggerTests (OS X).xctest"
+            BlueprintName = "XCGLoggerTests (OS X)"
             ReferencedContainer = "container:XCGLogger.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
