@@ -65,6 +65,13 @@
 			remoteGlobalIDString = 55BB1F011B79DC7500709779;
 			remoteInfo = "XCGLoggerTests (OS X)";
 		};
+		55CB2FB41BA12ADE0031F329 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 555FFCCE19D77B3400F62246 /* XCGLogger.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 5515A3DF1BA119FA0047BA31;
+			remoteInfo = "XCGLogger (tvOS)";
+		};
 		55D5C34819D77C6000A47D22 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 555FFCCE19D77B3400F62246 /* XCGLogger.xcodeproj */;
@@ -188,6 +195,7 @@
 				555FFCD519D77B3400F62246 /* XCGLogger.framework */,
 				555FFCD719D77B3400F62246 /* XCGLogger.framework */,
 				555CA5E51BA1120A00A5AA95 /* XCGLogger.framework */,
+				55CB2FB51BA12ADE0031F329 /* XCGLogger.framework */,
 				555FFCD919D77B3400F62246 /* XCGLoggerTests (iOS).xctest */,
 				5562CA971B7B25DD00F36DD8 /* XCGLoggerTests (OS X).xctest */,
 			);
@@ -315,6 +323,13 @@
 			remoteRef = 5562CA961B7B25DD00F36DD8 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
+		55CB2FB51BA12ADE0031F329 /* XCGLogger.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = XCGLogger.framework;
+			remoteRef = 55CB2FB41BA12ADE0031F329 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
 /* End PBXReferenceProxy section */
 
 /* Begin PBXResourcesBuildPhase section */
@@ -404,7 +419,7 @@
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				CODE_SIGN_IDENTITY = "-";
 				COPY_PHASE_STRIP = NO;
-				CURRENT_PROJECT_VERSION = 3.0;
+				CURRENT_PROJECT_VERSION = 3.1b1;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
@@ -448,7 +463,7 @@
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				CODE_SIGN_IDENTITY = "-";
 				COPY_PHASE_STRIP = YES;
-				CURRENT_PROJECT_VERSION = 3.0;
+				CURRENT_PROJECT_VERSION = 3.1b1;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
