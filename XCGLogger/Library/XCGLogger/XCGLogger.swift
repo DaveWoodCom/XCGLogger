@@ -8,10 +8,10 @@
 //
 
 import Foundation
-#if os(iOS) || os(watchOS)
-    import UIKit
-#else
+#if os(OSX)
     import AppKit
+#else
+    import UIKit
 #endif
 
 // MARK: - XCGLogDetails
@@ -363,24 +363,7 @@ public class XCGLogger: CustomDebugStringConvertible {
             self.bg = bg
         }
 
-#if os(iOS) || os(watchOS)
-        public init(fg: UIColor, bg: UIColor? = nil) {
-            var redComponent: CGFloat = 0
-            var greenComponent: CGFloat = 0
-            var blueComponent: CGFloat = 0
-            var alphaComponent: CGFloat = 0
-
-            fg.getRed(&redComponent, green: &greenComponent, blue: &blueComponent, alpha:&alphaComponent)
-            self.fg = (Int(redComponent * 255), Int(greenComponent * 255), Int(blueComponent * 255))
-            if let bg = bg {
-                bg.getRed(&redComponent, green: &greenComponent, blue: &blueComponent, alpha:&alphaComponent)
-                self.bg = (Int(redComponent * 255), Int(greenComponent * 255), Int(blueComponent * 255))
-            }
-            else {
-                self.bg = nil
-            }
-        }
-#else
+#if os(OSX)
         public init(fg: NSColor, bg: NSColor? = nil) {
             if let fgColorSpaceCorrected = fg.colorUsingColorSpaceName(NSCalibratedRGBColorSpace) {
                 self.fg = (Int(fgColorSpaceCorrected.redComponent * 255), Int(fgColorSpaceCorrected.greenComponent * 255), Int(fgColorSpaceCorrected.blueComponent * 255))
@@ -393,6 +376,23 @@ public class XCGLogger: CustomDebugStringConvertible {
                 let bgColorSpaceCorrected = bg.colorUsingColorSpaceName(NSCalibratedRGBColorSpace) {
 
                     self.bg = (Int(bgColorSpaceCorrected.redComponent * 255), Int(bgColorSpaceCorrected.greenComponent * 255), Int(bgColorSpaceCorrected.blueComponent * 255))
+            }
+            else {
+                self.bg = nil
+            }
+        }
+#else
+        public init(fg: UIColor, bg: UIColor? = nil) {
+            var redComponent: CGFloat = 0
+            var greenComponent: CGFloat = 0
+            var blueComponent: CGFloat = 0
+            var alphaComponent: CGFloat = 0
+
+            fg.getRed(&redComponent, green: &greenComponent, blue: &blueComponent, alpha:&alphaComponent)
+            self.fg = (Int(redComponent * 255), Int(greenComponent * 255), Int(blueComponent * 255))
+            if let bg = bg {
+                bg.getRed(&redComponent, green: &greenComponent, blue: &blueComponent, alpha:&alphaComponent)
+                self.bg = (Int(redComponent * 255), Int(greenComponent * 255), Int(blueComponent * 255))
             }
             else {
                 self.bg = nil

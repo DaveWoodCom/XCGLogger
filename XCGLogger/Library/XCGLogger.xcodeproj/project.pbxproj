@@ -7,9 +7,11 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		5515A3E71BA11B170047BA31 /* XCGLogger.h in Headers */ = {isa = PBXBuildFile; fileRef = 55DA396519D7737B0032F026 /* XCGLogger.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		554DF41019D76FA9005708BE /* XCGLogger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 554DF40F19D76FA9005708BE /* XCGLogger.swift */; };
 		554DF41119D76FA9005708BE /* XCGLogger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 554DF40F19D76FA9005708BE /* XCGLogger.swift */; };
 		554DF43319D77155005708BE /* XCGLogger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 554DF40F19D76FA9005708BE /* XCGLogger.swift */; };
+		557C47E41BA125F800C9A174 /* XCGLogger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 554DF40F19D76FA9005708BE /* XCGLogger.swift */; };
 		55BB1EF91B79DC7500709779 /* XCGLogger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 554DF40F19D76FA9005708BE /* XCGLogger.swift */; };
 		55BB1EFA1B79DC7500709779 /* XCGLoggerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55E3EE5719D76F280068C3A7 /* XCGLoggerTests.swift */; };
 		55BB1EFC1B79DC7500709779 /* XCGLogger.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55E3EE4519D76F280068C3A7 /* XCGLogger.framework */; };
@@ -39,6 +41,9 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		5515A3DF1BA119FA0047BA31 /* XCGLogger.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = XCGLogger.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		5515A3E11BA119FA0047BA31 /* XCGLogger (tvOS).h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "XCGLogger (tvOS).h"; sourceTree = "<group>"; };
+		5515A3E31BA119FA0047BA31 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		554DF40F19D76FA9005708BE /* XCGLogger.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = XCGLogger.swift; sourceTree = "<group>"; };
 		554DF41719D76FE7005708BE /* XCGLogger.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = XCGLogger.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		55BB1F011B79DC7500709779 /* XCGLoggerTests (OS X).xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "XCGLoggerTests (OS X).xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -53,6 +58,13 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		5515A3DB1BA119FA0047BA31 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		554DF41319D76FE7005708BE /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -93,6 +105,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		5515A3E01BA119FA0047BA31 /* XCGLogger (tvOS) */ = {
+			isa = PBXGroup;
+			children = (
+				5515A3E11BA119FA0047BA31 /* XCGLogger (tvOS).h */,
+				5515A3E31BA119FA0047BA31 /* Info.plist */,
+			);
+			path = "XCGLogger (tvOS)";
+			sourceTree = "<group>";
+		};
 		55DA396419D7737B0032F026 /* iOS */ = {
 			isa = PBXGroup;
 			children = (
@@ -114,6 +135,7 @@
 			children = (
 				55E3EE4719D76F280068C3A7 /* XCGLogger */,
 				55E3EE5419D76F280068C3A7 /* XCGLoggerTests */,
+				5515A3E01BA119FA0047BA31 /* XCGLogger (tvOS) */,
 				55E3EE4619D76F280068C3A7 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -126,6 +148,7 @@
 				554DF41719D76FE7005708BE /* XCGLogger.framework */,
 				55BB1F011B79DC7500709779 /* XCGLoggerTests (OS X).xctest */,
 				70CB94201B99E728007802FF /* XCGLogger.framework */,
+				5515A3DF1BA119FA0047BA31 /* XCGLogger.framework */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -169,6 +192,14 @@
 /* End PBXGroup section */
 
 /* Begin PBXHeadersBuildPhase section */
+		5515A3DC1BA119FA0047BA31 /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				5515A3E71BA11B170047BA31 /* XCGLogger.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		554DF41419D76FE7005708BE /* Headers */ = {
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
@@ -196,6 +227,24 @@
 /* End PBXHeadersBuildPhase section */
 
 /* Begin PBXNativeTarget section */
+		5515A3DE1BA119FA0047BA31 /* XCGLogger (tvOS) */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 5515A3E61BA119FA0047BA31 /* Build configuration list for PBXNativeTarget "XCGLogger (tvOS)" */;
+			buildPhases = (
+				5515A3DA1BA119FA0047BA31 /* Sources */,
+				5515A3DB1BA119FA0047BA31 /* Frameworks */,
+				5515A3DC1BA119FA0047BA31 /* Headers */,
+				5515A3DD1BA119FA0047BA31 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "XCGLogger (tvOS)";
+			productName = "XCGLogger (tvOS)";
+			productReference = 5515A3DF1BA119FA0047BA31 /* XCGLogger.framework */;
+			productType = "com.apple.product-type.framework";
+		};
 		554DF41619D76FE7005708BE /* XCGLogger (OS X) */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 554DF42A19D76FE7005708BE /* Build configuration list for PBXNativeTarget "XCGLogger (OS X)" */;
@@ -297,6 +346,9 @@
 				LastUpgradeCheck = 0700;
 				ORGANIZATIONNAME = "Cerebral Gardens";
 				TargetAttributes = {
+					5515A3DE1BA119FA0047BA31 = {
+						CreatedOnToolsVersion = 7.1;
+					};
 					554DF41619D76FE7005708BE = {
 						CreatedOnToolsVersion = 6.1;
 					};
@@ -323,6 +375,7 @@
 				55E3EE4419D76F280068C3A7 /* XCGLogger (iOS) */,
 				554DF41619D76FE7005708BE /* XCGLogger (OS X) */,
 				70CB94161B99E728007802FF /* XCGLogger (watchOS) */,
+				5515A3DE1BA119FA0047BA31 /* XCGLogger (tvOS) */,
 				55E3EE4F19D76F280068C3A7 /* XCGLoggerTests (iOS) */,
 				55BB1EF51B79DC7500709779 /* XCGLoggerTests (OS X) */,
 			);
@@ -330,6 +383,13 @@
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
+		5515A3DD1BA119FA0047BA31 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		554DF41519D76FE7005708BE /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -368,6 +428,14 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		5515A3DA1BA119FA0047BA31 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				557C47E41BA125F800C9A174 /* XCGLogger.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		554DF41219D76FE7005708BE /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -426,6 +494,51 @@
 /* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
+		5515A3E41BA119FA0047BA31 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CURRENT_PROJECT_VERSION = 1;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				GCC_NO_COMMON_BLOCKS = YES;
+				INFOPLIST_FILE = "XCGLogger (tvOS)/Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.cerebralgardens.xcglogger;
+				PRODUCT_NAME = XCGLogger;
+				SDKROOT = appletvos;
+				SKIP_INSTALL = YES;
+				TARGETED_DEVICE_FAMILY = 3;
+				TVOS_DEPLOYMENT_TARGET = 9.0;
+			};
+			name = Debug;
+		};
+		5515A3E51BA119FA0047BA31 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COPY_PHASE_STRIP = NO;
+				CURRENT_PROJECT_VERSION = 1;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				GCC_NO_COMMON_BLOCKS = YES;
+				INFOPLIST_FILE = "XCGLogger (tvOS)/Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.cerebralgardens.xcglogger;
+				PRODUCT_NAME = XCGLogger;
+				SDKROOT = appletvos;
+				SKIP_INSTALL = YES;
+				TARGETED_DEVICE_FAMILY = 3;
+				TVOS_DEPLOYMENT_TARGET = 9.0;
+			};
+			name = Release;
+		};
 		554DF42B19D76FE7005708BE /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -542,6 +655,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
+				PRODUCT_MODULE_NAME = XCGLogger;
 				SDKROOT = iphoneos;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -581,6 +695,7 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
+				PRODUCT_MODULE_NAME = XCGLogger;
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALIDATE_PRODUCT = YES;
@@ -710,6 +825,15 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		5515A3E61BA119FA0047BA31 /* Build configuration list for PBXNativeTarget "XCGLogger (tvOS)" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				5515A3E41BA119FA0047BA31 /* Debug */,
+				5515A3E51BA119FA0047BA31 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		554DF42A19D76FE7005708BE /* Build configuration list for PBXNativeTarget "XCGLogger (OS X)" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
