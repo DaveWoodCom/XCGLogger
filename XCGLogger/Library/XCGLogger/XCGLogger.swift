@@ -282,7 +282,7 @@ public class XCGLogger: DebugPrintable {
         public static let baseFileLogDestinationIdentifier = "com.cerebralgardens.xcglogger.logdestination.file"
         public static let nsdataFormatterCacheIdentifier = "com.cerebralgardens.xcglogger.nsdataFormatterCache"
         public static let logQueueIdentifier = "com.cerebralgardens.xcglogger.queue"
-        public static let versionString = "2.3"
+        public static let versionString = "2.4"
     }
 
     // MARK: - Enums

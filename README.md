@@ -187,6 +187,7 @@ Also, please check out my book **Swift for the Really Impatient** http://swiftfo
 
 ###Change Log
 
+* **Version 2.4**: *(2015/09/09)* - Minor bug fix, likely the last release for Swift 1.x
 * **Version 2.3**: *(2015/08/24)* - Added option to include the log identifier in log messages #79 
 * **Version 2.2**: *(2015/08/11)* - Internal restructuring, easier to create new log destination subclasses. Can disable function names, and/or dates. Added optional new log destination that uses NSLog instead of println().
 * **Version 2.1.1**: *(2015/06/18)* - Fixed two minor bugs wrt XcodeColors.
