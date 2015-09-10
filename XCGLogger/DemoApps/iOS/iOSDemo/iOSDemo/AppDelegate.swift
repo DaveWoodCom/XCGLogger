@@ -30,7 +30,7 @@ let log: XCGLogger = {
     log.logAppDetails()
 #else
     let logPath: NSURL = appDelegate.cacheDirectory.URLByAppendingPathComponent("XCGLogger_Log.txt")
-    log.setup(logLevel: .Debug, showThreadName: true, showLogLevel: true, showFileNames: true, showLineNumbers: true, writeToFile: logPath)
+    log.setup(.Debug, showThreadName: true, showLogLevel: true, showFileNames: true, showLineNumbers: true, writeToFile: logPath)
 #endif
 
     return log
@@ -44,12 +44,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     let documentsDirectory: NSURL = {
         let urls = NSFileManager.defaultManager().URLsForDirectory(.DocumentDirectory, inDomains: .UserDomainMask)
-        return urls[urls.endIndex-1] as! NSURL
+        return urls[urls.endIndex - 1]
     }()
 
     let cacheDirectory: NSURL = {
         let urls = NSFileManager.defaultManager().URLsForDirectory(.CachesDirectory, inDomains: .UserDomainMask)
-        return urls[urls.endIndex-1] as! NSURL
+        return urls[urls.endIndex - 1] 
     }()
 
     // MARK: - Life cycle methods

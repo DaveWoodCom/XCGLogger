@@ -14,10 +14,24 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "55E3EE4F19D76F280068C3A7"
-               BuildableName = "XCGLoggerTests (iOS).xctest"
-               BlueprintName = "XCGLoggerTests (iOS)"
-               ReferencedContainer = "container:XCGLogger.xcodeproj">
+               BlueprintIdentifier = "558C648119D7770100D6D507"
+               BuildableName = "iOSDemo.app"
+               BlueprintName = "iOSDemo"
+               ReferencedContainer = "container:iOSDemo.xcodeproj">
+            </BuildableReference>
+         </BuildActionEntry>
+         <BuildActionEntry
+            buildForTesting = "YES"
+            buildForRunning = "YES"
+            buildForProfiling = "NO"
+            buildForArchiving = "NO"
+            buildForAnalyzing = "YES">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "558C649619D7770100D6D507"
+               BuildableName = "iOSDemoTests.xctest"
+               BlueprintName = "iOSDemoTests"
+               ReferencedContainer = "container:iOSDemo.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -32,13 +46,22 @@
             skipped = "NO">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "55E3EE4F19D76F280068C3A7"
-               BuildableName = "XCGLoggerTests (iOS).xctest"
-               BlueprintName = "XCGLoggerTests (iOS)"
-               ReferencedContainer = "container:XCGLogger.xcodeproj">
+               BlueprintIdentifier = "558C649619D7770100D6D507"
+               BuildableName = "iOSDemoTests.xctest"
+               BlueprintName = "iOSDemoTests"
+               ReferencedContainer = "container:iOSDemo.xcodeproj">
             </BuildableReference>
          </TestableReference>
       </Testables>
+      <MacroExpansion>
+         <BuildableReference
+            BuildableIdentifier = "primary"
+            BlueprintIdentifier = "558C648119D7770100D6D507"
+            BuildableName = "iOSDemo.app"
+            BlueprintName = "iOSDemo"
+            ReferencedContainer = "container:iOSDemo.xcodeproj">
+         </BuildableReference>
+      </MacroExpansion>
       <AdditionalOptions>
       </AdditionalOptions>
    </TestAction>
@@ -52,15 +75,23 @@
       debugDocumentVersioning = "YES"
       debugServiceExtension = "internal"
       allowLocationSimulation = "YES">
-      <MacroExpansion>
+      <BuildableProductRunnable
+         runnableDebuggingMode = "0">
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "55E3EE4F19D76F280068C3A7"
-            BuildableName = "XCGLoggerTests (iOS).xctest"
-            BlueprintName = "XCGLoggerTests (iOS)"
-            ReferencedContainer = "container:XCGLogger.xcodeproj">
+            BlueprintIdentifier = "558C648119D7770100D6D507"
+            BuildableName = "iOSDemo.app"
+            BlueprintName = "iOSDemo"
+            ReferencedContainer = "container:iOSDemo.xcodeproj">
          </BuildableReference>
-      </MacroExpansion>
+      </BuildableProductRunnable>
+      <EnvironmentVariables>
+         <EnvironmentVariable
+            key = "XcodeColors"
+            value = "YES"
+            isEnabled = "YES">
+         </EnvironmentVariable>
+      </EnvironmentVariables>
       <AdditionalOptions>
       </AdditionalOptions>
    </LaunchAction>
@@ -70,15 +101,16 @@
       savedToolIdentifier = ""
       useCustomWorkingDirectory = "NO"
       debugDocumentVersioning = "YES">
-      <MacroExpansion>
+      <BuildableProductRunnable
+         runnableDebuggingMode = "0">
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "55E3EE4F19D76F280068C3A7"
-            BuildableName = "XCGLoggerTests (iOS).xctest"
-            BlueprintName = "XCGLoggerTests (iOS)"
-            ReferencedContainer = "container:XCGLogger.xcodeproj">
+            BlueprintIdentifier = "558C648119D7770100D6D507"
+            BuildableName = "iOSDemo.app"
+            BlueprintName = "iOSDemo"
+            ReferencedContainer = "container:iOSDemo.xcodeproj">
          </BuildableReference>
-      </MacroExpansion>
+      </BuildableProductRunnable>
    </ProfileAction>
    <AnalyzeAction
       buildConfiguration = "Debug">

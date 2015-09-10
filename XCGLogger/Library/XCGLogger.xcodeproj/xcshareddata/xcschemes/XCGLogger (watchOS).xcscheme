@@ -14,9 +14,9 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "55E3EE4F19D76F280068C3A7"
-               BuildableName = "XCGLoggerTests (iOS).xctest"
-               BlueprintName = "XCGLoggerTests (iOS)"
+               BlueprintIdentifier = "70CB94161B99E728007802FF"
+               BuildableName = "XCGLogger.framework"
+               BlueprintName = "XCGLogger (watchOS)"
                ReferencedContainer = "container:XCGLogger.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
@@ -28,17 +28,16 @@
       selectedLauncherIdentifier = "Xcode.DebuggerFoundation.Launcher.LLDB"
       shouldUseLaunchSchemeArgsEnv = "YES">
       <Testables>
-         <TestableReference
-            skipped = "NO">
-            <BuildableReference
-               BuildableIdentifier = "primary"
-               BlueprintIdentifier = "55E3EE4F19D76F280068C3A7"
-               BuildableName = "XCGLoggerTests (iOS).xctest"
-               BlueprintName = "XCGLoggerTests (iOS)"
-               ReferencedContainer = "container:XCGLogger.xcodeproj">
-            </BuildableReference>
-         </TestableReference>
       </Testables>
+      <MacroExpansion>
+         <BuildableReference
+            BuildableIdentifier = "primary"
+            BlueprintIdentifier = "55E3EE4419D76F280068C3A7"
+            BuildableName = "XCGLogger.framework"
+            BlueprintName = "XCGLogger (iOS)"
+            ReferencedContainer = "container:XCGLogger.xcodeproj">
+         </BuildableReference>
+      </MacroExpansion>
       <AdditionalOptions>
       </AdditionalOptions>
    </TestAction>
@@ -52,15 +51,6 @@
       debugDocumentVersioning = "YES"
       debugServiceExtension = "internal"
       allowLocationSimulation = "YES">
-      <MacroExpansion>
-         <BuildableReference
-            BuildableIdentifier = "primary"
-            BlueprintIdentifier = "55E3EE4F19D76F280068C3A7"
-            BuildableName = "XCGLoggerTests (iOS).xctest"
-            BlueprintName = "XCGLoggerTests (iOS)"
-            ReferencedContainer = "container:XCGLogger.xcodeproj">
-         </BuildableReference>
-      </MacroExpansion>
       <AdditionalOptions>
       </AdditionalOptions>
    </LaunchAction>
@@ -70,15 +60,6 @@
       savedToolIdentifier = ""
       useCustomWorkingDirectory = "NO"
       debugDocumentVersioning = "YES">
-      <MacroExpansion>
-         <BuildableReference
-            BuildableIdentifier = "primary"
-            BlueprintIdentifier = "55E3EE4F19D76F280068C3A7"
-            BuildableName = "XCGLoggerTests (iOS).xctest"
-            BlueprintName = "XCGLoggerTests (iOS)"
-            ReferencedContainer = "container:XCGLogger.xcodeproj">
-         </BuildableReference>
-      </MacroExpansion>
    </ProfileAction>
    <AnalyzeAction
       buildConfiguration = "Debug">

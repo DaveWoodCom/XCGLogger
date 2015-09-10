@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		553EEA8F19FF86A200EE60AF /* XCGLogger.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 555FFCD719D77B3400F62246 /* XCGLogger.framework */; };
 		553EEA9019FF86A200EE60AF /* XCGLogger.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 555FFCD719D77B3400F62246 /* XCGLogger.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		555FFCB319D77B1800F62246 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 555FFCB219D77B1800F62246 /* AppDelegate.swift */; };
 		555FFCB519D77B1800F62246 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 555FFCB419D77B1800F62246 /* Images.xcassets */; };
@@ -24,12 +23,12 @@
 			remoteGlobalIDString = 554DF41619D76FE7005708BE;
 			remoteInfo = "XCGLogger (OS X)";
 		};
-		553FC98A1BA106140017DAF3 /* PBXContainerItemProxy */ = {
+		555CA5E41BA1120A00A5AA95 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 555FFCCE19D77B3400F62246 /* XCGLogger.xcodeproj */;
 			proxyType = 2;
-			remoteGlobalIDString = 55BB1F011B79DC7500709779;
-			remoteInfo = "XCGLoggerTests (OS X)";
+			remoteGlobalIDString = 70CB94201B99E728007802FF;
+			remoteInfo = "XCGLogger (watchOS)";
 		};
 		555FFCBE19D77B1800F62246 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -58,6 +57,13 @@
 			proxyType = 2;
 			remoteGlobalIDString = 55E3EE5019D76F280068C3A7;
 			remoteInfo = XCGLoggerTests;
+		};
+		5562CA961B7B25DD00F36DD8 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 555FFCCE19D77B3400F62246 /* XCGLogger.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 55BB1F011B79DC7500709779;
+			remoteInfo = "XCGLoggerTests (OS X)";
 		};
 		55D5C34819D77C6000A47D22 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -100,7 +106,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				55D5C34A19D77C9B00A47D22 /* XCGLogger.framework in Frameworks */,
-				553EEA8F19FF86A200EE60AF /* XCGLogger.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -182,8 +187,9 @@
 			children = (
 				555FFCD519D77B3400F62246 /* XCGLogger.framework */,
 				555FFCD719D77B3400F62246 /* XCGLogger.framework */,
+				555CA5E51BA1120A00A5AA95 /* XCGLogger.framework */,
 				555FFCD919D77B3400F62246 /* XCGLoggerTests (iOS).xctest */,
-				553FC98B1BA106140017DAF3 /* XCGLoggerTests (OS X).xctest */,
+				5562CA971B7B25DD00F36DD8 /* XCGLoggerTests (OS X).xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -235,7 +241,8 @@
 		555FFCA519D77B1800F62246 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0610;
+				LastSwiftUpdateCheck = 0700;
+				LastUpgradeCheck = 0700;
 				ORGANIZATIONNAME = "Cerebral Gardens";
 				TargetAttributes = {
 					555FFCAC19D77B1800F62246 = {
@@ -273,11 +280,11 @@
 /* End PBXProject section */
 
 /* Begin PBXReferenceProxy section */
-		553FC98B1BA106140017DAF3 /* XCGLoggerTests (OS X).xctest */ = {
+		555CA5E51BA1120A00A5AA95 /* XCGLogger.framework */ = {
 			isa = PBXReferenceProxy;
-			fileType = wrapper.cfbundle;
-			path = "XCGLoggerTests (OS X).xctest";
-			remoteRef = 553FC98A1BA106140017DAF3 /* PBXContainerItemProxy */;
+			fileType = wrapper.framework;
+			path = XCGLogger.framework;
+			remoteRef = 555CA5E41BA1120A00A5AA95 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 		555FFCD519D77B3400F62246 /* XCGLogger.framework */ = {
@@ -299,6 +306,13 @@
 			fileType = wrapper.cfbundle;
 			path = "XCGLoggerTests (iOS).xctest";
 			remoteRef = 555FFCD819D77B3400F62246 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		5562CA971B7B25DD00F36DD8 /* XCGLoggerTests (OS X).xctest */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.cfbundle;
+			path = "XCGLoggerTests (OS X).xctest";
+			remoteRef = 5562CA961B7B25DD00F36DD8 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 /* End PBXReferenceProxy section */
@@ -390,8 +404,9 @@
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				CODE_SIGN_IDENTITY = "-";
 				COPY_PHASE_STRIP = NO;
-				CURRENT_PROJECT_VERSION = 2.4;
+				CURRENT_PROJECT_VERSION = 3.0;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_OPTIMIZATION_LEVEL = 0;
@@ -433,7 +448,7 @@
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				CODE_SIGN_IDENTITY = "-";
 				COPY_PHASE_STRIP = YES;
-				CURRENT_PROJECT_VERSION = 2.4;
+				CURRENT_PROJECT_VERSION = 3.0;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
@@ -458,6 +473,7 @@
 				EMBEDDED_CONTENT_CONTAINS_SWIFT = YES;
 				INFOPLIST_FILE = OSXDemo/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.cerebralgardens.xcglogger.osxdemo;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Debug;
@@ -470,6 +486,7 @@
 				EMBEDDED_CONTENT_CONTAINS_SWIFT = YES;
 				INFOPLIST_FILE = OSXDemo/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.cerebralgardens.xcglogger.osxdemo;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Release;
@@ -489,6 +506,7 @@
 				);
 				INFOPLIST_FILE = OSXDemoTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.cerebralgardens.xcglogger.osxdemo.tests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/OSXDemo.app/Contents/MacOS/OSXDemo";
 			};
@@ -505,6 +523,7 @@
 				);
 				INFOPLIST_FILE = OSXDemoTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.cerebralgardens.xcglogger.osxdemo.tests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/OSXDemo.app/Contents/MacOS/OSXDemo";
 			};
