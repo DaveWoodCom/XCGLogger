@@ -29,7 +29,7 @@ public class XCGCrashlyticsLogDestination: XCGBaseLogDestination {
         let args: [CVarArgType] = [adjustedText]
         withVaList(args) { (argp: CVaListPointer) -> Void in
             #if TEST
-                println(adjustedText)
+                print(adjustedText)
             #elseif DEBUG
                 CLSNSLogv("%@", argp)
             #else
