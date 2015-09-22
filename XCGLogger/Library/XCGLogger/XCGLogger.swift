@@ -231,12 +231,17 @@ public class XCGFileLogDestination: XCGBaseLogDestination {
         }
         else {
             writeToFileURL = nil
+            abort()
         }
 
         if fileOverwrite == true {
             openFile()
         } else {
-            appendToFile()
+            if NSFileManager.defaultManager().fileExistsAtPath(writeToFileURL!.path!) {
+                appendToFile()
+            } else {
+                openFile()
+            }
         }
     }
 
