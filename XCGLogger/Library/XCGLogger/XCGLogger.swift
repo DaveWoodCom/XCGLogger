@@ -557,14 +557,12 @@ public class XCGLogger: CustomDebugStringConvertible {
     }
 
     public func logln(logLevel: LogLevel = .Debug, functionName: String = __FUNCTION__, fileName: String = __FILE__, lineNumber: Int = __LINE__, @noescape closure: () -> String?) {
-        let date = NSDate()
-
         var logDetails: XCGLogDetails? = nil
         for logDestination in self.logDestinations {
             if (logDestination.isEnabledForLogLevel(logLevel)) {
                 if logDetails == nil {
                     if let logMessage = closure() {
-                        logDetails = XCGLogDetails(logLevel: logLevel, date: date, logMessage: logMessage, functionName: functionName, fileName: fileName, lineNumber: lineNumber)
+                        logDetails = XCGLogDetails(logLevel: logLevel, date: NSDate(), logMessage: logMessage, functionName: functionName, fileName: fileName, lineNumber: lineNumber)
                     }
                     else {
                         break
@@ -811,13 +809,12 @@ public class XCGLogger: CustomDebugStringConvertible {
 
     // MARK: - Private methods
     private func _logln(logMessage: String, logLevel: LogLevel = .Debug) {
-        let date = NSDate()
 
         var logDetails: XCGLogDetails? = nil
         for logDestination in self.logDestinations {
             if (logDestination.isEnabledForLogLevel(logLevel)) {
                 if logDetails == nil {
-                    logDetails = XCGLogDetails(logLevel: logLevel, date: date, logMessage: logMessage, functionName: "", fileName: "", lineNumber: 0)
+                    logDetails = XCGLogDetails(logLevel: logLevel, date: NSDate(), logMessage: logMessage, functionName: "", fileName: "", lineNumber: 0)
                 }
 
                 logDestination.processInternalLogDetails(logDetails!)
