@@ -8,7 +8,7 @@
 //
 
 import Foundation
-#if os(iOS) || os(watchOS)
+#if os(iOS) || os(watchOS) || os(tvOS)
     import UIKit
 #else
     import AppKit
@@ -363,7 +363,7 @@ public class XCGLogger: CustomDebugStringConvertible {
             self.bg = bg
         }
 
-#if os(iOS) || os(watchOS)
+#if os(iOS) || os(watchOS) || os(tvOS)
         public init(fg: UIColor, bg: UIColor? = nil) {
             var redComponent: CGFloat = 0
             var greenComponent: CGFloat = 0
