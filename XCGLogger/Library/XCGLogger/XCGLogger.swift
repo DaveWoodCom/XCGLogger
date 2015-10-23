@@ -62,7 +62,7 @@ public class XCGBaseLogDestination: XCGLogDestinationProtocol, CustomDebugString
     public var showLogLevel: Bool = true
     public var showDate: Bool = true
 
-    // MARK: - DebugPrintable
+    // MARK: - CustomDebugStringConvertible
     public var debugDescription: String {
         get {
             return "\(extractClassName(self)): \(identifier) - LogLevel: \(outputLogLevel) showLogIdentifier: \(showLogIdentifier) showFunctionName: \(showFunctionName) showThreadName: \(showThreadName) showLogLevel: \(showLogLevel) showFileName: \(showFileName) showLineNumber: \(showLineNumber) showDate: \(showDate)"
