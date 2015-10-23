@@ -183,10 +183,12 @@ Watchdog: http://watchdogforxcode.com/
 Slender: http://martiancraft.com/products/slender  
 Briefs: http://giveabrief.com/  
 
-Also, please check out my book **Swift for the Really Impatient** http://swiftforthereallyimpatient.com/
+Also, please check out my latest game Rudoku:
+https://itunes.apple.com/app/apple-store/id965105321?pt=17255&ct=github&mt=8&at=11lMGu
 
 ###Change Log
 
+* **Version 3.1**: *(2015/10/23)* - Initial support for tvOS
 * **Version 3.1b1**: *(2015/09/09)* - Initial support for tvOS
 * **Version 3.0**: *(2015/09/09)* - Bug fix, and WatchOS 2 suppport (thanks @ymyzk)
 * **Version 2.4**: *(2015/09/09)* - Minor bug fix, likely the last release for Swift 1.x
