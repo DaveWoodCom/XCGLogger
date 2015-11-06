@@ -9,16 +9,15 @@
 /* Begin PBXBuildFile section */
 		5515A3E71BA11B170047BA31 /* XCGLogger.h in Headers */ = {isa = PBXBuildFile; fileRef = 55DA396519D7737B0032F026 /* XCGLogger.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		554DF41019D76FA9005708BE /* XCGLogger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 554DF40F19D76FA9005708BE /* XCGLogger.swift */; };
-		554DF41119D76FA9005708BE /* XCGLogger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 554DF40F19D76FA9005708BE /* XCGLogger.swift */; };
 		554DF43319D77155005708BE /* XCGLogger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 554DF40F19D76FA9005708BE /* XCGLogger.swift */; };
 		557C47E41BA125F800C9A174 /* XCGLogger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 554DF40F19D76FA9005708BE /* XCGLogger.swift */; };
-		55BB1EF91B79DC7500709779 /* XCGLogger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 554DF40F19D76FA9005708BE /* XCGLogger.swift */; };
 		55BB1EFA1B79DC7500709779 /* XCGLoggerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55E3EE5719D76F280068C3A7 /* XCGLoggerTests.swift */; };
 		55BB1EFC1B79DC7500709779 /* XCGLogger.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55E3EE4519D76F280068C3A7 /* XCGLogger.framework */; };
 		55DA396819D7737B0032F026 /* XCGLogger.h in Headers */ = {isa = PBXBuildFile; fileRef = 55DA396519D7737B0032F026 /* XCGLogger.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		55DA396B19D7737B0032F026 /* XCGLogger.h in Headers */ = {isa = PBXBuildFile; fileRef = 55DA396719D7737B0032F026 /* XCGLogger.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		55E3EE5119D76F280068C3A7 /* XCGLogger.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55E3EE4519D76F280068C3A7 /* XCGLogger.framework */; };
 		55E3EE5819D76F280068C3A7 /* XCGLoggerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55E3EE5719D76F280068C3A7 /* XCGLoggerTests.swift */; };
+		63CB71A11BECF3DA004F2067 /* XCGLogger (tvOS).h in Headers */ = {isa = PBXBuildFile; fileRef = 5515A3E11BA119FA0047BA31 /* XCGLogger (tvOS).h */; };
 		70C0D5C01B99EAFC00C4F3BA /* XCGLogger.h in Headers */ = {isa = PBXBuildFile; fileRef = 55DA396519D7737B0032F026 /* XCGLogger.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		70CB94181B99E728007802FF /* XCGLogger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 554DF40F19D76FA9005708BE /* XCGLogger.swift */; };
 /* End PBXBuildFile section */
@@ -197,6 +196,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				5515A3E71BA11B170047BA31 /* XCGLogger.h in Headers */,
+				63CB71A11BECF3DA004F2067 /* XCGLogger (tvOS).h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -448,7 +448,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				55BB1EF91B79DC7500709779 /* XCGLogger.swift in Sources */,
 				55BB1EFA1B79DC7500709779 /* XCGLoggerTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -465,7 +464,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				554DF41119D76FA9005708BE /* XCGLogger.swift in Sources */,
 				55E3EE5819D76F280068C3A7 /* XCGLoggerTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -554,7 +552,7 @@
 				);
 				INFOPLIST_FILE = "$(SRCROOT)/XCGLogger/Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @loader_path/../Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				MACOSX_DEPLOYMENT_TARGET = 10.9;
 				PRODUCT_BUNDLE_IDENTIFIER = com.cerebralgardens.xcglogger;
 				PRODUCT_NAME = XCGLogger;
@@ -575,7 +573,7 @@
 				FRAMEWORK_VERSION = A;
 				INFOPLIST_FILE = "$(SRCROOT)/XCGLogger/Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @loader_path/../Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				MACOSX_DEPLOYMENT_TARGET = 10.9;
 				PRODUCT_BUNDLE_IDENTIFIER = com.cerebralgardens.xcglogger;
 				PRODUCT_NAME = XCGLogger;
@@ -595,8 +593,9 @@
 					"$(inherited)",
 				);
 				INFOPLIST_FILE = "$(SRCROOT)/XCGLoggerTests/Info.plist";
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @loader_path/../Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.cerebralgardens.xcglogger.tests;
+				PRODUCT_MODULE_NAME = "$(PRODUCT_NAME:c99extidentifier)";
 				PRODUCT_NAME = "XCGLoggerTests (OS X)";
 				SDKROOT = macosx;
 			};
@@ -609,8 +608,9 @@
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
 				INFOPLIST_FILE = "$(SRCROOT)/XCGLoggerTests/Info.plist";
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @loader_path/../Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.cerebralgardens.xcglogger.tests;
+				PRODUCT_MODULE_NAME = "$(PRODUCT_NAME:c99extidentifier)";
 				PRODUCT_NAME = "XCGLoggerTests (OS X)";
 				SDKROOT = macosx;
 			};
@@ -715,7 +715,7 @@
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				INFOPLIST_FILE = "$(SRCROOT)/XCGLogger/Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @loader_path/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.cerebralgardens.xcglogger;
 				PRODUCT_MODULE_NAME = XCGLogger;
 				PRODUCT_NAME = XCGLogger;
@@ -735,7 +735,7 @@
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				INFOPLIST_FILE = "$(SRCROOT)/XCGLogger/Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @loader_path/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.cerebralgardens.xcglogger;
 				PRODUCT_MODULE_NAME = XCGLogger;
 				PRODUCT_NAME = XCGLogger;
@@ -747,10 +747,7 @@
 		55E3EE5F19D76F280068C3A7 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(SDKROOT)/Developer/Library/Frameworks",
-					"$(inherited)",
-				);
+				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"DEBUG=1",
 					"$(inherited)",
@@ -758,6 +755,7 @@
 				INFOPLIST_FILE = "$(SRCROOT)/XCGLoggerTests/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.cerebralgardens.xcglogger.tests;
+				PRODUCT_MODULE_NAME = "$(PRODUCT_NAME:c99extidentifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Debug;
@@ -765,13 +763,11 @@
 		55E3EE6019D76F280068C3A7 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(SDKROOT)/Developer/Library/Frameworks",
-					"$(inherited)",
-				);
+				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
 				INFOPLIST_FILE = "$(SRCROOT)/XCGLoggerTests/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.cerebralgardens.xcglogger.tests;
+				PRODUCT_MODULE_NAME = "$(PRODUCT_NAME:c99extidentifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Release;
@@ -789,7 +785,7 @@
 				ENABLE_BITCODE = YES;
 				INFOPLIST_FILE = "$(SRCROOT)/XCGLogger/Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @loader_path/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.cerebralgardens.xcglogger;
 				PRODUCT_NAME = XCGLogger;
 				SDKROOT = watchos;
@@ -812,7 +808,7 @@
 				ENABLE_BITCODE = YES;
 				INFOPLIST_FILE = "$(SRCROOT)/XCGLogger/Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @loader_path/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.cerebralgardens.xcglogger;
 				PRODUCT_NAME = XCGLogger;
 				SDKROOT = watchos;
