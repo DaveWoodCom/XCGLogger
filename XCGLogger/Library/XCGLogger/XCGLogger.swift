@@ -491,9 +491,6 @@ public class XCGLogger: CustomDebugStringConvertible {
         if let xcodeColors = NSProcessInfo.processInfo().environment["XcodeColors"] {
             xcodeColorsEnabled = xcodeColors == "YES"
         }
-
-        // Setup a standard console log destination
-        addLogDestination(XCGConsoleLogDestination(owner: self, identifier: XCGLogger.constants.baseConsoleLogDestinationIdentifier))
     }
 
     // MARK: - Default instance
@@ -506,14 +503,16 @@ public class XCGLogger: CustomDebugStringConvertible {
     }
 
     // MARK: - Setup methods
-    public class func setup(logLevel: LogLevel = .Debug, showLogIdentifier: Bool = false, showFunctionName: Bool = true, showThreadName: Bool = false, showLogLevel: Bool = true, showFileNames: Bool = true, showLineNumbers: Bool = true, showDate: Bool = true, writeToFile: AnyObject? = nil, fileLogLevel: LogLevel? = nil) {
-        defaultInstance().setup(logLevel, showLogIdentifier: showLogIdentifier, showFunctionName: showFunctionName, showThreadName: showThreadName, showLogLevel: showLogLevel, showFileNames: showFileNames, showLineNumbers: showLineNumbers, showDate: showDate, writeToFile: writeToFile)
+    public class func setup(logLevel: LogLevel = .Debug, showLogIdentifier: Bool = false, showFunctionName: Bool = true, showThreadName: Bool = false, showLogLevel: Bool = true, showFileNames: Bool = true, showLineNumbers: Bool = true, showDate: Bool = true, writeToConsole: Bool = true, writeToNSLog: Bool = false, writeToFile: AnyObject? = nil, fileLogLevel: LogLevel? = nil) {
+        defaultInstance().setup(logLevel, showLogIdentifier: showLogIdentifier, showFunctionName: showFunctionName, showThreadName: showThreadName, showLogLevel: showLogLevel, showFileNames: showFileNames, showLineNumbers: showLineNumbers, showDate: showDate, writeToConsole: writeToConsole, writeToNSLog: writeToNSLog, writeToFile: writeToFile)
     }
 
-    public func setup(logLevel: LogLevel = .Debug, showLogIdentifier: Bool = false, showFunctionName: Bool = true, showThreadName: Bool = false, showLogLevel: Bool = true, showFileNames: Bool = true, showLineNumbers: Bool = true, showDate: Bool = true, writeToFile: AnyObject? = nil, fileLogLevel: LogLevel? = nil) {
+    public func setup(logLevel: LogLevel = .Debug, showLogIdentifier: Bool = false, showFunctionName: Bool = true, showThreadName: Bool = false, showLogLevel: Bool = true, showFileNames: Bool = true, showLineNumbers: Bool = true, showDate: Bool = true, writeToConsole: Bool = true, writeToNSLog: Bool = false, writeToFile: AnyObject? = nil, fileLogLevel: LogLevel? = nil) {
         outputLogLevel = logLevel;
 
-        if let standardConsoleLogDestination = logDestination(XCGLogger.constants.baseConsoleLogDestinationIdentifier) as? XCGConsoleLogDestination {
+        if writeToConsole {
+            let standardConsoleLogDestination: XCGConsoleLogDestination = XCGConsoleLogDestination(owner: self, identifier: XCGLogger.constants.baseConsoleLogDestinationIdentifier)
+            
             standardConsoleLogDestination.showLogIdentifier = showLogIdentifier
             standardConsoleLogDestination.showFunctionName = showFunctionName
             standardConsoleLogDestination.showThreadName = showThreadName
@@ -522,6 +521,23 @@ public class XCGLogger: CustomDebugStringConvertible {
             standardConsoleLogDestination.showLineNumber = showLineNumbers
             standardConsoleLogDestination.showDate = showDate
             standardConsoleLogDestination.outputLogLevel = logLevel
+            
+            addLogDestination(standardConsoleLogDestination)
+        }
+        
+        if writeToNSLog {
+            let standardNSLogDestination: XCGNSLogDestination = XCGNSLogDestination(owner: self, identifier: XCGLogger.constants.nslogDestinationIdentifier)
+            
+            standardNSLogDestination.showLogIdentifier = showLogIdentifier
+            standardNSLogDestination.showFunctionName = showFunctionName
+            standardNSLogDestination.showThreadName = showThreadName
+            standardNSLogDestination.showLogLevel = showLogLevel
+            standardNSLogDestination.showFileName = showFileNames
+            standardNSLogDestination.showLineNumber = showLineNumbers
+            standardNSLogDestination.showDate = showDate
+            standardNSLogDestination.outputLogLevel = logLevel
+            
+            addLogDestination(standardNSLogDestination)
         }
 
         logAppDetails()
