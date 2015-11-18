@@ -188,6 +188,7 @@ https://itunes.apple.com/app/apple-store/id965105321?pt=17255&ct=github&mt=8&at=
 
 ###Change Log
 
+* **Version 3.1.1**: *(2015/11/18)* - Minor clean up, fixes an app submission issue for tvOS
 * **Version 3.1**: *(2015/10/23)* - Initial support for tvOS
 * **Version 3.1b1**: *(2015/09/09)* - Initial support for tvOS
 * **Version 3.0**: *(2015/09/09)* - Bug fix, and WatchOS 2 suppport (thanks @ymyzk)

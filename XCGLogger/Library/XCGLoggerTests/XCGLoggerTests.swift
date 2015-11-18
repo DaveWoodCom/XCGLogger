@@ -7,6 +7,7 @@
 //
 
 import XCTest
+import XCGLogger
 
 class XCGLoggerTests: XCTestCase {
 
