@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		5515A3E71BA11B170047BA31 /* XCGLogger.h in Headers */ = {isa = PBXBuildFile; fileRef = 55DA396519D7737B0032F026 /* XCGLogger.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		554DF41019D76FA9005708BE /* XCGLogger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 554DF40F19D76FA9005708BE /* XCGLogger.swift */; };
 		554DF43319D77155005708BE /* XCGLogger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 554DF40F19D76FA9005708BE /* XCGLogger.swift */; };
 		557C47E41BA125F800C9A174 /* XCGLogger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 554DF40F19D76FA9005708BE /* XCGLogger.swift */; };
@@ -15,9 +14,9 @@
 		55BB1EFC1B79DC7500709779 /* XCGLogger.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55E3EE4519D76F280068C3A7 /* XCGLogger.framework */; };
 		55DA396819D7737B0032F026 /* XCGLogger.h in Headers */ = {isa = PBXBuildFile; fileRef = 55DA396519D7737B0032F026 /* XCGLogger.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		55DA396B19D7737B0032F026 /* XCGLogger.h in Headers */ = {isa = PBXBuildFile; fileRef = 55DA396719D7737B0032F026 /* XCGLogger.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		55E37F621BFC64C600392B9C /* XCGLogger.h in Headers */ = {isa = PBXBuildFile; fileRef = 55E37F611BFC648800392B9C /* XCGLogger.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		55E3EE5119D76F280068C3A7 /* XCGLogger.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55E3EE4519D76F280068C3A7 /* XCGLogger.framework */; };
 		55E3EE5819D76F280068C3A7 /* XCGLoggerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55E3EE5719D76F280068C3A7 /* XCGLoggerTests.swift */; };
-		63CB71A11BECF3DA004F2067 /* XCGLogger (tvOS).h in Headers */ = {isa = PBXBuildFile; fileRef = 5515A3E11BA119FA0047BA31 /* XCGLogger (tvOS).h */; };
 		70C0D5C01B99EAFC00C4F3BA /* XCGLogger.h in Headers */ = {isa = PBXBuildFile; fileRef = 55DA396519D7737B0032F026 /* XCGLogger.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		70CB94181B99E728007802FF /* XCGLogger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 554DF40F19D76FA9005708BE /* XCGLogger.swift */; };
 /* End PBXBuildFile section */
@@ -41,15 +40,16 @@
 
 /* Begin PBXFileReference section */
 		5515A3DF1BA119FA0047BA31 /* XCGLogger.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = XCGLogger.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		5515A3E11BA119FA0047BA31 /* XCGLogger (tvOS).h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "XCGLogger (tvOS).h"; sourceTree = "<group>"; };
-		5515A3E31BA119FA0047BA31 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		554DF40F19D76FA9005708BE /* XCGLogger.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = XCGLogger.swift; sourceTree = "<group>"; };
 		554DF41719D76FE7005708BE /* XCGLogger.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = XCGLogger.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		55BB1F011B79DC7500709779 /* XCGLoggerTests (OS X).xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "XCGLoggerTests (OS X).xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		55DA396519D7737B0032F026 /* XCGLogger.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XCGLogger.h; sourceTree = "<group>"; };
 		55DA396719D7737B0032F026 /* XCGLogger.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XCGLogger.h; sourceTree = "<group>"; };
+		55E37F5D1BFC646800392B9C /* Info-iOS.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Info-iOS.plist"; sourceTree = "<group>"; };
+		55E37F5E1BFC647400392B9C /* Info-OSX.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Info-OSX.plist"; sourceTree = "<group>"; };
+		55E37F601BFC648800392B9C /* Info-tvOS.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Info-tvOS.plist"; sourceTree = "<group>"; };
+		55E37F611BFC648800392B9C /* XCGLogger.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = XCGLogger.h; sourceTree = "<group>"; };
 		55E3EE4519D76F280068C3A7 /* XCGLogger.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = XCGLogger.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		55E3EE4919D76F280068C3A7 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		55E3EE5019D76F280068C3A7 /* XCGLoggerTests (iOS).xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "XCGLoggerTests (iOS).xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		55E3EE5619D76F280068C3A7 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		55E3EE5719D76F280068C3A7 /* XCGLoggerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = XCGLoggerTests.swift; sourceTree = "<group>"; };
@@ -104,19 +104,11 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		5515A3E01BA119FA0047BA31 /* XCGLogger (tvOS) */ = {
-			isa = PBXGroup;
-			children = (
-				5515A3E11BA119FA0047BA31 /* XCGLogger (tvOS).h */,
-				5515A3E31BA119FA0047BA31 /* Info.plist */,
-			);
-			path = "XCGLogger (tvOS)";
-			sourceTree = "<group>";
-		};
 		55DA396419D7737B0032F026 /* iOS */ = {
 			isa = PBXGroup;
 			children = (
 				55DA396519D7737B0032F026 /* XCGLogger.h */,
+				55E37F5D1BFC646800392B9C /* Info-iOS.plist */,
 			);
 			path = iOS;
 			sourceTree = "<group>";
@@ -125,8 +117,18 @@
 			isa = PBXGroup;
 			children = (
 				55DA396719D7737B0032F026 /* XCGLogger.h */,
+				55E37F5E1BFC647400392B9C /* Info-OSX.plist */,
 			);
 			path = OSX;
+			sourceTree = "<group>";
+		};
+		55E37F5F1BFC648800392B9C /* tvOS */ = {
+			isa = PBXGroup;
+			children = (
+				55E37F611BFC648800392B9C /* XCGLogger.h */,
+				55E37F601BFC648800392B9C /* Info-tvOS.plist */,
+			);
+			path = tvOS;
 			sourceTree = "<group>";
 		};
 		55E3EE3B19D76F280068C3A7 = {
@@ -134,7 +136,6 @@
 			children = (
 				55E3EE4719D76F280068C3A7 /* XCGLogger */,
 				55E3EE5419D76F280068C3A7 /* XCGLoggerTests */,
-				5515A3E01BA119FA0047BA31 /* XCGLogger (tvOS) */,
 				55E3EE4619D76F280068C3A7 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -157,6 +158,7 @@
 			children = (
 				55DA396419D7737B0032F026 /* iOS */,
 				55DA396619D7737B0032F026 /* OSX */,
+				55E37F5F1BFC648800392B9C /* tvOS */,
 				554DF40F19D76FA9005708BE /* XCGLogger.swift */,
 				55E3EE4819D76F280068C3A7 /* Supporting Files */,
 			);
@@ -166,7 +168,6 @@
 		55E3EE4819D76F280068C3A7 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
-				55E3EE4919D76F280068C3A7 /* Info.plist */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
@@ -195,8 +196,7 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				5515A3E71BA11B170047BA31 /* XCGLogger.h in Headers */,
-				63CB71A11BECF3DA004F2067 /* XCGLogger (tvOS).h in Headers */,
+				55E37F621BFC64C600392B9C /* XCGLogger.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -502,7 +502,7 @@
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				GCC_NO_COMMON_BLOCKS = YES;
-				INFOPLIST_FILE = "XCGLogger (tvOS)/Info.plist";
+				INFOPLIST_FILE = "$(SRCROOT)/XCGLogger/tvOS/Info-tvOS.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.cerebralgardens.xcglogger;
 				PRODUCT_NAME = XCGLogger;
@@ -524,7 +524,7 @@
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				GCC_NO_COMMON_BLOCKS = YES;
-				INFOPLIST_FILE = "XCGLogger (tvOS)/Info.plist";
+				INFOPLIST_FILE = "$(SRCROOT)/XCGLogger/tvOS/Info-tvOS.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.cerebralgardens.xcglogger;
 				PRODUCT_NAME = XCGLogger;
@@ -548,7 +548,7 @@
 					"DEBUG=1",
 					"$(inherited)",
 				);
-				INFOPLIST_FILE = "$(SRCROOT)/XCGLogger/Info.plist";
+				INFOPLIST_FILE = "$(SRCROOT)/XCGLogger/OSX/Info-OSX.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				MACOSX_DEPLOYMENT_TARGET = 10.9;
 				PRODUCT_BUNDLE_IDENTIFIER = com.cerebralgardens.xcglogger;
@@ -568,7 +568,7 @@
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				FRAMEWORK_VERSION = A;
-				INFOPLIST_FILE = "$(SRCROOT)/XCGLogger/Info.plist";
+				INFOPLIST_FILE = "$(SRCROOT)/XCGLogger/OSX/Info-OSX.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				MACOSX_DEPLOYMENT_TARGET = 10.9;
 				PRODUCT_BUNDLE_IDENTIFIER = com.cerebralgardens.xcglogger;
@@ -707,7 +707,7 @@
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				INFOPLIST_FILE = "$(SRCROOT)/XCGLogger/Info.plist";
+				INFOPLIST_FILE = "$(SRCROOT)/XCGLogger/iOS/Info-iOS.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.cerebralgardens.xcglogger;
 				PRODUCT_MODULE_NAME = XCGLogger;
@@ -726,7 +726,7 @@
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				INFOPLIST_FILE = "$(SRCROOT)/XCGLogger/Info.plist";
+				INFOPLIST_FILE = "$(SRCROOT)/XCGLogger/iOS/Info-iOS.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.cerebralgardens.xcglogger;
 				PRODUCT_MODULE_NAME = XCGLogger;
@@ -771,7 +771,7 @@
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				ENABLE_BITCODE = YES;
-				INFOPLIST_FILE = "$(SRCROOT)/XCGLogger/Info.plist";
+				INFOPLIST_FILE = "$(SRCROOT)/XCGLogger/iOS/Info-iOS.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.cerebralgardens.xcglogger;
 				PRODUCT_NAME = XCGLogger;
@@ -793,7 +793,7 @@
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				ENABLE_BITCODE = YES;
-				INFOPLIST_FILE = "$(SRCROOT)/XCGLogger/Info.plist";
+				INFOPLIST_FILE = "$(SRCROOT)/XCGLogger/iOS/Info-iOS.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.cerebralgardens.xcglogger;
 				PRODUCT_NAME = XCGLogger;
