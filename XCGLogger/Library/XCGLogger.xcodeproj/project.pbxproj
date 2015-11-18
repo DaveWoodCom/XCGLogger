@@ -595,7 +595,7 @@
 				INFOPLIST_FILE = "$(SRCROOT)/XCGLoggerTests/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.cerebralgardens.xcglogger.tests;
-				PRODUCT_MODULE_NAME = "$(PRODUCT_NAME:c99extidentifier)";
+				PRODUCT_MODULE_NAME = XCGLoggerTests_OSX;
 				PRODUCT_NAME = "XCGLoggerTests (OS X)";
 				SDKROOT = macosx;
 			};
@@ -610,7 +610,7 @@
 				INFOPLIST_FILE = "$(SRCROOT)/XCGLoggerTests/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.cerebralgardens.xcglogger.tests;
-				PRODUCT_MODULE_NAME = "$(PRODUCT_NAME:c99extidentifier)";
+				PRODUCT_MODULE_NAME = XCGLoggerTests_OSX;
 				PRODUCT_NAME = "XCGLoggerTests (OS X)";
 				SDKROOT = macosx;
 			};
@@ -755,7 +755,7 @@
 				INFOPLIST_FILE = "$(SRCROOT)/XCGLoggerTests/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.cerebralgardens.xcglogger.tests;
-				PRODUCT_MODULE_NAME = "$(PRODUCT_NAME:c99extidentifier)";
+				PRODUCT_MODULE_NAME = XCGLoggerTests_iOS;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Debug;
@@ -767,7 +767,7 @@
 				INFOPLIST_FILE = "$(SRCROOT)/XCGLoggerTests/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.cerebralgardens.xcglogger.tests;
-				PRODUCT_MODULE_NAME = "$(PRODUCT_NAME:c99extidentifier)";
+				PRODUCT_MODULE_NAME = XCGLoggerTests_iOS;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Release;
