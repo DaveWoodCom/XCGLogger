@@ -167,6 +167,7 @@ public class XCGConsoleLogDestination: XCGBaseLogDestination {
 
     // MARK: - Misc Methods
     public override func output(logDetails: XCGLogDetails, text: String) {
+        let queue = dispatch_get_global_queue(QOS_CLASS_BACKGROUND, 0)
         let adjustedText: String
         if let xcodeColor = (xcodeColors ?? owner.xcodeColors)[logDetails.logLevel] where owner.xcodeColorsEnabled {
             adjustedText = "\(xcodeColor.format())\(text)\(XCGLogger.XcodeColor.reset)"
@@ -174,8 +175,9 @@ public class XCGConsoleLogDestination: XCGBaseLogDestination {
         else {
             adjustedText = text
         }
-
-        print("\(adjustedText)")
+        dispatch_async(queue) {
+            print("\(adjustedText)")
+        }
     }
 }
 
@@ -196,6 +198,7 @@ public class XCGNSLogDestination: XCGBaseLogDestination {
 
     // MARK: - Misc Methods
     public override func output(logDetails: XCGLogDetails, text: String) {
+        let queue = dispatch_get_global_queue(QOS_CLASS_BACKGROUND, 0)
         let adjustedText: String
         if let xcodeColor = (xcodeColors ?? owner.xcodeColors)[logDetails.logLevel] where owner.xcodeColorsEnabled {
             adjustedText = "\(xcodeColor.format())\(text)\(XCGLogger.XcodeColor.reset)"
@@ -203,8 +206,9 @@ public class XCGNSLogDestination: XCGBaseLogDestination {
         else {
             adjustedText = text
         }
-
-        NSLog("%@", adjustedText)
+        dispatch_async(queue) {
+            NSLog("%@", adjustedText)
+        }
     }
 }
 
@@ -275,8 +279,11 @@ public class XCGFileLogDestination: XCGBaseLogDestination {
 
     // MARK: - Misc Methods
     public override func output(logDetails: XCGLogDetails, text: String) {
-        if let encodedData = "\(text)\n".dataUsingEncoding(NSUTF8StringEncoding) {
-            logFileHandle?.writeData(encodedData)
+        let queue = dispatch_get_global_queue(QOS_CLASS_BACKGROUND, 0)
+        dispatch_async(queue) {
+            if let encodedData = "\(text)\n".dataUsingEncoding(NSUTF8StringEncoding) {
+                self.logFileHandle?.writeData(encodedData)
+            }
         }
     }
 }
@@ -568,7 +575,6 @@ public class XCGLogger: CustomDebugStringConvertible {
                         break
                     }
                 }
-
                 logDestination.processLogDetails(logDetails!)
             }
         }
