@@ -1,5 +1,11 @@
 #XCGLogger
 #####By: Dave Wood
+
+[![Carthage compatible](https://img.shields.io/badge/Carthage-compatible-4BC51D.svg?style=flat)](https://github.com/Carthage/Carthage)
+[![Language Swift](https://img.shields.io/badge/language-Swift-F16D39.svg?style=flat)](https://developer.apple.com/swift)
+[![CocoaPods Version](https://img.shields.io/cocoapods/p/AFNetworking.svg?style=flat)](https://cocoapods.org/pods/XCGLogger)
+
+
 - Cerebral Gardens http://www.cerebralgardens.com/
 - Twitter: [@DaveWoodX](https://twitter.com/DaveWoodX)
 
@@ -29,6 +35,33 @@ Use XCGLogger version 3.x for Swift 2.0, XCGLogger version 2.x for Swift 1.2, an
 * If you found a bug, open an issue.
 * If you have a feature request, open an issue.
 * If you want to contribute, submit a pull request.
+
+## Installation
+
+XCGLogger is available through [Carthage](https://github.com/Carthage/Carthage) or [CocoaPods](https://cocoapods.org).
+
+### Carthage
+
+To install XCGLogger with Carthage, add the following line to your `Cartfile`.
+
+    github "DaveWoodCom/XCGLogger" ~> 3.1
+
+
+Then run `carthage update --no-use-binaries` command or just `carthage update`. For details of the installation and usage of Carthage, visit [its project page](https://github.com/Carthage/Carthage).
+
+
+### CocoaPods
+
+To install XCGLogger with CocoaPods, add the following lines to your `Podfile`.
+
+    source 'https://github.com/CocoaPods/Specs.git'
+    platform :ios, '8.0'
+    use_frameworks!
+
+    pod 'XCGLogger', '~> 3.1'
+
+Then run `pod install` command. For details of the installation and usage of CocoaPods, visit [its official website](https://cocoapods.org).
+
 
 ###How to Use
 
