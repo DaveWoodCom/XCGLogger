@@ -220,7 +220,7 @@ public class XCGFileLogDestination: XCGBaseLogDestination {
     private var logFileHandle: NSFileHandle? = nil
 
     // MARK: - Life Cycle
-    public init(owner: XCGLogger, writeToFile: AnyObject, identifier: String = "") {
+    public init(owner: XCGLogger, writeToFile: AnyObject, identifier: String = "", fileOverwrite:Bool? = true) {
         super.init(owner: owner, identifier: identifier)
 
         if writeToFile is NSString {
@@ -231,9 +231,18 @@ public class XCGFileLogDestination: XCGBaseLogDestination {
         }
         else {
             writeToFileURL = nil
+            abort()
         }
 
-        openFile()
+        if fileOverwrite == true {
+            openFile()
+        } else {
+            if NSFileManager.defaultManager().fileExistsAtPath(writeToFileURL!.path!) {
+                appendToFile()
+            } else {
+                openFile()
+            }
+        }
     }
 
     deinit {
@@ -241,6 +250,25 @@ public class XCGFileLogDestination: XCGBaseLogDestination {
         closeFile()
     }
 
+    private func appendToFile() {
+        if logFileHandle != nil {
+            closeFile()
+        }
+        
+        
+        if let writeToFileURL = writeToFileURL {
+            do {
+                logFileHandle = try NSFileHandle(forUpdatingURL: writeToFileURL)
+                logFileHandle?.seekToEndOfFile()
+            }
+            catch let error as NSError {
+                owner._logln("Attempt to open log file for appending failed: \(error.localizedDescription)", logLevel: .Error)
+                logFileHandle = nil
+                return
+            }
+        }
+    }
+    
     // MARK: - File Handling Methods
     private func openFile() {
         if logFileHandle != nil {
@@ -510,7 +538,7 @@ public class XCGLogger: CustomDebugStringConvertible {
         defaultInstance().setup(logLevel, showLogIdentifier: showLogIdentifier, showFunctionName: showFunctionName, showThreadName: showThreadName, showLogLevel: showLogLevel, showFileNames: showFileNames, showLineNumbers: showLineNumbers, showDate: showDate, writeToFile: writeToFile)
     }
 
-    public func setup(logLevel: LogLevel = .Debug, showLogIdentifier: Bool = false, showFunctionName: Bool = true, showThreadName: Bool = false, showLogLevel: Bool = true, showFileNames: Bool = true, showLineNumbers: Bool = true, showDate: Bool = true, writeToFile: AnyObject? = nil, fileLogLevel: LogLevel? = nil) {
+    public func setup(logLevel: LogLevel = .Debug, showLogIdentifier: Bool = false, showFunctionName: Bool = true, showThreadName: Bool = false, showLogLevel: Bool = true, showFileNames: Bool = true, showLineNumbers: Bool = true, showDate: Bool = true, writeToFile: AnyObject? = nil, fileLogLevel: LogLevel? = nil, fileLogOverwrite: Bool? = true) {
         outputLogLevel = logLevel;
 
         if let standardConsoleLogDestination = logDestination(XCGLogger.constants.baseConsoleLogDestinationIdentifier) as? XCGConsoleLogDestination {
@@ -528,7 +556,7 @@ public class XCGLogger: CustomDebugStringConvertible {
 
         if let writeToFile: AnyObject = writeToFile {
             // We've been passed a file to use for logging, set up a file logger
-            let standardFileLogDestination: XCGFileLogDestination = XCGFileLogDestination(owner: self, writeToFile: writeToFile, identifier: XCGLogger.constants.baseFileLogDestinationIdentifier)
+            let standardFileLogDestination: XCGFileLogDestination = XCGFileLogDestination(owner: self, writeToFile: writeToFile, identifier: XCGLogger.constants.baseFileLogDestinationIdentifier, fileOverwrite: fileLogOverwrite ?? true)
 
             standardFileLogDestination.showLogIdentifier = showLogIdentifier
             standardFileLogDestination.showFunctionName = showFunctionName
@@ -540,6 +568,31 @@ public class XCGLogger: CustomDebugStringConvertible {
             standardFileLogDestination.outputLogLevel = fileLogLevel ?? logLevel
 
             addLogDestination(standardFileLogDestination)
+        }
+    }
+    
+    //
+    // New Function to support log rotation
+    //
+    public func rollFileLogToFilename(filename:AnyObject, fileLogOverwrite: Bool? = true) {
+    
+        let loggers = logDestinations.filter({ $0.identifier == XCGLogger.constants.baseFileLogDestinationIdentifier })
+        if let logger = loggers.first as? XCGFileLogDestination {
+            removeLogDestination(XCGLogger.constants.baseFileLogDestinationIdentifier)
+         
+            let standardFileLogDestination: XCGFileLogDestination = XCGFileLogDestination(owner: self, writeToFile: filename, identifier: XCGLogger.constants.baseFileLogDestinationIdentifier, fileOverwrite: fileLogOverwrite ?? true)
+            
+            standardFileLogDestination.showLogIdentifier = logger.showLogIdentifier
+            standardFileLogDestination.showFunctionName = logger.showFunctionName
+            standardFileLogDestination.showThreadName = logger.showThreadName
+            standardFileLogDestination.showLogLevel = logger.showLogLevel
+            standardFileLogDestination.showFileName = logger.showFileName
+            standardFileLogDestination.showLineNumber = logger.showLineNumber
+            standardFileLogDestination.showDate = logger.showDate
+            standardFileLogDestination.outputLogLevel = logger.outputLogLevel
+            
+            addLogDestination(standardFileLogDestination)
+
         }
     }
 
