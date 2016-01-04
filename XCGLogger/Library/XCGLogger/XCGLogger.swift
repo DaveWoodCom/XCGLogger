@@ -484,7 +484,7 @@ public class XCGLogger: CustomDebugStringConvertible {
     public var logDestinations: Array<XCGLogDestinationProtocol> = []
 
     // MARK: - Life Cycle
-    public init(identifier: String = "") {
+    public init(identifier: String = "", includeDefaultDestinations: Bool = true) {
         self.identifier = identifier
 
         // Check if XcodeColors is installed and enabled
@@ -492,8 +492,10 @@ public class XCGLogger: CustomDebugStringConvertible {
             xcodeColorsEnabled = xcodeColors == "YES"
         }
 
-        // Setup a standard console log destination
-        addLogDestination(XCGConsoleLogDestination(owner: self, identifier: XCGLogger.constants.baseConsoleLogDestinationIdentifier))
+        if includeDefaultDestinations {
+            // Setup a standard console log destination
+            addLogDestination(XCGConsoleLogDestination(owner: self, identifier: XCGLogger.constants.baseConsoleLogDestinationIdentifier))
+        }
     }
 
     // MARK: - Default instance
