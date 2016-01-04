@@ -188,6 +188,19 @@ class XCGLoggerTests: XCTestCase {
         }
     }
 
+    func testBackgroundLogging() {
+        let log: XCGLogger = XCGLogger(identifier: "com.cerebralgardens.xcglogger.testBackgroundLogging", includeDefaultDestinations: false)
+        let systemLogDestination = XCGNSLogDestination(owner: log, identifier: "com.cerebralgardens.xcglogger.testBackgroundLogging.systemLogDestination")
+        systemLogDestination.outputLogLevel = .Debug
+        systemLogDestination.logQueue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0)
+        log.addLogDestination(systemLogDestination)
+
+        let linesToLog = ["One", "Two", "Three", "Four", "Five", "Six", "Seven", "Eight", "Nine", "Ten"]
+        for line in linesToLog {
+            log.debug(line)
+        }
+    }
+
     func testDateFormatterIsCached() {
         let log: XCGLogger = XCGLogger()
         log.identifier = "com.cerebralgardens.xcglogger.testDateFormatterIsCached"

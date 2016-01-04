@@ -163,19 +163,30 @@ public class XCGBaseLogDestination: XCGLogDestinationProtocol, CustomDebugString
 // - A standard log destination that outputs log details to the console
 public class XCGConsoleLogDestination: XCGBaseLogDestination {
     // MARK: - Properties
+    public var logQueue: dispatch_queue_t? = nil
     public var xcodeColors: [XCGLogger.LogLevel: XCGLogger.XcodeColor]? = nil
 
     // MARK: - Misc Methods
     public override func output(logDetails: XCGLogDetails, text: String) {
-        let adjustedText: String
-        if let xcodeColor = (xcodeColors ?? owner.xcodeColors)[logDetails.logLevel] where owner.xcodeColorsEnabled {
-            adjustedText = "\(xcodeColor.format())\(text)\(XCGLogger.XcodeColor.reset)"
-        }
-        else {
-            adjustedText = text
+
+        let outputClosure = {
+            let adjustedText: String
+            if let xcodeColor = (self.xcodeColors ?? self.owner.xcodeColors)[logDetails.logLevel] where self.owner.xcodeColorsEnabled {
+                adjustedText = "\(xcodeColor.format())\(text)\(XCGLogger.XcodeColor.reset)"
+            }
+            else {
+                adjustedText = text
+            }
+
+            print("\(adjustedText)")
         }
 
-        print("\(adjustedText)")
+        if let logQueue = logQueue {
+            dispatch_async(logQueue, outputClosure)
+        }
+        else {
+            outputClosure()
+        }
     }
 }
 
@@ -183,6 +194,7 @@ public class XCGConsoleLogDestination: XCGBaseLogDestination {
 // - A standard log destination that outputs log details to the console using NSLog instead of println
 public class XCGNSLogDestination: XCGBaseLogDestination {
     // MARK: - Properties
+    public var logQueue: dispatch_queue_t? = nil
     public var xcodeColors: [XCGLogger.LogLevel: XCGLogger.XcodeColor]? = nil
 
     public override var showDate: Bool {
@@ -196,15 +208,25 @@ public class XCGNSLogDestination: XCGBaseLogDestination {
 
     // MARK: - Misc Methods
     public override func output(logDetails: XCGLogDetails, text: String) {
-        let adjustedText: String
-        if let xcodeColor = (xcodeColors ?? owner.xcodeColors)[logDetails.logLevel] where owner.xcodeColorsEnabled {
-            adjustedText = "\(xcodeColor.format())\(text)\(XCGLogger.XcodeColor.reset)"
-        }
-        else {
-            adjustedText = text
+
+        let outputClosure = {
+            let adjustedText: String
+            if let xcodeColor = (self.xcodeColors ?? self.owner.xcodeColors)[logDetails.logLevel] where self.owner.xcodeColorsEnabled {
+                adjustedText = "\(xcodeColor.format())\(text)\(XCGLogger.XcodeColor.reset)"
+            }
+            else {
+                adjustedText = text
+            }
+
+            NSLog("%@", adjustedText)
         }
 
-        NSLog("%@", adjustedText)
+        if let logQueue = logQueue {
+            dispatch_async(logQueue, outputClosure)
+        }
+        else {
+            outputClosure()
+        }
     }
 }
 
@@ -212,6 +234,7 @@ public class XCGNSLogDestination: XCGBaseLogDestination {
 // - A standard log destination that outputs log details to a file
 public class XCGFileLogDestination: XCGBaseLogDestination {
     // MARK: - Properties
+    public var logQueue: dispatch_queue_t? = nil
     private var writeToFileURL: NSURL? = nil {
         didSet {
             openFile()
@@ -275,8 +298,18 @@ public class XCGFileLogDestination: XCGBaseLogDestination {
 
     // MARK: - Misc Methods
     public override func output(logDetails: XCGLogDetails, text: String) {
-        if let encodedData = "\(text)\n".dataUsingEncoding(NSUTF8StringEncoding) {
-            logFileHandle?.writeData(encodedData)
+
+        let outputClosure = {
+            if let encodedData = "\(text)\n".dataUsingEncoding(NSUTF8StringEncoding) {
+                self.logFileHandle?.writeData(encodedData)
+            }
+        }
+
+        if let logQueue = logQueue {
+            dispatch_async(logQueue, outputClosure)
+        }
+        else {
+            outputClosure()
         }
     }
 }
@@ -290,6 +323,7 @@ public class XCGLogger: CustomDebugStringConvertible {
         public static let baseConsoleLogDestinationIdentifier = "com.cerebralgardens.xcglogger.logdestination.console"
         public static let nslogDestinationIdentifier = "com.cerebralgardens.xcglogger.logdestination.console.nslog"
         public static let baseFileLogDestinationIdentifier = "com.cerebralgardens.xcglogger.logdestination.file"
+        public static let logQueueIdentifier = "com.cerebralgardens.xcglogger.queue"
         public static let nsdataFormatterCacheIdentifier = "com.cerebralgardens.xcglogger.nsdataFormatterCache"
         public static let versionString = "3.1.1"
     }
@@ -463,6 +497,14 @@ public class XCGLogger: CustomDebugStringConvertible {
     ]
 
     // MARK: - Properties
+    public class var logQueue: dispatch_queue_t {
+        struct Statics {
+            static var logQueue = dispatch_queue_create(XCGLogger.Constants.logQueueIdentifier, nil)
+        }
+
+        return Statics.logQueue
+    }
+
     private var _dateFormatter: NSDateFormatter? = nil
     public var dateFormatter: NSDateFormatter? {
         get {
