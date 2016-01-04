@@ -117,7 +117,11 @@ class XCGLoggerTests: XCTestCase {
         let log: XCGLogger = XCGLogger()
         log.identifier = "com.cerebralgardens.xcglogger.testExecExecutes"
         log.outputLogLevel = .Debug
-
+        
+        let additionalConsoleLogger = XCGConsoleLogDestination(owner: log, identifier: log.identifier)
+        let additionSuccess = log.addLogDestination(additionalConsoleLogger)
+        XCTAssert(additionSuccess, "Failed to add additional logger, correct result code")
+        
         var numberOfTimes: Int = 0
         log.debug {
             ++numberOfTimes
