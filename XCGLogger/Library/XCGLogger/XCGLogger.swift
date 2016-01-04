@@ -843,13 +843,6 @@ public func < (lhs:XCGLogger.LogLevel, rhs:XCGLogger.LogLevel) -> Bool {
     return lhs.rawValue < rhs.rawValue
 }
 
-// Temporary (hopefully) method to get the class name of an object, since reflect() was removed in Swift 2.0
-// This is a crappy way to do it, hopefully we'll find a better way soon.
 func extractClassName(someObject: Any) -> String {
-    var className = Mirror(reflecting: someObject).description
-    if let rangeToRemove = className.rangeOfString("Mirror for ") {
-        className.removeRange(rangeToRemove)
-    }
-
-    return className
+    return (someObject is Any.Type) ? "\(someObject)" : "\(someObject.dynamicType)"
 }
