@@ -36,10 +36,10 @@ class XCGLoggerTests: XCTestCase {
     func testDefaultInstance() {
         // Test that if we request the default instance multiple times, we always get the same instance
         let defaultInstance1: XCGLogger = XCGLogger.defaultInstance()
-        defaultInstance1.identifier = XCGLogger.constants.defaultInstanceIdentifier
+        defaultInstance1.identifier = XCGLogger.Constants.defaultInstanceIdentifier
 
         let defaultInstance2: XCGLogger = XCGLogger.defaultInstance()
-        defaultInstance2.identifier = XCGLogger.constants.defaultInstanceIdentifier + ".second" // this should also change defaultInstance1.identifier
+        defaultInstance2.identifier = XCGLogger.Constants.defaultInstanceIdentifier + ".second" // this should also change defaultInstance1.identifier
 
         XCTAssert(defaultInstance1.identifier == defaultInstance2.identifier, "Fail: defaultInstance() is not returning a common instance")
     }

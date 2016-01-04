@@ -285,7 +285,7 @@ public class XCGFileLogDestination: XCGBaseLogDestination {
 // - The main logging class
 public class XCGLogger: CustomDebugStringConvertible {
     // MARK: - Constants
-    public struct constants {
+    public struct Constants {
         public static let defaultInstanceIdentifier = "com.cerebralgardens.xcglogger.defaultInstance"
         public static let baseConsoleLogDestinationIdentifier = "com.cerebralgardens.xcglogger.logdestination.console"
         public static let nslogDestinationIdentifier = "com.cerebralgardens.xcglogger.logdestination.console.nslog"
@@ -293,6 +293,7 @@ public class XCGLogger: CustomDebugStringConvertible {
         public static let nsdataFormatterCacheIdentifier = "com.cerebralgardens.xcglogger.nsdataFormatterCache"
         public static let versionString = "3.1.1"
     }
+    public typealias constants = Constants // Preserve backwards compatibility: Constants should be capitalized since it's a type
 
     // MARK: - Enums
     public enum LogLevel: Int, Comparable, CustomStringConvertible {
@@ -494,17 +495,17 @@ public class XCGLogger: CustomDebugStringConvertible {
 
         if includeDefaultDestinations {
             // Setup a standard console log destination
-            addLogDestination(XCGConsoleLogDestination(owner: self, identifier: XCGLogger.constants.baseConsoleLogDestinationIdentifier))
+            addLogDestination(XCGConsoleLogDestination(owner: self, identifier: XCGLogger.Constants.baseConsoleLogDestinationIdentifier))
         }
     }
 
     // MARK: - Default instance
     public class func defaultInstance() -> XCGLogger {
-        struct statics {
-            static let instance: XCGLogger = XCGLogger(identifier: XCGLogger.constants.defaultInstanceIdentifier)
+        struct Statics {
+            static let instance: XCGLogger = XCGLogger(identifier: XCGLogger.Constants.defaultInstanceIdentifier)
         }
 
-        return statics.instance
+        return Statics.instance
     }
 
     // MARK: - Setup methods
@@ -515,7 +516,7 @@ public class XCGLogger: CustomDebugStringConvertible {
     public func setup(logLevel: LogLevel = .Debug, showLogIdentifier: Bool = false, showFunctionName: Bool = true, showThreadName: Bool = false, showLogLevel: Bool = true, showFileNames: Bool = true, showLineNumbers: Bool = true, showDate: Bool = true, writeToFile: AnyObject? = nil, fileLogLevel: LogLevel? = nil) {
         outputLogLevel = logLevel;
 
-        if let standardConsoleLogDestination = logDestination(XCGLogger.constants.baseConsoleLogDestinationIdentifier) as? XCGConsoleLogDestination {
+        if let standardConsoleLogDestination = logDestination(XCGLogger.Constants.baseConsoleLogDestinationIdentifier) as? XCGConsoleLogDestination {
             standardConsoleLogDestination.showLogIdentifier = showLogIdentifier
             standardConsoleLogDestination.showFunctionName = showFunctionName
             standardConsoleLogDestination.showThreadName = showThreadName
@@ -530,7 +531,7 @@ public class XCGLogger: CustomDebugStringConvertible {
 
         if let writeToFile: AnyObject = writeToFile {
             // We've been passed a file to use for logging, set up a file logger
-            let standardFileLogDestination: XCGFileLogDestination = XCGFileLogDestination(owner: self, writeToFile: writeToFile, identifier: XCGLogger.constants.baseFileLogDestinationIdentifier)
+            let standardFileLogDestination: XCGFileLogDestination = XCGFileLogDestination(owner: self, writeToFile: writeToFile, identifier: XCGLogger.Constants.baseFileLogDestinationIdentifier)
 
             standardFileLogDestination.showLogIdentifier = showLogIdentifier
             standardFileLogDestination.showFunctionName = showFunctionName
@@ -602,7 +603,7 @@ public class XCGLogger: CustomDebugStringConvertible {
         }
 
         let processInfo: NSProcessInfo = NSProcessInfo.processInfo()
-        let XCGLoggerVersionNumber = XCGLogger.constants.versionString
+        let XCGLoggerVersionNumber = XCGLogger.Constants.versionString
 
         let logDetails: Array<XCGLogDetails> = [XCGLogDetails(logLevel: .Info, date: date, logMessage: "\(processInfo.processName) \(buildString)PID: \(processInfo.processIdentifier)", functionName: "", fileName: "", lineNumber: 0),
             XCGLogDetails(logLevel: .Info, date: date, logMessage: "XCGLogger Version: \(XCGLoggerVersionNumber) - LogLevel: \(outputLogLevel)", functionName: "", fileName: "", lineNumber: 0)]
