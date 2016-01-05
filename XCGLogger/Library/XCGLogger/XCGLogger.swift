@@ -104,7 +104,7 @@ public class XCGBaseLogDestination: XCGLogDestinationProtocol, CustomDebugString
                 if let threadName = NSThread.currentThread().name where threadName != "" {
                     extendedDetails += "[" + threadName + "] "
                 }
-                else if let queueName = String(UTF8String: dispatch_queue_get_label(DISPATCH_CURRENT_QUEUE_LABEL)) where queueName != "" {
+                else if let queueName = String(UTF8String: dispatch_queue_get_label(DISPATCH_CURRENT_QUEUE_LABEL)) where !queueName.isEmpty {
                     extendedDetails += "[" + queueName + "] "
                 }
                 else {
