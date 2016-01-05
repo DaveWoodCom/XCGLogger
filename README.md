@@ -299,6 +299,8 @@ This works extremely well when combined with the Alternate Configurations method
 - Add additional log destination types
 - Add Objective-C support
 - Add log file rotation options
+- Add Swift Package Manager support
+- Add Linux support
 
 ##More
 
