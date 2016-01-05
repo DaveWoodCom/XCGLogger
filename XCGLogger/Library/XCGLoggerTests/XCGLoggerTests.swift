@@ -192,6 +192,9 @@ class XCGLoggerTests: XCTestCase {
         let log: XCGLogger = XCGLogger(identifier: "com.cerebralgardens.xcglogger.testBackgroundLogging", includeDefaultDestinations: false)
         let systemLogDestination = XCGNSLogDestination(owner: log, identifier: "com.cerebralgardens.xcglogger.testBackgroundLogging.systemLogDestination")
         systemLogDestination.outputLogLevel = .Debug
+        systemLogDestination.showThreadName = true
+        // Note: The thread name included in the log message should be "main" even though the log is processed in a background thread. This is because
+        // it uses the thread name of the thread the log function is called in, not the thread used to do the output.
         systemLogDestination.logQueue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0)
         log.addLogDestination(systemLogDestination)
 
