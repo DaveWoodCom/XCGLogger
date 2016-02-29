@@ -123,8 +123,11 @@ public class XCGBaseLogDestination: XCGLogDestinationProtocol, CustomDebugString
         if showFunctionName {
             extendedDetails += "\(logDetails.functionName) "
         }
-
-        output(logDetails, text: "\(extendedDetails)> \(logDetails.logMessage)")
+        if logDetails.logMessage == "" {
+            output(logDetails, text: "\(extendedDetails)")
+        } else {
+            output(logDetails, text: "\(extendedDetails)> \(logDetails.logMessage)")
+        }
     }
 
     public func processInternalLogDetails(logDetails: XCGLogDetails) {
@@ -666,7 +669,7 @@ public class XCGLogger: CustomDebugStringConvertible {
 
     // MARK: - Convenience logging methods
     // MARK: * Verbose
-    public class func verbose(@autoclosure closure: () -> String?, functionName: String = __FUNCTION__, fileName: String = __FILE__, lineNumber: Int = __LINE__) {
+    public class func verbose(@autoclosure closure: () -> String? = "", functionName: String = __FUNCTION__, fileName: String = __FILE__, lineNumber: Int = __LINE__) {
         self.defaultInstance().logln(.Verbose, functionName: functionName, fileName: fileName, lineNumber: lineNumber, closure: closure)
     }
 
@@ -674,7 +677,7 @@ public class XCGLogger: CustomDebugStringConvertible {
         self.defaultInstance().logln(.Verbose, functionName: functionName, fileName: fileName, lineNumber: lineNumber, closure: closure)
     }
 
-    public func verbose(@autoclosure closure: () -> String?, functionName: String = __FUNCTION__, fileName: String = __FILE__, lineNumber: Int = __LINE__) {
+    public func verbose(@autoclosure closure: () -> String? = "", functionName: String = __FUNCTION__, fileName: String = __FILE__, lineNumber: Int = __LINE__) {
         self.logln(.Verbose, functionName: functionName, fileName: fileName, lineNumber: lineNumber, closure: closure)
     }
 
@@ -683,7 +686,7 @@ public class XCGLogger: CustomDebugStringConvertible {
     }
 
     // MARK: * Debug
-    public class func debug(@autoclosure closure: () -> String?, functionName: String = __FUNCTION__, fileName: String = __FILE__, lineNumber: Int = __LINE__) {
+    public class func debug(@autoclosure closure: () -> String? = "", functionName: String = __FUNCTION__, fileName: String = __FILE__, lineNumber: Int = __LINE__) {
         self.defaultInstance().logln(.Debug, functionName: functionName, fileName: fileName, lineNumber: lineNumber, closure: closure)
     }
 
@@ -691,7 +694,7 @@ public class XCGLogger: CustomDebugStringConvertible {
         self.defaultInstance().logln(.Debug, functionName: functionName, fileName: fileName, lineNumber: lineNumber, closure: closure)
     }
 
-    public func debug(@autoclosure closure: () -> String?, functionName: String = __FUNCTION__, fileName: String = __FILE__, lineNumber: Int = __LINE__) {
+    public func debug(@autoclosure closure: () -> String? = "", functionName: String = __FUNCTION__, fileName: String = __FILE__, lineNumber: Int = __LINE__) {
         self.logln(.Debug, functionName: functionName, fileName: fileName, lineNumber: lineNumber, closure: closure)
     }
 
