@@ -234,4 +234,30 @@ class XCGLoggerTests: XCTestCase {
         XCTAssertEqual(log.dateFormatter!.dateFormat, dateFormat, "Fail: date format doesn't match our custom date format")
         XCTAssert(defaultDateFormatter != dateFormatter, "Fail: Did not assign a custom date formatter")
     }
+    
+    class TestStringArrayDestination : XCGBaseLogDestination {
+        var outputStrs : [String] = [] 
+        override func output(logDetails: XCGLogDetails, text: String) {
+            outputStrs.append(text)
+        }
+    }
+       
+    func testDefaultEmptyStringInVerboseDebugAndInfo() {
+        let log = XCGLogger()
+        log.outputLogLevel = .Verbose
+        let testStringArrayDestination = 
+            TestStringArrayDestination(
+                owner: log, 
+                identifier: "com.cerebralgardens.xcglogger.testStringArrayDestination" )
+                
+        testStringArrayDestination.outputLogLevel = .Verbose
+        log.addLogDestination(testStringArrayDestination)
+        
+        log.verbose()
+        XCTAssert(testStringArrayDestination.outputStrs.count == 1)
+        log.debug()
+        XCTAssert(testStringArrayDestination.outputStrs.count == 2)
+        log.info()
+        XCTAssert(testStringArrayDestination.outputStrs.count == 3)
+    }
 }
