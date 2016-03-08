@@ -19,6 +19,10 @@
 		55E3EE5819D76F280068C3A7 /* XCGLoggerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55E3EE5719D76F280068C3A7 /* XCGLoggerTests.swift */; };
 		70C0D5C01B99EAFC00C4F3BA /* XCGLogger.h in Headers */ = {isa = PBXBuildFile; fileRef = 55DA396519D7737B0032F026 /* XCGLogger.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		70CB94181B99E728007802FF /* XCGLogger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 554DF40F19D76FA9005708BE /* XCGLogger.swift */; };
+		D602E0C11C8E5B2800778549 /* XCGLogWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = D602E0C01C8E5B2800778549 /* XCGLogWrapper.swift */; };
+		D602E0C21C8E5B2800778549 /* XCGLogWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = D602E0C01C8E5B2800778549 /* XCGLogWrapper.swift */; };
+		D602E0C31C8E5B2800778549 /* XCGLogWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = D602E0C01C8E5B2800778549 /* XCGLogWrapper.swift */; };
+		D602E0C41C8E5B2800778549 /* XCGLogWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = D602E0C01C8E5B2800778549 /* XCGLogWrapper.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -54,6 +58,7 @@
 		55E3EE5619D76F280068C3A7 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		55E3EE5719D76F280068C3A7 /* XCGLoggerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = XCGLoggerTests.swift; sourceTree = "<group>"; };
 		70CB94201B99E728007802FF /* XCGLogger.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = XCGLogger.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		D602E0C01C8E5B2800778549 /* XCGLogWrapper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = XCGLogWrapper.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -160,6 +165,7 @@
 				55DA396619D7737B0032F026 /* OSX */,
 				55E37F5F1BFC648800392B9C /* tvOS */,
 				554DF40F19D76FA9005708BE /* XCGLogger.swift */,
+				D602E0C01C8E5B2800778549 /* XCGLogWrapper.swift */,
 				55E3EE4819D76F280068C3A7 /* Supporting Files */,
 			);
 			path = XCGLogger;
@@ -433,6 +439,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				557C47E41BA125F800C9A174 /* XCGLogger.swift in Sources */,
+				D602E0C41C8E5B2800778549 /* XCGLogWrapper.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -441,6 +448,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				554DF43319D77155005708BE /* XCGLogger.swift in Sources */,
+				D602E0C21C8E5B2800778549 /* XCGLogWrapper.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -457,6 +465,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				554DF41019D76FA9005708BE /* XCGLogger.swift in Sources */,
+				D602E0C11C8E5B2800778549 /* XCGLogWrapper.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -473,6 +482,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				70CB94181B99E728007802FF /* XCGLogger.swift in Sources */,
+				D602E0C31C8E5B2800778549 /* XCGLogWrapper.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
