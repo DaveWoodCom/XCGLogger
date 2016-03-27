@@ -328,7 +328,7 @@ public class XCGLogger: CustomDebugStringConvertible {
         public static let baseFileLogDestinationIdentifier = "com.cerebralgardens.xcglogger.logdestination.file"
         public static let logQueueIdentifier = "com.cerebralgardens.xcglogger.queue"
         public static let nsdataFormatterCacheIdentifier = "com.cerebralgardens.xcglogger.nsdataFormatterCache"
-        public static let versionString = "3.2"
+        public static let versionString = "3.3"
     }
     public typealias constants = Constants // Preserve backwards compatibility: Constants should be capitalized since it's a type
 

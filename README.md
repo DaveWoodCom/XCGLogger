@@ -52,7 +52,7 @@ in your repository folder.
 
 Add the following line to your `Cartfile`.
 
-```github "DaveWoodCom/XCGLogger" ~> 3.2```
+```github "DaveWoodCom/XCGLogger" ~> 3.3```
 
 Then run `carthage update --no-use-binaries` or just `carthage update`. For details of the installation and usage of Carthage, visit [it's project page](https://github.com/Carthage/Carthage).
 
@@ -65,14 +65,18 @@ source 'https://github.com/CocoaPods/Specs.git'
 platform :ios, '8.0'
 use_frameworks!
 
-pod 'XCGLogger', '~> 3.2'
+pod 'XCGLogger', '~> 3.3'
 ```
 
 Then run `pod install`. For details of the installation and usage of CocoaPods, visit [it's official web site](https://cocoapods.org/).
 
 ###Backwards Compatibility
 
-Use XCGLogger version 3.x for Swift 2.0-2.2, XCGLogger version 2.x for Swift 1.2, and XCGLogger version 1.x for Swift 1.1 and below.
+Use:
+* XCGLogger version 3.3 for Swift 2.2
+* XCGLogger version 3.2 for Swift 2.0-2.1
+* XCGLogger version 2.x for Swift 1.2
+* XCGLogger version 1.x for Swift 1.1 and below.
 
 ##Standard Usage
 
@@ -317,6 +321,7 @@ TV Tune Up: https://www.cerebralgardens.com/tvtuneup
 
 ###Change Log
 
+* **Version 3.3**: *(2016/03/27)* - Updated for Xcode 7.3 (Swift 2.2). If you're still using 7.2 (Swift 2.1), you must use XCGLogger 3.2.
 * **Version 3.2**: *(2016/01/04)* - Added option to omit the default destination (for advanced usage), added background logging option
 * **Version 3.1.1**: *(2015/11/18)* - Minor clean up, fixes an app submission issue for tvOS
 * **Version 3.1**: *(2015/10/23)* - Initial support for tvOS
