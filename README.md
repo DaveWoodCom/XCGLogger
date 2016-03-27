@@ -4,7 +4,7 @@
 [![Platforms OS X | iOS | tvOS | watchOS](https://img.shields.io/badge/Platforms-OS%20X%20%7C%20iOS%20%7C%20tvOS%20%7C%20watchOS-lightgray.svg?style=flat)](https://swift.org/)
 [![License MIT](https://img.shields.io/badge/License-MIT-lightgrey.svg?style=flat)](https://github.com/DaveWoodCom/XCGLogger/blob/master/LICENSE.txt)
 
-[![Travis CI](https://img.shields.io/travis/DaveWoodCom/XCGLogger.svg?style=flat)](https://swift.org/)
+[![Travis CI](https://img.shields.io/travis/DaveWoodCom/XCGLogger.svg?style=flat)](https://travis-ci.org/DaveWoodCom/XCGLogger)
 [![Carthage compatible](https://img.shields.io/badge/Carthage-compatible-brightgreen.svg?style=flat)](https://github.com/Carthage/Carthage)
 [![CocoaPods Version](https://img.shields.io/cocoapods/v/XCGLogger.svg?style=flat)](https://cocoapods.org/pods/XCGLogger)
 
