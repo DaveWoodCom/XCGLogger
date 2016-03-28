@@ -40,10 +40,11 @@ public protocol XCGLogDestinationProtocol: CustomDebugStringConvertible {
     var owner: XCGLogger {get set}
     var identifier: String {get set}
     var outputLogLevel: XCGLogger.LogLevel {get set}
+    var filenameOutputLogLevel: [String: XCGLogger.LogLevel] {get set}
 
     func processLogDetails(logDetails: XCGLogDetails)
     func processInternalLogDetails(logDetails: XCGLogDetails) // Same as processLogDetails but should omit function/file/line info
-    func isEnabledForLogLevel(logLevel: XCGLogger.LogLevel) -> Bool
+    func isEnabledForLogLevel(logLevel: XCGLogger.LogLevel, filename: String?) -> Bool
 }
 
 // MARK: - XCGBaseLogDestination
@@ -53,6 +54,7 @@ public class XCGBaseLogDestination: XCGLogDestinationProtocol, CustomDebugString
     public var owner: XCGLogger
     public var identifier: String
     public var outputLogLevel: XCGLogger.LogLevel = .Debug
+    public var filenameOutputLogLevel: [String: XCGLogger.LogLevel] = Dictionary()
 
     public var showLogIdentifier: Bool = false
     public var showFunctionName: Bool = true
@@ -151,8 +153,12 @@ public class XCGBaseLogDestination: XCGLogDestinationProtocol, CustomDebugString
     }
 
     // MARK: - Misc methods
-    public func isEnabledForLogLevel (logLevel: XCGLogger.LogLevel) -> Bool {
-        return logLevel >= self.outputLogLevel
+    public func isEnabledForLogLevel (logLevel: XCGLogger.LogLevel, filename: String?) -> Bool {
+        let enabled = logLevel >= self.outputLogLevel
+        guard filename != nil else { return enabled }
+        let basename = (filename! as NSString).lastPathComponent
+        guard let fileLogLevel = self.filenameOutputLogLevel[basename] else { return enabled }
+        return logLevel >= fileLogLevel
     }
 
     // MARK: - Methods that must be overriden in subclasses
@@ -489,6 +495,14 @@ public class XCGLogger: CustomDebugStringConvertible {
         }
     }
 
+    public var filenameOutputLogLevel = [String: LogLevel]() {
+        didSet {
+            for index in 0 ..< logDestinations.count {
+                logDestinations[index].outputLogLevel = outputLogLevel
+            }
+        }
+    }
+
     public var xcodeColorsEnabled: Bool = false
     public var xcodeColors: [XCGLogger.LogLevel: XCGLogger.XcodeColor] = [
         .Verbose: .lightGrey,
@@ -607,7 +621,7 @@ public class XCGLogger: CustomDebugStringConvertible {
     public func logln(logLevel: LogLevel = .Debug, functionName: String = #function, fileName: String = #file, lineNumber: Int = #line, @noescape closure: () -> String?) {
         var logDetails: XCGLogDetails? = nil
         for logDestination in self.logDestinations {
-            if (logDestination.isEnabledForLogLevel(logLevel)) {
+            if (logDestination.isEnabledForLogLevel(logLevel, filename: fileName)) {
                 if logDetails == nil {
                     if let logMessage = closure() {
                         logDetails = XCGLogDetails(logLevel: logLevel, date: NSDate(), logMessage: logMessage, functionName: functionName, fileName: fileName, lineNumber: lineNumber)
@@ -655,7 +669,7 @@ public class XCGLogger: CustomDebugStringConvertible {
 
         for logDestination in (selectedLogDestination != nil ? [selectedLogDestination!] : logDestinations) {
             for logDetail in logDetails {
-                if !logDestination.isEnabledForLogLevel(.Info) {
+                if !logDestination.isEnabledForLogLevel(.Info, filename: logDetail.fileName) {
                     continue;
                 }
 
@@ -860,7 +874,7 @@ public class XCGLogger: CustomDebugStringConvertible {
 
         var logDetails: XCGLogDetails? = nil
         for logDestination in self.logDestinations {
-            if (logDestination.isEnabledForLogLevel(logLevel)) {
+            if (logDestination.isEnabledForLogLevel(logLevel, filename: nil)) {
                 if logDetails == nil {
                     logDetails = XCGLogDetails(logLevel: logLevel, date: NSDate(), logMessage: logMessage, functionName: "", fileName: "", lineNumber: 0)
                 }
