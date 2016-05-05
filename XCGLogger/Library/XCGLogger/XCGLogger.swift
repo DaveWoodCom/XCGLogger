@@ -244,10 +244,13 @@ public class XCGFileLogDestination: XCGBaseLogDestination {
         }
     }
     private var logFileHandle: NSFileHandle? = nil
+    
+    private var append: Bool = false
 
     // MARK: - Life Cycle
-    public init(owner: XCGLogger, writeToFile: AnyObject, identifier: String = "") {
+    public init(owner: XCGLogger, writeToFile: AnyObject, identifier: String = "", append: Bool = false) {
         super.init(owner: owner, identifier: identifier)
+        self.append = append
 
         if writeToFile is NSString {
             writeToFileURL = NSURL.fileURLWithPath(writeToFile as! String)
@@ -275,10 +278,12 @@ public class XCGFileLogDestination: XCGBaseLogDestination {
 
         if let writeToFileURL = writeToFileURL,
           let path = writeToFileURL.path {
-
-            NSFileManager.defaultManager().createFileAtPath(path, contents: nil, attributes: nil)
+            if !NSFileManager.defaultManager().fileExistsAtPath(path) || !append {
+                NSFileManager.defaultManager().createFileAtPath(path, contents: nil, attributes: nil)
+            }
             do {
                 logFileHandle = try NSFileHandle(forWritingToURL: writeToFileURL)
+                logFileHandle?.seekToEndOfFile()
             }
             catch let error as NSError {
                 owner._logln("Attempt to open log file for writing failed: \(error.localizedDescription)", logLevel: .Error)
@@ -554,11 +559,11 @@ public class XCGLogger: CustomDebugStringConvertible {
     }
 
     // MARK: - Setup methods
-    public class func setup(logLevel: LogLevel = .Debug, showLogIdentifier: Bool = false, showFunctionName: Bool = true, showThreadName: Bool = false, showLogLevel: Bool = true, showFileNames: Bool = true, showLineNumbers: Bool = true, showDate: Bool = true, writeToFile: AnyObject? = nil, fileLogLevel: LogLevel? = nil) {
+    public class func setup(logLevel: LogLevel = .Debug, showLogIdentifier: Bool = false, showFunctionName: Bool = true, showThreadName: Bool = false, showLogLevel: Bool = true, showFileNames: Bool = true, showLineNumbers: Bool = true, showDate: Bool = true, writeToFile: AnyObject? = nil, fileLogLevel: LogLevel? = nil, append: Bool = false) {
         defaultInstance().setup(logLevel, showLogIdentifier: showLogIdentifier, showFunctionName: showFunctionName, showThreadName: showThreadName, showLogLevel: showLogLevel, showFileNames: showFileNames, showLineNumbers: showLineNumbers, showDate: showDate, writeToFile: writeToFile)
     }
 
-    public func setup(logLevel: LogLevel = .Debug, showLogIdentifier: Bool = false, showFunctionName: Bool = true, showThreadName: Bool = false, showLogLevel: Bool = true, showFileNames: Bool = true, showLineNumbers: Bool = true, showDate: Bool = true, writeToFile: AnyObject? = nil, fileLogLevel: LogLevel? = nil) {
+    public func setup(logLevel: LogLevel = .Debug, showLogIdentifier: Bool = false, showFunctionName: Bool = true, showThreadName: Bool = false, showLogLevel: Bool = true, showFileNames: Bool = true, showLineNumbers: Bool = true, showDate: Bool = true, writeToFile: AnyObject? = nil, fileLogLevel: LogLevel? = nil, append: Bool = false) {
         outputLogLevel = logLevel;
 
         if let standardConsoleLogDestination = logDestination(XCGLogger.Constants.baseConsoleLogDestinationIdentifier) as? XCGConsoleLogDestination {
@@ -576,7 +581,7 @@ public class XCGLogger: CustomDebugStringConvertible {
 
         if let writeToFile: AnyObject = writeToFile {
             // We've been passed a file to use for logging, set up a file logger
-            let standardFileLogDestination: XCGFileLogDestination = XCGFileLogDestination(owner: self, writeToFile: writeToFile, identifier: XCGLogger.Constants.baseFileLogDestinationIdentifier)
+            let standardFileLogDestination: XCGFileLogDestination = XCGFileLogDestination(owner: self, writeToFile: writeToFile, identifier: XCGLogger.Constants.baseFileLogDestinationIdentifier, append: append)
 
             standardFileLogDestination.showLogIdentifier = showLogIdentifier
             standardFileLogDestination.showFunctionName = showFunctionName
