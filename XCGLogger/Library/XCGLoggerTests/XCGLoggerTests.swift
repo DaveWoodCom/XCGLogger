@@ -36,10 +36,10 @@ class XCGLoggerTests: XCTestCase {
     func testDefaultInstance() {
         // Test that if we request the default instance multiple times, we always get the same instance
         let defaultInstance1: XCGLogger = XCGLogger.defaultInstance()
-        defaultInstance1.identifier = XCGLogger.constants.defaultInstanceIdentifier
+        defaultInstance1.identifier = XCGLogger.Constants.defaultInstanceIdentifier
 
         let defaultInstance2: XCGLogger = XCGLogger.defaultInstance()
-        defaultInstance2.identifier = XCGLogger.constants.defaultInstanceIdentifier + ".second" // this should also change defaultInstance1.identifier
+        defaultInstance2.identifier = XCGLogger.Constants.defaultInstanceIdentifier + ".second" // this should also change defaultInstance1.identifier
 
         XCTAssert(defaultInstance1.identifier == defaultInstance2.identifier, "Fail: defaultInstance() is not returning a common instance")
     }
@@ -185,6 +185,22 @@ class XCGLoggerTests: XCTestCase {
             log.debug {
                 return "\(linesToLog[Int(index)])"
             }
+        }
+    }
+
+    func testBackgroundLogging() {
+        let log: XCGLogger = XCGLogger(identifier: "com.cerebralgardens.xcglogger.testBackgroundLogging", includeDefaultDestinations: false)
+        let systemLogDestination = XCGNSLogDestination(owner: log, identifier: "com.cerebralgardens.xcglogger.testBackgroundLogging.systemLogDestination")
+        systemLogDestination.outputLogLevel = .Debug
+        systemLogDestination.showThreadName = true
+        // Note: The thread name included in the log message should be "main" even though the log is processed in a background thread. This is because
+        // it uses the thread name of the thread the log function is called in, not the thread used to do the output.
+        systemLogDestination.logQueue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0)
+        log.addLogDestination(systemLogDestination)
+
+        let linesToLog = ["One", "Two", "Three", "Four", "Five", "Six", "Seven", "Eight", "Nine", "Ten"]
+        for line in linesToLog {
+            log.debug(line)
         }
     }
 
