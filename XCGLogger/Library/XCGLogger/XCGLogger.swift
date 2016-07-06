@@ -605,20 +605,19 @@ public class XCGLogger: CustomDebugStringConvertible {
     }
 
     public func logln(logLevel: LogLevel = .Debug, functionName: String = #function, fileName: String = #file, lineNumber: Int = #line, @noescape closure: () -> String?) {
-        var logDetails: XCGLogDetails? = nil
+        var logDetails: XCGLogDetails!
         for logDestination in self.logDestinations {
-            if (logDestination.isEnabledForLogLevel(logLevel)) {
-                if logDetails == nil {
-                    if let logMessage = closure() {
-                        logDetails = XCGLogDetails(logLevel: logLevel, date: NSDate(), logMessage: logMessage, functionName: functionName, fileName: fileName, lineNumber: lineNumber)
-                    }
-                    else {
-                        break
-                    }
-                }
-
-                logDestination.processLogDetails(logDetails!)
+            guard logDestination.isEnabledForLogLevel(logLevel) else {
+                continue
             }
+            if logDetails == nil {
+                guard let logMessage = closure() else {
+                    break
+                }
+                logDetails = XCGLogDetails(logLevel: logLevel, date: NSDate(), logMessage: logMessage, functionName: functionName, fileName: fileName, lineNumber: lineNumber)
+            }
+
+            logDestination.processLogDetails(logDetails)
         }
     }
 
@@ -627,7 +626,7 @@ public class XCGLogger: CustomDebugStringConvertible {
     }
 
     public func exec(logLevel: LogLevel = .Debug, closure: () -> () = {}) {
-        if (!isEnabledForLogLevel(logLevel)) {
+        guard isEnabledForLogLevel(logLevel) else {
             return
         }
 
@@ -655,8 +654,8 @@ public class XCGLogger: CustomDebugStringConvertible {
 
         for logDestination in (selectedLogDestination != nil ? [selectedLogDestination!] : logDestinations) {
             for logDetail in logDetails {
-                if !logDestination.isEnabledForLogLevel(.Info) {
-                    continue;
+                guard logDestination.isEnabledForLogLevel(.Info) else {
+                    continue
                 }
 
                 logDestination.processInternalLogDetails(logDetail)
