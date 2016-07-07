@@ -120,7 +120,7 @@ class XCGLoggerTests: XCTestCase {
 
         var numberOfTimes: Int = 0
         log.debug {
-            ++numberOfTimes
+            numberOfTimes += 1
             return "executed closure correctly"
         }
 
@@ -135,7 +135,7 @@ class XCGLoggerTests: XCTestCase {
 
         var numberOfTimes: Int = 0
         log.debug {
-            ++numberOfTimes
+            numberOfTimes += 1
             return nil
         }
 
@@ -150,7 +150,7 @@ class XCGLoggerTests: XCTestCase {
 
         var numberOfTimes: Int = 0
         log.debug {
-            ++numberOfTimes
+            numberOfTimes += 1
             return "executed closure incorrectly"
         }
 
