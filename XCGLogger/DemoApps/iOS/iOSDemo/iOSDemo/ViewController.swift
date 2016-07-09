@@ -24,7 +24,7 @@ class ViewController: UIViewController {
         updateView()
     }
 
-    @IBAction func verboseButtonTouchUpInside(sender: AnyObject) {
+    @IBAction func verboseButtonTouchUpInside(_ sender: AnyObject) {
         log.verbose("Verbose button tapped")
         log.verbose {
             // add expensive code required only for logging, then return an optional String
@@ -33,7 +33,7 @@ class ViewController: UIViewController {
         }
     }
 
-    @IBAction func debugButtonTouchUpInside(sender: AnyObject) {
+    @IBAction func debugButtonTouchUpInside(_ sender: AnyObject) {
         log.debug("Debug button tapped")
         log.debug {
             // add expensive code required only for logging, then return an optional String
@@ -42,7 +42,7 @@ class ViewController: UIViewController {
         }
     }
 
-    @IBAction func infoButtonTouchUpInside(sender: AnyObject) {
+    @IBAction func infoButtonTouchUpInside(_ sender: AnyObject) {
         log.info("Info button tapped")
         log.info {
             // add expensive code required only for logging, then return an optional String
@@ -51,7 +51,7 @@ class ViewController: UIViewController {
         }
     }
 
-    @IBAction func warningButtonTouchUpInside(sender: AnyObject) {
+    @IBAction func warningButtonTouchUpInside(_ sender: AnyObject) {
         log.warning("Warning button tapped")
         log.warning {
             // add expensive code required only for logging, then return an optional String
@@ -60,7 +60,7 @@ class ViewController: UIViewController {
         }
     }
 
-    @IBAction func errorButtonTouchUpInside(sender: AnyObject) {
+    @IBAction func errorButtonTouchUpInside(_ sender: AnyObject) {
         log.error("Error button tapped")
         log.error {
             // add expensive code required only for logging, then return an optional String
@@ -69,7 +69,7 @@ class ViewController: UIViewController {
         }
     }
 
-    @IBAction func severeButtonTouchUpInside(sender: AnyObject) {
+    @IBAction func severeButtonTouchUpInside(_ sender: AnyObject) {
         log.severe("Severe button tapped")
         log.severe {
             // add expensive code required only for logging, then return an optional String
@@ -78,29 +78,29 @@ class ViewController: UIViewController {
         }
     }
 
-    @IBAction func logLevelSliderValueChanged(sender: AnyObject) {
-        var logLevel: XCGLogger.LogLevel = .Verbose
+    @IBAction func logLevelSliderValueChanged(_ sender: AnyObject) {
+        var logLevel: XCGLogger.LogLevel = .verbose
 
         if (0 <= logLevelSlider.value && logLevelSlider.value < 1) {
-            logLevel = .Verbose
+            logLevel = .verbose
         }
         else if (1 <= logLevelSlider.value && logLevelSlider.value < 2) {
-            logLevel = .Debug
+            logLevel = .debug
         }
         else if (2 <= logLevelSlider.value && logLevelSlider.value < 3) {
-            logLevel = .Info
+            logLevel = .info
         }
         else if (3 <= logLevelSlider.value && logLevelSlider.value < 4) {
-            logLevel = .Warning
+            logLevel = .warning
         }
         else if (4 <= logLevelSlider.value && logLevelSlider.value < 5) {
-            logLevel = .Error
+            logLevel = .error
         }
         else if (5 <= logLevelSlider.value && logLevelSlider.value < 6) {
-            logLevel = .Severe
+            logLevel = .severe
         }
         else {
-            logLevel = .None
+            logLevel = .none
         }
 
         log.outputLogLevel = logLevel

@@ -361,6 +361,9 @@
 						CreatedOnToolsVersion = 6.1;
 						LastSwiftMigration = 0800;
 					};
+					70CB94161B99E728007802FF = {
+						LastSwiftMigration = 0800;
+					};
 				};
 			};
 			buildConfigurationList = 55E3EE3F19D76F280068C3A7 /* Build configuration list for PBXProject "XCGLogger" */;
@@ -802,6 +805,7 @@
 				SDKROOT = watchos;
 				SKIP_INSTALL = YES;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 3.0;
 				TARGETED_DEVICE_FAMILY = 4;
 			};
 			name = Debug;
@@ -824,6 +828,7 @@
 				SDKROOT = watchos;
 				SKIP_INSTALL = YES;
 				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
+				SWIFT_VERSION = 3.0;
 				TARGETED_DEVICE_FAMILY = 4;
 			};
 			name = Release;
