@@ -96,7 +96,7 @@ class XCGLoggerTests: XCTestCase {
     func testAvoidStringInterpolationWithAutoclosure() {
         let log: XCGLogger = XCGLogger()
         log.identifier = "com.cerebralgardens.xcglogger.testAvoidStringInterpolationWithAutoclosure"
-        log.outputLogLevel = .Debug
+        log.outputLogLevel = .debug
 
         class ObjectWithExpensiveDescription: CustomStringConvertible {
             var descriptionInvoked = false
@@ -116,11 +116,11 @@ class XCGLoggerTests: XCTestCase {
     func testExecExecutes() {
         let log: XCGLogger = XCGLogger()
         log.identifier = "com.cerebralgardens.xcglogger.testExecExecutes"
-        log.outputLogLevel = .Debug
+        log.outputLogLevel = .debug
 
         var numberOfTimes: Int = 0
         log.debug {
-            ++numberOfTimes
+            numberOfTimes += 1
             return "executed closure correctly"
         }
 
@@ -130,12 +130,12 @@ class XCGLoggerTests: XCTestCase {
 
     func testExecExecutesExactlyOnceWithNilReturnAndMultipleDestinations() {
         let log: XCGLogger = XCGLogger()
-        log.setup(.Debug, showLogLevel: true, showFileNames: true, showLineNumbers: true, writeToFile: "/tmp/test.log")
+        log.setup(.debug, showLogLevel: true, showFileNames: true, showLineNumbers: true, writeToFile: "/tmp/test.log")
         log.identifier = "com.cerebralgardens.xcglogger.testExecExecutesExactlyOnceWithNilReturnAndMultipleDestinations"
 
         var numberOfTimes: Int = 0
         log.debug {
-            ++numberOfTimes
+            numberOfTimes += 1
             return nil
         }
 
@@ -146,15 +146,15 @@ class XCGLoggerTests: XCTestCase {
     func testExecDoesntExecute() {
         let log: XCGLogger = XCGLogger()
         log.identifier = "com.cerebralgardens.xcglogger.testExecDoesntExecute"
-        log.outputLogLevel = .Error
+        log.outputLogLevel = .error
 
         var numberOfTimes: Int = 0
         log.debug {
-            ++numberOfTimes
+            numberOfTimes += 1
             return "executed closure incorrectly"
         }
 
-        log.outputLogLevel = .Debug
+        log.outputLogLevel = .debug
         log.debug("executed: \(numberOfTimes) time(s)")
         XCTAssert(numberOfTimes == 0, "Fail: Didn't execute the closure when it should have")
     }
@@ -162,13 +162,11 @@ class XCGLoggerTests: XCTestCase {
     func testMultiThreaded() {
         let log: XCGLogger = XCGLogger()
         log.identifier = "com.cerebralgardens.xcglogger.testMultiThreaded"
-        log.setup(.Debug, showThreadName: true, showLogLevel: true, showFileNames: true, showLineNumbers: true, writeToFile: nil)
+        log.setup(.debug, showThreadName: true, showLogLevel: true, showFileNames: true, showLineNumbers: true, writeToFile: nil)
 
         let linesToLog = ["One", "Two", "Three", "Four", "Five", "Six", "Seven", "Eight", "Nine", "Ten"]
-        let myConcurrentQueue = dispatch_queue_create("com.cerebralgardens.xcglogger.testMultiThreaded.queue", DISPATCH_QUEUE_CONCURRENT)
-        dispatch_apply(linesToLog.count, myConcurrentQueue) { (index: Int) in
-            // log.debug(linesToLog[index])
-            // Workaround for llvm-crash
+        
+        DispatchQueue.concurrentPerform(iterations: linesToLog.count){ index in
             let line = linesToLog[index]
             log.debug(line)
         }
@@ -177,11 +175,10 @@ class XCGLoggerTests: XCTestCase {
     func testMultiThreaded2() {
         let log: XCGLogger = XCGLogger()
         log.identifier = "com.cerebralgardens.xcglogger.testMultiThreaded2"
-        log.setup(.Debug, showThreadName: true, showLogLevel: true, showFileNames: true, showLineNumbers: true, writeToFile: nil)
+        log.setup(.debug, showThreadName: true, showLogLevel: true, showFileNames: true, showLineNumbers: true, writeToFile: nil)
 
         let linesToLog = ["One", "Two", "Three", "Four", "Five", "Six", "Seven", "Eight", "Nine", "Ten"]
-        let myConcurrentQueue = dispatch_queue_create("com.cerebralgardens.xcglogger.testMultiThreaded2.queue", DISPATCH_QUEUE_CONCURRENT)
-        dispatch_apply(linesToLog.count, myConcurrentQueue) { (index: Int) in
+        DispatchQueue.concurrentPerform(iterations: linesToLog.count){ index in
             log.debug {
                 return "\(linesToLog[Int(index)])"
             }
@@ -191,11 +188,11 @@ class XCGLoggerTests: XCTestCase {
     func testBackgroundLogging() {
         let log: XCGLogger = XCGLogger(identifier: "com.cerebralgardens.xcglogger.testBackgroundLogging", includeDefaultDestinations: false)
         let systemLogDestination = XCGNSLogDestination(owner: log, identifier: "com.cerebralgardens.xcglogger.testBackgroundLogging.systemLogDestination")
-        systemLogDestination.outputLogLevel = .Debug
+        systemLogDestination.outputLogLevel = .debug
         systemLogDestination.showThreadName = true
         // Note: The thread name included in the log message should be "main" even though the log is processed in a background thread. This is because
         // it uses the thread name of the thread the log function is called in, not the thread used to do the output.
-        systemLogDestination.logQueue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0)
+        systemLogDestination.logQueue = DispatchQueue.global(attributes: .qosBackground)
         log.addLogDestination(systemLogDestination)
 
         let linesToLog = ["One", "Two", "Three", "Four", "Five", "Six", "Seven", "Eight", "Nine", "Ten"]
@@ -217,13 +214,13 @@ class XCGLoggerTests: XCTestCase {
     func testCustomDateFormatter() {
         let log: XCGLogger = XCGLogger()
         log.identifier = "com.cerebralgardens.xcglogger.testCustomDateFormatter"
-        log.outputLogLevel = .Debug
+        log.outputLogLevel = .debug
 
         let defaultDateFormatter = log.dateFormatter
 
         let dateFormat = "MM/dd/yyyy hh:mma"
 
-        let dateFormatter = NSDateFormatter()
+        let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = dateFormat
 
         log.dateFormatter = dateFormatter
