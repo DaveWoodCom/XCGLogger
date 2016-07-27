@@ -136,7 +136,7 @@ class XCGLoggerTests: XCTestCase {
         var numberOfTimes: Int = 0
         log.debug {
             ++numberOfTimes
-            return nil
+            return ""
         }
 
         log.debug("executed: \(numberOfTimes) time(s)")
@@ -233,5 +233,21 @@ class XCGLoggerTests: XCTestCase {
         XCTAssertNotNil(log.dateFormatter, "Fail: date formatter is nil")
         XCTAssertEqual(log.dateFormatter!.dateFormat, dateFormat, "Fail: date format doesn't match our custom date format")
         XCTAssert(defaultDateFormatter != dateFormatter, "Fail: Did not assign a custom date formatter")
+    }
+
+    func testVariousParameters() {
+        let log: XCGLogger = XCGLogger()
+        log.identifier = "com.cerebralgardens.xcglogger.testVariousParameters"
+        log.outputLogLevel = .Verbose
+
+        log.verbose()
+        log.debug(1.2)
+        log.info(true)
+        log.warning(["a", "b", "c"])
+        log.error {
+            return NSDate()
+        }
+        let optionalString: String? = "text"
+        log.severe(optionalString)
     }
 }
