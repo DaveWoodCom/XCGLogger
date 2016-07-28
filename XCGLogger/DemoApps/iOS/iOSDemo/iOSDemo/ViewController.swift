@@ -79,28 +79,28 @@ class ViewController: UIViewController {
     }
 
     @IBAction func logLevelSliderValueChanged(sender: AnyObject) {
-        var logLevel: XCGLogger.LogLevel = .Verbose
+        var logLevel: XCGLogger.LogLevel = .verbose
 
         if (0 <= logLevelSlider.value && logLevelSlider.value < 1) {
-            logLevel = .Verbose
+            logLevel = .verbose
         }
         else if (1 <= logLevelSlider.value && logLevelSlider.value < 2) {
-            logLevel = .Debug
+            logLevel = .debug
         }
         else if (2 <= logLevelSlider.value && logLevelSlider.value < 3) {
-            logLevel = .Info
+            logLevel = .info
         }
         else if (3 <= logLevelSlider.value && logLevelSlider.value < 4) {
-            logLevel = .Warning
+            logLevel = .warning
         }
         else if (4 <= logLevelSlider.value && logLevelSlider.value < 5) {
-            logLevel = .Error
+            logLevel = .error
         }
         else if (5 <= logLevelSlider.value && logLevelSlider.value < 6) {
-            logLevel = .Severe
+            logLevel = .severe
         }
         else {
-            logLevel = .None
+            logLevel = .none
         }
 
         log.outputLogLevel = logLevel

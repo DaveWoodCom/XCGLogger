@@ -15,12 +15,12 @@ let log: XCGLogger = {
     let log = XCGLogger.defaultInstance()
     log.xcodeColorsEnabled = true // Or set the XcodeColors environment variable in your scheme to YES
     log.xcodeColors = [
-        .Verbose: .lightGrey,
-        .Debug: .darkGrey,
-        .Info: .darkGreen,
-        .Warning: .orange,
-        .Error: XCGLogger.XcodeColor(fg: UIColor.redColor(), bg: UIColor.whiteColor()), // Optionally use a UIColor
-        .Severe: XCGLogger.XcodeColor(fg: (255, 255, 255), bg: (255, 0, 0)) // Optionally use RGB values directly
+        .verbose: .lightGrey,
+        .debug: .darkGrey,
+        .info: .darkGreen,
+        .warning: .orange,
+        .error: XCGLogger.XcodeColor(fg: UIColor.red(), bg: UIColor.white()), // Optionally use a UIColor
+        .severe: XCGLogger.XcodeColor(fg: (255, 255, 255), bg: (255, 0, 0)) // Optionally use RGB values directly
     ]
 
     #if USE_NSLOG // Set via Build Settings, under Other Swift Flags
@@ -36,11 +36,11 @@ let log: XCGLogger = {
 
 class InterfaceController: WKInterfaceController {
 
-    override func awakeWithContext(context: AnyObject?) {
+    override func awake(withContext context: AnyObject?) {
         // Display initial app info
-        log
+        _ = log
 
-        super.awakeWithContext(context)
+        super.awake(withContext: context)
         
         // Configure interface objects here.
     }
