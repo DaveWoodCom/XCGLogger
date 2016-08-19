@@ -238,7 +238,7 @@ public class XCGNSLogDestination: XCGBaseLogDestination {
 public class XCGFileLogDestination: XCGBaseLogDestination {
     // MARK: - Properties
     public var logQueue: dispatch_queue_t? = nil
-    private var writeToFileURL: NSURL? = nil {
+    public var writeToFileURL: NSURL? = nil {
         didSet {
             openFile()
         }
