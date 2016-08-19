@@ -66,6 +66,13 @@ let log: XCGLogger = {
     return log
 }()
 
+let dateHashFormatter: NSDateFormatter = {
+    let dateHashFormatter = NSDateFormatter()
+    dateHashFormatter.locale = NSLocale.currentLocale()
+    dateHashFormatter.dateFormat = "yyyy-MM-dd_HHmmss_SSS"
+    return dateHashFormatter
+}()
+
 @NSApplicationMain
 class AppDelegate: NSObject, NSApplicationDelegate {
 
@@ -133,6 +140,16 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         log.severe {
             // add expensive code required only for logging, then return an optional String
             return "Executed severe code block" // or nil
+        }
+    }
+
+    @IBAction func rotateLogFileButtonTouchUpInside(sender: AnyObject) {
+        if let fileLogDestination = log.logDestination("advancedLogger.fileLogDestination") as? XCGFileLogDestination {
+
+            let dateHash: String = dateHashFormatter.stringFromDate(NSDate())
+            let archiveFilePath: NSString = ("~/Desktop/XCGLogger_Log_\(dateHash).txt" as NSString).stringByExpandingTildeInPath
+
+            fileLogDestination.rotateFile(archiveFilePath)
         }
     }
 
