@@ -244,9 +244,14 @@ public class XCGFileLogDestination: XCGBaseLogDestination {
         }
     }
     private var logFileHandle: NSFileHandle? = nil
+    private var shouldAppend: Bool
+    private var appendMarker: String?
 
     // MARK: - Life Cycle
-    public init(owner: XCGLogger, writeToFile: AnyObject, identifier: String = "") {
+    public init(owner: XCGLogger, writeToFile: AnyObject, identifier: String = "", shouldAppend: Bool = false, appendMarker: String? = "-- ** ** ** --") {
+        self.shouldAppend = shouldAppend
+        self.appendMarker = appendMarker
+
         super.init(owner: owner, identifier: identifier)
 
         if writeToFile is NSString {
@@ -276,21 +281,34 @@ public class XCGFileLogDestination: XCGBaseLogDestination {
         if let writeToFileURL = writeToFileURL,
           let path = writeToFileURL.path {
 
-            NSFileManager.defaultManager().createFileAtPath(path, contents: nil, attributes: nil)
+            let fileManager: NSFileManager = NSFileManager.defaultManager()
+            let fileExists: Bool = fileManager.fileExistsAtPath(path)
+            if !shouldAppend || !fileExists {
+                fileManager.createFileAtPath(path, contents: nil, attributes: nil)
+            }
+
             do {
                 logFileHandle = try NSFileHandle(forWritingToURL: writeToFileURL)
+                if fileExists && shouldAppend {
+                    logFileHandle?.seekToEndOfFile()
+
+                    if let appendMarker = appendMarker,
+                      let encodedData = "\(appendMarker)\n".dataUsingEncoding(NSUTF8StringEncoding) {
+                        self.logFileHandle?.writeData(encodedData)
+                    }
+                }
             }
             catch let error as NSError {
-                owner._logln("Attempt to open log file for writing failed: \(error.localizedDescription)", logLevel: .Error)
+                owner._logln("Attempt to open log file for \(fileExists && shouldAppend ? "appending" : "writing") failed: \(error.localizedDescription)", logLevel: .Error)
                 logFileHandle = nil
                 return
             }
 
-            owner.logAppDetails(self)
-
-            let logDetails = XCGLogDetails(logLevel: .Info, date: NSDate(), logMessage: "XCGLogger writing to log to: \(writeToFileURL)", functionName: "", fileName: "", lineNumber: 0)
+            let logDetails = XCGLogDetails(logLevel: .Info, date: NSDate(), logMessage: "XCGLogger \(fileExists && shouldAppend ? "appending" : "writing") log to: \(writeToFileURL)", functionName: "", fileName: "", lineNumber: 0)
             owner._logln(logDetails.logMessage, logLevel: logDetails.logLevel)
-            processInternalLogDetails(logDetails)
+            if owner.logDestination(identifier) == nil {
+                processInternalLogDetails(logDetails)
+            }
         }
     }
 
@@ -572,8 +590,6 @@ public class XCGLogger: CustomDebugStringConvertible {
             standardConsoleLogDestination.outputLogLevel = logLevel
         }
 
-        logAppDetails()
-
         if let writeToFile: AnyObject = writeToFile {
             // We've been passed a file to use for logging, set up a file logger
             let standardFileLogDestination: XCGFileLogDestination = XCGFileLogDestination(owner: self, writeToFile: writeToFile, identifier: XCGLogger.Constants.baseFileLogDestinationIdentifier)
@@ -589,6 +605,8 @@ public class XCGLogger: CustomDebugStringConvertible {
 
             addLogDestination(standardFileLogDestination)
         }
+
+        logAppDetails()
     }
 
     // MARK: - Logging methods
