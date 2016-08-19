@@ -333,6 +333,46 @@ public class XCGFileLogDestination: XCGBaseLogDestination {
             outputClosure()
         }
     }
+
+    public func rotateFile(archiveToFile: AnyObject) -> Bool {
+        var archiveToFileURL: NSURL? = nil
+
+        if archiveToFile is NSString {
+            archiveToFileURL = NSURL.fileURLWithPath(archiveToFile as! String)
+        }
+        else if archiveToFile is NSURL {
+            archiveToFileURL = archiveToFile as? NSURL
+        }
+        else {
+            return false
+        }
+
+        if let archiveToFileURL = archiveToFileURL,
+          let archiveToFilePath = archiveToFileURL.path,
+          let writeToFileURL = writeToFileURL,
+          let writeToFilePath = writeToFileURL.path {
+
+            let fileManager: NSFileManager = NSFileManager.defaultManager()
+            guard !fileManager.fileExistsAtPath(archiveToFilePath) else { return false }
+
+            closeFile()
+
+            do {
+                try fileManager.moveItemAtPath(writeToFilePath, toPath: archiveToFilePath)
+            }
+            catch let error as NSError {
+                openFile()
+                owner._logln("Unable to rotate file \(writeToFilePath) to \(archiveToFilePath): \(error.localizedDescription)", logLevel: .Error)
+                return false
+            }
+
+            owner._logln("Rotated file \(writeToFilePath) to \(archiveToFilePath)", logLevel: .Info)
+            openFile()
+            return true
+        }
+
+        return false
+    }
 }
 
 // MARK: - XCGLogger
