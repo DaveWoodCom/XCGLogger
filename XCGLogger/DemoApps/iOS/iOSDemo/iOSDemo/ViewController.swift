@@ -28,7 +28,6 @@ class ViewController: UIViewController {
         log.verbose("Verbose button tapped")
         log.verbose {
             // add expensive code required only for logging, then return an optional String
-            noop()
             return "Executed verbose code block" // or nil
         }
     }
@@ -37,7 +36,6 @@ class ViewController: UIViewController {
         log.debug("Debug button tapped")
         log.debug {
             // add expensive code required only for logging, then return an optional String
-            noop()
             return "Executed debug code block" // or nil
         }
     }
@@ -46,7 +44,6 @@ class ViewController: UIViewController {
         log.info("Info button tapped")
         log.info {
             // add expensive code required only for logging, then return an optional String
-            noop()
             return "Executed info code block" // or nil
         }
     }
@@ -55,7 +52,6 @@ class ViewController: UIViewController {
         log.warning("Warning button tapped")
         log.warning {
             // add expensive code required only for logging, then return an optional String
-            noop()
             return "Executed warning code block" // or nil
         }
     }
@@ -64,7 +60,6 @@ class ViewController: UIViewController {
         log.error("Error button tapped")
         log.error {
             // add expensive code required only for logging, then return an optional String
-            noop()
             return "Executed error code block" // or nil
         }
     }
@@ -73,7 +68,6 @@ class ViewController: UIViewController {
         log.severe("Severe button tapped")
         log.severe {
             // add expensive code required only for logging, then return an optional String
-            noop()
             return "Executed severe code block" // or nil
         }
     }

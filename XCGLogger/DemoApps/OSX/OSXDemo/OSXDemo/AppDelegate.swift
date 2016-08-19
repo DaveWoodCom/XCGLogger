@@ -170,7 +170,3 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         currentLogLevelTextField.stringValue = "\(log.outputLogLevel)"
     }
 }
-
-func noop() {
-    // Global no operation function, useful for doing nothing in a switch option, and examples
-}
