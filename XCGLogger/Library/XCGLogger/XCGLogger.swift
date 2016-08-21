@@ -108,7 +108,7 @@ public class XCGBaseLogDestination: XCGLogDestinationProtocol, CustomDebugString
                     extendedDetails += "[" + queueName + "] "
                 }
                 else {
-                    extendedDetails += "[" + String(format:"%p", NSThread.currentThread()) + "] "
+                    extendedDetails += "[" + String(format: "%p", NSThread.currentThread()) + "] "
                 }
             }
         }
