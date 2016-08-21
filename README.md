@@ -52,7 +52,7 @@ in your repository folder.
 
 Add the following line to your `Cartfile`.
 
-```github "DaveWoodCom/XCGLogger" ~> 3.3```
+```github "DaveWoodCom/XCGLogger" ~> 3.4```
 
 Then run `carthage update --no-use-binaries` or just `carthage update`. For details of the installation and usage of Carthage, visit [it's project page](https://github.com/Carthage/Carthage).
 
@@ -65,7 +65,7 @@ source 'https://github.com/CocoaPods/Specs.git'
 platform :ios, '8.0'
 use_frameworks!
 
-pod 'XCGLogger', '~> 3.3'
+pod 'XCGLogger', '~> 3.4'
 ```
 
 Then run `pod install`. For details of the installation and usage of CocoaPods, visit [it's official web site](https://cocoapods.org/).
@@ -73,7 +73,7 @@ Then run `pod install`. For details of the installation and usage of CocoaPods, 
 ###Backwards Compatibility
 
 Use:
-* XCGLogger version 3.3 for Swift 2.2
+* XCGLogger version 3.4 for Swift 2.2
 * XCGLogger version 3.2 for Swift 2.0-2.1
 * XCGLogger version 2.x for Swift 1.2
 * XCGLogger version 1.x for Swift 1.1 and below.
@@ -127,9 +127,9 @@ log.severe("A severe error occurred, we are likely about to crash now")
 
 The different methods set the log level of the message. XCGLogger will only print messages with a log level that is >= its current log level setting.
 
-##Advanced Usage
+##Advanced Usage (Recommended)
 
-XCGLogger aims to be simple to use and get you up and running quickly with as few as 2 lines of code above. But it's allows for much greater control and flexibility. Here's an example of configuring the logger to output to the Apple System Log as well as a file.
+XCGLogger aims to be simple to use and get you up and running quickly with as few as 2 lines of code above. But it allows for much greater control and flexibility. Here's an example of configuring the logger to output to the Apple System Log as well as a file.
 
 ```Swift
 // Create a logger object with no destinations
@@ -287,6 +287,24 @@ This works extremely well when combined with the Alternate Configurations method
 #endif
 ```
 
+#####Append To Existing Log File
+
+When using the advanced configuration of the logger (see Advanced Usage above), you can now specify that the logger append to an existing log file, instead of automatically overwriting it.
+
+Add the optional `shouldAppend:` parameter when initializing the `XCGFileLogDestination` object. You can also add the `appendMarker:` parameter to add a marker to the log file indicating where a new instance of your app started appending. By default we'll add `-- ** ** ** --` if the parameter is omitted. Set it to `nil` to skip appending the marker.
+
+```let fileLogDestination = XCGFileLogDestination(owner: log, writeToFile: "/path/to/file", identifier: "advancedLogger.fileLogDestination", shouldAppend: true, appendMarker: "-- Relauched App --")```
+
+
+#####Log File Rotation
+
+When logging to a file, you have the option to rotate the log file to an archived destination, and have the logger automatically create a new log file in place of the old one.
+
+Using the `XCGFileLogDestination` object in your logger call the `rotateFile(archiveToFile:)` method. Pass either a path or file URL to a location you'd like to store the old file. The method will return `true` on success, after which you can do whatever you need with the old file, compress it, email it, etc.
+
+**Hint**: see the `logDestination(identifier:)` method on XCGLogger, to get your current `XCGFileLogDestination` object, or save a reference to it when you create it using the advanced usage options above.
+
+
 ##Third Party Tools That Work With XCGLogger
 
 [**XcodeColors:**](https://github.com/robbiehanson/XcodeColors) Enable colour in the Xcode console
@@ -302,7 +320,6 @@ This works extremely well when combined with the Alternate Configurations method
 - Add more examples of some advanced use cases
 - Add additional log destination types
 - Add Objective-C support
-- Add log file rotation options
 - Add Swift Package Manager support
 - Add Linux support
 
@@ -321,6 +338,7 @@ TV Tune Up: https://www.cerebralgardens.com/tvtuneup
 
 ###Change Log
 
+* **Version 3.4**: *(2016/08/21)* - Finally added an option to append to an existing log file, and added a basic log rotation method. Other bug fixes. This will likely be the last version for Swift 2.x.
 * **Version 3.3**: *(2016/03/27)* - Updated for Xcode 7.3 (Swift 2.2). If you're still using 7.2 (Swift 2.1), you must use XCGLogger 3.2.
 * **Version 3.2**: *(2016/01/04)* - Added option to omit the default destination (for advanced usage), added background logging option
 * **Version 3.1.1**: *(2015/11/18)* - Minor clean up, fixes an app submission issue for tvOS
