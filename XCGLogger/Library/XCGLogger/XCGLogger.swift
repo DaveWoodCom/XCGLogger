@@ -85,7 +85,8 @@ public class XCGBaseLogDestination: XCGLogDestinationProtocol, CustomDebugString
                 formattedDate = dateFormatter.stringFromDate(logDetails.date)
             }
 
-            extendedDetails += "\(formattedDate) "
+            // extendedDetails += "\(formattedDate) " // Note: Leaks in Swift versions prior to Swift 3
+            extendedDetails += formattedDate + " "
         }
 
         if showLogLevel {
@@ -93,7 +94,8 @@ public class XCGBaseLogDestination: XCGLogDestinationProtocol, CustomDebugString
         }
 
         if showLogIdentifier {
-            extendedDetails += "[\(owner.identifier)] "
+            // extendedDetails += "[\(owner.identifier)] " // Note: Leaks in Swift versions prior to Swift 3
+            extendedDetails += "[" + owner.identifier + "] "
         }
 
         if showThreadName {
@@ -121,10 +123,12 @@ public class XCGBaseLogDestination: XCGLogDestinationProtocol, CustomDebugString
         }
 
         if showFunctionName {
-            extendedDetails += "\(logDetails.functionName) "
+            // extendedDetails += "\(logDetails.functionName) " // Note: Leaks in Swift versions prior to Swift 3
+            extendedDetails += logDetails.functionName + " "
         }
 
-        output(logDetails, text: "\(extendedDetails)> \(logDetails.logMessage)")
+        // output(logDetails, text: "\(extendedDetails)> \(logDetails.logMessage)") // Note: Leaks in Swift versions prior to Swift 3
+        output(logDetails, text: extendedDetails + "> " + logDetails.logMessage)
     }
 
     public func processInternalLogDetails(logDetails: XCGLogDetails) {
@@ -136,7 +140,8 @@ public class XCGBaseLogDestination: XCGLogDestinationProtocol, CustomDebugString
                 formattedDate = dateFormatter.stringFromDate(logDetails.date)
             }
 
-            extendedDetails += "\(formattedDate) "
+            // extendedDetails += "\(formattedDate) " // Note: Leaks in Swift versions prior to Swift 3
+            extendedDetails += formattedDate + " "
         }
 
         if showLogLevel {
@@ -144,10 +149,12 @@ public class XCGBaseLogDestination: XCGLogDestinationProtocol, CustomDebugString
         }
 
         if showLogIdentifier {
-            extendedDetails += "[\(owner.identifier)] "
+            // extendedDetails += "[\(owner.identifier)] " // Note: Leaks in Swift versions prior to Swift 3
+            extendedDetails += "[" + owner.identifier + "] "
         }
 
-        output(logDetails, text: "\(extendedDetails)> \(logDetails.logMessage)")
+        // output(logDetails, text: "\(extendedDetails)> \(logDetails.logMessage)") // Note: Leaks in Swift versions prior to Swift 3
+        output(logDetails, text: extendedDetails + "> " + logDetails.logMessage)
     }
 
     // MARK: - Misc methods
@@ -181,7 +188,7 @@ public class XCGConsoleLogDestination: XCGBaseLogDestination {
                 adjustedText = text
             }
 
-            print("\(adjustedText)")
+            print(adjustedText)
         }
 
         if let logQueue = logQueue {
@@ -304,7 +311,7 @@ public class XCGFileLogDestination: XCGBaseLogDestination {
                 return
             }
 
-            let logDetails = XCGLogDetails(logLevel: .Info, date: NSDate(), logMessage: "XCGLogger \(fileExists && shouldAppend ? "appending" : "writing") log to: \(writeToFileURL)", functionName: "", fileName: "", lineNumber: 0)
+            let logDetails = XCGLogDetails(logLevel: .Info, date: NSDate(), logMessage: "XCGLogger " + (fileExists && shouldAppend ? "appending" : "writing") + " log to: " + writeToFileURL.absoluteString, functionName: "", fileName: "", lineNumber: 0)
             owner._logln(logDetails.logMessage, logLevel: logDetails.logLevel)
             if owner.logDestination(identifier) == nil {
                 processInternalLogDetails(logDetails)
@@ -698,18 +705,22 @@ public class XCGLogger: CustomDebugStringConvertible {
         var buildString = ""
         if let infoDictionary = NSBundle.mainBundle().infoDictionary {
             if let CFBundleShortVersionString = infoDictionary["CFBundleShortVersionString"] as? String {
-                buildString = "Version: \(CFBundleShortVersionString) "
+                // buildString = "Version: \(CFBundleShortVersionString) " // Note: Leaks in Swift versions prior to Swift 3
+                buildString = "Version: " + CFBundleShortVersionString + " "
             }
             if let CFBundleVersion = infoDictionary["CFBundleVersion"] as? String {
-                buildString += "Build: \(CFBundleVersion) "
+                // buildString += "Build: \(CFBundleVersion) " // Note: Leaks in Swift versions prior to Swift 3
+                buildString += "Build: " + CFBundleVersion + " "
             }
         }
 
         let processInfo: NSProcessInfo = NSProcessInfo.processInfo()
         let XCGLoggerVersionNumber = XCGLogger.Constants.versionString
 
-        let logDetails: Array<XCGLogDetails> = [XCGLogDetails(logLevel: .Info, date: date, logMessage: "\(processInfo.processName) \(buildString)PID: \(processInfo.processIdentifier)", functionName: "", fileName: "", lineNumber: 0),
-            XCGLogDetails(logLevel: .Info, date: date, logMessage: "XCGLogger Version: \(XCGLoggerVersionNumber) - LogLevel: \(outputLogLevel)", functionName: "", fileName: "", lineNumber: 0)]
+        // let logDetails: Array<XCGLogDetails> = [XCGLogDetails(logLevel: .Info, date: date, logMessage: "\(processInfo.processName) \(buildString)PID: \(processInfo.processIdentifier)", functionName: "", fileName: "", lineNumber: 0),
+        //     XCGLogDetails(logLevel: .Info, date: date, logMessage: "XCGLogger Version: \(XCGLoggerVersionNumber) - LogLevel: \(outputLogLevel)", functionName: "", fileName: "", lineNumber: 0)] // Note: Leaks in Swift versions prior to Swift 3
+        let logDetails: Array<XCGLogDetails> = [XCGLogDetails(logLevel: .Info, date: date, logMessage: processInfo.processName + " " + buildString + "PID: " + String(processInfo.processIdentifier), functionName: "", fileName: "", lineNumber: 0),
+            XCGLogDetails(logLevel: .Info, date: date, logMessage: "XCGLogger Version: " + XCGLoggerVersionNumber + " - LogLevel: " + outputLogLevel.description, functionName: "", fileName: "", lineNumber: 0)]
 
         for logDestination in (selectedLogDestination != nil ? [selectedLogDestination!] : logDestinations) {
             for logDetail in logDetails {
