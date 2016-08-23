@@ -564,6 +564,8 @@ public class XCGLogger: CustomDebugStringConvertible {
         .Severe: .whiteOnRed
     ]
 
+    public var noMessageClosure: () -> Any? = { return "" }
+
     // MARK: - Properties
     public class var logQueue: dispatch_queue_t {
         struct Statics {
@@ -737,12 +739,20 @@ public class XCGLogger: CustomDebugStringConvertible {
 
     // MARK: - Convenience logging methods
     // MARK: * Verbose
+    public class func verbose(functionName: StaticString = #function, fileName: StaticString = #file, lineNumber: Int = #line) {
+        self.defaultInstance().logln(.Verbose, functionName: functionName, fileName: fileName, lineNumber: lineNumber, closure: self.defaultInstance().noMessageClosure)
+    }
+
     public class func verbose(@autoclosure(escaping) closure: () -> Any?, functionName: StaticString = #function, fileName: StaticString = #file, lineNumber: Int = #line) {
         self.defaultInstance().logln(.Verbose, functionName: functionName, fileName: fileName, lineNumber: lineNumber, closure: closure)
     }
 
     public class func verbose(functionName: StaticString = #function, fileName: StaticString = #file, lineNumber: Int = #line, closure: () -> Any?) {
         self.defaultInstance().logln(.Verbose, functionName: functionName, fileName: fileName, lineNumber: lineNumber, closure: closure)
+    }
+
+    public func verbose(functionName: StaticString = #function, fileName: StaticString = #file, lineNumber: Int = #line) {
+        self.logln(.Verbose, functionName: functionName, fileName: fileName, lineNumber: lineNumber, closure: self.noMessageClosure)
     }
 
     public func verbose(@autoclosure(escaping) closure: () -> Any?, functionName: StaticString = #function, fileName: StaticString = #file, lineNumber: Int = #line) {
@@ -754,12 +764,20 @@ public class XCGLogger: CustomDebugStringConvertible {
     }
 
     // MARK: * Debug
+    public class func debug(functionName: StaticString = #function, fileName: StaticString = #file, lineNumber: Int = #line) {
+        self.defaultInstance().logln(.Debug, functionName: functionName, fileName: fileName, lineNumber: lineNumber, closure: self.defaultInstance().noMessageClosure)
+    }
+
     public class func debug(@autoclosure(escaping) closure: () -> Any?, functionName: StaticString = #function, fileName: StaticString = #file, lineNumber: Int = #line) {
         self.defaultInstance().logln(.Debug, functionName: functionName, fileName: fileName, lineNumber: lineNumber, closure: closure)
     }
 
     public class func debug(functionName: StaticString = #function, fileName: StaticString = #file, lineNumber: Int = #line, closure: () -> Any?) {
         self.defaultInstance().logln(.Debug, functionName: functionName, fileName: fileName, lineNumber: lineNumber, closure: closure)
+    }
+
+    public func debug(functionName: StaticString = #function, fileName: StaticString = #file, lineNumber: Int = #line) {
+        self.logln(.Debug, functionName: functionName, fileName: fileName, lineNumber: lineNumber, closure: self.noMessageClosure)
     }
 
     public func debug(@autoclosure(escaping) closure: () -> Any?, functionName: StaticString = #function, fileName: StaticString = #file, lineNumber: Int = #line) {
@@ -771,12 +789,20 @@ public class XCGLogger: CustomDebugStringConvertible {
     }
 
     // MARK: * Info
+    public class func info(functionName: StaticString = #function, fileName: StaticString = #file, lineNumber: Int = #line) {
+        self.defaultInstance().logln(.Info, functionName: functionName, fileName: fileName, lineNumber: lineNumber, closure: self.defaultInstance().noMessageClosure)
+    }
+
     public class func info(@autoclosure(escaping) closure: () -> Any?, functionName: StaticString = #function, fileName: StaticString = #file, lineNumber: Int = #line) {
         self.defaultInstance().logln(.Info, functionName: functionName, fileName: fileName, lineNumber: lineNumber, closure: closure)
     }
 
     public class func info(functionName: StaticString = #function, fileName: StaticString = #file, lineNumber: Int = #line, closure: () -> Any?) {
         self.defaultInstance().logln(.Info, functionName: functionName, fileName: fileName, lineNumber: lineNumber, closure: closure)
+    }
+
+    public func info(functionName: StaticString = #function, fileName: StaticString = #file, lineNumber: Int = #line) {
+        self.logln(.Info, functionName: functionName, fileName: fileName, lineNumber: lineNumber, closure: self.noMessageClosure)
     }
 
     public func info(@autoclosure(escaping) closure: () -> Any?, functionName: StaticString = #function, fileName: StaticString = #file, lineNumber: Int = #line) {
@@ -788,12 +814,20 @@ public class XCGLogger: CustomDebugStringConvertible {
     }
 
     // MARK: * Warning
+    public class func warning(functionName: StaticString = #function, fileName: StaticString = #file, lineNumber: Int = #line) {
+        self.defaultInstance().logln(.Warning, functionName: functionName, fileName: fileName, lineNumber: lineNumber, closure: self.defaultInstance().noMessageClosure)
+    }
+
     public class func warning(@autoclosure(escaping) closure: () -> Any?, functionName: StaticString = #function, fileName: StaticString = #file, lineNumber: Int = #line) {
         self.defaultInstance().logln(.Warning, functionName: functionName, fileName: fileName, lineNumber: lineNumber, closure: closure)
     }
 
     public class func warning(functionName: StaticString = #function, fileName: StaticString = #file, lineNumber: Int = #line, closure: () -> Any?) {
         self.defaultInstance().logln(.Warning, functionName: functionName, fileName: fileName, lineNumber: lineNumber, closure: closure)
+    }
+
+    public func warning(functionName: StaticString = #function, fileName: StaticString = #file, lineNumber: Int = #line) {
+        self.logln(.Warning, functionName: functionName, fileName: fileName, lineNumber: lineNumber, closure: self.noMessageClosure)
     }
 
     public func warning(@autoclosure(escaping) closure: () -> Any?, functionName: StaticString = #function, fileName: StaticString = #file, lineNumber: Int = #line) {
@@ -805,12 +839,20 @@ public class XCGLogger: CustomDebugStringConvertible {
     }
 
     // MARK: * Error
+    public class func error(functionName: StaticString = #function, fileName: StaticString = #file, lineNumber: Int = #line) {
+        self.defaultInstance().logln(.Error, functionName: functionName, fileName: fileName, lineNumber: lineNumber, closure: self.defaultInstance().noMessageClosure)
+    }
+
     public class func error(@autoclosure(escaping) closure: () -> Any?, functionName: StaticString = #function, fileName: StaticString = #file, lineNumber: Int = #line) {
         self.defaultInstance().logln(.Error, functionName: functionName, fileName: fileName, lineNumber: lineNumber, closure: closure)
     }
 
     public class func error(functionName: StaticString = #function, fileName: StaticString = #file, lineNumber: Int = #line, closure: () -> Any?) {
         self.defaultInstance().logln(.Error, functionName: functionName, fileName: fileName, lineNumber: lineNumber, closure: closure)
+    }
+
+    public func error(functionName: StaticString = #function, fileName: StaticString = #file, lineNumber: Int = #line) {
+        self.logln(.Error, functionName: functionName, fileName: fileName, lineNumber: lineNumber, closure: self.noMessageClosure)
     }
 
     public func error(@autoclosure(escaping) closure: () -> Any?, functionName: StaticString = #function, fileName: StaticString = #file, lineNumber: Int = #line) {
@@ -822,12 +864,20 @@ public class XCGLogger: CustomDebugStringConvertible {
     }
 
     // MARK: * Severe
+    public class func severe(functionName: StaticString = #function, fileName: StaticString = #file, lineNumber: Int = #line) {
+        self.defaultInstance().logln(.Severe, functionName: functionName, fileName: fileName, lineNumber: lineNumber, closure: self.defaultInstance().noMessageClosure)
+    }
+
     public class func severe(@autoclosure(escaping) closure: () -> Any?, functionName: StaticString = #function, fileName: StaticString = #file, lineNumber: Int = #line) {
         self.defaultInstance().logln(.Severe, functionName: functionName, fileName: fileName, lineNumber: lineNumber, closure: closure)
     }
 
     public class func severe(functionName: StaticString = #function, fileName: StaticString = #file, lineNumber: Int = #line, closure: () -> Any?) {
         self.defaultInstance().logln(.Severe, functionName: functionName, fileName: fileName, lineNumber: lineNumber, closure: closure)
+    }
+
+    public func severe(functionName: StaticString = #function, fileName: StaticString = #file, lineNumber: Int = #line) {
+        self.logln(.Severe, functionName: functionName, fileName: fileName, lineNumber: lineNumber, closure: self.noMessageClosure)
     }
 
     public func severe(@autoclosure(escaping) closure: () -> Any?, functionName: StaticString = #function, fileName: StaticString = #file, lineNumber: Int = #line) {

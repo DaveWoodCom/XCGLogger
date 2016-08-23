@@ -241,6 +241,7 @@ class XCGLoggerTests: XCTestCase {
         log.outputLogLevel = .Verbose
 
         log.info("testVariousParameters starting")
+        log.verbose()
         log.verbose {
             return nil
         }
@@ -253,5 +254,25 @@ class XCGLoggerTests: XCTestCase {
         
         let optionalString: String? = "text"
         log.severe(optionalString)
+    }
+
+    func testNoMessageClosure() {
+        let log: XCGLogger = XCGLogger()
+        log.identifier = "com.cerebralgardens.xcglogger.testNoMessageClosure"
+        log.outputLogLevel = .Debug
+
+        log.debug()
+
+        log.noMessageClosure = { return "***" }
+        log.debug()
+
+        log.noMessageClosure = { return NSDate() }
+        log.debug()
+
+        log.noMessageClosure = { return nil }
+        log.debug()
+
+        log.noMessageClosure = { return "" }
+        log.debug()
     }
 }
