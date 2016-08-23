@@ -36,6 +36,20 @@
 			remoteGlobalIDString = 55E3EE4419D76F280068C3A7;
 			remoteInfo = "XCGLogger (iOS)";
 		};
+		55419D621D6BF3D1007ED193 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 558C64A819D777B100D6D507 /* XCGLogger.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 558EEB851D6BAC61006A9C7A;
+			remoteInfo = "XCGLoggerTests (watchOS)";
+		};
+		55419D641D6BF3D1007ED193 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 558C64A819D777B100D6D507 /* XCGLogger.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 558EEB921D6BAC66006A9C7A;
+			remoteInfo = "XCGLoggerTests (tvOS)";
+		};
 		558C649819D7770100D6D507 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 558C647A19D7770100D6D507 /* Project object */;
@@ -293,6 +307,8 @@
 				55CB2FBC1BA12B4E0031F329 /* XCGLogger.framework */,
 				558C64B319D777B100D6D507 /* XCGLoggerTests (iOS).xctest */,
 				55D4395B1B7AAC16001370EC /* XCGLoggerTests (OS X).xctest */,
+				55419D631D6BF3D1007ED193 /* XCGLoggerTests (watchOS).xctest */,
+				55419D651D6BF3D1007ED193 /* XCGLoggerTests (tvOS).xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -462,6 +478,20 @@
 /* End PBXProject section */
 
 /* Begin PBXReferenceProxy section */
+		55419D631D6BF3D1007ED193 /* XCGLoggerTests (watchOS).xctest */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.cfbundle;
+			path = "XCGLoggerTests (watchOS).xctest";
+			remoteRef = 55419D621D6BF3D1007ED193 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		55419D651D6BF3D1007ED193 /* XCGLoggerTests (tvOS).xctest */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.cfbundle;
+			path = "XCGLoggerTests (tvOS).xctest";
+			remoteRef = 55419D641D6BF3D1007ED193 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
 		558C64AF19D777B100D6D507 /* XCGLogger.framework */ = {
 			isa = PBXReferenceProxy;
 			fileType = wrapper.framework;

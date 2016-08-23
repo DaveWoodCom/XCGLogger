@@ -10,6 +10,10 @@
 		554DF41019D76FA9005708BE /* XCGLogger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 554DF40F19D76FA9005708BE /* XCGLogger.swift */; };
 		554DF43319D77155005708BE /* XCGLogger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 554DF40F19D76FA9005708BE /* XCGLogger.swift */; };
 		557C47E41BA125F800C9A174 /* XCGLogger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 554DF40F19D76FA9005708BE /* XCGLogger.swift */; };
+		558EEB7E1D6BAC61006A9C7A /* XCGLoggerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55E3EE5719D76F280068C3A7 /* XCGLoggerTests.swift */; };
+		558EEB801D6BAC61006A9C7A /* XCGLogger.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55E3EE4519D76F280068C3A7 /* XCGLogger.framework */; };
+		558EEB8B1D6BAC66006A9C7A /* XCGLoggerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55E3EE5719D76F280068C3A7 /* XCGLoggerTests.swift */; };
+		558EEB8D1D6BAC66006A9C7A /* XCGLogger.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55E3EE4519D76F280068C3A7 /* XCGLogger.framework */; };
 		55BB1EFA1B79DC7500709779 /* XCGLoggerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55E3EE5719D76F280068C3A7 /* XCGLoggerTests.swift */; };
 		55BB1EFC1B79DC7500709779 /* XCGLogger.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55E3EE4519D76F280068C3A7 /* XCGLogger.framework */; };
 		55DA396819D7737B0032F026 /* XCGLogger.h in Headers */ = {isa = PBXBuildFile; fileRef = 55DA396519D7737B0032F026 /* XCGLogger.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -22,12 +26,26 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
-		55BB1EF71B79DC7500709779 /* PBXContainerItemProxy */ = {
+		550F31521D6C270E00919165 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 55E3EE3C19D76F280068C3A7 /* Project object */;
 			proxyType = 1;
-			remoteGlobalIDString = 55E3EE4419D76F280068C3A7;
-			remoteInfo = XCGLogger;
+			remoteGlobalIDString = 554DF41619D76FE7005708BE;
+			remoteInfo = "XCGLogger (OS X)";
+		};
+		550F31541D6C271600919165 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 55E3EE3C19D76F280068C3A7 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 70CB94161B99E728007802FF;
+			remoteInfo = "XCGLogger (watchOS)";
+		};
+		550F31561D6C271F00919165 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 55E3EE3C19D76F280068C3A7 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 5515A3DE1BA119FA0047BA31;
+			remoteInfo = "XCGLogger (tvOS)";
 		};
 		55E3EE5219D76F280068C3A7 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -42,6 +60,8 @@
 		5515A3DF1BA119FA0047BA31 /* XCGLogger.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = XCGLogger.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		554DF40F19D76FA9005708BE /* XCGLogger.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = XCGLogger.swift; sourceTree = "<group>"; };
 		554DF41719D76FE7005708BE /* XCGLogger.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = XCGLogger.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		558EEB851D6BAC61006A9C7A /* XCGLoggerTests (watchOS).xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "XCGLoggerTests (watchOS).xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
+		558EEB921D6BAC66006A9C7A /* XCGLoggerTests (tvOS).xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "XCGLoggerTests (tvOS).xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		55BB1F011B79DC7500709779 /* XCGLoggerTests (OS X).xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "XCGLoggerTests (OS X).xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		55DA396519D7737B0032F026 /* XCGLogger.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XCGLogger.h; sourceTree = "<group>"; };
 		55DA396719D7737B0032F026 /* XCGLogger.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XCGLogger.h; sourceTree = "<group>"; };
@@ -68,6 +88,22 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		558EEB7F1D6BAC61006A9C7A /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				558EEB801D6BAC61006A9C7A /* XCGLogger.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		558EEB8C1D6BAC66006A9C7A /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				558EEB8D1D6BAC66006A9C7A /* XCGLogger.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -148,7 +184,9 @@
 				554DF41719D76FE7005708BE /* XCGLogger.framework */,
 				55BB1F011B79DC7500709779 /* XCGLoggerTests (OS X).xctest */,
 				70CB94201B99E728007802FF /* XCGLogger.framework */,
+				558EEB851D6BAC61006A9C7A /* XCGLoggerTests (watchOS).xctest */,
 				5515A3DF1BA119FA0047BA31 /* XCGLogger.framework */,
+				558EEB921D6BAC66006A9C7A /* XCGLoggerTests (tvOS).xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -263,6 +301,42 @@
 			productReference = 554DF41719D76FE7005708BE /* XCGLogger.framework */;
 			productType = "com.apple.product-type.framework";
 		};
+		558EEB7A1D6BAC61006A9C7A /* XCGLoggerTests (watchOS) */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 558EEB821D6BAC61006A9C7A /* Build configuration list for PBXNativeTarget "XCGLoggerTests (watchOS)" */;
+			buildPhases = (
+				558EEB7D1D6BAC61006A9C7A /* Sources */,
+				558EEB7F1D6BAC61006A9C7A /* Frameworks */,
+				558EEB811D6BAC61006A9C7A /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				550F31551D6C271600919165 /* PBXTargetDependency */,
+			);
+			name = "XCGLoggerTests (watchOS)";
+			productName = XCGLoggerTests;
+			productReference = 558EEB851D6BAC61006A9C7A /* XCGLoggerTests (watchOS).xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+		558EEB871D6BAC66006A9C7A /* XCGLoggerTests (tvOS) */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 558EEB8F1D6BAC66006A9C7A /* Build configuration list for PBXNativeTarget "XCGLoggerTests (tvOS)" */;
+			buildPhases = (
+				558EEB8A1D6BAC66006A9C7A /* Sources */,
+				558EEB8C1D6BAC66006A9C7A /* Frameworks */,
+				558EEB8E1D6BAC66006A9C7A /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				550F31571D6C271F00919165 /* PBXTargetDependency */,
+			);
+			name = "XCGLoggerTests (tvOS)";
+			productName = XCGLoggerTests;
+			productReference = 558EEB921D6BAC66006A9C7A /* XCGLoggerTests (tvOS).xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
 		55BB1EF51B79DC7500709779 /* XCGLoggerTests (OS X) */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 55BB1EFE1B79DC7500709779 /* Build configuration list for PBXNativeTarget "XCGLoggerTests (OS X)" */;
@@ -274,7 +348,7 @@
 			buildRules = (
 			);
 			dependencies = (
-				55BB1EF61B79DC7500709779 /* PBXTargetDependency */,
+				550F31531D6C270E00919165 /* PBXTargetDependency */,
 			);
 			name = "XCGLoggerTests (OS X)";
 			productName = XCGLoggerTests;
@@ -378,6 +452,8 @@
 				5515A3DE1BA119FA0047BA31 /* XCGLogger (tvOS) */,
 				55E3EE4F19D76F280068C3A7 /* XCGLoggerTests (iOS) */,
 				55BB1EF51B79DC7500709779 /* XCGLoggerTests (OS X) */,
+				558EEB7A1D6BAC61006A9C7A /* XCGLoggerTests (watchOS) */,
+				558EEB871D6BAC66006A9C7A /* XCGLoggerTests (tvOS) */,
 			);
 		};
 /* End PBXProject section */
@@ -391,6 +467,20 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 		554DF41519D76FE7005708BE /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		558EEB811D6BAC61006A9C7A /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		558EEB8E1D6BAC66006A9C7A /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -444,6 +534,22 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		558EEB7D1D6BAC61006A9C7A /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				558EEB7E1D6BAC61006A9C7A /* XCGLoggerTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		558EEB8A1D6BAC66006A9C7A /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				558EEB8B1D6BAC66006A9C7A /* XCGLoggerTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		55BB1EF81B79DC7500709779 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -479,10 +585,20 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
-		55BB1EF61B79DC7500709779 /* PBXTargetDependency */ = {
+		550F31531D6C270E00919165 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = 55E3EE4419D76F280068C3A7 /* XCGLogger (iOS) */;
-			targetProxy = 55BB1EF71B79DC7500709779 /* PBXContainerItemProxy */;
+			target = 554DF41619D76FE7005708BE /* XCGLogger (OS X) */;
+			targetProxy = 550F31521D6C270E00919165 /* PBXContainerItemProxy */;
+		};
+		550F31551D6C271600919165 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 70CB94161B99E728007802FF /* XCGLogger (watchOS) */;
+			targetProxy = 550F31541D6C271600919165 /* PBXContainerItemProxy */;
+		};
+		550F31571D6C271F00919165 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 5515A3DE1BA119FA0047BA31 /* XCGLogger (tvOS) */;
+			targetProxy = 550F31561D6C271F00919165 /* PBXContainerItemProxy */;
 		};
 		55E3EE5319D76F280068C3A7 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
@@ -577,6 +693,58 @@
 			};
 			name = Release;
 		};
+		558EEB831D6BAC61006A9C7A /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				INFOPLIST_FILE = "$(SRCROOT)/XCGLoggerTests/Info.plist";
+				PRODUCT_BUNDLE_IDENTIFIER = com.cerebralgardens.xcglogger.tests;
+				PRODUCT_MODULE_NAME = XCGLoggerTests_iOS;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = watchos;
+			};
+			name = Debug;
+		};
+		558EEB841D6BAC61006A9C7A /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				INFOPLIST_FILE = "$(SRCROOT)/XCGLoggerTests/Info.plist";
+				PRODUCT_BUNDLE_IDENTIFIER = com.cerebralgardens.xcglogger.tests;
+				PRODUCT_MODULE_NAME = XCGLoggerTests_iOS;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = watchos;
+			};
+			name = Release;
+		};
+		558EEB901D6BAC66006A9C7A /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				INFOPLIST_FILE = "$(SRCROOT)/XCGLoggerTests/Info.plist";
+				PRODUCT_BUNDLE_IDENTIFIER = com.cerebralgardens.xcglogger.tests;
+				PRODUCT_MODULE_NAME = XCGLoggerTests_iOS;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = appletvos;
+			};
+			name = Debug;
+		};
+		558EEB911D6BAC66006A9C7A /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				INFOPLIST_FILE = "$(SRCROOT)/XCGLoggerTests/Info.plist";
+				PRODUCT_BUNDLE_IDENTIFIER = com.cerebralgardens.xcglogger.tests;
+				PRODUCT_MODULE_NAME = XCGLoggerTests_iOS;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = appletvos;
+			};
+			name = Release;
+		};
 		55BB1EFF1B79DC7500709779 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -623,7 +791,6 @@
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
 				CURRENT_PROJECT_VERSION = 3.4;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
@@ -643,7 +810,7 @@
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
-				LD_RUNPATH_SEARCH_PATHS = "${inherited} @executable_path/Frameworks @loader_path/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = "${inherited} @executable_path/Frameworks @executable_path/../Frameworks @loader_path/Frameworks @loader_path/../Frameworks";
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				PRODUCT_MODULE_NAME = XCGLogger;
@@ -674,7 +841,6 @@
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = YES;
 				CURRENT_PROJECT_VERSION = 3.4;
 				ENABLE_NS_ASSERTIONS = NO;
@@ -687,7 +853,7 @@
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
-				LD_RUNPATH_SEARCH_PATHS = "${inherited} @executable_path/Frameworks @loader_path/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = "${inherited} @executable_path/Frameworks @executable_path/../Frameworks @loader_path/Frameworks @loader_path/../Frameworks";
 				MTL_ENABLE_DEBUG_INFO = NO;
 				PRODUCT_MODULE_NAME = XCGLogger;
 				SDKROOT = iphoneos;
@@ -823,6 +989,24 @@
 			buildConfigurations = (
 				554DF42B19D76FE7005708BE /* Debug */,
 				554DF42C19D76FE7005708BE /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		558EEB821D6BAC61006A9C7A /* Build configuration list for PBXNativeTarget "XCGLoggerTests (watchOS)" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				558EEB831D6BAC61006A9C7A /* Debug */,
+				558EEB841D6BAC61006A9C7A /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		558EEB8F1D6BAC66006A9C7A /* Build configuration list for PBXNativeTarget "XCGLoggerTests (tvOS)" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				558EEB901D6BAC66006A9C7A /* Debug */,
+				558EEB911D6BAC66006A9C7A /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

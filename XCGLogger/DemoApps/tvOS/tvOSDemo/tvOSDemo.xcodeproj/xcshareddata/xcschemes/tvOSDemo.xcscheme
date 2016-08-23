@@ -14,24 +14,10 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "70CB94161B99E728007802FF"
-               BuildableName = "XCGLogger.framework"
-               BlueprintName = "XCGLogger (watchOS)"
-               ReferencedContainer = "container:XCGLogger.xcodeproj">
-            </BuildableReference>
-         </BuildActionEntry>
-         <BuildActionEntry
-            buildForTesting = "YES"
-            buildForRunning = "NO"
-            buildForProfiling = "NO"
-            buildForArchiving = "NO"
-            buildForAnalyzing = "NO">
-            <BuildableReference
-               BuildableIdentifier = "primary"
-               BlueprintIdentifier = "558EEB7A1D6BAC61006A9C7A"
-               BuildableName = "XCGLoggerTests (watchOS).xctest"
-               BlueprintName = "XCGLoggerTests (watchOS)"
-               ReferencedContainer = "container:XCGLogger.xcodeproj">
+               BlueprintIdentifier = "55F24E311BA11CF100747329"
+               BuildableName = "tvOSDemo.app"
+               BlueprintName = "tvOSDemo"
+               ReferencedContainer = "container:tvOSDemo.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -46,20 +32,20 @@
             skipped = "NO">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "558EEB7A1D6BAC61006A9C7A"
-               BuildableName = "XCGLoggerTests (watchOS).xctest"
-               BlueprintName = "XCGLoggerTests (watchOS)"
-               ReferencedContainer = "container:XCGLogger.xcodeproj">
+               BlueprintIdentifier = "55F24E421BA11CF100747329"
+               BuildableName = "tvOSDemoTests.xctest"
+               BlueprintName = "tvOSDemoTests"
+               ReferencedContainer = "container:tvOSDemo.xcodeproj">
             </BuildableReference>
          </TestableReference>
       </Testables>
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "70CB94161B99E728007802FF"
-            BuildableName = "XCGLogger.framework"
-            BlueprintName = "XCGLogger (watchOS)"
-            ReferencedContainer = "container:XCGLogger.xcodeproj">
+            BlueprintIdentifier = "55F24E311BA11CF100747329"
+            BuildableName = "tvOSDemo.app"
+            BlueprintName = "tvOSDemo"
+            ReferencedContainer = "container:tvOSDemo.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
       <AdditionalOptions>
@@ -75,15 +61,16 @@
       debugDocumentVersioning = "YES"
       debugServiceExtension = "internal"
       allowLocationSimulation = "YES">
-      <MacroExpansion>
+      <BuildableProductRunnable
+         runnableDebuggingMode = "0">
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "70CB94161B99E728007802FF"
-            BuildableName = "XCGLogger.framework"
-            BlueprintName = "XCGLogger (watchOS)"
-            ReferencedContainer = "container:XCGLogger.xcodeproj">
+            BlueprintIdentifier = "55F24E311BA11CF100747329"
+            BuildableName = "tvOSDemo.app"
+            BlueprintName = "tvOSDemo"
+            ReferencedContainer = "container:tvOSDemo.xcodeproj">
          </BuildableReference>
-      </MacroExpansion>
+      </BuildableProductRunnable>
       <AdditionalOptions>
       </AdditionalOptions>
    </LaunchAction>
@@ -93,15 +80,16 @@
       savedToolIdentifier = ""
       useCustomWorkingDirectory = "NO"
       debugDocumentVersioning = "YES">
-      <MacroExpansion>
+      <BuildableProductRunnable
+         runnableDebuggingMode = "0">
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "70CB94161B99E728007802FF"
-            BuildableName = "XCGLogger.framework"
-            BlueprintName = "XCGLogger (watchOS)"
-            ReferencedContainer = "container:XCGLogger.xcodeproj">
+            BlueprintIdentifier = "55F24E311BA11CF100747329"
+            BuildableName = "tvOSDemo.app"
+            BlueprintName = "tvOSDemo"
+            ReferencedContainer = "container:tvOSDemo.xcodeproj">
          </BuildableReference>
-      </MacroExpansion>
+      </BuildableProductRunnable>
    </ProfileAction>
    <AnalyzeAction
       buildConfiguration = "Debug">
