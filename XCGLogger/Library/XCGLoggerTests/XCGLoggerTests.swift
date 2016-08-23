@@ -234,4 +234,24 @@ class XCGLoggerTests: XCTestCase {
         XCTAssertEqual(log.dateFormatter!.dateFormat, dateFormat, "Fail: date format doesn't match our custom date format")
         XCTAssert(defaultDateFormatter != dateFormatter, "Fail: Did not assign a custom date formatter")
     }
+
+    func testVariousParameters() {
+        let log: XCGLogger = XCGLogger()
+        log.identifier = "com.cerebralgardens.xcglogger.testVariousParameters"
+        log.outputLogLevel = .Verbose
+
+        log.info("testVariousParameters starting")
+        log.verbose {
+            return nil
+        }
+        log.debug(1.2)
+        log.info(true)
+        log.warning(["a", "b", "c"])
+        log.error {
+            return NSDate()
+        }
+        
+        let optionalString: String? = "text"
+        log.severe(optionalString)
+    }
 }
