@@ -433,9 +433,9 @@ public class XCGLogger: CustomDebugStringConvertible {
         public static let resetBg = "\u{001b}[bg;"
         public static let reset = "\u{001b}[;"
 
-        public var fg: (Int, Int, Int)? = nil
-        public var bg: (Int, Int, Int)? = nil
+        public var fg: (r: Int, g: Int, b: Int)? = nil
 
+        public var bg: (r: Int, g: Int, b: Int)? = nil
         public func format() -> String {
             guard fg != nil || bg != nil else {
                 // neither set, return reset value
@@ -445,14 +445,14 @@ public class XCGLogger: CustomDebugStringConvertible {
             var format: String = ""
 
             if let fg = fg {
-                format += "\(XcodeColor.escape)fg\(fg.0),\(fg.1),\(fg.2);"
+                format += "\(XcodeColor.escape)fg\(fg.r),\(fg.g),\(fg.b);"
             }
             else {
                 format += XcodeColor.resetFg
             }
 
             if let bg = bg {
-                format += "\(XcodeColor.escape)bg\(bg.0),\(bg.1),\(bg.2);"
+                format += "\(XcodeColor.escape)bg\(bg.r),\(bg.g),\(bg.b);"
             }
             else {
                 format += XcodeColor.resetBg
@@ -461,7 +461,7 @@ public class XCGLogger: CustomDebugStringConvertible {
             return format
         }
 
-        public init(fg: (Int, Int, Int)? = nil, bg: (Int, Int, Int)? = nil) {
+        public init(fg: (r: Int, g: Int, b: Int)? = nil, bg: (r: Int, g: Int, b: Int)? = nil) {
             self.fg = fg
             self.bg = bg
         }
