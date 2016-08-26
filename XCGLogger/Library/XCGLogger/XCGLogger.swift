@@ -15,13 +15,25 @@ import Foundation
 #endif
 
 // MARK: - XCGLogDetails
-// - Data structure to hold all info about a log message, passed to log destination classes
+/// Data structure to hold all info about a log message, passed to log destination classes
 public struct XCGLogDetails {
+
+    /// Log level required to display this log
     public var logLevel: XCGLogger.LogLevel
+
+    /// Date this log was sent
     public var date: NSDate
+
+    /// The log message to display
     public var logMessage: String
+
+    /// Name of the function that generated this log
     public var functionName: String
+
+    /// Name of the file the function exists in
     public var fileName: String
+
+    /// The line number that generated this log
     public var lineNumber: Int
 
     public init(logLevel: XCGLogger.LogLevel, date: NSDate, logMessage: String, functionName: StaticString, fileName: StaticString, lineNumber: Int) {
@@ -35,31 +47,79 @@ public struct XCGLogDetails {
 }
 
 // MARK: - XCGLogDestinationProtocol
-// - Protocol for output classes to conform to
+/// Protocol for output classes to conform to
 public protocol XCGLogDestinationProtocol: CustomDebugStringConvertible {
+    /// Logger that owns the log destination object
     var owner: XCGLogger {get set}
+
+    /// Identifier for the log destination (should be unique)
     var identifier: String {get set}
+
+    /// Log level for this destination
     var outputLogLevel: XCGLogger.LogLevel {get set}
 
+    /// Process the log details.
+    ///
+    /// - Parameters:
+    ///     - logDetails:   Structure with all of the details for the log to process.
+    ///
+    /// - Returns:  Nothing
+    ///
     func processLogDetails(logDetails: XCGLogDetails)
-    func processInternalLogDetails(logDetails: XCGLogDetails) // Same as processLogDetails but should omit function/file/line info
+
+    /// Process the log details (internal use, same as processLogDetails but omits function/file/line info).
+    ///
+    /// - Parameters:
+    ///     - logDetails:   Structure with all of the details for the log to process.
+    ///
+    /// - Returns:  Nothing
+    ///
+    func processInternalLogDetails(logDetails: XCGLogDetails)
+
+    /// Check if the log destination's log level is equal to or lower than the specified level.
+    ///
+    /// - Parameters:
+    ///     - logLevel: The log level to check.
+    ///
+    /// - Returns:
+    ///     - true:     Log destination is at the log level specified or lower.
+    ///     - false:    Log destination is at a higher log level.
+    ///
     func isEnabledForLogLevel(logLevel: XCGLogger.LogLevel) -> Bool
 }
 
 // MARK: - XCGBaseLogDestination
-// - A base class log destination that doesn't actually output the log anywhere and is intented to be subclassed
+/// A base class log destination that doesn't actually output the log anywhere and is intented to be subclassed
 public class XCGBaseLogDestination: XCGLogDestinationProtocol, CustomDebugStringConvertible {
     // MARK: - Properties
+    /// Logger that owns the log destination object
     public var owner: XCGLogger
+
+    /// Identifier for the log destination (should be unique)
     public var identifier: String
+
+    /// Log level for this destination
     public var outputLogLevel: XCGLogger.LogLevel = .Debug
 
+    /// Option: whether or not to output the log identifier
     public var showLogIdentifier: Bool = false
+
+    /// Option: whether or not to output the function name that generated the log
     public var showFunctionName: Bool = true
+
+    /// Option: whether or not to output the thread's name the log was created on
     public var showThreadName: Bool = false
+
+    /// Option: whether or not to output the filename that generated the log
     public var showFileName: Bool = true
+
+    /// Option: whether or not to output the line number where the log was generated
     public var showLineNumber: Bool = true
+
+    /// Option: whether or not to output the log level of the log
     public var showLogLevel: Bool = true
+
+    /// Option: whether or not to output the date the log was created
     public var showDate: Bool = true
 
     // MARK: - CustomDebugStringConvertible
@@ -76,6 +136,13 @@ public class XCGBaseLogDestination: XCGLogDestinationProtocol, CustomDebugString
     }
 
     // MARK: - Methods to Process Log Details
+    /// Process the log details.
+    ///
+    /// - Parameters:
+    ///     - logDetails:   Structure with all of the details for the log to process.
+    ///
+    /// - Returns:  Nothing
+    ///
     public func processLogDetails(logDetails: XCGLogDetails) {
         var extendedDetails: String = ""
 
@@ -131,6 +198,13 @@ public class XCGBaseLogDestination: XCGLogDestinationProtocol, CustomDebugString
         output(logDetails, text: extendedDetails + "> " + logDetails.logMessage)
     }
 
+    /// Process the log details (internal use, same as processLogDetails but omits function/file/line info).
+    ///
+    /// - Parameters:
+    ///     - logDetails:   Structure with all of the details for the log to process.
+    ///
+    /// - Returns:  Nothing
+    ///
     public func processInternalLogDetails(logDetails: XCGLogDetails) {
         var extendedDetails: String = ""
 
@@ -158,11 +232,28 @@ public class XCGBaseLogDestination: XCGLogDestinationProtocol, CustomDebugString
     }
 
     // MARK: - Misc methods
+    /// Check if the log destination's log level is equal to or lower than the specified level.
+    ///
+    /// - Parameters:
+    ///     - logLevel: The log level to check.
+    ///
+    /// - Returns:
+    ///     - true:     Log destination is at the log level specified or lower.
+    ///     - false:    Log destination is at a higher log level.
+    ///
     public func isEnabledForLogLevel (logLevel: XCGLogger.LogLevel) -> Bool {
         return logLevel >= self.outputLogLevel
     }
 
     // MARK: - Methods that must be overriden in subclasses
+    /// Output the log to the destination.
+    ///
+    /// - Parameters:
+    ///     - logDetails:   The log details.
+    ///     - text:         Formatted/processed message ready for output.
+    ///
+    /// - Returns:  Nothing
+    ///
     public func output(logDetails: XCGLogDetails, text: String) {
         // Do something with the text in an overridden version of this method
         precondition(false, "Must override this")
@@ -170,13 +261,24 @@ public class XCGBaseLogDestination: XCGLogDestinationProtocol, CustomDebugString
 }
 
 // MARK: - XCGConsoleLogDestination
-// - A standard log destination that outputs log details to the console
+/// A standard log destination that outputs log details to the console
 public class XCGConsoleLogDestination: XCGBaseLogDestination {
     // MARK: - Properties
+    /// The dispatch queue to process the log on
     public var logQueue: dispatch_queue_t? = nil
+
+    /// The colour to use for each of the various log levels
     public var xcodeColors: [XCGLogger.LogLevel: XCGLogger.XcodeColor]? = nil
 
-    // MARK: - Misc Methods
+    // MARK: - Overridden Methods
+    /// Print the log to the console.
+    ///
+    /// - Parameters:
+    ///     - logDetails:   The log details.
+    ///     - text:         Formatted/processed message ready for output.
+    ///
+    /// - Returns:  Nothing
+    ///
     public override func output(logDetails: XCGLogDetails, text: String) {
 
         let outputClosure = {
@@ -201,12 +303,16 @@ public class XCGConsoleLogDestination: XCGBaseLogDestination {
 }
 
 // MARK: - XCGNSLogDestination
-// - A standard log destination that outputs log details to the console using NSLog instead of println
+/// A standard log destination that outputs log details to the console using NSLog instead of println
 public class XCGNSLogDestination: XCGBaseLogDestination {
     // MARK: - Properties
+    /// The dispatch queue to process the log on
     public var logQueue: dispatch_queue_t? = nil
+
+    /// The colour to use for each of the various log levels
     public var xcodeColors: [XCGLogger.LogLevel: XCGLogger.XcodeColor]? = nil
 
+    /// Option: whether or not to output the date the log was created (Always false for this destination)
     public override var showDate: Bool {
         get {
             return false
@@ -216,7 +322,15 @@ public class XCGNSLogDestination: XCGBaseLogDestination {
         }
     }
 
-    // MARK: - Misc Methods
+    // MARK: - Overridden Methods
+    /// Print the log to the Apple System Log facility (using NSLog).
+    ///
+    /// - Parameters:
+    ///     - logDetails:   The log details.
+    ///     - text:         Formatted/processed message ready for output.
+    ///
+    /// - Returns:  Nothing
+    ///
     public override func output(logDetails: XCGLogDetails, text: String) {
 
         let outputClosure = {
@@ -241,17 +355,26 @@ public class XCGNSLogDestination: XCGBaseLogDestination {
 }
 
 // MARK: - XCGFileLogDestination
-// - A standard log destination that outputs log details to a file
+/// A standard log destination that outputs log details to a file
 public class XCGFileLogDestination: XCGBaseLogDestination {
     // MARK: - Properties
+    /// The dispatch queue to process the log on
     public var logQueue: dispatch_queue_t? = nil
+
+    /// FileURL of the file to log to
     public var writeToFileURL: NSURL? = nil {
         didSet {
             openFile()
         }
     }
+
+    /// File handle for the log file
     private var logFileHandle: NSFileHandle? = nil
+
+    /// Option: whether or not to append to the log file if it already exists
     private var shouldAppend: Bool
+
+    /// Option: if appending to the log file, the string to output at the start to mark where the append took place
     private var appendMarker: String?
 
     // MARK: - Life Cycle
@@ -280,6 +403,12 @@ public class XCGFileLogDestination: XCGBaseLogDestination {
     }
 
     // MARK: - File Handling Methods
+    /// Open the log file for writing.
+    ///
+    /// - Parameters:   None
+    ///
+    /// - Returns:  Nothing
+    ///
     private func openFile() {
         if logFileHandle != nil {
             closeFile()
@@ -319,28 +448,26 @@ public class XCGFileLogDestination: XCGBaseLogDestination {
         }
     }
 
+    /// Close the log file.
+    ///
+    /// - Parameters:   None
+    ///
+    /// - Returns:  Nothing
+    ///
     private func closeFile() {
         logFileHandle?.closeFile()
         logFileHandle = nil
     }
 
-    // MARK: - Misc Methods
-    public override func output(logDetails: XCGLogDetails, text: String) {
-
-        let outputClosure = {
-            if let encodedData = "\(text)\n".dataUsingEncoding(NSUTF8StringEncoding) {
-                self.logFileHandle?.writeData(encodedData)
-            }
-        }
-
-        if let logQueue = logQueue {
-            dispatch_async(logQueue, outputClosure)
-        }
-        else {
-            outputClosure()
-        }
-    }
-
+    /// Rotate the log file, storing the existing log file in the specified location.
+    ///
+    /// - Parameters:
+    ///     - archiveToFile:    FileURL or path (as String) to where the existing log file should be rotated to.
+    ///
+    /// - Returns:
+    ///     - true:     Log file rotated successfully.
+    ///     - false:    Error rotating the log file.
+    ///
     public func rotateFile(archiveToFile: AnyObject) -> Bool {
         var archiveToFileURL: NSURL? = nil
 
@@ -380,23 +507,60 @@ public class XCGFileLogDestination: XCGBaseLogDestination {
 
         return false
     }
+
+    // MARK: - Overridden Methods
+    /// Write the log to the log file.
+    ///
+    /// - Parameters:
+    ///     - logDetails:   The log details.
+    ///     - text:         Formatted/processed message ready for output.
+    ///
+    /// - Returns:  Nothing
+    ///
+    public override func output(logDetails: XCGLogDetails, text: String) {
+
+        let outputClosure = {
+            if let encodedData = "\(text)\n".dataUsingEncoding(NSUTF8StringEncoding) {
+                self.logFileHandle?.writeData(encodedData)
+            }
+        }
+
+        if let logQueue = logQueue {
+            dispatch_async(logQueue, outputClosure)
+        }
+        else {
+            outputClosure()
+        }
+    }
 }
 
 // MARK: - XCGLogger
-// - The main logging class
+/// The main logging class
 public class XCGLogger: CustomDebugStringConvertible {
     // MARK: - Constants
     public struct Constants {
+        /// Identifier for the default instance of XCGLogger
         public static let defaultInstanceIdentifier = "com.cerebralgardens.xcglogger.defaultInstance"
+
+        /// Identifer for the Xcode console log destination
         public static let baseConsoleLogDestinationIdentifier = "com.cerebralgardens.xcglogger.logdestination.console"
+
+        /// Identifier for the Apple System Log destination
         public static let nslogDestinationIdentifier = "com.cerebralgardens.xcglogger.logdestination.console.nslog"
+
+        /// Identifier for the file logging destination
         public static let baseFileLogDestinationIdentifier = "com.cerebralgardens.xcglogger.logdestination.file"
+
+        /// Identifier for the default dispatch queue
         public static let logQueueIdentifier = "com.cerebralgardens.xcglogger.queue"
+
+        /// Library version number
         public static let versionString = "3.5"
     }
     public typealias constants = Constants // Preserve backwards compatibility: Constants should be capitalized since it's a type
 
     // MARK: - Enums
+    /// Enum defining our log levels
     public enum LogLevel: Int, Comparable, CustomStringConvertible {
         case Verbose
         case Debug
@@ -426,15 +590,34 @@ public class XCGLogger: CustomDebugStringConvertible {
         }
     }
 
+    /// Structure to manage log colours
     public struct XcodeColor {
+
+        /// ANSI code Escape sequence
         public static let escape = "\u{001b}["
+
+        /// ANSI code to reset the foreground colour
         public static let resetFg = "\u{001b}[fg;"
+
+        /// ANSI code to reset the background colour
         public static let resetBg = "\u{001b}[bg;"
+
+        /// ANSI code to reset the foreground and background colours
         public static let reset = "\u{001b}[;"
 
+        /// Tuple to store the foreground RGB colour values
         public var fg: (r: Int, g: Int, b: Int)? = nil
 
+        /// Tuple to store the background RGB colour values
         public var bg: (r: Int, g: Int, b: Int)? = nil
+
+        /// Generate the complete ANSI code required to set the colours specified in the object.
+        ///
+        /// - Parameters:
+        ///     - None
+        ///
+        /// - Returns:  The complete ANSI code needed to set the text colours
+        ///
         public func format() -> String {
             guard fg != nil || bg != nil else {
                 // neither set, return reset value
@@ -502,49 +685,62 @@ public class XCGLogger: CustomDebugStringConvertible {
         }
 #endif
 
+        /// XcodeColor preset foreground colour: Red
         public static let red: XcodeColor = {
             return XcodeColor(fg: (255, 0, 0))
         }()
 
+        /// XcodeColor preset foreground colour: Green
         public static let green: XcodeColor = {
             return XcodeColor(fg: (0, 255, 0))
         }()
 
+        /// XcodeColor preset foreground colour: Blue
         public static let blue: XcodeColor = {
             return XcodeColor(fg: (0, 0, 255))
         }()
 
+        /// XcodeColor preset foreground colour: Black
         public static let black: XcodeColor = {
             return XcodeColor(fg: (0, 0, 0))
         }()
 
+        /// XcodeColor preset foreground colour: White
         public static let white: XcodeColor = {
             return XcodeColor(fg: (255, 255, 255))
         }()
 
+        /// XcodeColor preset foreground colour: Light Grey
         public static let lightGrey: XcodeColor = {
             return XcodeColor(fg: (211, 211, 211))
         }()
 
+        /// XcodeColor preset foreground colour: Dark Grey
         public static let darkGrey: XcodeColor = {
             return XcodeColor(fg: (169, 169, 169))
         }()
 
+        /// XcodeColor preset foreground colour: Orange
         public static let orange: XcodeColor = {
             return XcodeColor(fg: (255, 165, 0))
         }()
 
+        /// XcodeColor preset colours: White foreground, Red background
         public static let whiteOnRed: XcodeColor = {
             return XcodeColor(fg: (255, 255, 255), bg: (255, 0, 0))
         }()
 
+        /// XcodeColor preset foreground colour: Dark Green
         public static let darkGreen: XcodeColor = {
             return XcodeColor(fg: (0, 128, 0))
         }()
     }
 
     // MARK: - Properties (Options)
+    /// Identifier for this logger object (should be unique)
     public var identifier: String = ""
+
+    /// The log level of this logger, any logs received at this level or higher will be output to the log destinations
     public var outputLogLevel: LogLevel = .Debug {
         didSet {
             for index in 0 ..< logDestinations.count {
@@ -553,7 +749,10 @@ public class XCGLogger: CustomDebugStringConvertible {
         }
     }
 
+    /// Option: enable ANSI colour codes
     public var xcodeColorsEnabled: Bool = false
+
+    /// The colours to use for each log level
     public var xcodeColors: [XCGLogger.LogLevel: XCGLogger.XcodeColor] = [
         .Verbose: .lightGrey,
         .Debug: .darkGrey,
@@ -563,9 +762,11 @@ public class XCGLogger: CustomDebugStringConvertible {
         .Severe: .whiteOnRed
     ]
 
+    /// Option: a closure to execute whenever a logging method is called without a log message
     public var noMessageClosure: () -> Any? = { return "" }
 
     // MARK: - Properties
+    /// The default dispatch queue used for logging
     public class var logQueue: dispatch_queue_t {
         struct Statics {
             static var logQueue = dispatch_queue_create(XCGLogger.Constants.logQueueIdentifier, nil)
@@ -574,7 +775,9 @@ public class XCGLogger: CustomDebugStringConvertible {
         return Statics.logQueue
     }
 
+    /// The date formatter object to use when displaying the dates of log messages (internal storage)
     private var _dateFormatter: NSDateFormatter? = nil
+    /// The date formatter object to use when displaying the dates of log messages
     public var dateFormatter: NSDateFormatter? {
         get {
             if _dateFormatter != nil {
@@ -593,6 +796,7 @@ public class XCGLogger: CustomDebugStringConvertible {
         }
     }
 
+    /// Array containing all of the log destinations for this logger
     public var logDestinations: [XCGLogDestinationProtocol] = []
 
     // MARK: - Life Cycle
@@ -611,6 +815,13 @@ public class XCGLogger: CustomDebugStringConvertible {
     }
 
     // MARK: - Default instance
+    /// Access the default XCGLogger object.
+    ///
+    /// - Parameters:
+    ///     - None
+    ///
+    /// - Returns:  The default XCGLogger object
+    ///
     public class func defaultInstance() -> XCGLogger {
         struct Statics {
             static let instance: XCGLogger = XCGLogger(identifier: XCGLogger.Constants.defaultInstanceIdentifier)
@@ -620,10 +831,46 @@ public class XCGLogger: CustomDebugStringConvertible {
     }
 
     // MARK: - Setup methods
+    /// A shortcut method to configure the default logger instance.
+    ///
+    /// - Note: The function exists to get you up and running quickly, but it's recommended that you use the advanced usage configuration for most projects. See https://github.com/DaveWoodCom/XCGLogger/blob/master/README.md#advanced-usage-recommended
+    ///
+    /// - Parameters:
+    ///     - logLevel: The log level of this logger, any logs received at this level or higher will be output to the log destinations. **Default:** Debug
+    ///     - showLogIdentifier: Whether or not to output the log identifier. **Default:** false
+    ///     - showFunctionName: Whether or not to output the function name that generated the log. **Default:** true
+    ///     - showThreadName: Whether or not to output the thread's name the log was created on. **Default:** false
+    ///     - showLogLevel: Whether or not to output the log level of the log. **Default:** true
+    ///     - showFileNames: Whether or not to output the filename that generated the log. **Default:** true
+    ///     - showLineNumbers: Whether or not to output the line number where the log was generated. **Default:** true
+    ///     - showDate: Whether or not to output the date the log was created. **Default:** true
+    ///     - writeToFile: FileURL or path (as String) to a file to log all messages to (this file is overwritten each time the logger is created). **Default:** nil => no log file
+    ///     - fileLogLevel: An alternate log level for the file destination. **Default:** nil => use the same log level as the console destination
+    ///
+    /// - Returns:  Nothing
+    ///
     public class func setup(logLevel: LogLevel = .Debug, showLogIdentifier: Bool = false, showFunctionName: Bool = true, showThreadName: Bool = false, showLogLevel: Bool = true, showFileNames: Bool = true, showLineNumbers: Bool = true, showDate: Bool = true, writeToFile: AnyObject? = nil, fileLogLevel: LogLevel? = nil) {
         defaultInstance().setup(logLevel, showLogIdentifier: showLogIdentifier, showFunctionName: showFunctionName, showThreadName: showThreadName, showLogLevel: showLogLevel, showFileNames: showFileNames, showLineNumbers: showLineNumbers, showDate: showDate, writeToFile: writeToFile)
     }
 
+    /// A shortcut method to configure the logger.
+    ///
+    /// - Note: The function exists to get you up and running quickly, but it's recommended that you use the advanced usage configuration for most projects. See https://github.com/DaveWoodCom/XCGLogger/blob/master/README.md#advanced-usage-recommended
+    ///
+    /// - Parameters:
+    ///     - logLevel: The log level of this logger, any logs received at this level or higher will be output to the log destinations. **Default:** Debug
+    ///     - showLogIdentifier: Whether or not to output the log identifier. **Default:** false
+    ///     - showFunctionName: Whether or not to output the function name that generated the log. **Default:** true
+    ///     - showThreadName: Whether or not to output the thread's name the log was created on. **Default:** false
+    ///     - showLogLevel: Whether or not to output the log level of the log. **Default:** true
+    ///     - showFileNames: Whether or not to output the filename that generated the log. **Default:** true
+    ///     - showLineNumbers: Whether or not to output the line number where the log was generated. **Default:** true
+    ///     - showDate: Whether or not to output the date the log was created. **Default:** true
+    ///     - writeToFile: FileURL or path (as String) to a file to log all messages to (this file is overwritten each time the logger is created). **Default:** nil => no log file
+    ///     - fileLogLevel: An alternate log level for the file destination. **Default:** nil => use the same log level as the console destination
+    ///
+    /// - Returns:  Nothing
+    ///
     public func setup(logLevel: LogLevel = .Debug, showLogIdentifier: Bool = false, showFunctionName: Bool = true, showThreadName: Bool = false, showLogLevel: Bool = true, showFileNames: Bool = true, showLineNumbers: Bool = true, showDate: Bool = true, writeToFile: AnyObject? = nil, fileLogLevel: LogLevel? = nil) {
         outputLogLevel = logLevel
 
@@ -658,18 +905,62 @@ public class XCGLogger: CustomDebugStringConvertible {
     }
 
     // MARK: - Logging methods
+    /// Log a message if the logger's log level is equal to or lower than the specified level.
+    ///
+    /// - Parameters:
+    ///     - closure:      A closure that returns the object to be logged.
+    ///     - logLevel:     Specified log level **Default:** *Debug*.
+    ///     - functionName: Normally omitted **Default:** *#function*.
+    ///     - fileName:     Normally omitted **Default:** *#file*.
+    ///     - lineNumber:   Normally omitted **Default:** *#line*.
+    ///
+    /// - Returns:  Nothing
+    ///
     public class func logln(@autoclosure(escaping) closure: () -> Any?, logLevel: LogLevel = .Debug, functionName: StaticString = #function, fileName: StaticString = #file, lineNumber: Int = #line) {
         self.defaultInstance().logln(logLevel, functionName: functionName, fileName: fileName, lineNumber: lineNumber, closure: closure)
     }
 
+    /// Log a message if the logger's log level is equal to or lower than the specified level.
+    ///
+    /// - Parameters:
+    ///     - logLevel:     Specified log level **Default:** *Debug*.
+    ///     - functionName: Normally omitted **Default:** *#function*.
+    ///     - fileName:     Normally omitted **Default:** *#file*.
+    ///     - lineNumber:   Normally omitted **Default:** *#line*.
+    ///     - closure:      A closure that returns the object to be logged.
+    ///
+    /// - Returns:  Nothing
+    ///
     public class func logln(logLevel: LogLevel = .Debug, functionName: StaticString = #function, fileName: StaticString = #file, lineNumber: Int = #line, closure: () -> Any?) {
         self.defaultInstance().logln(logLevel, functionName: functionName, fileName: fileName, lineNumber: lineNumber, closure: closure)
     }
 
+    /// Log a message if the logger's log level is equal to or lower than the specified level.
+    ///
+    /// - Parameters:
+    ///     - closure:      A closure that returns the object to be logged.
+    ///     - logLevel:     Specified log level **Default:** *Debug*.
+    ///     - functionName: Normally omitted **Default:** *#function*.
+    ///     - fileName:     Normally omitted **Default:** *#file*.
+    ///     - lineNumber:   Normally omitted **Default:** *#line*.
+    ///
+    /// - Returns:  Nothing
+    ///
     public func logln(@autoclosure(escaping) closure: () -> Any?, logLevel: LogLevel = .Debug, functionName: StaticString = #function, fileName: StaticString = #file, lineNumber: Int = #line) {
         self.logln(logLevel, functionName: functionName, fileName: fileName, lineNumber: lineNumber, closure: closure)
     }
 
+    /// Log a message if the logger's log level is equal to or lower than the specified level.
+    ///
+    /// - Parameters:
+    ///     - logLevel:     Specified log level **Default:** *Debug*.
+    ///     - functionName: Normally omitted **Default:** *#function*.
+    ///     - fileName:     Normally omitted **Default:** *#file*.
+    ///     - lineNumber:   Normally omitted **Default:** *#line*.
+    ///     - closure:      A closure that returns the object to be logged.
+    ///
+    /// - Returns:  Nothing
+    ///
     public func logln(logLevel: LogLevel = .Debug, functionName: StaticString = #function, fileName: StaticString = #file, lineNumber: Int = #line, @noescape closure: () -> Any?) {
         var logDetails: XCGLogDetails!
         for logDestination in self.logDestinations {
@@ -689,10 +980,26 @@ public class XCGLogger: CustomDebugStringConvertible {
         }
     }
 
+    /// Execute some code only when at the specified log level.
+    ///
+    /// - Parameters:
+    ///     - logLevel:     Specified log level **Default:** *Debug*.
+    ///     - closure:      The code closure to be executed.
+    ///
+    /// - Returns:  Nothing.
+    ///
     public class func exec(logLevel: LogLevel = .Debug, closure: () -> () = {}) {
         self.defaultInstance().exec(logLevel, closure: closure)
     }
 
+    /// Execute some code only when at the specified log level.
+    ///
+    /// - Parameters:
+    ///     - logLevel:     Specified log level **Default:** *Debug*.
+    ///     - closure:      The code closure to be executed.
+    ///
+    /// - Returns:  Nothing.
+    ///
     public func exec(logLevel: LogLevel = .Debug, @noescape closure: () -> () = {}) {
         guard isEnabledForLogLevel(logLevel) else {
             return
@@ -701,6 +1008,14 @@ public class XCGLogger: CustomDebugStringConvertible {
         closure()
     }
 
+    /// Generate logs to display your app's vitals (app name, version, etc) as well as XCGLogger's version and log level.
+    ///
+    /// - Parameters:
+    ///     - logLevel:     Specified log level **Default:** *Debug*.
+    ///     - closure:      The code closure to be executed.
+    ///
+    /// - Returns:  Nothing.
+    ///
     public func logAppDetails(selectedLogDestination: XCGLogDestinationProtocol? = nil) {
         let date = NSDate()
 
@@ -738,215 +1053,650 @@ public class XCGLogger: CustomDebugStringConvertible {
 
     // MARK: - Convenience logging methods
     // MARK: * Verbose
+    /// Log something at the Verbose log level. This format of verbose() isn't provided the object to log, instead the property `noMessageClosure` is executed instead.
+    ///
+    /// - Parameters:
+    ///     - functionName: Normally omitted **Default:** *#function*.
+    ///     - fileName:     Normally omitted **Default:** *#file*.
+    ///     - lineNumber:   Normally omitted **Default:** *#line*.
+    ///
+    /// - Returns:  Nothing.
+    ///
     public class func verbose(functionName: StaticString = #function, fileName: StaticString = #file, lineNumber: Int = #line) {
         self.defaultInstance().logln(.Verbose, functionName: functionName, fileName: fileName, lineNumber: lineNumber, closure: self.defaultInstance().noMessageClosure)
     }
 
+    /// Log something at the Verbose log level.
+    ///
+    /// - Parameters:
+    ///     - closure:      A closure that returns the object to be logged.
+    ///     - functionName: Normally omitted **Default:** *#function*.
+    ///     - fileName:     Normally omitted **Default:** *#file*.
+    ///     - lineNumber:   Normally omitted **Default:** *#line*.
+    ///
+    /// - Returns:  Nothing.
+    ///
     public class func verbose(@autoclosure(escaping) closure: () -> Any?, functionName: StaticString = #function, fileName: StaticString = #file, lineNumber: Int = #line) {
         self.defaultInstance().logln(.Verbose, functionName: functionName, fileName: fileName, lineNumber: lineNumber, closure: closure)
     }
 
+    /// Log something at the Verbose log level.
+    ///
+    /// - Parameters:
+    ///     - functionName: Normally omitted **Default:** *#function*.
+    ///     - fileName:     Normally omitted **Default:** *#file*.
+    ///     - lineNumber:   Normally omitted **Default:** *#line*.
+    ///     - closure:      A closure that returns the object to be logged.
+    ///
+    /// - Returns:  Nothing.
+    ///
     public class func verbose(functionName: StaticString = #function, fileName: StaticString = #file, lineNumber: Int = #line, closure: () -> Any?) {
         self.defaultInstance().logln(.Verbose, functionName: functionName, fileName: fileName, lineNumber: lineNumber, closure: closure)
     }
 
+    /// Log something at the Verbose log level. This format of verbose() isn't provided the object to log, instead the property *`noMessageClosure`* is executed instead.
+    ///
+    /// - Parameters:
+    ///     - functionName: Normally omitted **Default:** *#function*.
+    ///     - fileName:     Normally omitted **Default:** *#file*.
+    ///     - lineNumber:   Normally omitted **Default:** *#line*.
+    ///
+    /// - Returns:  Nothing.
+    ///
     public func verbose(functionName: StaticString = #function, fileName: StaticString = #file, lineNumber: Int = #line) {
         self.logln(.Verbose, functionName: functionName, fileName: fileName, lineNumber: lineNumber, closure: self.noMessageClosure)
     }
 
+    /// Log something at the Verbose log level.
+    ///
+    /// - Parameters:
+    ///     - closure:      A closure that returns the object to be logged.
+    ///     - functionName: Normally omitted **Default:** *#function*.
+    ///     - fileName:     Normally omitted **Default:** *#file*.
+    ///     - lineNumber:   Normally omitted **Default:** *#line*.
+    ///
+    /// - Returns:  Nothing.
+    ///
     public func verbose(@autoclosure(escaping) closure: () -> Any?, functionName: StaticString = #function, fileName: StaticString = #file, lineNumber: Int = #line) {
         self.logln(.Verbose, functionName: functionName, fileName: fileName, lineNumber: lineNumber, closure: closure)
     }
 
+    /// Log something at the Verbose log level.
+    ///
+    /// - Parameters:
+    ///     - functionName: Normally omitted **Default:** *#function*.
+    ///     - fileName:     Normally omitted **Default:** *#file*.
+    ///     - lineNumber:   Normally omitted **Default:** *#line*.
+    ///     - closure:      A closure that returns the object to be logged.
+    ///
+    /// - Returns:  Nothing.
+    ///
     public func verbose(functionName: StaticString = #function, fileName: StaticString = #file, lineNumber: Int = #line, closure: () -> Any?) {
         self.logln(.Verbose, functionName: functionName, fileName: fileName, lineNumber: lineNumber, closure: closure)
     }
 
     // MARK: * Debug
+    /// Log something at the Debug log level. This format of debug() isn't provided the object to log, instead the property `noMessageClosure` is executed instead.
+    ///
+    /// - Parameters:
+    ///     - functionName: Normally omitted **Default:** *#function*.
+    ///     - fileName:     Normally omitted **Default:** *#file*.
+    ///     - lineNumber:   Normally omitted **Default:** *#line*.
+    ///
+    /// - Returns:  Nothing.
+    ///
     public class func debug(functionName: StaticString = #function, fileName: StaticString = #file, lineNumber: Int = #line) {
         self.defaultInstance().logln(.Debug, functionName: functionName, fileName: fileName, lineNumber: lineNumber, closure: self.defaultInstance().noMessageClosure)
     }
 
+    /// Log something at the Debug log level.
+    ///
+    /// - Parameters:
+    ///     - closure:      A closure that returns the object to be logged.
+    ///     - functionName: Normally omitted **Default:** *#function*.
+    ///     - fileName:     Normally omitted **Default:** *#file*.
+    ///     - lineNumber:   Normally omitted **Default:** *#line*.
+    ///
+    /// - Returns:  Nothing.
+    ///
     public class func debug(@autoclosure(escaping) closure: () -> Any?, functionName: StaticString = #function, fileName: StaticString = #file, lineNumber: Int = #line) {
         self.defaultInstance().logln(.Debug, functionName: functionName, fileName: fileName, lineNumber: lineNumber, closure: closure)
     }
 
+    /// Log something at the Debug log level.
+    ///
+    /// - Parameters:
+    ///     - functionName: Normally omitted **Default:** *#function*.
+    ///     - fileName:     Normally omitted **Default:** *#file*.
+    ///     - lineNumber:   Normally omitted **Default:** *#line*.
+    ///     - closure:      A closure that returns the object to be logged.
+    ///
+    /// - Returns:  Nothing.
+    ///
     public class func debug(functionName: StaticString = #function, fileName: StaticString = #file, lineNumber: Int = #line, closure: () -> Any?) {
         self.defaultInstance().logln(.Debug, functionName: functionName, fileName: fileName, lineNumber: lineNumber, closure: closure)
     }
 
+    /// Log something at the Debug log level. This format of debug() isn't provided the object to log, instead the property `noMessageClosure` is executed instead.
+    ///
+    /// - Parameters:
+    ///     - functionName: Normally omitted **Default:** *#function*.
+    ///     - fileName:     Normally omitted **Default:** *#file*.
+    ///     - lineNumber:   Normally omitted **Default:** *#line*.
+    ///
+    /// - Returns:  Nothing.
+    ///
     public func debug(functionName: StaticString = #function, fileName: StaticString = #file, lineNumber: Int = #line) {
         self.logln(.Debug, functionName: functionName, fileName: fileName, lineNumber: lineNumber, closure: self.noMessageClosure)
     }
 
+    /// Log something at the Debug log level.
+    ///
+    /// - Parameters:
+    ///     - closure:      A closure that returns the object to be logged.
+    ///     - functionName: Normally omitted **Default:** *#function*.
+    ///     - fileName:     Normally omitted **Default:** *#file*.
+    ///     - lineNumber:   Normally omitted **Default:** *#line*.
+    ///
+    /// - Returns:  Nothing.
+    ///
     public func debug(@autoclosure(escaping) closure: () -> Any?, functionName: StaticString = #function, fileName: StaticString = #file, lineNumber: Int = #line) {
         self.logln(.Debug, functionName: functionName, fileName: fileName, lineNumber: lineNumber, closure: closure)
     }
 
+    /// Log something at the Debug log level.
+    ///
+    /// - Parameters:
+    ///     - functionName: Normally omitted **Default:** *#function*.
+    ///     - fileName:     Normally omitted **Default:** *#file*.
+    ///     - lineNumber:   Normally omitted **Default:** *#line*.
+    ///     - closure:      A closure that returns the object to be logged.
+    ///
+    /// - Returns:  Nothing.
+    ///
     public func debug(functionName: StaticString = #function, fileName: StaticString = #file, lineNumber: Int = #line, closure: () -> Any?) {
         self.logln(.Debug, functionName: functionName, fileName: fileName, lineNumber: lineNumber, closure: closure)
     }
 
     // MARK: * Info
+    /// Log something at the Info log level. This format of info() isn't provided the object to log, instead the property `noMessageClosure` is executed instead.
+    ///
+    /// - Parameters:
+    ///     - functionName: Normally omitted **Default:** *#function*.
+    ///     - fileName:     Normally omitted **Default:** *#file*.
+    ///     - lineNumber:   Normally omitted **Default:** *#line*.
+    ///
+    /// - Returns:  Nothing.
+    ///
     public class func info(functionName: StaticString = #function, fileName: StaticString = #file, lineNumber: Int = #line) {
         self.defaultInstance().logln(.Info, functionName: functionName, fileName: fileName, lineNumber: lineNumber, closure: self.defaultInstance().noMessageClosure)
     }
 
+    /// Log something at the Info log level.
+    ///
+    /// - Parameters:
+    ///     - closure:      A closure that returns the object to be logged.
+    ///     - functionName: Normally omitted **Default:** *#function*.
+    ///     - fileName:     Normally omitted **Default:** *#file*.
+    ///     - lineNumber:   Normally omitted **Default:** *#line*.
+    ///
+    /// - Returns:  Nothing.
+    ///
     public class func info(@autoclosure(escaping) closure: () -> Any?, functionName: StaticString = #function, fileName: StaticString = #file, lineNumber: Int = #line) {
         self.defaultInstance().logln(.Info, functionName: functionName, fileName: fileName, lineNumber: lineNumber, closure: closure)
     }
 
+    /// Log something at the Info log level.
+    ///
+    /// - Parameters:
+    ///     - functionName: Normally omitted **Default:** *#function*.
+    ///     - fileName:     Normally omitted **Default:** *#file*.
+    ///     - lineNumber:   Normally omitted **Default:** *#line*.
+    ///     - closure:      A closure that returns the object to be logged.
+    ///
+    /// - Returns:  Nothing.
+    ///
     public class func info(functionName: StaticString = #function, fileName: StaticString = #file, lineNumber: Int = #line, closure: () -> Any?) {
         self.defaultInstance().logln(.Info, functionName: functionName, fileName: fileName, lineNumber: lineNumber, closure: closure)
     }
 
+    /// Log something at the Info log level. This format of info() isn't provided the object to log, instead the property `noMessageClosure` is executed instead.
+    ///
+    /// - Parameters:
+    ///     - functionName: Normally omitted **Default:** *#function*.
+    ///     - fileName:     Normally omitted **Default:** *#file*.
+    ///     - lineNumber:   Normally omitted **Default:** *#line*.
+    ///
+    /// - Returns:  Nothing.
+    ///
     public func info(functionName: StaticString = #function, fileName: StaticString = #file, lineNumber: Int = #line) {
         self.logln(.Info, functionName: functionName, fileName: fileName, lineNumber: lineNumber, closure: self.noMessageClosure)
     }
 
+    /// Log something at the Info log level.
+    ///
+    /// - Parameters:
+    ///     - closure:      A closure that returns the object to be logged.
+    ///     - functionName: Normally omitted **Default:** *#function*.
+    ///     - fileName:     Normally omitted **Default:** *#file*.
+    ///     - lineNumber:   Normally omitted **Default:** *#line*.
+    ///
+    /// - Returns:  Nothing.
+    ///
     public func info(@autoclosure(escaping) closure: () -> Any?, functionName: StaticString = #function, fileName: StaticString = #file, lineNumber: Int = #line) {
         self.logln(.Info, functionName: functionName, fileName: fileName, lineNumber: lineNumber, closure: closure)
     }
 
+    /// Log something at the Info log level.
+    ///
+    /// - Parameters:
+    ///     - functionName: Normally omitted **Default:** *#function*.
+    ///     - fileName:     Normally omitted **Default:** *#file*.
+    ///     - lineNumber:   Normally omitted **Default:** *#line*.
+    ///     - closure:      A closure that returns the object to be logged.
+    ///
+    /// - Returns:  Nothing.
+    ///
     public func info(functionName: StaticString = #function, fileName: StaticString = #file, lineNumber: Int = #line, closure: () -> Any?) {
         self.logln(.Info, functionName: functionName, fileName: fileName, lineNumber: lineNumber, closure: closure)
     }
 
     // MARK: * Warning
+    /// Log something at the Warning log level. This format of warning() isn't provided the object to log, instead the property `noMessageClosure` is executed instead.
+    ///
+    /// - Parameters:
+    ///     - functionName: Normally omitted **Default:** *#function*.
+    ///     - fileName:     Normally omitted **Default:** *#file*.
+    ///     - lineNumber:   Normally omitted **Default:** *#line*.
+    ///
+    /// - Returns:  Nothing.
+    ///
     public class func warning(functionName: StaticString = #function, fileName: StaticString = #file, lineNumber: Int = #line) {
         self.defaultInstance().logln(.Warning, functionName: functionName, fileName: fileName, lineNumber: lineNumber, closure: self.defaultInstance().noMessageClosure)
     }
 
+    /// Log something at the Warning log level.
+    ///
+    /// - Parameters:
+    ///     - closure:      A closure that returns the object to be logged.
+    ///     - functionName: Normally omitted **Default:** *#function*.
+    ///     - fileName:     Normally omitted **Default:** *#file*.
+    ///     - lineNumber:   Normally omitted **Default:** *#line*.
+    ///
+    /// - Returns:  Nothing.
+    ///
     public class func warning(@autoclosure(escaping) closure: () -> Any?, functionName: StaticString = #function, fileName: StaticString = #file, lineNumber: Int = #line) {
         self.defaultInstance().logln(.Warning, functionName: functionName, fileName: fileName, lineNumber: lineNumber, closure: closure)
     }
 
+    /// Log something at the Warning log level.
+    ///
+    /// - Parameters:
+    ///     - functionName: Normally omitted **Default:** *#function*.
+    ///     - fileName:     Normally omitted **Default:** *#file*.
+    ///     - lineNumber:   Normally omitted **Default:** *#line*.
+    ///     - closure:      A closure that returns the object to be logged.
+    ///
+    /// - Returns:  Nothing.
+    ///
     public class func warning(functionName: StaticString = #function, fileName: StaticString = #file, lineNumber: Int = #line, closure: () -> Any?) {
         self.defaultInstance().logln(.Warning, functionName: functionName, fileName: fileName, lineNumber: lineNumber, closure: closure)
     }
 
+    /// Log something at the Warning log level. This format of warning() isn't provided the object to log, instead the property `noMessageClosure` is executed instead.
+    ///
+    /// - Parameters:
+    ///     - functionName: Normally omitted **Default:** *#function*.
+    ///     - fileName:     Normally omitted **Default:** *#file*.
+    ///     - lineNumber:   Normally omitted **Default:** *#line*.
+    ///
+    /// - Returns:  Nothing.
+    ///
     public func warning(functionName: StaticString = #function, fileName: StaticString = #file, lineNumber: Int = #line) {
         self.logln(.Warning, functionName: functionName, fileName: fileName, lineNumber: lineNumber, closure: self.noMessageClosure)
     }
 
+    /// Log something at the Warning log level.
+    ///
+    /// - Parameters:
+    ///     - closure:      A closure that returns the object to be logged.
+    ///     - functionName: Normally omitted **Default:** *#function*.
+    ///     - fileName:     Normally omitted **Default:** *#file*.
+    ///     - lineNumber:   Normally omitted **Default:** *#line*.
+    ///
+    /// - Returns:  Nothing.
+    ///
     public func warning(@autoclosure(escaping) closure: () -> Any?, functionName: StaticString = #function, fileName: StaticString = #file, lineNumber: Int = #line) {
         self.logln(.Warning, functionName: functionName, fileName: fileName, lineNumber: lineNumber, closure: closure)
     }
 
+    /// Log something at the Warning log level.
+    ///
+    /// - Parameters:
+    ///     - functionName: Normally omitted **Default:** *#function*.
+    ///     - fileName:     Normally omitted **Default:** *#file*.
+    ///     - lineNumber:   Normally omitted **Default:** *#line*.
+    ///     - closure:      A closure that returns the object to be logged.
+    ///
+    /// - Returns:  Nothing.
+    ///
     public func warning(functionName: StaticString = #function, fileName: StaticString = #file, lineNumber: Int = #line, closure: () -> Any?) {
         self.logln(.Warning, functionName: functionName, fileName: fileName, lineNumber: lineNumber, closure: closure)
     }
 
     // MARK: * Error
+    /// Log something at the Error log level. This format of error() isn't provided the object to log, instead the property `noMessageClosure` is executed instead.
+    ///
+    /// - Parameters:
+    ///     - functionName: Normally omitted **Default:** *#function*.
+    ///     - fileName:     Normally omitted **Default:** *#file*.
+    ///     - lineNumber:   Normally omitted **Default:** *#line*.
+    ///
+    /// - Returns:  Nothing.
+    ///
     public class func error(functionName: StaticString = #function, fileName: StaticString = #file, lineNumber: Int = #line) {
         self.defaultInstance().logln(.Error, functionName: functionName, fileName: fileName, lineNumber: lineNumber, closure: self.defaultInstance().noMessageClosure)
     }
 
+    /// Log something at the Error log level.
+    ///
+    /// - Parameters:
+    ///     - closure:      A closure that returns the object to be logged.
+    ///     - functionName: Normally omitted **Default:** *#function*.
+    ///     - fileName:     Normally omitted **Default:** *#file*.
+    ///     - lineNumber:   Normally omitted **Default:** *#line*.
+    ///
+    /// - Returns:  Nothing.
+    ///
     public class func error(@autoclosure(escaping) closure: () -> Any?, functionName: StaticString = #function, fileName: StaticString = #file, lineNumber: Int = #line) {
         self.defaultInstance().logln(.Error, functionName: functionName, fileName: fileName, lineNumber: lineNumber, closure: closure)
     }
 
+    /// Log something at the Error log level.
+    ///
+    /// - Parameters:
+    ///     - functionName: Normally omitted **Default:** *#function*.
+    ///     - fileName:     Normally omitted **Default:** *#file*.
+    ///     - lineNumber:   Normally omitted **Default:** *#line*.
+    ///     - closure:      A closure that returns the object to be logged.
+    ///
+    /// - Returns:  Nothing.
+    ///
     public class func error(functionName: StaticString = #function, fileName: StaticString = #file, lineNumber: Int = #line, closure: () -> Any?) {
         self.defaultInstance().logln(.Error, functionName: functionName, fileName: fileName, lineNumber: lineNumber, closure: closure)
     }
 
+    /// Log something at the Error log level. This format of error() isn't provided the object to log, instead the property `noMessageClosure` is executed instead.
+    ///
+    /// - Parameters:
+    ///     - functionName: Normally omitted **Default:** *#function*.
+    ///     - fileName:     Normally omitted **Default:** *#file*.
+    ///     - lineNumber:   Normally omitted **Default:** *#line*.
+    ///
+    /// - Returns:  Nothing.
+    ///
     public func error(functionName: StaticString = #function, fileName: StaticString = #file, lineNumber: Int = #line) {
         self.logln(.Error, functionName: functionName, fileName: fileName, lineNumber: lineNumber, closure: self.noMessageClosure)
     }
 
+    /// Log something at the Error log level.
+    ///
+    /// - Parameters:
+    ///     - closure:      A closure that returns the object to be logged.
+    ///     - functionName: Normally omitted **Default:** *#function*.
+    ///     - fileName:     Normally omitted **Default:** *#file*.
+    ///     - lineNumber:   Normally omitted **Default:** *#line*.
+    ///
+    /// - Returns:  Nothing.
+    ///
     public func error(@autoclosure(escaping) closure: () -> Any?, functionName: StaticString = #function, fileName: StaticString = #file, lineNumber: Int = #line) {
         self.logln(.Error, functionName: functionName, fileName: fileName, lineNumber: lineNumber, closure: closure)
     }
 
+    /// Log something at the Error log level.
+    ///
+    /// - Parameters:
+    ///     - functionName: Normally omitted **Default:** *#function*.
+    ///     - fileName:     Normally omitted **Default:** *#file*.
+    ///     - lineNumber:   Normally omitted **Default:** *#line*.
+    ///     - closure:      A closure that returns the object to be logged.
+    ///
+    /// - Returns:  Nothing.
+    ///
     public func error(functionName: StaticString = #function, fileName: StaticString = #file, lineNumber: Int = #line, closure: () -> Any?) {
         self.logln(.Error, functionName: functionName, fileName: fileName, lineNumber: lineNumber, closure: closure)
     }
 
     // MARK: * Severe
+    /// Log something at the Severe log level. This format of severe() isn't provided the object to log, instead the property `noMessageClosure` is executed instead.
+    ///
+    /// - Parameters:
+    ///     - functionName: Normally omitted **Default:** *#function*.
+    ///     - fileName:     Normally omitted **Default:** *#file*.
+    ///     - lineNumber:   Normally omitted **Default:** *#line*.
+    ///
+    /// - Returns:  Nothing.
+    ///
     public class func severe(functionName: StaticString = #function, fileName: StaticString = #file, lineNumber: Int = #line) {
         self.defaultInstance().logln(.Severe, functionName: functionName, fileName: fileName, lineNumber: lineNumber, closure: self.defaultInstance().noMessageClosure)
     }
 
+    /// Log something at the Severe log level.
+    ///
+    /// - Parameters:
+    ///     - closure:      A closure that returns the object to be logged.
+    ///     - functionName: Normally omitted **Default:** *#function*.
+    ///     - fileName:     Normally omitted **Default:** *#file*.
+    ///     - lineNumber:   Normally omitted **Default:** *#line*.
+    ///
+    /// - Returns:  Nothing.
+    ///
     public class func severe(@autoclosure(escaping) closure: () -> Any?, functionName: StaticString = #function, fileName: StaticString = #file, lineNumber: Int = #line) {
         self.defaultInstance().logln(.Severe, functionName: functionName, fileName: fileName, lineNumber: lineNumber, closure: closure)
     }
 
+    /// Log something at the Severe log level.
+    ///
+    /// - Parameters:
+    ///     - functionName: Normally omitted **Default:** *#function*.
+    ///     - fileName:     Normally omitted **Default:** *#file*.
+    ///     - lineNumber:   Normally omitted **Default:** *#line*.
+    ///     - closure:      A closure that returns the object to be logged.
+    ///
+    /// - Returns:  Nothing.
+    ///
     public class func severe(functionName: StaticString = #function, fileName: StaticString = #file, lineNumber: Int = #line, closure: () -> Any?) {
         self.defaultInstance().logln(.Severe, functionName: functionName, fileName: fileName, lineNumber: lineNumber, closure: closure)
     }
 
+    /// Log something at the Severe log level. This format of severe() isn't provided the object to log, instead the property `noMessageClosure` is executed instead.
+    ///
+    /// - Parameters:
+    ///     - functionName: Normally omitted **Default:** *#function*.
+    ///     - fileName:     Normally omitted **Default:** *#file*.
+    ///     - lineNumber:   Normally omitted **Default:** *#line*.
+    ///
+    /// - Returns:  Nothing.
+    ///
     public func severe(functionName: StaticString = #function, fileName: StaticString = #file, lineNumber: Int = #line) {
         self.logln(.Severe, functionName: functionName, fileName: fileName, lineNumber: lineNumber, closure: self.noMessageClosure)
     }
 
+    /// Log something at the Severe log level.
+    ///
+    /// - Parameters:
+    ///     - closure:      A closure that returns the object to be logged.
+    ///     - functionName: Normally omitted **Default:** *#function*.
+    ///     - fileName:     Normally omitted **Default:** *#file*.
+    ///     - lineNumber:   Normally omitted **Default:** *#line*.
+    ///
+    /// - Returns:  Nothing.
+    ///
     public func severe(@autoclosure(escaping) closure: () -> Any?, functionName: StaticString = #function, fileName: StaticString = #file, lineNumber: Int = #line) {
         self.logln(.Severe, functionName: functionName, fileName: fileName, lineNumber: lineNumber, closure: closure)
     }
 
+    /// Log something at the Severe log level.
+    ///
+    /// - Parameters:
+    ///     - functionName: Normally omitted **Default:** *#function*.
+    ///     - fileName:     Normally omitted **Default:** *#file*.
+    ///     - lineNumber:   Normally omitted **Default:** *#line*.
+    ///     - closure:      A closure that returns the object to be logged.
+    ///
+    /// - Returns:  Nothing.
+    ///
     public func severe(functionName: StaticString = #function, fileName: StaticString = #file, lineNumber: Int = #line, closure: () -> Any?) {
         self.logln(.Severe, functionName: functionName, fileName: fileName, lineNumber: lineNumber, closure: closure)
     }
 
     // MARK: - Exec Methods
     // MARK: * Verbose
+    /// Execute some code only when at the Verbose log level.
+    ///
+    /// - Parameters:
+    ///     - closure:      The code closure to be executed.
+    ///
+    /// - Returns:  Nothing.
+    ///
     public class func verboseExec(closure: () -> () = {}) {
         self.defaultInstance().exec(XCGLogger.LogLevel.Verbose, closure: closure)
     }
 
+    /// Execute some code only when at the Verbose log level.
+    ///
+    /// - Parameters:
+    ///     - closure:      The code closure to be executed.
+    ///
+    /// - Returns:  Nothing.
+    ///
     public func verboseExec(closure: () -> () = {}) {
         self.exec(XCGLogger.LogLevel.Verbose, closure: closure)
     }
 
     // MARK: * Debug
+    /// Execute some code only when at the Debug or lower log level.
+    ///
+    /// - Parameters:
+    ///     - closure:      The code closure to be executed.
+    ///
+    /// - Returns:  Nothing.
+    ///
     public class func debugExec(closure: () -> () = {}) {
         self.defaultInstance().exec(XCGLogger.LogLevel.Debug, closure: closure)
     }
 
+    /// Execute some code only when at the Debug or lower log level.
+    ///
+    /// - Parameters:
+    ///     - closure:      The code closure to be executed.
+    ///
+    /// - Returns:  Nothing.
+    ///
     public func debugExec(closure: () -> () = {}) {
         self.exec(XCGLogger.LogLevel.Debug, closure: closure)
     }
 
     // MARK: * Info
+    /// Execute some code only when at the Info or lower log level.
+    ///
+    /// - Parameters:
+    ///     - closure:      The code closure to be executed.
+    ///
+    /// - Returns:  Nothing.
+    ///
     public class func infoExec(closure: () -> () = {}) {
         self.defaultInstance().exec(XCGLogger.LogLevel.Info, closure: closure)
     }
 
+    /// Execute some code only when at the Info or lower log level.
+    ///
+    /// - Parameters:
+    ///     - closure:      The code closure to be executed.
+    ///
+    /// - Returns:  Nothing.
+    ///
     public func infoExec(closure: () -> () = {}) {
         self.exec(XCGLogger.LogLevel.Info, closure: closure)
     }
 
     // MARK: * Warning
+    /// Execute some code only when at the Warning or lower log level.
+    ///
+    /// - Parameters:
+    ///     - closure:      The code closure to be executed.
+    ///
+    /// - Returns:  Nothing.
+    ///
     public class func warningExec(closure: () -> () = {}) {
         self.defaultInstance().exec(XCGLogger.LogLevel.Warning, closure: closure)
     }
 
+    /// Execute some code only when at the Warning or lower log level.
+    ///
+    /// - Parameters:
+    ///     - closure:      The code closure to be executed.
+    ///
+    /// - Returns:  Nothing.
+    ///
     public func warningExec(closure: () -> () = {}) {
         self.exec(XCGLogger.LogLevel.Warning, closure: closure)
     }
 
     // MARK: * Error
+    /// Execute some code only when at the Error or lower log level.
+    ///
+    /// - Parameters:
+    ///     - closure:      The code closure to be executed.
+    ///
+    /// - Returns:  Nothing.
+    ///
     public class func errorExec(closure: () -> () = {}) {
         self.defaultInstance().exec(XCGLogger.LogLevel.Error, closure: closure)
     }
 
+    /// Execute some code only when at the Error or lower log level.
+    ///
+    /// - Parameters:
+    ///     - closure:      The code closure to be executed.
+    ///
+    /// - Returns:  Nothing.
+    ///
     public func errorExec(closure: () -> () = {}) {
         self.exec(XCGLogger.LogLevel.Error, closure: closure)
     }
 
     // MARK: * Severe
+    /// Execute some code only when at the Severe log level.
+    ///
+    /// - Parameters:
+    ///     - closure:      The code closure to be executed.
+    ///
+    /// - Returns:  Nothing.
+    ///
     public class func severeExec(closure: () -> () = {}) {
         self.defaultInstance().exec(XCGLogger.LogLevel.Severe, closure: closure)
     }
 
+    /// Execute some code only when at the Severe log level.
+    ///
+    /// - Parameters:
+    ///     - closure:      The code closure to be executed.
+    ///
+    /// - Returns:  Nothing.
+    ///
     public func severeExec(closure: () -> () = {}) {
         self.exec(XCGLogger.LogLevel.Severe, closure: closure)
     }
 
-    // MARK: - Misc methods
-    public func isEnabledForLogLevel (logLevel: XCGLogger.LogLevel) -> Bool {
-        return logLevel >= self.outputLogLevel
-    }
-
+    // MARK: - Log destination methods
+    /// Get the log destination with the specified identifier.
+    ///
+    /// - Parameters:
+    ///     - identifier:   Identifier of the log destination to return.
+    ///
+    /// - Returns:  The log destination with the specified identifier, if one exists, nil otherwise.
+    /// 
     public func logDestination(identifier: String) -> XCGLogDestinationProtocol? {
         for logDestination in logDestinations {
             if logDestination.identifier == identifier {
@@ -957,6 +1707,15 @@ public class XCGLogger: CustomDebugStringConvertible {
         return nil
     }
 
+    /// Add a new log destination to the logger.
+    ///
+    /// - Parameters:
+    ///     - logDestination:   The log destination to add.
+    ///
+    /// - Returns:
+    ///     - true:     Log destination was added successfully.
+    ///     - false:    Failed to add the log destination.
+    ///
     public func addLogDestination(logDestination: XCGLogDestinationProtocol) -> Bool {
         let existingLogDestination: XCGLogDestinationProtocol? = self.logDestination(logDestination.identifier)
         if existingLogDestination != nil {
@@ -967,15 +1726,51 @@ public class XCGLogger: CustomDebugStringConvertible {
         return true
     }
 
+    /// Remove the log destination from the logger.
+    ///
+    /// - Parameters:
+    ///     - logDestination:   The log destination to remove.
+    ///
+    /// - Returns:  Nothing
+    ///
     public func removeLogDestination(logDestination: XCGLogDestinationProtocol) {
         removeLogDestination(logDestination.identifier)
     }
 
+    /// Remove the log destination with the specified identifier from the logger.
+    ///
+    /// - Parameters:
+    ///     - identifier:   The identifier of the log destination to remove.
+    ///
+    /// - Returns:  Nothing
+    ///
     public func removeLogDestination(identifier: String) {
         logDestinations = logDestinations.filter({$0.identifier != identifier})
     }
 
+    // MARK: - Misc methods
+    /// Check if the logger's log level is equal to or lower than the specified level.
+    ///
+    /// - Parameters:
+    ///     - logLevel: The log level to check.
+    ///
+    /// - Returns:
+    ///     - true:     Logger is at the log level specified or lower.
+    ///     - false:    Logger is at a higher log levelss.
+    ///
+    public func isEnabledForLogLevel (logLevel: XCGLogger.LogLevel) -> Bool {
+        return logLevel >= self.outputLogLevel
+    }
+
     // MARK: - Private methods
+    /// Log a message if the logger's log level is equal to or lower than the specified level.
+    ///
+    /// - Parameters:
+    ///     - logMessage:   Message to log.
+    ///     - logLevel:     Specified log level.
+    ///
+    /// - Returns:  Nothing
+    ///
     private func _logln(logMessage: String, logLevel: LogLevel = .Debug) {
 
         var logDetails: XCGLogDetails? = nil
