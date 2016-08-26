@@ -392,7 +392,6 @@ public class XCGLogger: CustomDebugStringConvertible {
         public static let nslogDestinationIdentifier = "com.cerebralgardens.xcglogger.logdestination.console.nslog"
         public static let baseFileLogDestinationIdentifier = "com.cerebralgardens.xcglogger.logdestination.file"
         public static let logQueueIdentifier = "com.cerebralgardens.xcglogger.queue"
-        public static let nsdataFormatterCacheIdentifier = "com.cerebralgardens.xcglogger.nsdataFormatterCache"
         public static let versionString = "3.5"
     }
     public typealias constants = Constants // Preserve backwards compatibility: Constants should be capitalized since it's a type
@@ -626,7 +625,7 @@ public class XCGLogger: CustomDebugStringConvertible {
     }
 
     public func setup(logLevel: LogLevel = .Debug, showLogIdentifier: Bool = false, showFunctionName: Bool = true, showThreadName: Bool = false, showLogLevel: Bool = true, showFileNames: Bool = true, showLineNumbers: Bool = true, showDate: Bool = true, writeToFile: AnyObject? = nil, fileLogLevel: LogLevel? = nil) {
-        outputLogLevel = logLevel;
+        outputLogLevel = logLevel
 
         if let standardConsoleLogDestination = logDestination(XCGLogger.Constants.baseConsoleLogDestinationIdentifier) as? XCGConsoleLogDestination {
             standardConsoleLogDestination.showLogIdentifier = showLogIdentifier
