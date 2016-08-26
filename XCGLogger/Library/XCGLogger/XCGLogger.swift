@@ -694,7 +694,7 @@ public class XCGLogger: CustomDebugStringConvertible {
         self.defaultInstance().exec(logLevel, closure: closure)
     }
 
-    public func exec(logLevel: LogLevel = .Debug, closure: () -> () = {}) {
+    public func exec(logLevel: LogLevel = .Debug, @noescape closure: () -> () = {}) {
         guard isEnabledForLogLevel(logLevel) else {
             return
         }
