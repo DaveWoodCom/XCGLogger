@@ -167,10 +167,7 @@ class XCGLoggerTests: XCTestCase {
         let linesToLog = ["One", "Two", "Three", "Four", "Five", "Six", "Seven", "Eight", "Nine", "Ten"]
         let myConcurrentQueue = dispatch_queue_create("com.cerebralgardens.xcglogger.testMultiThreaded.queue", DISPATCH_QUEUE_CONCURRENT)
         dispatch_apply(linesToLog.count, myConcurrentQueue) { (index: Int) in
-            // log.debug(linesToLog[index])
-            // Workaround for llvm-crash
-            let line = linesToLog[index]
-            log.debug(line)
+            log.debug(linesToLog[index])
         }
     }
 
