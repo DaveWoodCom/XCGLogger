@@ -52,7 +52,7 @@ in your repository folder.
 
 Add the following line to your `Cartfile`.
 
-```github "DaveWoodCom/XCGLogger" ~> 3.5```
+```github "DaveWoodCom/XCGLogger" ~> 3.5.1```
 
 Then run `carthage update --no-use-binaries` or just `carthage update`. For details of the installation and usage of Carthage, visit [it's project page](https://github.com/Carthage/Carthage).
 
@@ -65,7 +65,7 @@ source 'https://github.com/CocoaPods/Specs.git'
 platform :ios, '8.0'
 use_frameworks!
 
-pod 'XCGLogger', '~> 3.5'
+pod 'XCGLogger', '~> 3.5.1'
 ```
 
 Then run `pod install`. For details of the installation and usage of CocoaPods, visit [it's official web site](https://cocoapods.org/).
@@ -73,12 +73,12 @@ Then run `pod install`. For details of the installation and usage of CocoaPods, 
 ###Backwards Compatibility
 
 Use:
-* XCGLogger version 3.5 for Swift 2.2
+* XCGLogger version 3.5.1 for Swift 2.2
 * XCGLogger version 3.2 for Swift 2.0-2.1
 * XCGLogger version 2.x for Swift 1.2
 * XCGLogger version 1.x for Swift 1.1 and below.
 
-##Standard Usage
+##Basic Usage (Quick Start)
 
 Add the XCGLogger project as a subproject to your project, and add the appropriate library as a dependancy of your target(s).
 Under the `General` tab of your target, add the `XCGLogger.framework` to the `Embedded Binaries`.

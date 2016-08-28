@@ -1,6 +1,7 @@
 #Change Log
 
-* **Version 3.5**: *(2016/08/23)* - Added the ability to log anything, no longer limited to strings, or required to use string interpolation. Thanks to @Zyphrax #130 and @mishimay #140. Can also now call a logging method with no parameters, such as `log.debug()`. This will log the result of customizable `testNoMessageClosure` property. By default that's just an empty string, but should allow for some interesting features, (like an automatic counter). This will likely be the last version for Swift 2.x.
+* **Version 3.5.1**: *(2016/08/28)* - Added documentation, improved tests. This will likely be the last version for Swift 2.x.
+* **Version 3.5**: *(2016/08/23)* - Added the ability to log anything, no longer limited to strings, or required to use string interpolation. Thanks to @Zyphrax #130 and @mishimay #140. Can also now call a logging method with no parameters, such as `log.debug()`. This will log the result of customizable `testNoMessageClosure` property. By default that's just an empty string, but should allow for some interesting features, (like an automatic counter). 
 * **Version 3.4**: *(2016/08/21)* - Finally added an option to append to an existing log file, and added a basic log rotation method. Other bug fixes.
 * **Version 3.3**: *(2016/03/27)* - Updated for Xcode 7.3 (Swift 2.2). If you're still using 7.2 (Swift 2.1), you must use XCGLogger 3.2.
 * **Version 3.2**: *(2016/01/04)* - Added option to omit the default destination (for advanced usage), added background logging option
