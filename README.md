@@ -52,7 +52,7 @@ in your repository folder.
 
 Add the following line to your `Cartfile`.
 
-```github "DaveWoodCom/XCGLogger" ~> 3.3```
+```github "DaveWoodCom/XCGLogger" ~> 3.5```
 
 Then run `carthage update --no-use-binaries` or just `carthage update`. For details of the installation and usage of Carthage, visit [it's project page](https://github.com/Carthage/Carthage).
 
@@ -65,7 +65,7 @@ source 'https://github.com/CocoaPods/Specs.git'
 platform :ios, '8.0'
 use_frameworks!
 
-pod 'XCGLogger', '~> 3.3'
+pod 'XCGLogger', '~> 3.5'
 ```
 
 Then run `pod install`. For details of the installation and usage of CocoaPods, visit [it's official web site](https://cocoapods.org/).
@@ -73,7 +73,7 @@ Then run `pod install`. For details of the installation and usage of CocoaPods, 
 ###Backwards Compatibility
 
 Use:
-* XCGLogger version 3.3 for Swift 2.2
+* XCGLogger version 3.5 for Swift 2.2
 * XCGLogger version 3.2 for Swift 2.0-2.1
 * XCGLogger version 2.x for Swift 1.2
 * XCGLogger version 1.x for Swift 1.1 and below.
@@ -127,9 +127,9 @@ log.severe("A severe error occurred, we are likely about to crash now")
 
 The different methods set the log level of the message. XCGLogger will only print messages with a log level that is >= its current log level setting.
 
-##Advanced Usage
+##Advanced Usage (Recommended)
 
-XCGLogger aims to be simple to use and get you up and running quickly with as few as 2 lines of code above. But it's allows for much greater control and flexibility. Here's an example of configuring the logger to output to the Apple System Log as well as a file.
+XCGLogger aims to be simple to use and get you up and running quickly with as few as 2 lines of code above. But it allows for much greater control and flexibility. Here's an example of configuring the logger to output to the Apple System Log as well as a file.
 
 ```Swift
 // Create a logger object with no destinations
@@ -180,6 +180,24 @@ Another common usage pattern is to have multiple loggers, perhaps one for UI iss
 
 Each log destination can have its own log level. As a convenience, you can set the log level on the log object itself and it will pass that level to each destination. Then set the destinations that need to be different.
 
+#####Log Anything
+
+You can log strings:
+
+```
+log.debug("Hi there!")
+```
+
+or pretty much anything you want:
+
+```
+log.debug(true)
+log.debug(CGPoint(x: 1.1, y: 2.2))
+log.debug(MyEnum.Option)
+log.debug((4, 2))
+log.debug(["Device": "iPhone", "Version": 7])
+```
+
 #####Extending XCGLogger
 
 You can create alternate log destinations (besides the two built in ones for the console and a file). Your custom log destination must implement the `XCGLogDestinationProtocol` protocol. Instantiate your object, configure it, and then add it to the `XCGLogger` object with `addLogDestination`. Take a look at `XCGConsoleLogDestination` and `XCGFileLogDestination` for examples.
@@ -207,7 +225,7 @@ log.debug {
 }
 ```
 
-In cases where you wish to selectively execute code without generating a log line, you can use the methods: `verboseExec`, `debugExec`, `infoExec`, `warningExec`, `errorExec`, and `severeExec`.
+In cases where you wish to selectively execute code without generating a log line, return `nil`, or use one of the methods: `verboseExec`, `debugExec`, `infoExec`, `warningExec`, `errorExec`, and `severeExec`.
 
 #####Custom Date Formats
 
@@ -287,6 +305,24 @@ This works extremely well when combined with the Alternate Configurations method
 #endif
 ```
 
+#####Append To Existing Log File
+
+When using the advanced configuration of the logger (see Advanced Usage above), you can now specify that the logger append to an existing log file, instead of automatically overwriting it.
+
+Add the optional `shouldAppend:` parameter when initializing the `XCGFileLogDestination` object. You can also add the `appendMarker:` parameter to add a marker to the log file indicating where a new instance of your app started appending. By default we'll add `-- ** ** ** --` if the parameter is omitted. Set it to `nil` to skip appending the marker.
+
+```let fileLogDestination = XCGFileLogDestination(owner: log, writeToFile: "/path/to/file", identifier: "advancedLogger.fileLogDestination", shouldAppend: true, appendMarker: "-- Relauched App --")```
+
+
+#####Log File Rotation
+
+When logging to a file, you have the option to rotate the log file to an archived destination, and have the logger automatically create a new log file in place of the old one.
+
+Using the `XCGFileLogDestination` object in your logger call the `rotateFile(archiveToFile:)` method. Pass either a path or file URL to a location you'd like to store the old file. The method will return `true` on success, after which you can do whatever you need with the old file, compress it, email it, etc.
+
+**Hint**: see the `logDestination(identifier:)` method on XCGLogger, to get your current `XCGFileLogDestination` object, or save a reference to it when you create it using the advanced usage options above.
+
+
 ##Third Party Tools That Work With XCGLogger
 
 [**XcodeColors:**](https://github.com/robbiehanson/XcodeColors) Enable colour in the Xcode console
@@ -302,7 +338,6 @@ This works extremely well when combined with the Alternate Configurations method
 - Add more examples of some advanced use cases
 - Add additional log destination types
 - Add Objective-C support
-- Add log file rotation options
 - Add Swift Package Manager support
 - Add Linux support
 
@@ -321,30 +356,5 @@ TV Tune Up: https://www.cerebralgardens.com/tvtuneup
 
 ###Change Log
 
-* **Version 3.3**: *(2016/03/27)* - Updated for Xcode 7.3 (Swift 2.2). If you're still using 7.2 (Swift 2.1), you must use XCGLogger 3.2.
-* **Version 3.2**: *(2016/01/04)* - Added option to omit the default destination (for advanced usage), added background logging option
-* **Version 3.1.1**: *(2015/11/18)* - Minor clean up, fixes an app submission issue for tvOS
-* **Version 3.1**: *(2015/10/23)* - Initial support for tvOS
-* **Version 3.1b1**: *(2015/09/09)* - Initial support for tvOS
-* **Version 3.0**: *(2015/09/09)* - Bug fix, and WatchOS 2 suppport (thanks @ymyzk)
-* **Version 2.4**: *(2015/09/09)* - Minor bug fix, likely the last release for Swift 1.x
-* **Version 3.0b3**: *(2015/08/24)* - Added option to include the log identifier in log messages #79
-* **Version 2.3**: *(2015/08/24)* - Added option to include the log identifier in log messages #79
-* **Version 3.0b2**: *(2015/08/11)* - Updated for Swift 2.0 (Xcode 7 Beta 5)
-* **Version 2.2**: *(2015/08/11)* - Internal restructuring, easier to create new log destination subclasses. Can disable function names, and/or dates. Added optional new log destination that uses NSLog instead of println().
-* **Version 3.0b1**: *(2015/06/18)* - Swift 2.0 support/required. Consider this unstable for now, as Swift 2.0 will likely see changes before final release, and this library may undergo some architecture changes (time permitting).
-* **Version 2.1.1**: *(2015/06/18)* - Fixed two minor bugs wrt XcodeColors.
-* **Version 2.1**: *(2015/06/17)* - Added support for XcodeColors (https://github.com/robbiehanson/XcodeColors). Undeprecated the \*Exec() methods.
-* **Version 2.0**: *(2015/04/14)* - Requires Swift 1.2. Removed some workarounds/hacks for older versions of Xcode. Removed thread based caching of NSDateFormatter objects since they're now thread safe. You can now use the default date formatter, or create and assign your own and it'll be used. Added Thread name option (Thanks to Nick Strecker https://github.com/tekknick ). Add experimental support for CocoaPods. 
-* **Version 1.9**: *(2015/04/14)* - Deprecated the \*Exec() methods in favour of just using a trailing closure on the logging methods (Thanks to Nick Strecker https://github.com/tekknick ). This will be the last version for Swift 1.1.
-* **Version 1.8.1**: *(2014/12/31)* - Added a workaround to the Swift compiler's optimization bug, restored optimization level back to Fastest
-* **Version 1.8**: *(2014/11/16)* - Added warning log level (Issue #16)
-* **Version 1.7**: *(2014/09/27)* - Reorganized to be used as a subproject instead of a framework, fixed threading
-* **Version 1.6**: *(2014/09/09)* - Updated for Xcode 6.1 Beta 1
-* **Version 1.5**: *(2014/08/23)* - Updated for Xcode 6 Beta 6
-* **Version 1.4**: *(2014/08/04)* - Updated for Xcode 6 Beta 5, removed `__FUNCTION__` workaround
-* **Version 1.3**: *(2014/07/27)* - Updated to use public/internal/private access modifiers
-* **Version 1.2**: *(2014/07/01)* - Added exec methods to selectively execute code
-* **Version 1.1**: *(2014/06/22)* - Changed the internal architecture to allow for more flexibility
-* **Version 1.0**: *(2014/06/09)* - Initial Release
+The change log is now in it's own file: [CHANGELOG.md](CHANGELOG.md)
 

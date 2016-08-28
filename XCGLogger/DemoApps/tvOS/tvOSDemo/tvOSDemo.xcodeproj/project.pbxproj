@@ -17,6 +17,20 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
+		55419D6E1D6BF44F007ED193 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 557C47C21BA1207500C9A174 /* XCGLogger.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 558EEB851D6BAC61006A9C7A;
+			remoteInfo = "XCGLoggerTests (watchOS)";
+		};
+		55419D701D6BF44F007ED193 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 557C47C21BA1207500C9A174 /* XCGLogger.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 558EEB921D6BAC66006A9C7A;
+			remoteInfo = "XCGLoggerTests (tvOS)";
+		};
 		557C47CB1BA1207500C9A174 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 557C47C21BA1207500C9A174 /* XCGLogger.xcodeproj */;
@@ -138,6 +152,8 @@
 				557C47D21BA1207500C9A174 /* XCGLogger.framework */,
 				557C47D41BA1207500C9A174 /* XCGLoggerTests (iOS).xctest */,
 				557C47D61BA1207500C9A174 /* XCGLoggerTests (OS X).xctest */,
+				55419D6F1D6BF44F007ED193 /* XCGLoggerTests (watchOS).xctest */,
+				55419D711D6BF44F007ED193 /* XCGLoggerTests (tvOS).xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -267,6 +283,20 @@
 /* End PBXProject section */
 
 /* Begin PBXReferenceProxy section */
+		55419D6F1D6BF44F007ED193 /* XCGLoggerTests (watchOS).xctest */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.cfbundle;
+			path = "XCGLoggerTests (watchOS).xctest";
+			remoteRef = 55419D6E1D6BF44F007ED193 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		55419D711D6BF44F007ED193 /* XCGLoggerTests (tvOS).xctest */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.cfbundle;
+			path = "XCGLoggerTests (tvOS).xctest";
+			remoteRef = 55419D701D6BF44F007ED193 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
 		557C47CC1BA1207500C9A174 /* XCGLogger.framework */ = {
 			isa = PBXReferenceProxy;
 			fileType = wrapper.framework;
@@ -393,7 +423,7 @@
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COPY_PHASE_STRIP = NO;
-				CURRENT_PROJECT_VERSION = 3.3;
+				CURRENT_PROJECT_VERSION = 3.5;
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
@@ -438,7 +468,7 @@
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COPY_PHASE_STRIP = NO;
-				CURRENT_PROJECT_VERSION = 3.3;
+				CURRENT_PROJECT_VERSION = 3.5;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;

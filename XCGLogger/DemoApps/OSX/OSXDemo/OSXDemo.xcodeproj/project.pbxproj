@@ -79,6 +79,20 @@
 			remoteGlobalIDString = 554DF41619D76FE7005708BE;
 			remoteInfo = "XCGLogger (OS X)";
 		};
+		55E328541D6C33BF008CCB8A /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 555FFCCE19D77B3400F62246 /* XCGLogger.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 558EEB851D6BAC61006A9C7A;
+			remoteInfo = "XCGLoggerTests (watchOS)";
+		};
+		55E328561D6C33BF008CCB8A /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 555FFCCE19D77B3400F62246 /* XCGLogger.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 558EEB921D6BAC66006A9C7A;
+			remoteInfo = "XCGLoggerTests (tvOS)";
+		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -198,6 +212,8 @@
 				55CB2FB51BA12ADE0031F329 /* XCGLogger.framework */,
 				555FFCD919D77B3400F62246 /* XCGLoggerTests (iOS).xctest */,
 				5562CA971B7B25DD00F36DD8 /* XCGLoggerTests (OS X).xctest */,
+				55E328551D6C33BF008CCB8A /* XCGLoggerTests (watchOS).xctest */,
+				55E328571D6C33BF008CCB8A /* XCGLoggerTests (tvOS).xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -330,6 +346,20 @@
 			remoteRef = 55CB2FB41BA12ADE0031F329 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
+		55E328551D6C33BF008CCB8A /* XCGLoggerTests (watchOS).xctest */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.cfbundle;
+			path = "XCGLoggerTests (watchOS).xctest";
+			remoteRef = 55E328541D6C33BF008CCB8A /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		55E328571D6C33BF008CCB8A /* XCGLoggerTests (tvOS).xctest */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.cfbundle;
+			path = "XCGLoggerTests (tvOS).xctest";
+			remoteRef = 55E328561D6C33BF008CCB8A /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
 /* End PBXReferenceProxy section */
 
 /* Begin PBXResourcesBuildPhase section */
@@ -419,7 +449,7 @@
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				CODE_SIGN_IDENTITY = "-";
 				COPY_PHASE_STRIP = NO;
-				CURRENT_PROJECT_VERSION = 3.3;
+				CURRENT_PROJECT_VERSION = 3.5;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
@@ -463,7 +493,7 @@
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				CODE_SIGN_IDENTITY = "-";
 				COPY_PHASE_STRIP = YES;
-				CURRENT_PROJECT_VERSION = 3.3;
+				CURRENT_PROJECT_VERSION = 3.5;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
