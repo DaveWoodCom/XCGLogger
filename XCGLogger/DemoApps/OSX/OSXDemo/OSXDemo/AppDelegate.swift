@@ -10,25 +10,25 @@
 import Cocoa
 import XCGLogger
 
-let appDelegate = NSApplication.sharedApplication().delegate as! AppDelegate
+let appDelegate = NSApplication.shared().delegate as! AppDelegate
 let log: XCGLogger = {
     // Setup XCGLogger (Advanced/Recommended Usage)
     // Create a logger object with no destinations
     let log = XCGLogger(identifier: "advancedLogger", includeDefaultDestinations: false)
     log.xcodeColors = [
-        .Verbose: .lightGrey,
-        .Debug: .darkGrey,
-        .Info: .darkGreen,
-        .Warning: .orange,
-        .Error: XCGLogger.XcodeColor(fg: NSColor.redColor(), bg: NSColor.whiteColor()), // Optionally use an NSColor
-        .Severe: XCGLogger.XcodeColor(fg: (255, 255, 255), bg: (255, 0, 0)) // Optionally use RGB values directly
+        .verbose: .lightGrey,
+        .debug: .darkGrey,
+        .info: .darkGreen,
+        .warning: .orange,
+        .error: XCGLogger.XcodeColor(fg: NSColor.red, bg: NSColor.white), // Optionally use an NSColor
+        .severe: XCGLogger.XcodeColor(fg: (255, 255, 255), bg: (255, 0, 0)) // Optionally use RGB values directly
     ]
 
     // Create a destination for the system console log (via NSLog)
     let systemLogDestination = XCGNSLogDestination(owner: log, identifier: "advancedLogger.systemLogDestination")
 
     // Optionally set some configuration options
-    systemLogDestination.outputLogLevel = .Debug
+    systemLogDestination.outputLogLevel = .debug
     systemLogDestination.showLogIdentifier = false
     systemLogDestination.showFunctionName = true
     systemLogDestination.showThreadName = true
@@ -38,14 +38,14 @@ let log: XCGLogger = {
     systemLogDestination.showDate = true
 
     // Add the destination to the logger
-    log.addLogDestination(systemLogDestination)
+    log.add(logDestination: systemLogDestination)
 
     // Create a file log destination
-    let logPath: NSString = ("~/Desktop/XCGLogger_Log.txt" as NSString).stringByExpandingTildeInPath
+    let logPath: String = ("~/Desktop/XCGLogger_Log.txt" as NSString).expandingTildeInPath
     let fileLogDestination = XCGFileLogDestination(owner: log, writeToFile: logPath, identifier: "advancedLogger.fileLogDestination", shouldAppend: true)
 
     // Optionally set some configuration options
-    fileLogDestination.outputLogLevel = .Debug
+    fileLogDestination.outputLogLevel = .debug
     fileLogDestination.showLogIdentifier = false
     fileLogDestination.showFunctionName = true
     fileLogDestination.showThreadName = true
@@ -58,7 +58,7 @@ let log: XCGLogger = {
     fileLogDestination.logQueue = XCGLogger.logQueue
 
     // Add the destination to the logger
-    log.addLogDestination(fileLogDestination)
+    log.add(logDestination: fileLogDestination)
 
     // Add basic app info, version info etc, to the start of the logs
     log.logAppDetails()
@@ -66,9 +66,9 @@ let log: XCGLogger = {
     return log
 }()
 
-let dateHashFormatter: NSDateFormatter = {
-    let dateHashFormatter = NSDateFormatter()
-    dateHashFormatter.locale = NSLocale.currentLocale()
+let dateHashFormatter: DateFormatter = {
+    let dateHashFormatter = DateFormatter()
+    dateHashFormatter.locale = NSLocale.current
     dateHashFormatter.dateFormat = "yyyy-MM-dd_HHmmss_SSS"
     return dateHashFormatter
 }()
@@ -85,17 +85,17 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     @IBOutlet var logLevelSlider: NSSlider!
 
     // MARK: - Life cycle methods
-    func applicationDidFinishLaunching(aNotification: NSNotification) {
+    func applicationDidFinishLaunching(_ notification: Notification) {
         // Insert code here to initialize your application
         updateView()
     }
 
-    func applicationWillTerminate(aNotification: NSNotification) {
+    func applicationWillTerminate(_ notification: Notification) {
         // Insert code here to tear down your application
     }
 
     // MARK: - Main View
-    @IBAction func verboseButtonTouchUpInside(sender: AnyObject) {
+    @IBAction func verboseButtonTouchUpInside(_ sender: AnyObject) {
         log.verbose("Verbose button tapped")
         log.verbose {
             // add expensive code required only for logging, then return an optional String
@@ -103,7 +103,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         }
     }
 
-    @IBAction func debugButtonTouchUpInside(sender: AnyObject) {
+    @IBAction func debugButtonTouchUpInside(_ sender: AnyObject) {
         log.debug("Debug button tapped")
         log.debug {
             // add expensive code required only for logging, then return an optional String
@@ -111,7 +111,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         }
     }
 
-    @IBAction func infoButtonTouchUpInside(sender: AnyObject) {
+    @IBAction func infoButtonTouchUpInside(_ sender: AnyObject) {
         log.info("Info button tapped")
         log.info {
             // add expensive code required only for logging, then return an optional String
@@ -119,7 +119,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         }
     }
 
-    @IBAction func warningButtonTouchUpInside(sender: AnyObject) {
+    @IBAction func warningButtonTouchUpInside(_ sender: AnyObject) {
         log.warning("Warning button tapped")
         log.warning {
             // add expensive code required only for logging, then return an optional String
@@ -127,7 +127,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         }
     }
 
-    @IBAction func errorButtonTouchUpInside(sender: AnyObject) {
+    @IBAction func errorButtonTouchUpInside(_ sender: AnyObject) {
         log.error("Error button tapped")
         log.error {
             // add expensive code required only for logging, then return an optional String
@@ -135,7 +135,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         }
     }
 
-    @IBAction func severeButtonTouchUpInside(sender: AnyObject) {
+    @IBAction func severeButtonTouchUpInside(_ sender: AnyObject) {
         log.severe("Severe button tapped")
         log.severe {
             // add expensive code required only for logging, then return an optional String
@@ -143,39 +143,39 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         }
     }
 
-    @IBAction func rotateLogFileButtonTouchUpInside(sender: AnyObject) {
-        if let fileLogDestination = log.logDestination("advancedLogger.fileLogDestination") as? XCGFileLogDestination {
+    @IBAction func rotateLogFileButtonTouchUpInside(_ sender: AnyObject) {
+        if let fileLogDestination = log.logDestination(withIdentifier: "advancedLogger.fileLogDestination") as? XCGFileLogDestination {
 
-            let dateHash: String = dateHashFormatter.stringFromDate(NSDate())
-            let archiveFilePath: NSString = ("~/Desktop/XCGLogger_Log_\(dateHash).txt" as NSString).stringByExpandingTildeInPath
+            let dateHash: String = dateHashFormatter.string(from: Date())
+            let archiveFilePath: String = ("~/Desktop/XCGLogger_Log_\(dateHash).txt" as NSString).expandingTildeInPath
 
-            fileLogDestination.rotateFile(archiveFilePath)
+            fileLogDestination.rotateFile(to: archiveFilePath)
         }
     }
 
-    @IBAction func logLevelSliderValueChanged(sender: AnyObject) {
-        var logLevel: XCGLogger.LogLevel = .Verbose
+    @IBAction func logLevelSliderValueChanged(_ sender: AnyObject) {
+        var logLevel: XCGLogger.LogLevel = .verbose
 
         if (0 <= logLevelSlider.floatValue && logLevelSlider.floatValue < 1) {
-            logLevel = .Verbose
+            logLevel = .verbose
         }
         else if (1 <= logLevelSlider.floatValue && logLevelSlider.floatValue < 2) {
-            logLevel = .Debug
+            logLevel = .debug
         }
         else if (2 <= logLevelSlider.floatValue && logLevelSlider.floatValue < 3) {
-            logLevel = .Info
+            logLevel = .info
         }
         else if (3 <= logLevelSlider.floatValue && logLevelSlider.floatValue < 4) {
-            logLevel = .Warning
+            logLevel = .warning
         }
         else if (4 <= logLevelSlider.floatValue && logLevelSlider.floatValue < 5) {
-            logLevel = .Error
+            logLevel = .error
         }
         else if (5 <= logLevelSlider.floatValue && logLevelSlider.floatValue < 6) {
-            logLevel = .Severe
+            logLevel = .severe
         }
         else {
-            logLevel = .None
+            logLevel = .none
         }
 
         log.outputLogLevel = logLevel

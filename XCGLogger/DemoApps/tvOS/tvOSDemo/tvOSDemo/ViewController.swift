@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import XCGLogger
 
 class ViewController: UIViewController {
 
@@ -20,27 +21,27 @@ class ViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
 
-    @IBAction func verboseButtonTapped(sender: UIButton) {
+    @IBAction func verboseButtonTapped(_ sender: UIButton) {
         log.verbose("Verbose tapped on the TV")
     }
 
-    @IBAction func debugButtonTapped(sender: UIButton) {
+    @IBAction func debugButtonTapped(_ sender: UIButton) {
         log.debug("Debug tapped on the TV")
     }
 
-    @IBAction func infoButtonTapped(sender: UIButton) {
+    @IBAction func infoButtonTapped(_ sender: UIButton) {
         log.info("Info tapped on the TV")
     }
 
-    @IBAction func warningButtonTapped(sender: UIButton) {
+    @IBAction func warningButtonTapped(_ sender: UIButton) {
         log.warning("Warning tapped on the TV")
     }
 
-    @IBAction func errorButtonTapped(sender: UIButton) {
+    @IBAction func errorButtonTapped(_ sender: UIButton) {
         log.error("Error tapped on the TV")
     }
 
-    @IBAction func severeButtonTapped(sender: UIButton) {
+    @IBAction func severeButtonTapped(_ sender: UIButton) {
         log.severe("Severe tapped on the TV")
     }
 }
