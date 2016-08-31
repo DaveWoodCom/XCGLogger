@@ -7,8 +7,6 @@
 //  Some rights reserved: https://github.com/DaveWoodCom/XCGLogger/blob/master/LICENSE.txt
 //
 
-import Foundation
-
 // MARK: - DestinationProtocol
 /// Protocol for destination classes to conform to
 public protocol DestinationProtocol: CustomDebugStringConvertible {

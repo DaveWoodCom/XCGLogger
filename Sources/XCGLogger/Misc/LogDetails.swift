@@ -7,8 +7,6 @@
 //  Some rights reserved: https://github.com/DaveWoodCom/XCGLogger/blob/master/LICENSE.txt
 //
 
-import Foundation
-
 // MARK: - LogDetails
 /// Data structure to hold all info about a log message, passed to destination classes
 public struct LogDetails {

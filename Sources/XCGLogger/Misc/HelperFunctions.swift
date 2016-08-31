@@ -7,8 +7,6 @@
 //  Some rights reserved: https://github.com/DaveWoodCom/XCGLogger/blob/master/LICENSE.txt
 //
 
-import Foundation
-
 func extractTypeName(_ someObject: Any) -> String {
     return (someObject is Any.Type) ? "\(someObject)" : "\(type(of: someObject))"
 }

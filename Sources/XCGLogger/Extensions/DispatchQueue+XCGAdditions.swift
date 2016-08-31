@@ -7,8 +7,6 @@
 //  Some rights reserved: https://github.com/DaveWoodCom/XCGLogger/blob/master/LICENSE.txt
 //
 
-import Foundation
-
 /// Extensions to the DispatchQueue class
 extension DispatchQueue {
 
