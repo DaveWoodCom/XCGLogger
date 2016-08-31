@@ -84,7 +84,7 @@ class XCGLoggerTests: XCTestCase {
         let log = XCGLogger(identifier: functionIdentifier())
         let destinationCountAtStart = log.destinations.count
 
-        let additionalConsoleLogger = ConsoleDestination(owner: log, identifier: log.identifier + ".second.console")
+        let additionalConsoleLogger = ConsoleDestination(identifier: log.identifier + ".second.console")
 
         let additionSuccess = log.add(destination: additionalConsoleLogger)
         let destinationCountAfterAddition = log.destinations.count
@@ -100,10 +100,11 @@ class XCGLoggerTests: XCTestCase {
 
         let destinationCountAtStart = log.destinations.count
 
-        log.remove(destinationWithIdentifier: XCGLogger.Constants.baseConsoleDestinationIdentifier)
+        let removeSuccess = log.remove(destinationWithIdentifier: XCGLogger.Constants.baseConsoleDestinationIdentifier)
         let destinationCountAfterRemoval = log.destinations.count
 
         XCTAssert(destinationCountAtStart == (destinationCountAfterRemoval + 1), "Failed to remove destination")
+        XCTAssert(removeSuccess, "Fail: didn't remove destination")
     }
 
     /// Test that we can not add a destination with a duplicate identifier
@@ -112,8 +113,8 @@ class XCGLoggerTests: XCTestCase {
         log.outputLevel = .debug
 
         let testIdentifier = log.identifier + ".testIdentifier"
-        let additionalConsoleLogger = ConsoleDestination(owner: log, identifier: testIdentifier)
-        let additionalConsoleLogger2 = ConsoleDestination(owner: log, identifier: testIdentifier)
+        let additionalConsoleLogger = ConsoleDestination(identifier: testIdentifier)
+        let additionalConsoleLogger2 = ConsoleDestination(identifier: testIdentifier)
 
         let additionSuccess = log.add(destination: additionalConsoleLogger)
         let destinationCountAfterAddition = log.destinations.count
@@ -124,6 +125,28 @@ class XCGLoggerTests: XCTestCase {
         XCTAssert(additionSuccess, "Failed to add additional destination")
         XCTAssert(!additionSuccess2, "Failed to prevent adding additional destination with a duplicate identifier")
         XCTAssert(destinationCountAfterAddition == destinationCountAfterAddition2, "Failed to prevent adding additional destination with a duplicate identifier")
+    }
+
+    /// Test a destination has it's owner set correctly when added to or removed from a logger
+    func test_00052_CheckDestinationOwner() {
+        let log1: XCGLogger = XCGLogger(identifier: functionIdentifier() + ".1")
+        XCTAssert(log1.destinations.count == 1, "Fail: Logger didn't include the correct default destinations")
+
+        let log2: XCGLogger = XCGLogger(identifier: functionIdentifier() + ".2", includeDefaultDestinations: false)
+        XCTAssert(log2.destinations.count == 0, "Fail: Logger included default destinations when it shouldn't have")
+
+        let consoleDestination: ConsoleDestination! = log1.destination(withIdentifier: XCGLogger.Constants.baseConsoleDestinationIdentifier) as? ConsoleDestination
+        XCTAssert(consoleDestination != nil, "Fail: Didn't add our default destination")
+        XCTAssert(consoleDestination.owner === log1, "Fail: default destination did not have the correct owner set")
+
+        log1.remove(destination: consoleDestination)
+        XCTAssert(consoleDestination.owner == nil, "Fail: removed destination didn't have it's owner cleared")
+
+        log1.add(destination: consoleDestination)
+        XCTAssert(consoleDestination.owner === log1, "Fail: added destination didn't have it's owner set correctly")
+
+        log2.add(destination: consoleDestination)
+        XCTAssert(consoleDestination.owner === log2, "Fail: moved destination didn't have it's owner set correctly")
     }
 
     /// Test that closures for a log aren't executed via string interpolation if they aren't needed
@@ -222,7 +245,7 @@ class XCGLoggerTests: XCTestCase {
 
         // We add this destination after the normal log.debug() call above (that's for humans to look at), because
         // there's a chance when the test runs, that we could cross time boundaries (ie, second [or even the year])
-        let testDestination: TestDestination = TestDestination(owner: log, identifier: log.identifier + ".testDestination")
+        let testDestination: TestDestination = TestDestination(identifier: log.identifier + ".testDestination")
         testDestination.showThreadName = false
         testDestination.showLevel = true
         testDestination.showFileName = true
@@ -249,7 +272,7 @@ class XCGLoggerTests: XCTestCase {
         let log: XCGLogger = XCGLogger(identifier: functionIdentifier())
         log.setup(level: .verbose, showThreadName: true, showLevel: true, showFileNames: true, showLineNumbers: true, writeToFile: nil)
 
-        let testDestination: TestDestination = TestDestination(owner: log, identifier: log.identifier + ".testDestination")
+        let testDestination: TestDestination = TestDestination(identifier: log.identifier + ".testDestination")
         testDestination.outputLevel = .verbose
         testDestination.showThreadName = false
         testDestination.showLevel = true
@@ -313,7 +336,7 @@ class XCGLoggerTests: XCTestCase {
         let log: XCGLogger = XCGLogger(identifier: functionIdentifier())
         log.outputLevel = .debug
 
-        let testDestination: TestDestination = TestDestination(owner: log, identifier: log.identifier + ".testDestination")
+        let testDestination: TestDestination = TestDestination(identifier: log.identifier + ".testDestination")
         testDestination.showThreadName = false
         testDestination.showLevel = true
         testDestination.showFileName = true
@@ -397,7 +420,7 @@ class XCGLoggerTests: XCTestCase {
         let log: XCGLogger = XCGLogger(identifier: functionIdentifier())
         log.setup(level: .debug, showThreadName: true, showLevel: true, showFileNames: true, showLineNumbers: true, writeToFile: nil)
 
-        let testDestination: TestDestination = TestDestination(owner: log, identifier: log.identifier + ".testDestination")
+        let testDestination: TestDestination = TestDestination(identifier: log.identifier + ".testDestination")
         testDestination.showThreadName = false
         testDestination.showLevel = true
         testDestination.showFileName = true
@@ -430,7 +453,7 @@ class XCGLoggerTests: XCTestCase {
         let log: XCGLogger = XCGLogger(identifier: functionIdentifier())
         log.setup(level: .debug, showThreadName: true, showLevel: true, showFileNames: true, showLineNumbers: true, writeToFile: nil)
 
-        let testDestination: TestDestination = TestDestination(owner: log, identifier: log.identifier + ".testDestination")
+        let testDestination: TestDestination = TestDestination(identifier: log.identifier + ".testDestination")
         testDestination.showThreadName = false
         testDestination.showLevel = true
         testDestination.showFileName = true
@@ -464,7 +487,7 @@ class XCGLoggerTests: XCTestCase {
     func test_01030_BackgroundLogging() {
         let log: XCGLogger = XCGLogger(identifier: functionIdentifier(), includeDefaultDestinations: false)
 
-        let systemDestination = AppleSystemLogDestination(owner: log, identifier: log.identifier + ".systemDestination")
+        let systemDestination = AppleSystemLogDestination(identifier: log.identifier + ".systemDestination")
         systemDestination.outputLevel = .debug
         systemDestination.showThreadName = true
 
@@ -473,7 +496,7 @@ class XCGLoggerTests: XCTestCase {
         systemDestination.logQueue = DispatchQueue.global(qos: .background)
         log.add(destination: systemDestination)
 
-        let testDestination: TestDestination = TestDestination(owner: log, identifier: log.identifier + ".testDestination")
+        let testDestination: TestDestination = TestDestination(identifier: log.identifier + ".testDestination")
         testDestination.showThreadName = false
         testDestination.showLevel = true
         testDestination.showFileName = true
@@ -501,4 +524,3 @@ class XCGLoggerTests: XCTestCase {
         Thread.sleep(forTimeInterval: 1.0)
     }
 }
-

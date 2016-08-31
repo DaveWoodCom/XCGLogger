@@ -26,7 +26,7 @@ let log: XCGLogger = {
 
 #if USE_NSLOG // Set via Build Settings, under Other Swift Flags
     log.remove(destinationWithIdentifier: XCGLogger.Constants.baseConsoleDestinationIdentifier)
-    log.add(destination: AppleSystemLogDestination(owner: log, identifier: XCGLogger.Constants.systemLogDestinationIdentifier))
+    log.add(destination: AppleSystemLogDestination(identifier: XCGLogger.Constants.systemLogDestinationIdentifier))
     log.logAppDetails()
 #else
     let logPath: URL = appDelegate.cacheDirectory.appendingPathComponent("XCGLogger_Log.txt")

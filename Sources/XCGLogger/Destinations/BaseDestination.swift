@@ -12,13 +12,16 @@
 open class BaseDestination: DestinationProtocol, CustomDebugStringConvertible {
     // MARK: - Properties
     /// Logger that owns the destination object
-    open var owner: XCGLogger
+    open var owner: XCGLogger?
 
     /// Identifier for the destination (should be unique)
     open var identifier: String
 
     /// Log level for this destination
     open var outputLevel: XCGLogger.Level = .debug
+
+    /// Flag whether or not we've logged the app details to this destination
+    open var haveLoggedAppDetails: Bool = false
 
     /// Option: whether or not to output the log identifier
     open var showLogIdentifier: Bool = false
@@ -49,7 +52,7 @@ open class BaseDestination: DestinationProtocol, CustomDebugStringConvertible {
     }
 
     // MARK: - Life Cycle
-    public init(owner: XCGLogger, identifier: String = "") {
+    public init(owner: XCGLogger? = nil, identifier: String = "") {
         self.owner = owner
         self.identifier = identifier
     }
@@ -63,6 +66,8 @@ open class BaseDestination: DestinationProtocol, CustomDebugStringConvertible {
     /// - Returns:  Nothing
     ///
     open func process(logDetails: LogDetails) {
+        guard let owner = owner else { return }
+
         var extendedDetails: String = ""
 
         if showDate {
@@ -125,6 +130,8 @@ open class BaseDestination: DestinationProtocol, CustomDebugStringConvertible {
     /// - Returns:  Nothing
     ///
     open func processInternal(logDetails: LogDetails) {
+        guard let owner = owner else { return }
+
         var extendedDetails: String = ""
 
         if showDate {

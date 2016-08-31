@@ -11,13 +11,16 @@
 /// Protocol for destination classes to conform to
 public protocol DestinationProtocol: CustomDebugStringConvertible {
     /// Logger that owns the destination object
-    var owner: XCGLogger {get set}
+    var owner: XCGLogger? {get set}
 
     /// Identifier for the destination (should be unique)
     var identifier: String {get set}
 
     /// Log level for this destination
     var outputLevel: XCGLogger.Level {get set}
+
+    /// Flag whether or not we've logged the app details to this destination
+    var haveLoggedAppDetails: Bool { get set }
 
     /// Process the log details.
     ///

@@ -29,8 +29,10 @@ open class ConsoleDestination: BaseDestination {
     open override func output(logDetails: LogDetails, message: String) {
 
         let outputClosure = {
+            guard let owner = self.owner else { return }
+
             let adjustedLogMessage: String
-            if let xcodeColor = (self.xcodeColors ?? self.owner.xcodeColors)[logDetails.level], self.owner.xcodeColorsEnabled {
+            if let xcodeColor = (self.xcodeColors ?? owner.xcodeColors)[logDetails.level], owner.xcodeColorsEnabled {
                 adjustedLogMessage = "\(xcodeColor.format())\(message)\(XCGLogger.XcodeColor.reset)"
             }
             else {

@@ -11,6 +11,18 @@
 /// A standard destination that outputs log details to a file
 open class FileDestination: BaseDestination {
     // MARK: - Properties
+    /// Logger that owns the destination object
+    open override var owner: XCGLogger? {
+        didSet {
+            if owner != nil {
+                openFile()
+            }
+            else {
+                closeFile()
+            }
+        }
+    }
+
     /// The dispatch queue to process the log on
     open var logQueue: DispatchQueue? = nil
 
@@ -22,20 +34,18 @@ open class FileDestination: BaseDestination {
     }
 
     /// File handle for the log file
-    private var logFileHandle: FileHandle? = nil
+    internal var logFileHandle: FileHandle? = nil
 
     /// Option: whether or not to append to the log file if it already exists
-    private var shouldAppend: Bool
+    internal var shouldAppend: Bool
 
     /// Option: if appending to the log file, the string to output at the start to mark where the append took place
-    private var appendMarker: String?
+    internal var appendMarker: String?
 
     // MARK: - Life Cycle
-    public init(owner: XCGLogger, writeToFile: Any, identifier: String = "", shouldAppend: Bool = false, appendMarker: String? = "-- ** ** ** --") {
+    public init(owner: XCGLogger? = nil, writeToFile: Any, identifier: String = "", shouldAppend: Bool = false, appendMarker: String? = "-- ** ** ** --") {
         self.shouldAppend = shouldAppend
         self.appendMarker = appendMarker
-
-        super.init(owner: owner, identifier: identifier)
 
         if writeToFile is NSString {
             writeToFileURL = URL(fileURLWithPath: writeToFile as! String)
@@ -47,7 +57,11 @@ open class FileDestination: BaseDestination {
             writeToFileURL = nil
         }
 
-        openFile()
+        super.init(owner: owner, identifier: identifier)
+
+        if owner != nil {
+            openFile()
+        }
     }
 
     deinit {
@@ -63,6 +77,8 @@ open class FileDestination: BaseDestination {
     /// - Returns:  Nothing
     ///
     private func openFile() {
+        guard let owner = owner else { return }
+
         if logFileHandle != nil {
             closeFile()
         }
@@ -91,6 +107,8 @@ open class FileDestination: BaseDestination {
                 logFileHandle = nil
                 return
             }
+
+            owner.logAppDetails(selectedDestination: self)
 
             let logDetails = LogDetails(level: .info, date: Date(), message: "XCGLogger " + (fileExists && shouldAppend ? "appending" : "writing") + " log to: " + writeToFileURL.absoluteString, functionName: "", fileName: "", lineNumber: 0)
             owner._logln(logDetails.message, level: logDetails.level)
@@ -140,17 +158,18 @@ open class FileDestination: BaseDestination {
             guard !fileManager.fileExists(atPath: archiveToFileURL.path) else { return false }
 
             closeFile()
+            haveLoggedAppDetails = false
 
             do {
                 try fileManager.moveItem(atPath: writeToFileURL.path, toPath: archiveToFileURL.path)
             }
             catch let error as NSError {
                 openFile()
-                owner._logln("Unable to rotate file \(writeToFileURL.path) to \(archiveToFileURL.path): \(error.localizedDescription)", level: .error)
+                owner?._logln("Unable to rotate file \(writeToFileURL.path) to \(archiveToFileURL.path): \(error.localizedDescription)", level: .error)
                 return false
             }
 
-            owner._logln("Rotated file \(writeToFileURL.path) to \(archiveToFileURL.path)", level: .info)
+            owner?._logln("Rotated file \(writeToFileURL.path) to \(archiveToFileURL.path)", level: .info)
             openFile()
             return true
         }

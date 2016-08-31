@@ -25,7 +25,7 @@ let log: XCGLogger = {
     ]
 
     // Create a destination for the system console log (via NSLog)
-    let systemLogDestination = AppleSystemLogDestination(owner: log, identifier: "advancedLogger.appleSystemLogDestination")
+    let systemLogDestination = AppleSystemLogDestination(identifier: "advancedLogger.appleSystemLogDestination")
 
     // Optionally set some configuration options
     systemLogDestination.outputLevel = .debug
@@ -42,7 +42,7 @@ let log: XCGLogger = {
 
     // Create a file log destination
     let logPath: String = ("~/Desktop/XCGLogger_Log.txt" as NSString).expandingTildeInPath
-    let fileDestination = FileDestination(owner: log, writeToFile: logPath, identifier: "advancedLogger.fileDestination", shouldAppend: true)
+    let fileDestination = FileDestination(writeToFile: logPath, identifier: "advancedLogger.fileDestination", shouldAppend: true)
 
     // Optionally set some configuration options
     fileDestination.outputLevel = .debug

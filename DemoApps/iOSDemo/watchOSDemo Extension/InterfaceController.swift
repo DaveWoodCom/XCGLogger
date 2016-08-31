@@ -25,7 +25,7 @@ let log: XCGLogger = {
 
     #if USE_NSLOG // Set via Build Settings, under Other Swift Flags
         log.remove(destinationWithIdentifier: XCGLogger.Constants.baseConsoleDestinationIdentifier)
-        log.add(destination: AppleSystemLogDestination(owner: log, identifier: XCGLogger.Constants.systemLogDestinationIdentifier))
+        log.add(destination: AppleSystemLogDestination(identifier: XCGLogger.Constants.systemLogDestinationIdentifier))
         log.logAppDetails()
     #else
         log.setup(level: .debug, showThreadName: true, showLevel: true, showFileNames: true, showLineNumbers: true)

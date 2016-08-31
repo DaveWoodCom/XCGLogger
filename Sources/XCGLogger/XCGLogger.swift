@@ -301,7 +301,7 @@ open class XCGLogger: CustomDebugStringConvertible {
 
         if includeDefaultDestinations {
             // Setup a standard console destination
-            add(destination: ConsoleDestination(owner: self, identifier: XCGLogger.Constants.baseConsoleDestinationIdentifier))
+            add(destination: ConsoleDestination(identifier: XCGLogger.Constants.baseConsoleDestinationIdentifier))
         }
     }
 
@@ -362,7 +362,7 @@ open class XCGLogger: CustomDebugStringConvertible {
 
         if let writeToFile: Any = writeToFile {
             // We've been passed a file to use for logging, set up a file logger
-            let standardFileDestination: FileDestination = FileDestination(owner: self, writeToFile: writeToFile, identifier: XCGLogger.Constants.fileDestinationIdentifier)
+            let standardFileDestination: FileDestination = FileDestination(writeToFile: writeToFile, identifier: XCGLogger.Constants.fileDestinationIdentifier)
 
             standardFileDestination.showLogIdentifier = showLogIdentifier
             standardFileDestination.showFunctionName = showFunctionName
@@ -439,14 +439,10 @@ open class XCGLogger: CustomDebugStringConvertible {
     open func logln(_ level: Level = .debug, functionName: StaticString = #function, fileName: StaticString = #file, lineNumber: Int = #line, closure: () -> Any?) {
         var logDetails: LogDetails!
         for destination in self.destinations {
-            guard destination.isEnabledFor(level: level) else {
-                continue
-            }
+            guard destination.isEnabledFor(level: level) else { continue }
 
             if logDetails == nil {
-                guard let closureResult = closure() else {
-                    break
-                }
+                guard let closureResult = closure() else { break }
 
                 logDetails = LogDetails(level: level, date: Date(), message: String(describing: closureResult), functionName: functionName, fileName: fileName, lineNumber: lineNumber)
             }
@@ -476,9 +472,7 @@ open class XCGLogger: CustomDebugStringConvertible {
     /// - Returns:  Nothing.
     ///
     open func exec(_ level: Level = .debug, closure: () -> () = {}) {
-        guard isEnabledFor(level:level) else {
-            return
-        }
+        guard isEnabledFor(level:level) else { return }
 
         closure()
     }
@@ -515,12 +509,11 @@ open class XCGLogger: CustomDebugStringConvertible {
         logDetails.append(LogDetails(level: .info, date: date, message: processInfo.processName + " " + buildString + "PID: " + String(processInfo.processIdentifier), functionName: "", fileName: "", lineNumber: 0))
         logDetails.append(LogDetails(level: .info, date: date, message: "XCGLogger Version: " + XCGLoggerVersionNumber + " - Level: " + outputLevel.description, functionName: "", fileName: "", lineNumber: 0))
 
-        for destination in (selectedDestination != nil ? [selectedDestination!] : destinations) {
+        for var destination in (selectedDestination != nil ? [selectedDestination!] : destinations) where !destination.haveLoggedAppDetails {
             for logDetail in logDetails {
-                guard destination.isEnabledFor(level:.info) else {
-                    continue
-                }
+                guard destination.isEnabledFor(level:.info) else { continue }
 
+                destination.haveLoggedAppDetails = true
                 destination.processInternal(logDetails: logDetail)
             }
         }
@@ -1192,11 +1185,18 @@ open class XCGLogger: CustomDebugStringConvertible {
     ///     - false:    Failed to add the destination.
     ///
     @discardableResult open func add(destination: DestinationProtocol) -> Bool {
+        var destination = destination
+
         let existingDestination: DestinationProtocol? = self.destination(withIdentifier: destination.identifier)
         if existingDestination != nil {
             return false
         }
 
+        if let previousOwner = destination.owner {
+            previousOwner.remove(destination: destination)
+        }
+
+        destination.owner = self
         destinations.append(destination)
         return true
     }
@@ -1206,10 +1206,22 @@ open class XCGLogger: CustomDebugStringConvertible {
     /// - Parameters:
     ///     - destination:   The destination to remove.
     ///
-    /// - Returns:  Nothing
+    /// - Returns:
+    ///     - true:     Log destination was removed successfully.
+    ///     - false:    Failed to remove the destination.
     ///
-    open func remove(destination: DestinationProtocol) {
-        remove(destinationWithIdentifier: destination.identifier)
+    @discardableResult open func remove(destination: DestinationProtocol) -> Bool {
+        guard destination.owner === self else { return false }
+
+        let existingDestination: DestinationProtocol? = self.destination(withIdentifier: destination.identifier)
+        guard existingDestination != nil else { return false }
+
+        // Make our parameter mutable
+        var destination = destination
+        destination.owner = nil
+
+        destinations = destinations.filter({$0.owner != nil})
+        return true
     }
 
     /// Remove the destination with the specified identifier from the logger.
@@ -1217,10 +1229,13 @@ open class XCGLogger: CustomDebugStringConvertible {
     /// - Parameters:
     ///     - identifier:   The identifier of the destination to remove.
     ///
-    /// - Returns:  Nothing
+    /// - Returns:
+    ///     - true:     Log destination was removed successfully.
+    ///     - false:    Failed to remove the destination.
     ///
-    open func remove(destinationWithIdentifier identifier: String) {
-        destinations = destinations.filter({$0.identifier != identifier})
+    @discardableResult open func remove(destinationWithIdentifier identifier: String) -> Bool {
+        guard let destination = destination(withIdentifier: identifier) else { return false }
+        return remove(destination: destination)
     }
 
     // MARK: - Misc methods
