@@ -69,6 +69,16 @@ class XCGLoggerTests: XCTestCase {
         XCTAssert(instance1.identifier != instance2.identifier, "Fail: same instance is being returned")
     }
 
+    /// Test our default instance starts with the correct default destinations
+    func test_00022_DefaultInstanceDestinations() {
+        let defaultInstance: XCGLogger = XCGLogger.default
+
+        let consoleDestination: ConsoleDestination? = defaultInstance.destination(withIdentifier: XCGLogger.Constants.baseConsoleDestinationIdentifier) as? ConsoleDestination
+
+        XCTAssert(consoleDestination != nil, "Fail: default console destination not attached to our default instance")
+        XCTAssert(defaultInstance.destinations.count == 1, "Fail: Incorrect number of destinations on our default instance")
+    }
+
     /// Test that we can add additonal destinations
     func test_00030_addDestination() {
         let log = XCGLogger(identifier: functionIdentifier())
