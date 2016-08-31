@@ -77,6 +77,9 @@ class XCGLoggerTests: XCTestCase {
 
         XCTAssert(consoleDestination != nil, "Fail: default console destination not attached to our default instance")
         XCTAssert(defaultInstance.destinations.count == 1, "Fail: Incorrect number of destinations on our default instance")
+
+        let log = XCGLogger(identifier: functionIdentifier(), includeDefaultDestinations: false)
+        XCTAssert(log.destinations.count == 0, "Fail: Logger included default destinations when it shouldn't have")
     }
 
     /// Test that we can add additonal destinations
@@ -105,6 +108,9 @@ class XCGLoggerTests: XCTestCase {
 
         XCTAssert(removeSuccess, "Fail: didn't remove destination")
         XCTAssert(destinationCountAtStart == (destinationCountAfterRemoval + 1), "Fail: didn't remove destination")
+
+        let nonExistantDestination: DestinationProtocol? = log.destination(withIdentifier: XCGLogger.Constants.baseConsoleDestinationIdentifier)
+        XCTAssert(nonExistantDestination == nil, "Fail: didn't remove specified destination")
     }
 
     /// Test that we can not add a destination with a duplicate identifier
@@ -147,6 +153,28 @@ class XCGLoggerTests: XCTestCase {
 
         log2.add(destination: consoleDestination)
         XCTAssert(consoleDestination.owner === log2, "Fail: moved destination didn't have it's owner set correctly")
+    }
+
+    /// Test a file destination correctly opens a file
+    func test_00054_FileDestinationOpenedFile() {
+        let log: XCGLogger = XCGLogger(identifier: functionIdentifier())
+
+        let logPath: String = ("/tmp/XCGLogger_Testing.log" as NSString).expandingTildeInPath
+        var fileDestination: FileDestination = FileDestination(writeToFile: logPath, identifier: log.identifier + ".fileDestination.1", shouldAppend: true)
+
+        XCTAssert(fileDestination.owner == nil, "Fail: newly created FileDestination has an owner set when it should be nil")
+        XCTAssert(fileDestination.logFileHandle == nil, "Fail: FileDestination has opened a file before it was assigned to a logger")
+
+        log.add(destination: fileDestination)
+        XCTAssert(fileDestination.owner === log, "Fail: file destination did not have the correct owner set")
+        XCTAssert(fileDestination.logFileHandle != nil, "Fail: FileDestination been assigned to a logger, but no file has been opened")
+
+        log.remove(destination: fileDestination)
+
+        fileDestination = FileDestination(owner: log, writeToFile: logPath, identifier: log.identifier + ".fileDestination.2", shouldAppend: true)
+
+        XCTAssert(fileDestination.owner === log, "Fail: file destination did not have the correct owner set")
+        XCTAssert(fileDestination.logFileHandle != nil, "Fail: FileDestination been assigned to a logger, but no file has been opened")
     }
 
     /// Test that closures for a log aren't executed via string interpolation if they aren't needed
