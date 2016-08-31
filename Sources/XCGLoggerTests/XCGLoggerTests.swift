@@ -89,8 +89,8 @@ class XCGLoggerTests: XCTestCase {
         let additionSuccess = log.add(destination: additionalConsoleLogger)
         let destinationCountAfterAddition = log.destinations.count
 
-        XCTAssert(additionSuccess, "Failed to add additional destination")
-        XCTAssert(destinationCountAtStart == (destinationCountAfterAddition - 1), "Failed to add additional destination")
+        XCTAssert(additionSuccess, "Fail: didn't add additional destination")
+        XCTAssert(destinationCountAtStart == (destinationCountAfterAddition - 1), "Fail: didn't add additional destination")
     }
 
     /// Test we can remove existing destinations
@@ -103,8 +103,8 @@ class XCGLoggerTests: XCTestCase {
         let removeSuccess = log.remove(destinationWithIdentifier: XCGLogger.Constants.baseConsoleDestinationIdentifier)
         let destinationCountAfterRemoval = log.destinations.count
 
-        XCTAssert(destinationCountAtStart == (destinationCountAfterRemoval + 1), "Failed to remove destination")
         XCTAssert(removeSuccess, "Fail: didn't remove destination")
+        XCTAssert(destinationCountAtStart == (destinationCountAfterRemoval + 1), "Fail: didn't remove destination")
     }
 
     /// Test that we can not add a destination with a duplicate identifier
@@ -122,9 +122,9 @@ class XCGLoggerTests: XCTestCase {
         let additionSuccess2 = log.add(destination: additionalConsoleLogger2)
         let destinationCountAfterAddition2 = log.destinations.count
 
-        XCTAssert(additionSuccess, "Failed to add additional destination")
-        XCTAssert(!additionSuccess2, "Failed to prevent adding additional destination with a duplicate identifier")
-        XCTAssert(destinationCountAfterAddition == destinationCountAfterAddition2, "Failed to prevent adding additional destination with a duplicate identifier")
+        XCTAssert(additionSuccess, "Fail: didn't add additional destination")
+        XCTAssert(!additionSuccess2, "Fail: didn't prevent adding additional destination with a duplicate identifier")
+        XCTAssert(destinationCountAfterAddition == destinationCountAfterAddition2, "Fail: didn't prevent adding additional destination with a duplicate identifier")
     }
 
     /// Test a destination has it's owner set correctly when added to or removed from a logger
