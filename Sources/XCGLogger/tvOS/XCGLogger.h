@@ -3,7 +3,7 @@
 //  XCGLogger: https://github.com/DaveWoodCom/XCGLogger
 //
 //  Created by Dave Wood on 2015-09-09.
-//  Copyright (c) 2014 Dave Wood, Cerebral Gardens.
+//  Copyright © 2014 Dave Wood, Cerebral Gardens.
 //  Some rights reserved: https://github.com/DaveWoodCom/XCGLogger/blob/master/LICENSE.txt
 //
 

@@ -27,7 +27,7 @@ let log: XCGLogger = {
         log.add(logDestination: XCGNSLogDestination(owner: log, identifier: XCGLogger.Constants.nslogDestinationIdentifier))
         log.logAppDetails()
     #else
-        log.setup(logLevel: .debug, showThreadName: true, showLogLevel: true, showFileNames: true, showLineNumbers: true)
+        log.setup(level: .debug, showThreadName: true, showLevel: true, showFileNames: true, showLineNumbers: true)
     #endif
 
     return log

@@ -1,9 +1,10 @@
 //
 //  XCGLoggerTests.swift
-//  XCGLoggerTests
+//  XCGLogger: https://github.com/DaveWoodCom/XCGLogger
 //
 //  Created by Dave Wood on 2014-06-09.
-//  Copyright (c) 2014 Cerebral Gardens. All rights reserved.
+//  Copyright © 2014 Dave Wood, Cerebral Gardens.
+//  Some rights reserved: https://github.com/DaveWoodCom/XCGLogger/blob/master/LICENSE.txt
 //
 
 import XCTest
@@ -22,7 +23,7 @@ class XCGLoggerTests: XCTestCase {
     /// - Returns:  A string to use as the base identifier for objects in the test
     ///
     func functionIdentifier(_ functionName: StaticString = #function) -> String {
-        return "com.cerebralgardens.xcglogger.\(functionName)"
+        return "\(XCGLogger.Constants.baseIdentifier).\(functionName)"
     }
 
     /// Set up prior to each test
@@ -68,57 +69,57 @@ class XCGLoggerTests: XCTestCase {
         XCTAssert(instance1.identifier != instance2.identifier, "Fail: same instance is being returned")
     }
 
-    /// Test that we can add additonal log destinations
-    func test_00030_addLogDestination() {
+    /// Test that we can add additonal destinations
+    func test_00030_addDestination() {
         let log = XCGLogger(identifier: functionIdentifier())
-        let logDestinationCountAtStart = log.logDestinations.count
+        let destinationCountAtStart = log.destinations.count
 
-        let additionalConsoleLogger = XCGConsoleLogDestination(owner: log, identifier: log.identifier + ".second.console")
+        let additionalConsoleLogger = ConsoleDestination(owner: log, identifier: log.identifier + ".second.console")
 
-        let additionSuccess = log.add(logDestination: additionalConsoleLogger)
-        let logDestinationCountAfterAddition = log.logDestinations.count
+        let additionSuccess = log.add(destination: additionalConsoleLogger)
+        let destinationCountAfterAddition = log.destinations.count
 
-        XCTAssert(additionSuccess, "Failed to add additional log destination")
-        XCTAssert(logDestinationCountAtStart == (logDestinationCountAfterAddition - 1), "Failed to add additional log destination")
+        XCTAssert(additionSuccess, "Failed to add additional destination")
+        XCTAssert(destinationCountAtStart == (destinationCountAfterAddition - 1), "Failed to add additional destination")
     }
 
-    /// Test we can remove existing log destinations
-    func test_00040_RemoveLogDestination() {
+    /// Test we can remove existing destinations
+    func test_00040_RemoveDestination() {
         let log: XCGLogger = XCGLogger(identifier: functionIdentifier())
-        log.outputLogLevel = .debug
+        log.outputLevel = .debug
 
-        let logDestinationCountAtStart = log.logDestinations.count
+        let destinationCountAtStart = log.destinations.count
 
-        log.remove(logDestinationWithIdentifier: XCGLogger.Constants.baseConsoleLogDestinationIdentifier)
-        let logDestinationCountAfterRemoval = log.logDestinations.count
+        log.remove(destinationWithIdentifier: XCGLogger.Constants.baseConsoleDestinationIdentifier)
+        let destinationCountAfterRemoval = log.destinations.count
 
-        XCTAssert(logDestinationCountAtStart == (logDestinationCountAfterRemoval + 1), "Failed to remove log destination")
+        XCTAssert(destinationCountAtStart == (destinationCountAfterRemoval + 1), "Failed to remove destination")
     }
 
-    /// Test that we can not add a log destination with a duplicate identifier
-    func test_00050_DenyAdditionOfLogDestinationWithDuplicateIdentifier() {
+    /// Test that we can not add a destination with a duplicate identifier
+    func test_00050_DenyAdditionOfDestinationWithDuplicateIdentifier() {
         let log: XCGLogger = XCGLogger(identifier: functionIdentifier())
-        log.outputLogLevel = .debug
+        log.outputLevel = .debug
 
         let testIdentifier = log.identifier + ".testIdentifier"
-        let additionalConsoleLogger = XCGConsoleLogDestination(owner: log, identifier: testIdentifier)
-        let additionalConsoleLogger2 = XCGConsoleLogDestination(owner: log, identifier: testIdentifier)
+        let additionalConsoleLogger = ConsoleDestination(owner: log, identifier: testIdentifier)
+        let additionalConsoleLogger2 = ConsoleDestination(owner: log, identifier: testIdentifier)
 
-        let additionSuccess = log.add(logDestination: additionalConsoleLogger)
-        let logDestinationCountAfterAddition = log.logDestinations.count
+        let additionSuccess = log.add(destination: additionalConsoleLogger)
+        let destinationCountAfterAddition = log.destinations.count
 
-        let additionSuccess2 = log.add(logDestination: additionalConsoleLogger2)
-        let logDestinationCountAfterAddition2 = log.logDestinations.count
+        let additionSuccess2 = log.add(destination: additionalConsoleLogger2)
+        let destinationCountAfterAddition2 = log.destinations.count
 
-        XCTAssert(additionSuccess, "Failed to add additional log destination")
-        XCTAssert(!additionSuccess2, "Failed to prevent adding additional log destination with a duplicate identifier")
-        XCTAssert(logDestinationCountAfterAddition == logDestinationCountAfterAddition2, "Failed to prevent adding additional log destination with a duplicate identifier")
+        XCTAssert(additionSuccess, "Failed to add additional destination")
+        XCTAssert(!additionSuccess2, "Failed to prevent adding additional destination with a duplicate identifier")
+        XCTAssert(destinationCountAfterAddition == destinationCountAfterAddition2, "Failed to prevent adding additional destination with a duplicate identifier")
     }
 
     /// Test that closures for a log aren't executed via string interpolation if they aren't needed
     func test_00060_AvoidStringInterpolationWithAutoclosure() {
         let log: XCGLogger = XCGLogger(identifier: functionIdentifier())
-        log.outputLogLevel = .debug
+        log.outputLevel = .debug
 
         class ObjectWithExpensiveDescription: CustomStringConvertible {
             var descriptionInvoked = false
@@ -138,7 +139,7 @@ class XCGLoggerTests: XCTestCase {
     /// Test that closures for a log execute when required
     func test_00070_ExecExecutes() {
         let log: XCGLogger = XCGLogger(identifier: functionIdentifier())
-        log.outputLogLevel = .debug
+        log.outputLevel = .debug
 
         var numberOfTimes: Int = 0
         log.debug {
@@ -153,7 +154,7 @@ class XCGLoggerTests: XCTestCase {
     /// Test that closures execute exactly once, even when being logged to multiple destinations, and even if they return nil
     func test_00080_ExecExecutesExactlyOnceWithNilReturnAndMultipleDestinations() {
         let log: XCGLogger = XCGLogger(identifier: functionIdentifier())
-        log.setup(logLevel: .debug, showLogLevel: true, showFileNames: true, showLineNumbers: true, writeToFile: "/tmp/test.log")
+        log.setup(level: .debug, showLevel: true, showFileNames: true, showLineNumbers: true, writeToFile: "/tmp/test.log")
 
         var numberOfTimes: Int = 0
         log.debug {
@@ -168,7 +169,7 @@ class XCGLoggerTests: XCTestCase {
     /// Test that closures for a log aren't executed if they aren't needed
     func test_00090_ExecDoesntExecute() {
         let log: XCGLogger = XCGLogger(identifier: functionIdentifier())
-        log.outputLogLevel = .error
+        log.outputLevel = .error
 
         var numberOfTimes: Int = 0
         log.debug {
@@ -176,7 +177,7 @@ class XCGLoggerTests: XCTestCase {
             return "executed closure incorrectly"
         }
 
-        log.outputLogLevel = .debug
+        log.outputLevel = .debug
         log.debug("executed: \(numberOfTimes) time(s)")
         XCTAssert(numberOfTimes == 0, "Fail: Didn't execute the closure when it should have")
     }
@@ -194,7 +195,7 @@ class XCGLoggerTests: XCTestCase {
     /// Test our custom date formatter works
     func test_00110_CustomDateFormatter() {
         let log: XCGLogger = XCGLogger(identifier: functionIdentifier())
-        log.outputLogLevel = .debug
+        log.outputLevel = .debug
 
         let defaultDateFormatter = log.dateFormatter
         let alternateDateFormat = "MM/dd/yyyy h:mma"
@@ -211,134 +212,134 @@ class XCGLoggerTests: XCTestCase {
 
         // We add this destination after the normal log.debug() call above (that's for humans to look at), because
         // there's a chance when the test runs, that we could cross time boundaries (ie, second [or even the year])
-        let testLogDestination: XCGTestLogDestination = XCGTestLogDestination(owner: log, identifier: log.identifier + ".testLogDestination")
-        testLogDestination.showThreadName = false
-        testLogDestination.showLogLevel = true
-        testLogDestination.showFileName = true
-        testLogDestination.showLineNumber = false
-        testLogDestination.showDate = true
-        log.add(logDestination: testLogDestination)
+        let testDestination: TestDestination = TestDestination(owner: log, identifier: log.identifier + ".testDestination")
+        testDestination.showThreadName = false
+        testDestination.showLevel = true
+        testDestination.showFileName = true
+        testDestination.showLineNumber = false
+        testDestination.showDate = true
+        log.add(destination: testDestination)
 
         // We force the date for this part of the test to ensure a change of date as the test runs doesn't break the test
         let knownDate = Date(timeIntervalSince1970: 0)
         let message = "Testing date format output matches what we expect"
-        testLogDestination.add(expectedLogMessage: "\(alternateDateFormatter.string(from: knownDate)) [\(XCGLogger.LogLevel.debug)] [\(filename)] \(#function) > \(message)")
+        testDestination.add(expectedLogMessage: "\(alternateDateFormatter.string(from: knownDate)) [\(XCGLogger.Level.debug)] [\(filename)] \(#function) > \(message)")
 
-        XCTAssert(testLogDestination.remainingNumberOfExpectedLogMessages == 1, "Fail: Didn't correctly load all of the expected log messages")
+        XCTAssert(testDestination.remainingNumberOfExpectedLogMessages == 1, "Fail: Didn't correctly load all of the expected log messages")
 
-        let knownLogDetails = XCGLogDetails(logLevel: .debug, date: knownDate, logMessage: message, functionName: #function, fileName: #file, lineNumber: #line)
-        testLogDestination.process(logDetails: knownLogDetails)
+        let knownLogDetails = LogDetails(level: .debug, date: knownDate, message: message, functionName: #function, fileName: #file, lineNumber: #line)
+        testDestination.process(logDetails: knownLogDetails)
 
-        XCTAssert(testLogDestination.remainingNumberOfExpectedLogMessages == 0, "Fail: Didn't receive all expected log lines")
-        XCTAssert(testLogDestination.numberOfUnexpectedLogMessages == 0, "Fail: Received an unexpected log line")
+        XCTAssert(testDestination.remainingNumberOfExpectedLogMessages == 0, "Fail: Didn't receive all expected log lines")
+        XCTAssert(testDestination.numberOfUnexpectedLogMessages == 0, "Fail: Received an unexpected log line")
     }
 
     /// Test that we can log a variety of different object types
     func test_00120_VariousParameters() {
         let log: XCGLogger = XCGLogger(identifier: functionIdentifier())
-        log.setup(logLevel: .verbose, showThreadName: true, showLogLevel: true, showFileNames: true, showLineNumbers: true, writeToFile: nil)
+        log.setup(level: .verbose, showThreadName: true, showLevel: true, showFileNames: true, showLineNumbers: true, writeToFile: nil)
 
-        let testLogDestination: XCGTestLogDestination = XCGTestLogDestination(owner: log, identifier: log.identifier + ".testLogDestination")
-        testLogDestination.outputLogLevel = .verbose
-        testLogDestination.showThreadName = false
-        testLogDestination.showLogLevel = true
-        testLogDestination.showFileName = true
-        testLogDestination.showLineNumber = false
-        testLogDestination.showDate = false
-        log.add(logDestination: testLogDestination)
+        let testDestination: TestDestination = TestDestination(owner: log, identifier: log.identifier + ".testDestination")
+        testDestination.outputLevel = .verbose
+        testDestination.showThreadName = false
+        testDestination.showLevel = true
+        testDestination.showFileName = true
+        testDestination.showLineNumber = false
+        testDestination.showDate = false
+        log.add(destination: testDestination)
 
-        testLogDestination.add(expectedLogMessage: "[\(XCGLogger.LogLevel.info)] [\(filename)] \(#function) > testVariousParameters starting")
-        XCTAssert(testLogDestination.remainingNumberOfExpectedLogMessages == 1, "Fail: Didn't correctly load all of the expected log messages")
+        testDestination.add(expectedLogMessage: "[\(XCGLogger.Level.info)] [\(filename)] \(#function) > testVariousParameters starting")
+        XCTAssert(testDestination.remainingNumberOfExpectedLogMessages == 1, "Fail: Didn't correctly load all of the expected log messages")
         log.info("testVariousParameters starting")
-        XCTAssert(testLogDestination.remainingNumberOfExpectedLogMessages == 0, "Fail: Didn't receive all expected log lines")
-        XCTAssert(testLogDestination.numberOfUnexpectedLogMessages == 0, "Fail: Received an unexpected log line")
+        XCTAssert(testDestination.remainingNumberOfExpectedLogMessages == 0, "Fail: Didn't receive all expected log lines")
+        XCTAssert(testDestination.numberOfUnexpectedLogMessages == 0, "Fail: Received an unexpected log line")
 
-        testLogDestination.add(expectedLogMessage: "[\(XCGLogger.LogLevel.verbose)] [\(filename)] \(#function) > ")
-        XCTAssert(testLogDestination.remainingNumberOfExpectedLogMessages == 1, "Fail: Didn't correctly load all of the expected log messages")
+        testDestination.add(expectedLogMessage: "[\(XCGLogger.Level.verbose)] [\(filename)] \(#function) > ")
+        XCTAssert(testDestination.remainingNumberOfExpectedLogMessages == 1, "Fail: Didn't correctly load all of the expected log messages")
         log.verbose()
-        XCTAssert(testLogDestination.remainingNumberOfExpectedLogMessages == 0, "Fail: Didn't receive all expected log lines")
-        XCTAssert(testLogDestination.numberOfUnexpectedLogMessages == 0, "Fail: Received an unexpected log line")
+        XCTAssert(testDestination.remainingNumberOfExpectedLogMessages == 0, "Fail: Didn't receive all expected log lines")
+        XCTAssert(testDestination.numberOfUnexpectedLogMessages == 0, "Fail: Received an unexpected log line")
 
         // Should not log anything, so there are no expected log messages
         log.verbose { return nil }
-        XCTAssert(testLogDestination.remainingNumberOfExpectedLogMessages == 0, "Fail: Didn't receive all expected log lines")
-        XCTAssert(testLogDestination.numberOfUnexpectedLogMessages == 0, "Fail: Received an unexpected log line")
+        XCTAssert(testDestination.remainingNumberOfExpectedLogMessages == 0, "Fail: Didn't receive all expected log lines")
+        XCTAssert(testDestination.numberOfUnexpectedLogMessages == 0, "Fail: Received an unexpected log line")
 
-        testLogDestination.add(expectedLogMessage: "[\(XCGLogger.LogLevel.debug)] [\(filename)] \(#function) > 1.2")
-        XCTAssert(testLogDestination.remainingNumberOfExpectedLogMessages == 1, "Fail: Didn't correctly load all of the expected log messages")
+        testDestination.add(expectedLogMessage: "[\(XCGLogger.Level.debug)] [\(filename)] \(#function) > 1.2")
+        XCTAssert(testDestination.remainingNumberOfExpectedLogMessages == 1, "Fail: Didn't correctly load all of the expected log messages")
         log.debug(1.2)
-        XCTAssert(testLogDestination.remainingNumberOfExpectedLogMessages == 0, "Fail: Didn't receive all expected log lines")
-        XCTAssert(testLogDestination.numberOfUnexpectedLogMessages == 0, "Fail: Received an unexpected log line")
+        XCTAssert(testDestination.remainingNumberOfExpectedLogMessages == 0, "Fail: Didn't receive all expected log lines")
+        XCTAssert(testDestination.numberOfUnexpectedLogMessages == 0, "Fail: Received an unexpected log line")
 
-        testLogDestination.add(expectedLogMessage: "[\(XCGLogger.LogLevel.info)] [\(filename)] \(#function) > true")
-        XCTAssert(testLogDestination.remainingNumberOfExpectedLogMessages == 1, "Fail: Didn't correctly load all of the expected log messages")
+        testDestination.add(expectedLogMessage: "[\(XCGLogger.Level.info)] [\(filename)] \(#function) > true")
+        XCTAssert(testDestination.remainingNumberOfExpectedLogMessages == 1, "Fail: Didn't correctly load all of the expected log messages")
         log.info(true)
-        XCTAssert(testLogDestination.remainingNumberOfExpectedLogMessages == 0, "Fail: Didn't receive all expected log lines")
-        XCTAssert(testLogDestination.numberOfUnexpectedLogMessages == 0, "Fail: Received an unexpected log line")
+        XCTAssert(testDestination.remainingNumberOfExpectedLogMessages == 0, "Fail: Didn't receive all expected log lines")
+        XCTAssert(testDestination.numberOfUnexpectedLogMessages == 0, "Fail: Received an unexpected log line")
 
-        testLogDestination.add(expectedLogMessage: "[\(XCGLogger.LogLevel.warning)] [\(filename)] \(#function) > [\"a\", \"b\", \"c\"]")
-        XCTAssert(testLogDestination.remainingNumberOfExpectedLogMessages == 1, "Fail: Didn't correctly load all of the expected log messages")
+        testDestination.add(expectedLogMessage: "[\(XCGLogger.Level.warning)] [\(filename)] \(#function) > [\"a\", \"b\", \"c\"]")
+        XCTAssert(testDestination.remainingNumberOfExpectedLogMessages == 1, "Fail: Didn't correctly load all of the expected log messages")
         log.warning(["a", "b", "c"])
-        XCTAssert(testLogDestination.remainingNumberOfExpectedLogMessages == 0, "Fail: Didn't receive all expected log lines")
-        XCTAssert(testLogDestination.numberOfUnexpectedLogMessages == 0, "Fail: Received an unexpected log line")
+        XCTAssert(testDestination.remainingNumberOfExpectedLogMessages == 0, "Fail: Didn't receive all expected log lines")
+        XCTAssert(testDestination.numberOfUnexpectedLogMessages == 0, "Fail: Received an unexpected log line")
 
         let knownDate = Date(timeIntervalSince1970: 0)
-        testLogDestination.add(expectedLogMessage: "[\(XCGLogger.LogLevel.error)] [\(filename)] \(#function) > \(knownDate)")
-        XCTAssert(testLogDestination.remainingNumberOfExpectedLogMessages == 1, "Fail: Didn't correctly load all of the expected log messages")
+        testDestination.add(expectedLogMessage: "[\(XCGLogger.Level.error)] [\(filename)] \(#function) > \(knownDate)")
+        XCTAssert(testDestination.remainingNumberOfExpectedLogMessages == 1, "Fail: Didn't correctly load all of the expected log messages")
         log.error { return knownDate }
-        XCTAssert(testLogDestination.remainingNumberOfExpectedLogMessages == 0, "Fail: Didn't receive all expected log lines")
-        XCTAssert(testLogDestination.numberOfUnexpectedLogMessages == 0, "Fail: Received an unexpected log line")
+        XCTAssert(testDestination.remainingNumberOfExpectedLogMessages == 0, "Fail: Didn't receive all expected log lines")
+        XCTAssert(testDestination.numberOfUnexpectedLogMessages == 0, "Fail: Received an unexpected log line")
 
         let optionalString: String? = "text"
-        testLogDestination.add(expectedLogMessage: "[\(XCGLogger.LogLevel.severe)] [\(filename)] \(#function) > \(optionalString ?? "")")
-        XCTAssert(testLogDestination.remainingNumberOfExpectedLogMessages == 1, "Fail: Didn't correctly load all of the expected log messages")
+        testDestination.add(expectedLogMessage: "[\(XCGLogger.Level.severe)] [\(filename)] \(#function) > \(optionalString ?? "")")
+        XCTAssert(testDestination.remainingNumberOfExpectedLogMessages == 1, "Fail: Didn't correctly load all of the expected log messages")
         log.severe(optionalString)
-        XCTAssert(testLogDestination.remainingNumberOfExpectedLogMessages == 0, "Fail: Didn't receive all expected log lines")
-        XCTAssert(testLogDestination.numberOfUnexpectedLogMessages == 0, "Fail: Received an unexpected log line")
+        XCTAssert(testDestination.remainingNumberOfExpectedLogMessages == 0, "Fail: Didn't receive all expected log lines")
+        XCTAssert(testDestination.numberOfUnexpectedLogMessages == 0, "Fail: Received an unexpected log line")
     }
 
     /// Test our noMessageClosure works as expected
     func test_00130_NoMessageClosure() {
         let log: XCGLogger = XCGLogger(identifier: functionIdentifier())
-        log.outputLogLevel = .debug
+        log.outputLevel = .debug
 
-        let testLogDestination: XCGTestLogDestination = XCGTestLogDestination(owner: log, identifier: log.identifier + ".testLogDestination")
-        testLogDestination.showThreadName = false
-        testLogDestination.showLogLevel = true
-        testLogDestination.showFileName = true
-        testLogDestination.showLineNumber = false
-        testLogDestination.showDate = false
-        log.add(logDestination: testLogDestination)
+        let testDestination: TestDestination = TestDestination(owner: log, identifier: log.identifier + ".testDestination")
+        testDestination.showThreadName = false
+        testDestination.showLevel = true
+        testDestination.showFileName = true
+        testDestination.showLineNumber = false
+        testDestination.showDate = false
+        log.add(destination: testDestination)
 
         let checkDefault = String(describing: log.noMessageClosure() ?? "__unexpected__")
         XCTAssert(checkDefault == "", "Fail: Default noMessageClosure doesn't return expected value")
 
-        testLogDestination.add(expectedLogMessage: "[\(XCGLogger.LogLevel.debug)] [\(filename)] \(#function) > ")
-        XCTAssert(testLogDestination.remainingNumberOfExpectedLogMessages == 1, "Fail: Didn't correctly load all of the expected log messages")
+        testDestination.add(expectedLogMessage: "[\(XCGLogger.Level.debug)] [\(filename)] \(#function) > ")
+        XCTAssert(testDestination.remainingNumberOfExpectedLogMessages == 1, "Fail: Didn't correctly load all of the expected log messages")
         log.debug()
-        XCTAssert(testLogDestination.remainingNumberOfExpectedLogMessages == 0, "Fail: Didn't receive all expected log lines")
-        XCTAssert(testLogDestination.numberOfUnexpectedLogMessages == 0, "Fail: Received an unexpected log line")
+        XCTAssert(testDestination.remainingNumberOfExpectedLogMessages == 0, "Fail: Didn't receive all expected log lines")
+        XCTAssert(testDestination.numberOfUnexpectedLogMessages == 0, "Fail: Received an unexpected log line")
 
         log.noMessageClosure = { return "***" }
-        testLogDestination.add(expectedLogMessage: "[\(XCGLogger.LogLevel.debug)] [\(filename)] \(#function) > ***")
-        XCTAssert(testLogDestination.remainingNumberOfExpectedLogMessages == 1, "Fail: Didn't correctly load all of the expected log messages")
+        testDestination.add(expectedLogMessage: "[\(XCGLogger.Level.debug)] [\(filename)] \(#function) > ***")
+        XCTAssert(testDestination.remainingNumberOfExpectedLogMessages == 1, "Fail: Didn't correctly load all of the expected log messages")
         log.debug()
-        XCTAssert(testLogDestination.remainingNumberOfExpectedLogMessages == 0, "Fail: Didn't receive all expected log lines")
-        XCTAssert(testLogDestination.numberOfUnexpectedLogMessages == 0, "Fail: Received an unexpected log line")
+        XCTAssert(testDestination.remainingNumberOfExpectedLogMessages == 0, "Fail: Didn't receive all expected log lines")
+        XCTAssert(testDestination.numberOfUnexpectedLogMessages == 0, "Fail: Received an unexpected log line")
 
         let knownDate = Date(timeIntervalSince1970: 0)
         log.noMessageClosure = { return knownDate }
-        testLogDestination.add(expectedLogMessage: "[\(XCGLogger.LogLevel.debug)] [\(filename)] \(#function) > \(knownDate)")
-        XCTAssert(testLogDestination.remainingNumberOfExpectedLogMessages == 1, "Fail: Didn't correctly load all of the expected log messages")
+        testDestination.add(expectedLogMessage: "[\(XCGLogger.Level.debug)] [\(filename)] \(#function) > \(knownDate)")
+        XCTAssert(testDestination.remainingNumberOfExpectedLogMessages == 1, "Fail: Didn't correctly load all of the expected log messages")
         log.debug()
-        XCTAssert(testLogDestination.remainingNumberOfExpectedLogMessages == 0, "Fail: Didn't receive all expected log lines")
-        XCTAssert(testLogDestination.numberOfUnexpectedLogMessages == 0, "Fail: Received an unexpected log line")
+        XCTAssert(testDestination.remainingNumberOfExpectedLogMessages == 0, "Fail: Didn't receive all expected log lines")
+        XCTAssert(testDestination.numberOfUnexpectedLogMessages == 0, "Fail: Received an unexpected log line")
 
         log.noMessageClosure = { return nil }
         // Should not log anything, so there are no expected log messages
         log.debug()
-        XCTAssert(testLogDestination.remainingNumberOfExpectedLogMessages == 0, "Fail: Didn't receive all expected log lines")
-        XCTAssert(testLogDestination.numberOfUnexpectedLogMessages == 0, "Fail: Received an unexpected log line")
+        XCTAssert(testDestination.remainingNumberOfExpectedLogMessages == 0, "Fail: Didn't receive all expected log lines")
+        XCTAssert(testDestination.numberOfUnexpectedLogMessages == 0, "Fail: Received an unexpected log line")
     }
 
     func test_00140_QueueName() {
@@ -359,26 +360,48 @@ class XCGLoggerTests: XCTestCase {
         XCTAssert(labelDirectlyRead == labelExtracted!, "Fail: Didn't get the correct queue label")
     }
 
+    func test_00150_ExtractTypeName() {
+        let log: XCGLogger = XCGLogger(identifier: functionIdentifier())
+        log.outputLevel = .debug
+
+        let className: String = extractTypeName(log)
+        let stringName: String = extractTypeName(className)
+        let intName: String = extractTypeName(4)
+
+        let optionalString: String? = nil
+        let optionalName: String = extractTypeName(optionalString)
+
+        log.debug("className: \(className)")
+        log.debug("stringName: \(stringName)")
+        log.debug("intName: \(intName)")
+        log.debug("optionalName: \(optionalName)")
+
+        XCTAssert(className == "XCGLogger", "Fail: Didn't extract the correct class name")
+        XCTAssert(stringName == "String", "Fail: Didn't extract the correct class name")
+        XCTAssert(intName == "Int", "Fail: Didn't extract the correct class name")
+        XCTAssert(optionalName == "Optional<String>", "Fail: Didn't extract the correct class name")
+    }
+
     /// Test logging works correctly when logs are generated from multiple threads
     func test_01010_MultiThreaded() {
         let log: XCGLogger = XCGLogger(identifier: functionIdentifier())
-        log.setup(logLevel: .debug, showThreadName: true, showLogLevel: true, showFileNames: true, showLineNumbers: true, writeToFile: nil)
+        log.setup(level: .debug, showThreadName: true, showLevel: true, showFileNames: true, showLineNumbers: true, writeToFile: nil)
 
-        let testLogDestination: XCGTestLogDestination = XCGTestLogDestination(owner: log, identifier: log.identifier + ".testLogDestination")
-        testLogDestination.showThreadName = false
-        testLogDestination.showLogLevel = true
-        testLogDestination.showFileName = true
-        testLogDestination.showLineNumber = false
-        testLogDestination.showDate = false
-        testLogDestination.logQueue = DispatchQueue(label: log.identifier + ".serialQueue")
-        log.add(logDestination: testLogDestination)
+        let testDestination: TestDestination = TestDestination(owner: log, identifier: log.identifier + ".testDestination")
+        testDestination.showThreadName = false
+        testDestination.showLevel = true
+        testDestination.showFileName = true
+        testDestination.showLineNumber = false
+        testDestination.showDate = false
+        testDestination.logQueue = DispatchQueue(label: log.identifier + ".serialQueue")
+        log.add(destination: testDestination)
 
         let linesToLog = ["One", "Two", "Three", "Four", "Five", "Six", "Seven", "Eight", "Nine", "Ten"]
         for lineToLog in linesToLog {
-            testLogDestination.add(expectedLogMessage: "[\(XCGLogger.LogLevel.debug)] [\(filename)] \(#function) > \(lineToLog)")
+            testDestination.add(expectedLogMessage: "[\(XCGLogger.Level.debug)] [\(filename)] \(#function) > \(lineToLog)")
         }
 
-        XCTAssert(testLogDestination.remainingNumberOfExpectedLogMessages == linesToLog.count, "Fail: Didn't correctly load all of the expected log messages")
+        XCTAssert(testDestination.remainingNumberOfExpectedLogMessages == linesToLog.count, "Fail: Didn't correctly load all of the expected log messages")
 
         let myConcurrentQueue = DispatchQueue(label: log.identifier + ".concurrentQueue", attributes: .concurrent)
         // TODO: Switch to DispatchQueue.apply() when/if it is implemented in Swift 3.0
@@ -388,30 +411,30 @@ class XCGLoggerTests: XCTestCase {
             log.debug(linesToLog[index])
         })
 
-        XCTAssert(testLogDestination.remainingNumberOfExpectedLogMessages == 0, "Fail: Didn't receive all expected log lines")
-        XCTAssert(testLogDestination.numberOfUnexpectedLogMessages == 0, "Fail: Received an unexpected log line")
+        XCTAssert(testDestination.remainingNumberOfExpectedLogMessages == 0, "Fail: Didn't receive all expected log lines")
+        XCTAssert(testDestination.numberOfUnexpectedLogMessages == 0, "Fail: Received an unexpected log line")
     }
 
     /// Test logging with closures works correctly when generated from multiple threads
     func test_01020_MultiThreaded2() {
         let log: XCGLogger = XCGLogger(identifier: functionIdentifier())
-        log.setup(logLevel: .debug, showThreadName: true, showLogLevel: true, showFileNames: true, showLineNumbers: true, writeToFile: nil)
+        log.setup(level: .debug, showThreadName: true, showLevel: true, showFileNames: true, showLineNumbers: true, writeToFile: nil)
 
-        let testLogDestination: XCGTestLogDestination = XCGTestLogDestination(owner: log, identifier: log.identifier + ".testLogDestination")
-        testLogDestination.showThreadName = false
-        testLogDestination.showLogLevel = true
-        testLogDestination.showFileName = true
-        testLogDestination.showLineNumber = false
-        testLogDestination.showDate = false
-        testLogDestination.logQueue = DispatchQueue(label: log.identifier + ".serialQueue")
-        log.add(logDestination: testLogDestination)
+        let testDestination: TestDestination = TestDestination(owner: log, identifier: log.identifier + ".testDestination")
+        testDestination.showThreadName = false
+        testDestination.showLevel = true
+        testDestination.showFileName = true
+        testDestination.showLineNumber = false
+        testDestination.showDate = false
+        testDestination.logQueue = DispatchQueue(label: log.identifier + ".serialQueue")
+        log.add(destination: testDestination)
 
         let linesToLog = ["One", "Two", "Three", "Four", "Five", "Six", "Seven", "Eight", "Nine", "Ten"]
         for lineToLog in linesToLog {
-            testLogDestination.add(expectedLogMessage: "[\(XCGLogger.LogLevel.debug)] [\(filename)] \(#function) > \(lineToLog)")
+            testDestination.add(expectedLogMessage: "[\(XCGLogger.Level.debug)] [\(filename)] \(#function) > \(lineToLog)")
         }
 
-        XCTAssert(testLogDestination.remainingNumberOfExpectedLogMessages == linesToLog.count, "Fail: Didn't correctly load all of the expected log messages")
+        XCTAssert(testDestination.remainingNumberOfExpectedLogMessages == linesToLog.count, "Fail: Didn't correctly load all of the expected log messages")
 
         let myConcurrentQueue = DispatchQueue(label: log.identifier + ".concurrentQueue", attributes: .concurrent)
         // TODO: Switch to DispatchQueue.apply() when/if it is implemented in Swift 3.0
@@ -423,44 +446,44 @@ class XCGLoggerTests: XCTestCase {
             }
         })
 
-        XCTAssert(testLogDestination.remainingNumberOfExpectedLogMessages == 0, "Fail: Didn't receive all expected log lines")
-        XCTAssert(testLogDestination.numberOfUnexpectedLogMessages == 0, "Fail: Received an unexpected log line")
+        XCTAssert(testDestination.remainingNumberOfExpectedLogMessages == 0, "Fail: Didn't receive all expected log lines")
+        XCTAssert(testDestination.numberOfUnexpectedLogMessages == 0, "Fail: Received an unexpected log line")
     }
 
     /// Test that our background processing works
     func test_01030_BackgroundLogging() {
         let log: XCGLogger = XCGLogger(identifier: functionIdentifier(), includeDefaultDestinations: false)
 
-        let systemLogDestination = XCGNSLogDestination(owner: log, identifier: log.identifier + ".systemLogDestination")
-        systemLogDestination.outputLogLevel = .debug
-        systemLogDestination.showThreadName = true
+        let systemDestination = AppleSystemLogDestination(owner: log, identifier: log.identifier + ".systemDestination")
+        systemDestination.outputLevel = .debug
+        systemDestination.showThreadName = true
 
         // Note: The thread name included in the log message should be "main" even though the log is processed in a background thread. This is because
         // it uses the thread name of the thread the log function is called in, not the thread used to do the output.
-        systemLogDestination.logQueue = DispatchQueue.global(qos: .background)
-        log.add(logDestination: systemLogDestination)
+        systemDestination.logQueue = DispatchQueue.global(qos: .background)
+        log.add(destination: systemDestination)
 
-        let testLogDestination: XCGTestLogDestination = XCGTestLogDestination(owner: log, identifier: log.identifier + ".testLogDestination")
-        testLogDestination.showThreadName = false
-        testLogDestination.showLogLevel = true
-        testLogDestination.showFileName = true
-        testLogDestination.showLineNumber = false
-        testLogDestination.showDate = false
-        log.add(logDestination: testLogDestination)
+        let testDestination: TestDestination = TestDestination(owner: log, identifier: log.identifier + ".testDestination")
+        testDestination.showThreadName = false
+        testDestination.showLevel = true
+        testDestination.showFileName = true
+        testDestination.showLineNumber = false
+        testDestination.showDate = false
+        log.add(destination: testDestination)
 
         let linesToLog = ["One", "Two", "Three", "Four", "Five", "Six", "Seven", "Eight", "Nine", "Ten"]
         for lineToLog in linesToLog {
-            testLogDestination.add(expectedLogMessage: "[\(XCGLogger.LogLevel.debug)] [\(filename)] \(#function) > \(lineToLog)")
+            testDestination.add(expectedLogMessage: "[\(XCGLogger.Level.debug)] [\(filename)] \(#function) > \(lineToLog)")
         }
 
-        XCTAssert(testLogDestination.remainingNumberOfExpectedLogMessages == linesToLog.count, "Fail: Didn't correctly load all of the expected log messages")
+        XCTAssert(testDestination.remainingNumberOfExpectedLogMessages == linesToLog.count, "Fail: Didn't correctly load all of the expected log messages")
 
         for line in linesToLog {
             log.debug(line)
         }
 
-        XCTAssert(testLogDestination.remainingNumberOfExpectedLogMessages == 0, "Fail: Didn't receive all expected log lines")
-        XCTAssert(testLogDestination.numberOfUnexpectedLogMessages == 0, "Fail: Received an unexpected log line")
+        XCTAssert(testDestination.remainingNumberOfExpectedLogMessages == 0, "Fail: Didn't receive all expected log lines")
+        XCTAssert(testDestination.numberOfUnexpectedLogMessages == 0, "Fail: Received an unexpected log line")
     }
 
     func test_99999_LastTest() {
@@ -469,82 +492,3 @@ class XCGLoggerTests: XCTestCase {
     }
 }
 
-// MARK: - XCGTestLogDestination
-/// A log destination for testing, preload it with the expected logs, send your logs, then check for success
-open class XCGTestLogDestination: XCGBaseLogDestination {
-    // MARK: - Properties
-    /// The dispatch queue to process the log on
-    open var logQueue: DispatchQueue? = nil
-
-    /// Array of all expected log messages
-    open var expectedLogMessages: [String] = []
-
-    /// Array of received, unexpected log messages
-    open var unexpectedLogMessages: [String] = []
-
-    /// Number of log messages still expected
-    open var remainingNumberOfExpectedLogMessages: Int {
-        get {
-            return expectedLogMessages.count
-        }
-    }
-
-    /// Number of unexpected log messages
-    open var numberOfUnexpectedLogMessages: Int {
-        get {
-            return unexpectedLogMessages.count
-        }
-    }
-
-    /// Add the messages you expect to be logged
-    ///
-    /// - Parameters:
-    ///     - expectedLogMessage:   The log message, formated as you expect it to be received.
-    ///
-    /// - Returns:  Nothing
-    ///
-    open func add(expectedLogMessage logMessage: String) {
-        sync {
-            expectedLogMessages.append(logMessage)
-        }
-    }
-
-    /// Execute a closure on the logQueue if it exists, otherwise just execute on the current thread
-    ///
-    /// - Parameters:
-    ///     - closure:  The closure to execute.
-    ///
-    /// - Returns:  Nothing
-    ///
-    fileprivate func sync(closure: () -> ()) {
-        if let logQueue = logQueue {
-            logQueue.sync {
-                closure()
-            }
-        }
-        else {
-            closure()
-        }
-    }
-
-    // MARK: - Overridden Methods
-    /// Removes line from expected log messages if there's a match, otherwise adds to unexpected log messages.
-    ///
-    /// - Parameters:
-    ///     - logDetails:   The log details.
-    ///     - logMessage:   Formatted/processed message ready for output.
-    ///
-    /// - Returns:  Nothing
-    ///
-    open override func output(logDetails: XCGLogDetails, logMessage: String) {
-        sync {
-            let index = expectedLogMessages.index(of: logMessage)
-            if let index = index {
-                expectedLogMessages.remove(at: index)
-            }
-            else {
-                unexpectedLogMessages.append(logMessage)
-            }
-        }
-    }
-}

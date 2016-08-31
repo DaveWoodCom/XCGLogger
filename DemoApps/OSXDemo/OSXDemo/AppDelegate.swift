@@ -25,40 +25,40 @@ let log: XCGLogger = {
     ]
 
     // Create a destination for the system console log (via NSLog)
-    let systemLogDestination = XCGNSLogDestination(owner: log, identifier: "advancedLogger.systemLogDestination")
+    let systemLogDestination = AppleSystemLogDestination(owner: log, identifier: "advancedLogger.appleSystemLogDestination")
 
     // Optionally set some configuration options
-    systemLogDestination.outputLogLevel = .debug
+    systemLogDestination.outputLevel = .debug
     systemLogDestination.showLogIdentifier = false
     systemLogDestination.showFunctionName = true
     systemLogDestination.showThreadName = true
-    systemLogDestination.showLogLevel = true
+    systemLogDestination.showLevel = true
     systemLogDestination.showFileName = true
     systemLogDestination.showLineNumber = true
     systemLogDestination.showDate = true
 
     // Add the destination to the logger
-    log.add(logDestination: systemLogDestination)
+    log.add(destination: systemLogDestination)
 
     // Create a file log destination
     let logPath: String = ("~/Desktop/XCGLogger_Log.txt" as NSString).expandingTildeInPath
-    let fileLogDestination = XCGFileLogDestination(owner: log, writeToFile: logPath, identifier: "advancedLogger.fileLogDestination", shouldAppend: true)
+    let fileDestination = FileDestination(owner: log, writeToFile: logPath, identifier: "advancedLogger.fileDestination", shouldAppend: true)
 
     // Optionally set some configuration options
-    fileLogDestination.outputLogLevel = .debug
-    fileLogDestination.showLogIdentifier = false
-    fileLogDestination.showFunctionName = true
-    fileLogDestination.showThreadName = true
-    fileLogDestination.showLogLevel = true
-    fileLogDestination.showFileName = true
-    fileLogDestination.showLineNumber = true
-    fileLogDestination.showDate = true
+    fileDestination.outputLevel = .debug
+    fileDestination.showLogIdentifier = false
+    fileDestination.showFunctionName = true
+    fileDestination.showThreadName = true
+    fileDestination.showLevel = true
+    fileDestination.showFileName = true
+    fileDestination.showLineNumber = true
+    fileDestination.showDate = true
 
     // Process this destination in the background
-    fileLogDestination.logQueue = XCGLogger.logQueue
+    fileDestination.logQueue = XCGLogger.logQueue
 
     // Add the destination to the logger
-    log.add(logDestination: fileLogDestination)
+    log.add(destination: fileDestination)
 
     // Add basic app info, version info etc, to the start of the logs
     log.logAppDetails()
@@ -144,17 +144,17 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     }
 
     @IBAction func rotateLogFileButtonTouchUpInside(_ sender: AnyObject) {
-        if let fileLogDestination = log.logDestination(withIdentifier: "advancedLogger.fileLogDestination") as? XCGFileLogDestination {
+        if let fileDestination = log.destination(withIdentifier: "advancedLogger.fileDestination") as? FileDestination {
 
             let dateHash: String = dateHashFormatter.string(from: Date())
             let archiveFilePath: String = ("~/Desktop/XCGLogger_Log_\(dateHash).txt" as NSString).expandingTildeInPath
 
-            fileLogDestination.rotateFile(to: archiveFilePath)
+            fileDestination.rotateFile(to: archiveFilePath)
         }
     }
 
     @IBAction func logLevelSliderValueChanged(_ sender: AnyObject) {
-        var logLevel: XCGLogger.LogLevel = .verbose
+        var logLevel: XCGLogger.Level = .verbose
 
         if (0 <= logLevelSlider.floatValue && logLevelSlider.floatValue < 1) {
             logLevel = .verbose
@@ -178,12 +178,12 @@ class AppDelegate: NSObject, NSApplicationDelegate {
             logLevel = .none
         }
 
-        log.outputLogLevel = logLevel
+        log.outputLevel = logLevel
         updateView()
     }
 
     func updateView() {
-        logLevelSlider.floatValue = Float(log.outputLogLevel.rawValue)
-        currentLogLevelTextField.stringValue = "\(log.outputLogLevel)"
+        logLevelSlider.floatValue = Float(log.outputLevel.rawValue)
+        currentLogLevelTextField.stringValue = "\(log.outputLevel)"
     }
 }

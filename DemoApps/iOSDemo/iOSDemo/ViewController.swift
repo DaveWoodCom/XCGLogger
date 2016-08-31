@@ -73,7 +73,7 @@ class ViewController: UIViewController {
     }
 
     @IBAction func logLevelSliderValueChanged(_ sender: AnyObject) {
-        var logLevel: XCGLogger.LogLevel = .verbose
+        var logLevel: XCGLogger.Level = .verbose
 
         if (0 <= logLevelSlider.value && logLevelSlider.value < 1) {
             logLevel = .verbose
@@ -97,12 +97,12 @@ class ViewController: UIViewController {
             logLevel = .none
         }
 
-        log.outputLogLevel = logLevel
+        log.outputLevel = logLevel
         updateView()
     }
 
     func updateView() {
-        logLevelSlider.value = Float(log.outputLogLevel.rawValue)
-        currentLogLevelLabel.text = "\(log.outputLogLevel)"
+        logLevelSlider.value = Float(log.outputLevel.rawValue)
+        currentLogLevelLabel.text = "\(log.outputLevel)"
     }
 }
