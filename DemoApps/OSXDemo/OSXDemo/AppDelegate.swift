@@ -15,14 +15,6 @@ let log: XCGLogger = {
     // Setup XCGLogger (Advanced/Recommended Usage)
     // Create a logger object with no destinations
     let log = XCGLogger(identifier: "advancedLogger", includeDefaultDestinations: false)
-    log.xcodeColors = [
-        .verbose: .lightGrey,
-        .debug: .darkGrey,
-        .info: .darkGreen,
-        .warning: .orange,
-        .error: XCGLogger.XcodeColor(fg: NSColor.red, bg: NSColor.white), // Optionally use an NSColor
-        .severe: XCGLogger.XcodeColor(fg: (255, 255, 255), bg: (255, 0, 0)) // Optionally use RGB values directly
-    ]
 
     // Create a destination for the system console log (via NSLog)
     let systemLogDestination = AppleSystemLogDestination(identifier: "advancedLogger.appleSystemLogDestination")
@@ -57,11 +49,23 @@ let log: XCGLogger = {
     // Process this destination in the background
     fileDestination.logQueue = XCGLogger.logQueue
 
+    // Add colour (using the ANSI format) to our file log, you can see the colour when `cat`ing or `tail`ing the file in Terminal on macOS
+    let ansiColorLogFormatter: ANSIColorLogFormatter = ANSIColorLogFormatter()
+    ansiColorLogFormatter.colorize(level: .verbose, with: .colorIndex(number: 244), options: [.faint])
+    ansiColorLogFormatter.colorize(level: .debug, with: .black)
+    ansiColorLogFormatter.colorize(level: .info, with: .blue, options: [.underline])
+    ansiColorLogFormatter.colorize(level: .warning, with: .red, options: [.faint])
+    ansiColorLogFormatter.colorize(level: .error, with: .red, options: [.bold])
+    ansiColorLogFormatter.colorize(level: .severe, with: .white, on: .red)
+    fileDestination.formatters = [ansiColorLogFormatter]
+
     // Add the destination to the logger
     log.add(destination: fileDestination)
 
     // Add basic app info, version info etc, to the start of the logs
     log.logAppDetails()
+
+    log.debug(ansiColorLogFormatter)
     
     return log
 }()

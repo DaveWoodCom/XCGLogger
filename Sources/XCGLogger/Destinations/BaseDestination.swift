@@ -23,6 +23,9 @@ open class BaseDestination: DestinationProtocol, CustomDebugStringConvertible {
     /// Flag whether or not we've logged the app details to this destination
     open var haveLoggedAppDetails: Bool = false
 
+    /// Array of log formatters to apply to messages before they're output
+    open var formatters: [LogFormatterProtocol]? = nil
+
     /// Option: whether or not to output the log identifier
     open var showLogIdentifier: Bool = false
 

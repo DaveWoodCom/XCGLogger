@@ -189,6 +189,10 @@ open class FileDestination: BaseDestination {
     open override func output(logDetails: LogDetails, message: String) {
 
         let outputClosure = {
+            var logDetails = logDetails
+            var message = message
+            self.applyFormatters(logDetails: &logDetails, message: &message)
+
             if let encodedData = "\(message)\n".data(using: String.Encoding.utf8) {
                 self.logFileHandle?.write(encodedData)
             }

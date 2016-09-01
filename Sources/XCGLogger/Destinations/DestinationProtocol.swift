@@ -22,6 +22,9 @@ public protocol DestinationProtocol: CustomDebugStringConvertible {
     /// Flag whether or not we've logged the app details to this destination
     var haveLoggedAppDetails: Bool { get set }
 
+    /// Array of log formatters to apply to messages before they're output
+    var formatters: [LogFormatterProtocol]? { get set }
+
     /// Process the log details.
     ///
     /// - Parameters:
@@ -50,4 +53,26 @@ public protocol DestinationProtocol: CustomDebugStringConvertible {
     ///     - false:    Log destination is at a higher log level.
     ///
     func isEnabledFor(level: XCGLogger.Level) -> Bool
+
+    /// Apply formatters
+    func applyFormatters(logDetails: inout LogDetails, message: inout String)
+}
+
+extension DestinationProtocol {
+
+    /// Iterate over all of the log formatters in this destination, or the logger if none set for the destination.
+    ///
+    /// - Parameters:
+    ///     - logDetails:   The log details.
+    ///     - message:      Formatted/processed message ready for output.
+    ///
+    /// - Returns:  Nothing
+    ///
+    public func applyFormatters(logDetails: inout LogDetails, message: inout String) {
+        guard let formatters = self.formatters ?? self.owner?.formatters, formatters.count > 0 else { return }
+
+        for formatter in formatters {
+            formatter.format(logDetails: &logDetails, message: &message)
+        }
+    }
 }

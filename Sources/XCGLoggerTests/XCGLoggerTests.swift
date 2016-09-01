@@ -443,6 +443,51 @@ class XCGLoggerTests: XCTestCase {
         XCTAssert(optionalName == "Optional<String>", "Fail: Didn't extract the correct class name")
     }
 
+    func test_00160_TestLogFormattersAreApplied() {
+        let log: XCGLogger = XCGLogger(identifier: functionIdentifier())
+        log.outputLevel = .verbose
+
+        let testDestination: TestDestination = TestDestination(identifier: log.identifier + ".testDestination")
+        testDestination.showThreadName = false
+        testDestination.showLevel = true
+        testDestination.showFileName = true
+        testDestination.showLineNumber = false
+        testDestination.showDate = false
+        log.add(destination: testDestination)
+
+        let testString: String = "Black on Blue"
+
+        let ansiColorLogFormatter: ANSIColorLogFormatter = ANSIColorLogFormatter()
+        ansiColorLogFormatter.colorize(level: .debug, with: .blue, on: .black, options: [.bold])
+        log.formatters = [ansiColorLogFormatter]
+
+        testDestination.add(expectedLogMessage: "\(ANSIColorLogFormatter.escape)34;40;1m[\(XCGLogger.Level.debug)] [\(filename)] \(#function) > \(testString)\(ANSIColorLogFormatter.reset)")
+        XCTAssert(testDestination.remainingNumberOfExpectedLogMessages == 1, "Fail: Didn't correctly load all of the expected log messages")
+        log.debug(testString)
+        XCTAssert(testDestination.remainingNumberOfExpectedLogMessages == 0, "Fail: Didn't receive all expected log lines")
+        XCTAssert(testDestination.numberOfUnexpectedLogMessages == 0, "Fail: Received an unexpected log line")
+
+        let xcodeColorsLogFormatter: XcodeColorsLogFormatter = XcodeColorsLogFormatter()
+        xcodeColorsLogFormatter.colorize(level: .debug, with: .black, on: .blue)
+        log.formatters = [xcodeColorsLogFormatter]
+
+        testDestination.add(expectedLogMessage: "\(XcodeColorsLogFormatter.escape)fg0,0,0;\(XcodeColorsLogFormatter.escape)bg0,0,255;[\(XCGLogger.Level.debug)] [\(filename)] \(#function) > \(testString)\(XcodeColorsLogFormatter.reset)")
+        XCTAssert(testDestination.remainingNumberOfExpectedLogMessages == 1, "Fail: Didn't correctly load all of the expected log messages")
+        log.debug(testString)
+        XCTAssert(testDestination.remainingNumberOfExpectedLogMessages == 0, "Fail: Didn't receive all expected log lines")
+        XCTAssert(testDestination.numberOfUnexpectedLogMessages == 0, "Fail: Received an unexpected log line")
+
+        let base64LogFormatter: Base64LogFormatter = Base64LogFormatter()
+        log.formatters = [base64LogFormatter]
+
+        // "[Debug] [XCGLoggerTests.swift] test_00160_TestLogFormattersAreApplied() > Black on Blue" base64 encoded
+        testDestination.add(expectedLogMessage: "W0RlYnVnXSBbWENHTG9nZ2VyVGVzdHMuc3dpZnRdIHRlc3RfMDAxNjBfVGVzdExvZ0Zvcm1hdHRlcnNBcmVBcHBsaWVkKCkgPiBCbGFjayBvbiBCbHVl")
+        XCTAssert(testDestination.remainingNumberOfExpectedLogMessages == 1, "Fail: Didn't correctly load all of the expected log messages")
+        log.debug(testString)
+        XCTAssert(testDestination.remainingNumberOfExpectedLogMessages == 0, "Fail: Didn't receive all expected log lines")
+        XCTAssert(testDestination.numberOfUnexpectedLogMessages == 0, "Fail: Received an unexpected log line")
+    }
+
     /// Test logging works correctly when logs are generated from multiple threads
     func test_01010_MultiThreaded() {
         let log: XCGLogger = XCGLogger(identifier: functionIdentifier())

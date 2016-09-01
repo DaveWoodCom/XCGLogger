@@ -14,9 +14,6 @@ open class ConsoleDestination: BaseDestination {
     /// The dispatch queue to process the log on
     open var logQueue: DispatchQueue? = nil
 
-    /// The colour to use for each of the various log levels
-    open var xcodeColors: [XCGLogger.Level: XCGLogger.XcodeColor]? = nil
-
     // MARK: - Overridden Methods
     /// Print the log to the console.
     ///
@@ -29,17 +26,11 @@ open class ConsoleDestination: BaseDestination {
     open override func output(logDetails: LogDetails, message: String) {
 
         let outputClosure = {
-            guard let owner = self.owner else { return }
+            var logDetails = logDetails
+            var message = message
+            self.applyFormatters(logDetails: &logDetails, message: &message)
 
-            let adjustedLogMessage: String
-            if let xcodeColor = (self.xcodeColors ?? owner.xcodeColors)[logDetails.level], owner.xcodeColorsEnabled {
-                adjustedLogMessage = "\(xcodeColor.format())\(message)\(XCGLogger.XcodeColor.reset)"
-            }
-            else {
-                adjustedLogMessage = message
-            }
-
-            print(adjustedLogMessage)
+            print(message)
         }
 
         if let logQueue = logQueue {

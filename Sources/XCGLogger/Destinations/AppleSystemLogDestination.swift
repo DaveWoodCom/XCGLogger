@@ -14,9 +14,6 @@ open class AppleSystemLogDestination: BaseDestination {
     /// The dispatch queue to process the log on
     open var logQueue: DispatchQueue? = nil
 
-    /// The colour to use for each of the various log levels
-    open var xcodeColors: [XCGLogger.Level: XCGLogger.XcodeColor]? = nil
-
     /// Option: whether or not to output the date the log was created (Always false for this destination)
     open override var showDate: Bool {
         get {
@@ -39,17 +36,11 @@ open class AppleSystemLogDestination: BaseDestination {
     open override func output(logDetails: LogDetails, message: String) {
 
         let outputClosure = {
-            guard let owner = self.owner else { return }
+            var logDetails = logDetails
+            var message = message
+            self.applyFormatters(logDetails: &logDetails, message: &message)
 
-            let adjustedLogMessage: String
-            if let xcodeColor = (self.xcodeColors ?? owner.xcodeColors)[logDetails.level], owner.xcodeColorsEnabled {
-                adjustedLogMessage = "\(xcodeColor.format())\(message)\(XCGLogger.XcodeColor.reset)"
-            }
-            else {
-                adjustedLogMessage = message
-            }
-
-            NSLog("%@", adjustedLogMessage)
+            NSLog("%@", message)
         }
 
         if let logQueue = logQueue {

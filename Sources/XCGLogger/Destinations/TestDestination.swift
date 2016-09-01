@@ -76,6 +76,10 @@ open class TestDestination: BaseDestination {
     ///
     open override func output(logDetails: LogDetails, message: String) {
         sync {
+            var logDetails = logDetails
+            var message = message
+            applyFormatters(logDetails: &logDetails, message: &message)
+
             let index = expectedLogMessages.index(of: message)
             if let index = index {
                 expectedLogMessages.remove(at: index)

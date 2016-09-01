@@ -13,16 +13,6 @@ import XCGLogger
 let log: XCGLogger = {
     // Setup XCGLogger
     let log = XCGLogger.default
-    log.xcodeColorsEnabled = false // Or set the XcodeColors environment variable in your scheme to YES
-    log.xcodeColors = [
-        .verbose: .lightGrey,
-        .debug: .darkGrey,
-        .info: .darkGreen,
-        .warning: .orange,
-        .error: XCGLogger.XcodeColor(fg: UIColor.red, bg: UIColor.white), // Optionally use a UIColor
-        .severe: XCGLogger.XcodeColor(fg: (255, 255, 255), bg: (255, 0, 0)) // Optionally use RGB values directly
-    ]
-
     #if USE_NSLOG // Set via Build Settings, under Other Swift Flags
         log.remove(destinationWithIdentifier: XCGLogger.Constants.baseConsoleDestinationIdentifier)
         log.add(destination: AppleSystemLogDestination(identifier: XCGLogger.Constants.systemLogDestinationIdentifier))

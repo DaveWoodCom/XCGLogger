@@ -14,15 +14,6 @@ let appDelegate = UIApplication.shared.delegate as! AppDelegate
 let log: XCGLogger = {
     // Setup XCGLogger
     let log = XCGLogger.default
-    log.xcodeColorsEnabled = false // Or set the XcodeColors environment variable in your scheme to YES
-    log.xcodeColors = [
-        .verbose: .lightGrey,
-        .debug: .darkGrey,
-        .info: .darkGreen,
-        .warning: .orange,
-        .error: XCGLogger.XcodeColor(fg: UIColor.red, bg: UIColor.white), // Optionally use a UIColor
-        .severe: XCGLogger.XcodeColor(fg: (255, 255, 255), bg: (255, 0, 0)) // Optionally use RGB values directly
-    ]
 
 #if USE_NSLOG // Set via Build Settings, under Other Swift Flags
     log.remove(destinationWithIdentifier: XCGLogger.Constants.baseConsoleDestinationIdentifier)
@@ -31,6 +22,19 @@ let log: XCGLogger = {
 #else
     let logPath: URL = appDelegate.cacheDirectory.appendingPathComponent("XCGLogger_Log.txt")
     log.setup(level: .debug, showThreadName: true, showLevel: true, showFileNames: true, showLineNumbers: true, writeToFile: logPath)
+
+    // Add colour (using the ANSI format) to our file log, you can see the colour when `cat`ing or `tail`ing the file in Terminal on macOS
+    // This is mostly useful when testing in the simulator, or if you have the app sending you log files remotely
+    if let fileDestination: FileDestination = log.destination(withIdentifier: XCGLogger.Constants.fileDestinationIdentifier) as? FileDestination {
+        let ansiColorLogFormatter: ANSIColorLogFormatter = ANSIColorLogFormatter()
+        ansiColorLogFormatter.colorize(level: .verbose, with: .colorIndex(number: 244), options: [.faint])
+        ansiColorLogFormatter.colorize(level: .debug, with: .black)
+        ansiColorLogFormatter.colorize(level: .info, with: .blue, options: [.underline])
+        ansiColorLogFormatter.colorize(level: .warning, with: .red, options: [.faint])
+        ansiColorLogFormatter.colorize(level: .error, with: .red, options: [.bold])
+        ansiColorLogFormatter.colorize(level: .severe, with: .white, on: .red)
+        fileDestination.formatters = [ansiColorLogFormatter]
+    }
 #endif
 
     return log

@@ -69,152 +69,8 @@ open class XCGLogger: CustomDebugStringConvertible {
                 return "None"
             }
         }
-    }
 
-    /// Structure to manage log colours
-    public struct XcodeColor {
-
-        /// ANSI code Escape sequence
-        public static let escape = "\u{001b}["
-
-        /// ANSI code to reset the foreground colour
-        public static let resetFg = "\u{001b}[fg;"
-
-        /// ANSI code to reset the background colour
-        public static let resetBg = "\u{001b}[bg;"
-
-        /// ANSI code to reset the foreground and background colours
-        public static let reset = "\u{001b}[;"
-
-        /// Tuple to store the foreground RGB colour values
-        public var fg: (r: Int, g: Int, b: Int)? = nil
-
-        /// Tuple to store the background RGB colour values
-        public var bg: (r: Int, g: Int, b: Int)? = nil
-
-        /// Generate the complete ANSI code required to set the colours specified in the object.
-        ///
-        /// - Parameters:
-        ///     - None
-        ///
-        /// - Returns:  The complete ANSI code needed to set the text colours
-        ///
-        public func format() -> String {
-            guard fg != nil || bg != nil else {
-                // neither set, return reset value
-                return XcodeColor.reset
-            }
-
-            var format: String = ""
-
-            if let fg = fg {
-                format += "\(XcodeColor.escape)fg\(fg.r),\(fg.g),\(fg.b);"
-            }
-            else {
-                format += XcodeColor.resetFg
-            }
-
-            if let bg = bg {
-                format += "\(XcodeColor.escape)bg\(bg.r),\(bg.g),\(bg.b);"
-            }
-            else {
-                format += XcodeColor.resetBg
-            }
-
-            return format
-        }
-
-        public init(fg: (r: Int, g: Int, b: Int)? = nil, bg: (r: Int, g: Int, b: Int)? = nil) {
-            self.fg = fg
-            self.bg = bg
-        }
-
-#if os(OSX)
-        public init(fg: NSColor, bg: NSColor? = nil) {
-            if let fgColorSpaceCorrected = fg.usingColorSpaceName(NSCalibratedRGBColorSpace) {
-                self.fg = (Int(fgColorSpaceCorrected.redComponent * 255), Int(fgColorSpaceCorrected.greenComponent * 255), Int(fgColorSpaceCorrected.blueComponent * 255))
-            }
-            else {
-                self.fg = nil
-            }
-
-            if let bg = bg,
-                let bgColorSpaceCorrected = bg.usingColorSpaceName(NSCalibratedRGBColorSpace) {
-
-                    self.bg = (Int(bgColorSpaceCorrected.redComponent * 255), Int(bgColorSpaceCorrected.greenComponent * 255), Int(bgColorSpaceCorrected.blueComponent * 255))
-            }
-            else {
-                self.bg = nil
-            }
-        }
-#elseif os(iOS) || os(tvOS) || os(watchOS)
-        public init(fg: UIColor, bg: UIColor? = nil) {
-            var redComponent: CGFloat = 0
-            var greenComponent: CGFloat = 0
-            var blueComponent: CGFloat = 0
-            var alphaComponent: CGFloat = 0
-
-            fg.getRed(&redComponent, green: &greenComponent, blue: &blueComponent, alpha:&alphaComponent)
-            self.fg = (Int(redComponent * 255), Int(greenComponent * 255), Int(blueComponent * 255))
-            if let bg = bg {
-                bg.getRed(&redComponent, green: &greenComponent, blue: &blueComponent, alpha:&alphaComponent)
-                self.bg = (Int(redComponent * 255), Int(greenComponent * 255), Int(blueComponent * 255))
-            }
-            else {
-                self.bg = nil
-            }
-        }
-#endif
-
-        /// XcodeColor preset foreground colour: Red
-        public static let red: XcodeColor = {
-            return XcodeColor(fg: (255, 0, 0))
-        }()
-
-        /// XcodeColor preset foreground colour: Green
-        public static let green: XcodeColor = {
-            return XcodeColor(fg: (0, 255, 0))
-        }()
-
-        /// XcodeColor preset foreground colour: Blue
-        public static let blue: XcodeColor = {
-            return XcodeColor(fg: (0, 0, 255))
-        }()
-
-        /// XcodeColor preset foreground colour: Black
-        public static let black: XcodeColor = {
-            return XcodeColor(fg: (0, 0, 0))
-        }()
-
-        /// XcodeColor preset foreground colour: White
-        public static let white: XcodeColor = {
-            return XcodeColor(fg: (255, 255, 255))
-        }()
-
-        /// XcodeColor preset foreground colour: Light Grey
-        public static let lightGrey: XcodeColor = {
-            return XcodeColor(fg: (211, 211, 211))
-        }()
-
-        /// XcodeColor preset foreground colour: Dark Grey
-        public static let darkGrey: XcodeColor = {
-            return XcodeColor(fg: (169, 169, 169))
-        }()
-
-        /// XcodeColor preset foreground colour: Orange
-        public static let orange: XcodeColor = {
-            return XcodeColor(fg: (255, 165, 0))
-        }()
-
-        /// XcodeColor preset colours: White foreground, Red background
-        public static let whiteOnRed: XcodeColor = {
-            return XcodeColor(fg: (255, 255, 255), bg: (255, 0, 0))
-        }()
-
-        /// XcodeColor preset foreground colour: Dark Green
-        public static let darkGreen: XcodeColor = {
-            return XcodeColor(fg: (0, 128, 0))
-        }()
+        public static let all: [Level] = [.verbose, .debug, .info, .warning, .error, .severe]
     }
 
     // MARK: - Default instance
@@ -227,7 +83,7 @@ open class XCGLogger: CustomDebugStringConvertible {
         return Statics.instance
     }()
 
-    // MARK: - Properties (Options)
+    // MARK: - Properties
     /// Identifier for this logger object (should be unique)
     open var identifier: String = ""
 
@@ -240,23 +96,12 @@ open class XCGLogger: CustomDebugStringConvertible {
         }
     }
 
-    /// Option: enable ANSI colour codes
-    open var xcodeColorsEnabled: Bool = false
-
-    /// The colours to use for each log level
-    open var xcodeColors: [XCGLogger.Level: XCGLogger.XcodeColor] = [
-        .verbose: .lightGrey,
-        .debug: .darkGrey,
-        .info: .blue,
-        .warning: .orange,
-        .error: .red,
-        .severe: .whiteOnRed
-    ]
-
     /// Option: a closure to execute whenever a logging method is called without a log message
     open var noMessageClosure: () -> Any? = { return "" }
 
-    // MARK: - Properties
+    /// Array of log formatters to apply to messages before they're output
+    open var formatters: [LogFormatterProtocol]? = nil
+
     /// The default dispatch queue used for logging
     open class var logQueue: DispatchQueue {
         struct Statics {
@@ -293,11 +138,6 @@ open class XCGLogger: CustomDebugStringConvertible {
     // MARK: - Life Cycle
     public init(identifier: String = "", includeDefaultDestinations: Bool = true) {
         self.identifier = identifier
-
-        // Check if XcodeColors is installed and enabled
-        if let xcodeColors = ProcessInfo.processInfo.environment["XcodeColors"] {
-            xcodeColorsEnabled = xcodeColors == "YES"
-        }
 
         if includeDefaultDestinations {
             // Setup a standard console destination
