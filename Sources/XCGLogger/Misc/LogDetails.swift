@@ -29,12 +29,16 @@ public struct LogDetails {
     /// The line number that generated this log
     public var lineNumber: Int
 
-    public init(level: XCGLogger.Level, date: Date, message: String, functionName: StaticString, fileName: StaticString, lineNumber: Int) {
+    /// Dictionary to store miscellaneous data about the log, can be used by formatters and filters etc. Please prefix any keys to help avoid collissions.
+    public var userInfo: [String: Any]
+
+    public init(level: XCGLogger.Level, date: Date, message: String, functionName: StaticString, fileName: StaticString, lineNumber: Int, userInfo: [String: Any] = [:]) {
         self.level = level
         self.date = date
         self.message = message
         self.functionName = functionName.description
         self.fileName = fileName.description
         self.lineNumber = lineNumber
+        self.userInfo = userInfo
     }
 }
