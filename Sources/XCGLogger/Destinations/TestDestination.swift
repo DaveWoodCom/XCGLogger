@@ -78,6 +78,12 @@ open class TestDestination: BaseDestination {
         sync {
             var logDetails = logDetails
             var message = message
+
+            // Apply filters, if any indicate we should drop the message, we abort before doing the actual logging
+            if self.shouldExclude(logDetails: &logDetails, message: &message) {
+                return
+            }
+            
             applyFormatters(logDetails: &logDetails, message: &message)
 
             let index = expectedLogMessages.index(of: message)

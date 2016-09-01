@@ -25,6 +25,9 @@ public protocol DestinationProtocol: CustomDebugStringConvertible {
     /// Array of log formatters to apply to messages before they're output
     var formatters: [LogFormatterProtocol]? { get set }
 
+    /// Array of log filters to apply to messages before they're output
+    var filters: [FilterProtocol]? { get set }
+
     /// Process the log details.
     ///
     /// - Parameters:
@@ -54,11 +57,52 @@ public protocol DestinationProtocol: CustomDebugStringConvertible {
     ///
     func isEnabledFor(level: XCGLogger.Level) -> Bool
 
-    /// Apply formatters
+    /// Apply filters to determine if the log message should be logged.
+    ///
+    /// - Parameters:
+    ///     - logDetails:   The log details.
+    ///     - message:      Formatted/processed message ready for output.
+    ///
+    /// - Returns:
+    ///     - true:     Drop this log message.
+    ///     - false:    Keep this log message and continue processing.
+    ///
+    func shouldExclude(logDetails: inout LogDetails, message: inout String) -> Bool
+
+    /// Apply formatters.
+    ///
+    /// - Parameters:
+    ///     - logDetails:   The log details.
+    ///     - message:      Formatted/processed message ready for output.
+    ///
+    /// - Returns:  Nothing
+    ///
     func applyFormatters(logDetails: inout LogDetails, message: inout String)
 }
 
 extension DestinationProtocol {
+
+    /// Iterate over all of the log filters in this destination, or the logger if none set for the destination.
+    ///
+    /// - Parameters:
+    ///     - logDetails: The log details.
+    ///     - message: Formatted/processed message ready for output.
+    ///
+    /// - Returns:
+    ///     - true:     Drop this log message.
+    ///     - false:    Keep this log message and continue processing.
+    ///
+    public func shouldExclude(logDetails: inout LogDetails, message: inout String) -> Bool {
+        guard let filters = self.filters ?? self.owner?.filters, filters.count > 0 else { return false }
+
+        for filter in filters {
+            if filter.shouldExclude(logDetails: &logDetails, message: &message) {
+                return true
+            }
+        }
+
+        return false
+    }
 
     /// Iterate over all of the log formatters in this destination, or the logger if none set for the destination.
     ///

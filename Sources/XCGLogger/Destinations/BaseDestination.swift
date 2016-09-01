@@ -26,6 +26,9 @@ open class BaseDestination: DestinationProtocol, CustomDebugStringConvertible {
     /// Array of log formatters to apply to messages before they're output
     open var formatters: [LogFormatterProtocol]? = nil
 
+    /// Array of log filters to apply to messages before they're output
+    open var filters: [FilterProtocol]? = nil
+
     /// Option: whether or not to output the log identifier
     open var showLogIdentifier: Bool = false
 

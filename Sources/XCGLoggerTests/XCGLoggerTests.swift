@@ -488,6 +488,38 @@ class XCGLoggerTests: XCTestCase {
         XCTAssert(testDestination.numberOfUnexpectedLogMessages == 0, "Fail: Received an unexpected log line")
     }
 
+    func test_00200_TestLogFiltersAreApplied() {
+        let log: XCGLogger = XCGLogger(identifier: functionIdentifier())
+        log.outputLevel = .debug
+
+        let testDestination: TestDestination = TestDestination(identifier: log.identifier + ".testDestination")
+        testDestination.showThreadName = false
+        testDestination.showLevel = true
+        testDestination.showFileName = true
+        testDestination.showLineNumber = false
+        testDestination.showDate = false
+        log.add(destination: testDestination)
+
+        let message = "Filters are more powerful than they first appear, since they can also change the content of log messages"
+
+        let exclusiveFileNameFilter: FileNameFilter = FileNameFilter(excludeFrom: [fileName])
+        log.filters = [exclusiveFileNameFilter]
+
+        // Should not log anything, so there are no expected log messages
+        log.debug(message)
+        XCTAssert(testDestination.remainingNumberOfExpectedLogMessages == 0, "Fail: Didn't receive all expected log lines")
+        XCTAssert(testDestination.numberOfUnexpectedLogMessages == 0, "Fail: Received an unexpected log line")
+
+        let inclusiveFileNameFilter: FileNameFilter = FileNameFilter(includeFrom: [fileName])
+        log.filters = [inclusiveFileNameFilter]
+
+        testDestination.add(expectedLogMessage: "[\(XCGLogger.Level.debug)] [\(fileName)] \(#function) > \(message)")
+        XCTAssert(testDestination.remainingNumberOfExpectedLogMessages == 1, "Fail: Didn't correctly load all of the expected log messages")
+        log.debug(message)
+        XCTAssert(testDestination.remainingNumberOfExpectedLogMessages == 0, "Fail: Didn't receive all expected log lines")
+        XCTAssert(testDestination.numberOfUnexpectedLogMessages == 0, "Fail: Received an unexpected log line")
+    }
+
     /// Test logging works correctly when logs are generated from multiple threads
     func test_01010_MultiThreaded() {
         let log: XCGLogger = XCGLogger(identifier: functionIdentifier())

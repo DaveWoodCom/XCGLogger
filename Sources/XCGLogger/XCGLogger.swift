@@ -102,6 +102,9 @@ open class XCGLogger: CustomDebugStringConvertible {
     /// Array of log formatters to apply to messages before they're output
     open var formatters: [LogFormatterProtocol]? = nil
 
+    /// Array of log filters to apply to messages before they're output
+    open var filters: [FilterProtocol]? = nil
+
     /// The default dispatch queue used for logging
     open class var logQueue: DispatchQueue {
         struct Statics {
