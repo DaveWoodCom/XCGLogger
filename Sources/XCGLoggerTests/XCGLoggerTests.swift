@@ -12,8 +12,8 @@ import XCTest
 
 /// Tests
 class XCGLoggerTests: XCTestCase {
-    /// This file's filename for use in testing expected log messages
-    let filename = { return (#file as NSString).lastPathComponent }()
+    /// This file's fileName for use in testing expected log messages
+    let fileName = { return (#file as NSString).lastPathComponent }()
 
     /// Calculate a base identifier to use for the giving function name.
     ///
@@ -284,7 +284,7 @@ class XCGLoggerTests: XCTestCase {
         // We force the date for this part of the test to ensure a change of date as the test runs doesn't break the test
         let knownDate = Date(timeIntervalSince1970: 0)
         let message = "Testing date format output matches what we expect"
-        testDestination.add(expectedLogMessage: "\(alternateDateFormatter.string(from: knownDate)) [\(XCGLogger.Level.debug)] [\(filename)] \(#function) > \(message)")
+        testDestination.add(expectedLogMessage: "\(alternateDateFormatter.string(from: knownDate)) [\(XCGLogger.Level.debug)] [\(fileName)] \(#function) > \(message)")
 
         XCTAssert(testDestination.remainingNumberOfExpectedLogMessages == 1, "Fail: Didn't correctly load all of the expected log messages")
 
@@ -309,13 +309,13 @@ class XCGLoggerTests: XCTestCase {
         testDestination.showDate = false
         log.add(destination: testDestination)
 
-        testDestination.add(expectedLogMessage: "[\(XCGLogger.Level.info)] [\(filename)] \(#function) > testVariousParameters starting")
+        testDestination.add(expectedLogMessage: "[\(XCGLogger.Level.info)] [\(fileName)] \(#function) > testVariousParameters starting")
         XCTAssert(testDestination.remainingNumberOfExpectedLogMessages == 1, "Fail: Didn't correctly load all of the expected log messages")
         log.info("testVariousParameters starting")
         XCTAssert(testDestination.remainingNumberOfExpectedLogMessages == 0, "Fail: Didn't receive all expected log lines")
         XCTAssert(testDestination.numberOfUnexpectedLogMessages == 0, "Fail: Received an unexpected log line")
 
-        testDestination.add(expectedLogMessage: "[\(XCGLogger.Level.verbose)] [\(filename)] \(#function) > ")
+        testDestination.add(expectedLogMessage: "[\(XCGLogger.Level.verbose)] [\(fileName)] \(#function) > ")
         XCTAssert(testDestination.remainingNumberOfExpectedLogMessages == 1, "Fail: Didn't correctly load all of the expected log messages")
         log.verbose()
         XCTAssert(testDestination.remainingNumberOfExpectedLogMessages == 0, "Fail: Didn't receive all expected log lines")
@@ -326,33 +326,33 @@ class XCGLoggerTests: XCTestCase {
         XCTAssert(testDestination.remainingNumberOfExpectedLogMessages == 0, "Fail: Didn't receive all expected log lines")
         XCTAssert(testDestination.numberOfUnexpectedLogMessages == 0, "Fail: Received an unexpected log line")
 
-        testDestination.add(expectedLogMessage: "[\(XCGLogger.Level.debug)] [\(filename)] \(#function) > 1.2")
+        testDestination.add(expectedLogMessage: "[\(XCGLogger.Level.debug)] [\(fileName)] \(#function) > 1.2")
         XCTAssert(testDestination.remainingNumberOfExpectedLogMessages == 1, "Fail: Didn't correctly load all of the expected log messages")
         log.debug(1.2)
         XCTAssert(testDestination.remainingNumberOfExpectedLogMessages == 0, "Fail: Didn't receive all expected log lines")
         XCTAssert(testDestination.numberOfUnexpectedLogMessages == 0, "Fail: Received an unexpected log line")
 
-        testDestination.add(expectedLogMessage: "[\(XCGLogger.Level.info)] [\(filename)] \(#function) > true")
+        testDestination.add(expectedLogMessage: "[\(XCGLogger.Level.info)] [\(fileName)] \(#function) > true")
         XCTAssert(testDestination.remainingNumberOfExpectedLogMessages == 1, "Fail: Didn't correctly load all of the expected log messages")
         log.info(true)
         XCTAssert(testDestination.remainingNumberOfExpectedLogMessages == 0, "Fail: Didn't receive all expected log lines")
         XCTAssert(testDestination.numberOfUnexpectedLogMessages == 0, "Fail: Received an unexpected log line")
 
-        testDestination.add(expectedLogMessage: "[\(XCGLogger.Level.warning)] [\(filename)] \(#function) > [\"a\", \"b\", \"c\"]")
+        testDestination.add(expectedLogMessage: "[\(XCGLogger.Level.warning)] [\(fileName)] \(#function) > [\"a\", \"b\", \"c\"]")
         XCTAssert(testDestination.remainingNumberOfExpectedLogMessages == 1, "Fail: Didn't correctly load all of the expected log messages")
         log.warning(["a", "b", "c"])
         XCTAssert(testDestination.remainingNumberOfExpectedLogMessages == 0, "Fail: Didn't receive all expected log lines")
         XCTAssert(testDestination.numberOfUnexpectedLogMessages == 0, "Fail: Received an unexpected log line")
 
         let knownDate = Date(timeIntervalSince1970: 0)
-        testDestination.add(expectedLogMessage: "[\(XCGLogger.Level.error)] [\(filename)] \(#function) > \(knownDate)")
+        testDestination.add(expectedLogMessage: "[\(XCGLogger.Level.error)] [\(fileName)] \(#function) > \(knownDate)")
         XCTAssert(testDestination.remainingNumberOfExpectedLogMessages == 1, "Fail: Didn't correctly load all of the expected log messages")
         log.error { return knownDate }
         XCTAssert(testDestination.remainingNumberOfExpectedLogMessages == 0, "Fail: Didn't receive all expected log lines")
         XCTAssert(testDestination.numberOfUnexpectedLogMessages == 0, "Fail: Received an unexpected log line")
 
         let optionalString: String? = "text"
-        testDestination.add(expectedLogMessage: "[\(XCGLogger.Level.severe)] [\(filename)] \(#function) > \(optionalString ?? "")")
+        testDestination.add(expectedLogMessage: "[\(XCGLogger.Level.severe)] [\(fileName)] \(#function) > \(optionalString ?? "")")
         XCTAssert(testDestination.remainingNumberOfExpectedLogMessages == 1, "Fail: Didn't correctly load all of the expected log messages")
         log.severe(optionalString)
         XCTAssert(testDestination.remainingNumberOfExpectedLogMessages == 0, "Fail: Didn't receive all expected log lines")
@@ -375,14 +375,14 @@ class XCGLoggerTests: XCTestCase {
         let checkDefault = String(describing: log.noMessageClosure() ?? "__unexpected__")
         XCTAssert(checkDefault == "", "Fail: Default noMessageClosure doesn't return expected value")
 
-        testDestination.add(expectedLogMessage: "[\(XCGLogger.Level.debug)] [\(filename)] \(#function) > ")
+        testDestination.add(expectedLogMessage: "[\(XCGLogger.Level.debug)] [\(fileName)] \(#function) > ")
         XCTAssert(testDestination.remainingNumberOfExpectedLogMessages == 1, "Fail: Didn't correctly load all of the expected log messages")
         log.debug()
         XCTAssert(testDestination.remainingNumberOfExpectedLogMessages == 0, "Fail: Didn't receive all expected log lines")
         XCTAssert(testDestination.numberOfUnexpectedLogMessages == 0, "Fail: Received an unexpected log line")
 
         log.noMessageClosure = { return "***" }
-        testDestination.add(expectedLogMessage: "[\(XCGLogger.Level.debug)] [\(filename)] \(#function) > ***")
+        testDestination.add(expectedLogMessage: "[\(XCGLogger.Level.debug)] [\(fileName)] \(#function) > ***")
         XCTAssert(testDestination.remainingNumberOfExpectedLogMessages == 1, "Fail: Didn't correctly load all of the expected log messages")
         log.debug()
         XCTAssert(testDestination.remainingNumberOfExpectedLogMessages == 0, "Fail: Didn't receive all expected log lines")
@@ -390,7 +390,7 @@ class XCGLoggerTests: XCTestCase {
 
         let knownDate = Date(timeIntervalSince1970: 0)
         log.noMessageClosure = { return knownDate }
-        testDestination.add(expectedLogMessage: "[\(XCGLogger.Level.debug)] [\(filename)] \(#function) > \(knownDate)")
+        testDestination.add(expectedLogMessage: "[\(XCGLogger.Level.debug)] [\(fileName)] \(#function) > \(knownDate)")
         XCTAssert(testDestination.remainingNumberOfExpectedLogMessages == 1, "Fail: Didn't correctly load all of the expected log messages")
         log.debug()
         XCTAssert(testDestination.remainingNumberOfExpectedLogMessages == 0, "Fail: Didn't receive all expected log lines")
@@ -445,7 +445,7 @@ class XCGLoggerTests: XCTestCase {
 
     func test_00160_TestLogFormattersAreApplied() {
         let log: XCGLogger = XCGLogger(identifier: functionIdentifier())
-        log.outputLevel = .verbose
+        log.outputLevel = .debug
 
         let testDestination: TestDestination = TestDestination(identifier: log.identifier + ".testDestination")
         testDestination.showThreadName = false
@@ -461,7 +461,7 @@ class XCGLoggerTests: XCTestCase {
         ansiColorLogFormatter.colorize(level: .debug, with: .blue, on: .black, options: [.bold])
         log.formatters = [ansiColorLogFormatter]
 
-        testDestination.add(expectedLogMessage: "\(ANSIColorLogFormatter.escape)34;40;1m[\(XCGLogger.Level.debug)] [\(filename)] \(#function) > \(testString)\(ANSIColorLogFormatter.reset)")
+        testDestination.add(expectedLogMessage: "\(ANSIColorLogFormatter.escape)34;40;1m[\(XCGLogger.Level.debug)] [\(fileName)] \(#function) > \(testString)\(ANSIColorLogFormatter.reset)")
         XCTAssert(testDestination.remainingNumberOfExpectedLogMessages == 1, "Fail: Didn't correctly load all of the expected log messages")
         log.debug(testString)
         XCTAssert(testDestination.remainingNumberOfExpectedLogMessages == 0, "Fail: Didn't receive all expected log lines")
@@ -471,7 +471,7 @@ class XCGLoggerTests: XCTestCase {
         xcodeColorsLogFormatter.colorize(level: .debug, with: .black, on: .blue)
         log.formatters = [xcodeColorsLogFormatter]
 
-        testDestination.add(expectedLogMessage: "\(XcodeColorsLogFormatter.escape)fg0,0,0;\(XcodeColorsLogFormatter.escape)bg0,0,255;[\(XCGLogger.Level.debug)] [\(filename)] \(#function) > \(testString)\(XcodeColorsLogFormatter.reset)")
+        testDestination.add(expectedLogMessage: "\(XcodeColorsLogFormatter.escape)fg0,0,0;\(XcodeColorsLogFormatter.escape)bg0,0,255;[\(XCGLogger.Level.debug)] [\(fileName)] \(#function) > \(testString)\(XcodeColorsLogFormatter.reset)")
         XCTAssert(testDestination.remainingNumberOfExpectedLogMessages == 1, "Fail: Didn't correctly load all of the expected log messages")
         log.debug(testString)
         XCTAssert(testDestination.remainingNumberOfExpectedLogMessages == 0, "Fail: Didn't receive all expected log lines")
@@ -504,7 +504,7 @@ class XCGLoggerTests: XCTestCase {
 
         let linesToLog = ["One", "Two", "Three", "Four", "Five", "Six", "Seven", "Eight", "Nine", "Ten"]
         for lineToLog in linesToLog {
-            testDestination.add(expectedLogMessage: "[\(XCGLogger.Level.debug)] [\(filename)] \(#function) > \(lineToLog)")
+            testDestination.add(expectedLogMessage: "[\(XCGLogger.Level.debug)] [\(fileName)] \(#function) > \(lineToLog)")
         }
 
         XCTAssert(testDestination.remainingNumberOfExpectedLogMessages == linesToLog.count, "Fail: Didn't correctly load all of the expected log messages")
@@ -537,7 +537,7 @@ class XCGLoggerTests: XCTestCase {
 
         let linesToLog = ["One", "Two", "Three", "Four", "Five", "Six", "Seven", "Eight", "Nine", "Ten"]
         for lineToLog in linesToLog {
-            testDestination.add(expectedLogMessage: "[\(XCGLogger.Level.debug)] [\(filename)] \(#function) > \(lineToLog)")
+            testDestination.add(expectedLogMessage: "[\(XCGLogger.Level.debug)] [\(fileName)] \(#function) > \(lineToLog)")
         }
 
         XCTAssert(testDestination.remainingNumberOfExpectedLogMessages == linesToLog.count, "Fail: Didn't correctly load all of the expected log messages")
@@ -579,7 +579,7 @@ class XCGLoggerTests: XCTestCase {
 
         let linesToLog = ["One", "Two", "Three", "Four", "Five", "Six", "Seven", "Eight", "Nine", "Ten"]
         for lineToLog in linesToLog {
-            testDestination.add(expectedLogMessage: "[\(XCGLogger.Level.debug)] [\(filename)] \(#function) > \(lineToLog)")
+            testDestination.add(expectedLogMessage: "[\(XCGLogger.Level.debug)] [\(fileName)] \(#function) > \(lineToLog)")
         }
 
         XCTAssert(testDestination.remainingNumberOfExpectedLogMessages == linesToLog.count, "Fail: Didn't correctly load all of the expected log messages")

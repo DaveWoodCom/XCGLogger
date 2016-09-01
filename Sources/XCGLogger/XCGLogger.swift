@@ -156,7 +156,7 @@ open class XCGLogger: CustomDebugStringConvertible {
     ///     - showFunctionName: Whether or not to output the function name that generated the log. **Default:** true
     ///     - showThreadName: Whether or not to output the thread's name the log was created on. **Default:** false
     ///     - showLevel: Whether or not to output the log level of the log. **Default:** true
-    ///     - showFileNames: Whether or not to output the filename that generated the log. **Default:** true
+    ///     - showFileNames: Whether or not to output the fileName that generated the log. **Default:** true
     ///     - showLineNumbers: Whether or not to output the line number where the log was generated. **Default:** true
     ///     - showDate: Whether or not to output the date the log was created. **Default:** true
     ///     - writeToFile: FileURL or path (as String) to a file to log all messages to (this file is overwritten each time the logger is created). **Default:** nil => no log file
@@ -178,7 +178,7 @@ open class XCGLogger: CustomDebugStringConvertible {
     ///     - showFunctionName: Whether or not to output the function name that generated the log. **Default:** true
     ///     - showThreadName: Whether or not to output the thread's name the log was created on. **Default:** false
     ///     - showLevel: Whether or not to output the log level of the log. **Default:** true
-    ///     - showFileNames: Whether or not to output the filename that generated the log. **Default:** true
+    ///     - showFileNames: Whether or not to output the fileName that generated the log. **Default:** true
     ///     - showLineNumbers: Whether or not to output the line number where the log was generated. **Default:** true
     ///     - showDate: Whether or not to output the date the log was created. **Default:** true
     ///     - writeToFile: FileURL or path (as String) to a file to log all messages to (this file is overwritten each time the logger is created). **Default:** nil => no log file

@@ -35,7 +35,7 @@ open class BaseDestination: DestinationProtocol, CustomDebugStringConvertible {
     /// Option: whether or not to output the thread's name the log was created on
     open var showThreadName: Bool = false
 
-    /// Option: whether or not to output the filename that generated the log
+    /// Option: whether or not to output the fileName that generated the log
     open var showFileName: Bool = true
 
     /// Option: whether or not to output the line number where the log was generated
