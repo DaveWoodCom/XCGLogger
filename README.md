@@ -4,7 +4,7 @@
 [![Platforms OS X | iOS | tvOS | watchOS](https://img.shields.io/badge/Platforms-OS%20X%20%7C%20iOS%20%7C%20tvOS%20%7C%20watchOS-lightgray.svg?style=flat)](https://swift.org/)
 [![License MIT](https://img.shields.io/badge/License-MIT-lightgrey.svg?style=flat)](https://github.com/DaveWoodCom/XCGLogger/blob/master/LICENSE.txt)
 
-[![Travis CI](https://img.shields.io/travis/DaveWoodCom/XCGLogger.svg?style=flat)](https://travis-ci.org/DaveWoodCom/XCGLogger)
+[![Travis CI](https://img.shields.io/travis/DaveWoodCom/XCGLogger/master.svg?style=flat)](https://travis-ci.org/DaveWoodCom/XCGLogger)
 [![Carthage compatible](https://img.shields.io/badge/Carthage-compatible-brightgreen.svg?style=flat)](https://github.com/Carthage/Carthage)
 [![CocoaPods Version](https://img.shields.io/cocoapods/v/XCGLogger.svg?style=flat)](https://cocoapods.org/pods/XCGLogger)
 
@@ -73,10 +73,11 @@ Then run `pod install`. For details of the installation and usage of CocoaPods, 
 ###Backwards Compatibility
 
 Use:
-* XCGLogger version 3.5.1 for Swift 2.2
-* XCGLogger version 3.2 for Swift 2.0-2.1
-* XCGLogger version 2.x for Swift 1.2
-* XCGLogger version 1.x for Swift 1.1 and below.
+* XCGLogger version [4.0.0](https://github.com/DaveWoodCom/XCGLogger/tree/swift_3.0) for Swift 3.0
+* XCGLogger version [3.5.1](https://github.com/DaveWoodCom/XCGLogger/releases/tag/Version_3.5.1) for Swift 2.2
+* XCGLogger version [3.2](https://github.com/DaveWoodCom/XCGLogger/releases/tag/Version_3.2) for Swift 2.0-2.1
+* XCGLogger version [2.x](https://github.com/DaveWoodCom/XCGLogger/releases/tag/Version_2.4) for Swift 1.2
+* XCGLogger version [1.x](https://github.com/DaveWoodCom/XCGLogger/releases/tag/Version_1.8.1) for Swift 1.1 and below.
 
 ##Basic Usage (Quick Start)
 
