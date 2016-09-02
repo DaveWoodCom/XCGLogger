@@ -440,7 +440,12 @@ public class XCGFileLogDestination: XCGBaseLogDestination {
                 return
             }
 
-            let logDetails = XCGLogDetails(logLevel: .Info, date: NSDate(), logMessage: "XCGLogger " + (fileExists && shouldAppend ? "appending" : "writing") + " log to: " + writeToFileURL.absoluteString, functionName: "", fileName: "", lineNumber: 0)
+            #if swift(>=2.3)
+                let logFileName = writeToFileURL.absoluteString!
+            #else
+                let logFileName = writeToFileURL.absoluteString
+            #endif
+            let logDetails = XCGLogDetails(logLevel: .Info, date: NSDate(), logMessage: "XCGLogger " + (fileExists && shouldAppend ? "appending" : "writing") + " log to: " + logFileName, functionName: "", fileName: "", lineNumber: 0)
             owner._logln(logDetails.logMessage, logLevel: logDetails.logLevel)
             if owner.logDestination(identifier) == nil {
                 processInternalLogDetails(logDetails)
