@@ -9,6 +9,11 @@
 
 #import <Cocoa/Cocoa.h>
 
+#ifdef __OBJC__
+#define XCGLogva(level, message) [XCGLogWrapper log:level functionName: @(__PRETTY_FUNCTION__) fileName: @__FILE__ lineNumber: __LINE__ logMessage: message ]
+#define XCGLog(level, ...) XCGLogva(level, ([NSString stringWithFormat: __VA_ARGS__ ]) )
+#endif
+
 //! Project version number for XCGLogger.
 FOUNDATION_EXPORT double XCGLoggerVersionNumber;
 
