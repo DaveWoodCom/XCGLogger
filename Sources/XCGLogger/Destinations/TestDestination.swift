@@ -65,6 +65,18 @@ open class TestDestination: BaseDestination {
         }
     }
 
+    /// Reset our expections etc for additional tests
+    ///
+    /// - Parameters:   Nothing
+    ///
+    /// - Returns:  Nothing
+    ///
+    open func reset() {
+        haveLoggedAppDetails = false
+        expectedLogMessages = []
+        unexpectedLogMessages = []
+    }
+
     // MARK: - Overridden Methods
     /// Removes line from expected log messages if there's a match, otherwise adds to unexpected log messages.
     ///
