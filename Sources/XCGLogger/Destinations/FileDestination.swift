@@ -110,7 +110,7 @@ open class FileDestination: BaseDestination {
 
             owner.logAppDetails(selectedDestination: self)
 
-            let logDetails = LogDetails(level: .info, date: Date(), message: "XCGLogger " + (fileExists && shouldAppend ? "appending" : "writing") + " log to: " + writeToFileURL.absoluteString, functionName: "", fileName: "", lineNumber: 0)
+            let logDetails = LogDetails(level: .info, date: Date(), message: "XCGLogger " + (fileExists && shouldAppend ? "appending" : "writing") + " log to: " + writeToFileURL.absoluteString, functionName: "", fileName: "", lineNumber: 0, userInfo: XCGLogger.Constants.internalUserInfo)
             owner._logln(logDetails.message, level: logDetails.level)
             if owner.destination(withIdentifier: identifier) == nil {
                 processInternal(logDetails: logDetails)

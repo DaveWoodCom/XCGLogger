@@ -520,6 +520,121 @@ class XCGLoggerTests: XCTestCase {
         XCTAssert(testDestination.numberOfUnexpectedLogMessages == 0, "Fail: Received an unexpected log line")
     }
 
+    func test_00210_TestTagFilter() {
+        let log: XCGLogger = XCGLogger(identifier: functionIdentifier())
+        log.outputLevel = .debug
+
+        let testDestination: TestDestination = TestDestination(identifier: log.identifier + ".testDestination")
+        testDestination.showThreadName = false
+        testDestination.showLevel = true
+        testDestination.showFileName = true
+        testDestination.showLineNumber = false
+        testDestination.showDate = false
+        log.add(destination: testDestination)
+
+        let normalMessage = "The WiFi SSID is: strange"
+        let sensitiveMessage = "The WiFi password is: shamballa"
+
+        let sensitiveTag = "Sensitive"
+
+        // No filter
+        testDestination.add(expectedLogMessage: "[\(XCGLogger.Level.debug)] [\(fileName)] \(#function) > \(normalMessage)")
+        testDestination.add(expectedLogMessage: "[\(XCGLogger.Level.debug)] [\(fileName)] \(#function) > \(sensitiveMessage)")
+        XCTAssert(testDestination.remainingNumberOfExpectedLogMessages == 2, "Fail: Didn't correctly load all of the expected log messages")
+        log.debug(normalMessage)
+        log.debug(sensitiveMessage, userInfo: [XCGLogger.Constants.userInfoKeyTags: sensitiveTag])
+        XCTAssert(testDestination.remainingNumberOfExpectedLogMessages == 0, "Fail: Didn't receive all expected log lines")
+        XCTAssert(testDestination.numberOfUnexpectedLogMessages == 0, "Fail: Received an unexpected log line")
+
+        // Exclude messages tagged as sensitive
+        let exclusiveTagFilter: TagFilter = TagFilter(excludeFrom: [sensitiveTag])
+        log.filters = [exclusiveTagFilter]
+
+        testDestination.add(expectedLogMessage: "[\(XCGLogger.Level.debug)] [\(fileName)] \(#function) > \(normalMessage)")
+        XCTAssert(testDestination.remainingNumberOfExpectedLogMessages == 1, "Fail: Didn't correctly load all of the expected log messages")
+        log.debug(normalMessage)
+        log.debug(sensitiveMessage, userInfo: [XCGLogger.Constants.userInfoKeyTags: [sensitiveTag]])
+        XCTAssert(testDestination.remainingNumberOfExpectedLogMessages == 0, "Fail: Didn't receive all expected log lines")
+        XCTAssert(testDestination.numberOfUnexpectedLogMessages == 0, "Fail: Received an unexpected log line")
+
+        // Include only messages that are sensitive
+        let inclusiveTagFilter: TagFilter = TagFilter(includeFrom: [sensitiveTag])
+        log.filters = [inclusiveTagFilter]
+
+        testDestination.add(expectedLogMessage: "[\(XCGLogger.Level.debug)] [\(fileName)] \(#function) > \(sensitiveMessage)")
+        XCTAssert(testDestination.remainingNumberOfExpectedLogMessages == 1, "Fail: Didn't correctly load all of the expected log messages")
+        log.debug(normalMessage)
+        log.debug(sensitiveMessage, userInfo: [XCGLogger.Constants.userInfoKeyTags: Set<String>([sensitiveTag])])
+        XCTAssert(testDestination.remainingNumberOfExpectedLogMessages == 0, "Fail: Didn't receive all expected log lines")
+        XCTAssert(testDestination.numberOfUnexpectedLogMessages == 0, "Fail: Received an unexpected log line")
+    }
+
+    func test_00220_TestDevFilter() {
+        let log: XCGLogger = XCGLogger(identifier: functionIdentifier())
+        log.outputLevel = .debug
+
+        let testDestination: TestDestination = TestDestination(identifier: log.identifier + ".testDestination")
+        testDestination.showThreadName = false
+        testDestination.showLevel = true
+        testDestination.showFileName = true
+        testDestination.showLineNumber = false
+        testDestination.showDate = false
+        log.add(destination: testDestination)
+
+        let daveMessage = "Hmm, checking this thing, and that thing, and then this other thing..."
+        let sabbyMessage = "Yeah it works...Moving on..."
+
+        let dave = "DW"
+        let sabby = "SW"
+
+        let chatterBoxCount = 2
+
+        // No filter
+        for _ in 0 ..< chatterBoxCount {
+            testDestination.add(expectedLogMessage: "[\(XCGLogger.Level.debug)] [\(fileName)] \(#function) > \(daveMessage)")
+        }
+        testDestination.add(expectedLogMessage: "[\(XCGLogger.Level.debug)] [\(fileName)] \(#function) > \(sabbyMessage)")
+        XCTAssert(testDestination.remainingNumberOfExpectedLogMessages == chatterBoxCount + 1, "Fail: Didn't correctly load all of the expected log messages")
+        log.logAppDetails() // adds two unexpected log messages, since we haven't added these to the expected list above
+        for _ in 0 ..< chatterBoxCount {
+            log.debug(daveMessage, userInfo: [XCGLogger.Constants.userInfoKeyDevs: dave])
+        }
+        log.debug(sabbyMessage, userInfo: [XCGLogger.Constants.userInfoKeyDevs: sabby])
+        XCTAssert(testDestination.remainingNumberOfExpectedLogMessages == 0, "Fail: Didn't receive all expected log lines")
+        XCTAssert(testDestination.numberOfUnexpectedLogMessages == 2, "Fail: Received an unexpected log line")
+        testDestination.reset()
+
+        // Exclude log messages added by a chatter box developer
+        let exclusiveDevFilter: DevFilter = DevFilter(excludeFrom: [dave])
+        log.filters = [exclusiveDevFilter]
+
+        testDestination.add(expectedLogMessage: "[\(XCGLogger.Level.debug)] [\(fileName)] \(#function) > \(sabbyMessage)")
+        XCTAssert(testDestination.remainingNumberOfExpectedLogMessages == 1, "Fail: Didn't correctly load all of the expected log messages")
+        log.logAppDetails() // adds two unexpected log messages, since we haven't added these to the expected list above
+        for _ in 0 ..< chatterBoxCount {
+            log.debug(daveMessage, userInfo: [XCGLogger.Constants.userInfoKeyDevs: dave])
+        }
+        log.debug(sabbyMessage, userInfo: [XCGLogger.Constants.userInfoKeyDevs: sabby])
+        XCTAssert(testDestination.remainingNumberOfExpectedLogMessages == 0, "Fail: Didn't receive all expected log lines")
+        XCTAssert(testDestination.numberOfUnexpectedLogMessages == 2, "Fail: Received an unexpected log line")
+        testDestination.reset()
+
+        // Include only messages by one developer (lets them focus on only their info)
+        let inclusiveDevFilter: DevFilter = DevFilter(includeFrom: [sabby])
+        inclusiveDevFilter.applyFilterToInternalMessages = true // This will mean internal (ie appDetails etc) messages will be subject to the same filter rules as normal messages
+        log.filters = [inclusiveDevFilter]
+
+        testDestination.add(expectedLogMessage: "[\(XCGLogger.Level.debug)] [\(fileName)] \(#function) > \(sabbyMessage)")
+        XCTAssert(testDestination.remainingNumberOfExpectedLogMessages == 1, "Fail: Didn't correctly load all of the expected log messages")
+        log.logAppDetails() // this time this shouldn't add additional unexpected messages, since these should be filtered because they weren't logged by sabby
+        for _ in 0 ..< chatterBoxCount {
+            log.debug(daveMessage, userInfo: [XCGLogger.Constants.userInfoKeyDevs: dave])
+        }
+        log.debug(sabbyMessage, userInfo: [XCGLogger.Constants.userInfoKeyDevs: sabby])
+        XCTAssert(testDestination.remainingNumberOfExpectedLogMessages == 0, "Fail: Didn't receive all expected log lines")
+        XCTAssert(testDestination.numberOfUnexpectedLogMessages == 0, "Fail: Received an unexpected log line")
+    }
+
     /// Test logging works correctly when logs are generated from multiple threads
     func test_01010_MultiThreaded() {
         let log: XCGLogger = XCGLogger(identifier: functionIdentifier())
