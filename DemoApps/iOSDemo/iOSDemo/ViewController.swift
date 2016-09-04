@@ -10,12 +10,35 @@
 import UIKit
 import XCGLogger
 
+let sensitiveTag = "Sensitive"
+let userInfoSensitive: [String: Any] = [XCGLogger.Constants.userInfoKeyTags: [sensitiveTag]]
+
+func +<Key: Hashable, Value> (lhs: Dictionary<Key, Value>, rhs: Dictionary<Key, Value>) -> Dictionary<Key, Value> {
+    var merged = lhs
+    rhs.forEach { key, value in
+        merged[key] = value
+    }
+    return merged
+}
+
+struct Tag {
+    static let sensitive = [XCGLogger.Constants.userInfoKeyTags: ["sensitive"]]
+    static let ui = [XCGLogger.Constants.userInfoKeyTags: ["ui"]]
+    static let data = [XCGLogger.Constants.userInfoKeyTags: ["data"]]
+}
+
+struct Dev {
+    static let dave = [XCGLogger.Constants.userInfoKeyDevs: ["dave"]]
+    static let sabby = [XCGLogger.Constants.userInfoKeyDevs: ["sabby"]]
+}
+
 class ViewController: UIViewController {
 
     @IBOutlet var logLevelLabel: UILabel!
     @IBOutlet var currentLogLevelLabel: UILabel!
     @IBOutlet var logLevelSlider: UISlider!
     @IBOutlet var generateLabel: UILabel!
+    @IBOutlet var enableFilterSwitch: UISwitch!
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -72,6 +95,30 @@ class ViewController: UIViewController {
         }
     }
 
+    @IBAction func verboseSensitiveButtonTouchUpInside(_ sender: AnyObject) {
+        log.verbose("Verbose (Sensitive) button tapped", userInfo: userInfoSensitive)
+    }
+
+    @IBAction func debugSensitiveButtonTouchUpInside(_ sender: AnyObject) {
+        log.debug("Debug (Sensitive) button tapped", userInfo: userInfoSensitive)
+    }
+
+    @IBAction func infoSensitiveButtonTouchUpInside(_ sender: AnyObject) {
+        log.info("Info (Sensitive) button tapped", userInfo: Tag.sensitive + Dev.dave)
+    }
+
+    @IBAction func warningSensitiveButtonTouchUpInside(_ sender: AnyObject) {
+        log.warning("Warning (Sensitive) button tapped", userInfo: Tag.sensitive + Dev.dave)
+    }
+
+    @IBAction func errorSensitiveButtonTouchUpInside(_ sender: AnyObject) {
+        log.error("Error (Sensitive) button tapped", userInfo: userInfoSensitive)
+    }
+
+    @IBAction func severeSensitiveButtonTouchUpInside(_ sender: AnyObject) {
+        log.severe("Severe (Sensitive) button tapped", userInfo: userInfoSensitive)
+    }
+
     @IBAction func logLevelSliderValueChanged(_ sender: AnyObject) {
         var logLevel: XCGLogger.Level = .verbose
 
@@ -99,6 +146,15 @@ class ViewController: UIViewController {
 
         log.outputLevel = logLevel
         updateView()
+    }
+
+    @IBAction func enableFilterSwitchValueChanged(_ sender: AnyObject) {
+        if enableFilterSwitch.isOn {
+            log.filters = [TagFilter(excludeFrom: [sensitiveTag])]
+        }
+        else {
+            log.filters = []
+        }
     }
 
     func updateView() {
