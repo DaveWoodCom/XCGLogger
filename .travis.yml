@@ -1,46 +1,50 @@
 language: objective-c
-osx_image: xcode7.3
+osx_image: xcode8
 env:
   global:
     - LC_CTYPE=en_US.UTF-8
     - LANG=en_US.UTF-8
-    - LIB_PROJECT=XCGLogger/Library/XCGLogger.xcodeproj
-    - IOSDEMO_PROJECT=XCGLogger/DemoApps/iOS/iOSDemo/iOSDemo.xcodeproj
-    - OSXDEMO_PROJECT=XCGLogger/DemoApps/OSX/OSXDemo/OSXDemo.xcodeproj
-    - TVOSDEMO_PROJECT=XCGLogger/DemoApps/tvOS/tvOSDemo/tvOSDemo.xcodeproj
+    - LIB_PROJECT=Sources/XCGLogger.xcodeproj
+    - IOSDEMO_PROJECT=DemoApps/iOSDemo/iOSDemo.xcodeproj
+    - OSXDEMO_PROJECT=DemoApps/OSXDemo/OSXDemo.xcodeproj
+    - TVOSDEMO_PROJECT=DemoApps/tvOSDemo/tvOSDemo.xcodeproj
     - IOS_FRAMEWORK_SCHEME="XCGLogger (iOS)"
     - OSX_FRAMEWORK_SCHEME="XCGLogger (OS X)"
     - TVOS_FRAMEWORK_SCHEME="XCGLogger (tvOS)"
     - WATCHOS_FRAMEWORK_SCHEME="XCGLogger (watchOS)"
-    - IOS_SDK=iphonesimulator9.3
+    - IOS_SDK=iphonesimulator10.0
     - OSX_SDK=macosx10.11
-    - TVOS_SDK=appletvsimulator9.2
-    - WATCHOS_SDK=watchsimulator2.2
+    - TVOS_SDK=appletvsimulator10.0
+    - WATCHOS_SDK=watchsimulator3.0
     - IOS_EXAMPLE_SCHEME="iOSDemo"
     - OSX_EXAMPLE_SCHEME="OSXDemo"
     - TVOS_EXAMPLE_SCHEME="tvOSDemo"
   matrix:
-    - POD_LINT="YES"
-    - PROJECT_FILE="$LIB_PROJECT"       DESTINATION="OS=9.3,name=iPhone 6S"             SCHEME="$IOS_FRAMEWORK_SCHEME"      SDK="$IOS_SDK"      POD_LINT="NO"   BUILDCMD="clean test build"
+    # Can't do a pod lint with Xcode 8 due to: https://github.com/CocoaPods/CocoaPods/issues/5661
+    # - POD_LINT="YES"
+    - PROJECT_FILE="$LIB_PROJECT"       DESTINATION="OS=10.0,name=iPhone 6S"            SCHEME="$IOS_FRAMEWORK_SCHEME"      SDK="$IOS_SDK"      POD_LINT="NO"   BUILDCMD="clean test build"
     - PROJECT_FILE="$LIB_PROJECT"       DESTINATION="arch=x86_64"                       SCHEME="$OSX_FRAMEWORK_SCHEME"      SDK="$OSX_SDK"      POD_LINT="NO"   BUILDCMD="clean test build"
-    - PROJECT_FILE="$LIB_PROJECT"       DESTINATION="OS=9.2,name=Apple TV 1080p"        SCHEME="$TVOS_FRAMEWORK_SCHEME"     SDK="$TVOS_SDK"     POD_LINT="NO"   BUILDCMD="clean test build"
-    - PROJECT_FILE="$LIB_PROJECT"       DESTINATION="OS=2.2,name=Apple Watch - 42mm"    SCHEME="$WATCHOS_FRAMEWORK_SCHEME"  SDK="$WATCHOS_SDK"  POD_LINT="NO"   BUILDCMD="clean build"
-    - PROJECT_FILE="$IOSDEMO_PROJECT"   DESTINATION="OS=8.1,name=iPhone 5"              SCHEME="$IOS_EXAMPLE_SCHEME"        SDK="$IOS_SDK"      POD_LINT="NO"   BUILDCMD="clean build"
-    - PROJECT_FILE="$IOSDEMO_PROJECT"   DESTINATION="OS=8.2,name=iPhone 5S"             SCHEME="$IOS_EXAMPLE_SCHEME"        SDK="$IOS_SDK"      POD_LINT="NO"   BUILDCMD="clean build"
-    - PROJECT_FILE="$IOSDEMO_PROJECT"   DESTINATION="OS=8.3,name=iPhone 6"              SCHEME="$IOS_EXAMPLE_SCHEME"        SDK="$IOS_SDK"      POD_LINT="NO"   BUILDCMD="clean build"
-    - PROJECT_FILE="$IOSDEMO_PROJECT"   DESTINATION="OS=8.4,name=iPad Retina"           SCHEME="$IOS_EXAMPLE_SCHEME"        SDK="$IOS_SDK"      POD_LINT="NO"   BUILDCMD="clean build"
-    - PROJECT_FILE="$IOSDEMO_PROJECT"   DESTINATION="OS=9.0,name=iPhone 6 Plus"         SCHEME="$IOS_EXAMPLE_SCHEME"        SDK="$IOS_SDK"      POD_LINT="NO"   BUILDCMD="clean build"
-    - PROJECT_FILE="$IOSDEMO_PROJECT"   DESTINATION="OS=9.1,name=iPhone 6S"             SCHEME="$IOS_EXAMPLE_SCHEME"        SDK="$IOS_SDK"      POD_LINT="NO"   BUILDCMD="clean build"
-    - PROJECT_FILE="$IOSDEMO_PROJECT"   DESTINATION="OS=9.2,name=iPhone 6S Plus"        SCHEME="$IOS_EXAMPLE_SCHEME"        SDK="$IOS_SDK"      POD_LINT="NO"   BUILDCMD="clean build"
-    - PROJECT_FILE="$IOSDEMO_PROJECT"   DESTINATION="OS=9.3,name=iPad Retina"           SCHEME="$IOS_EXAMPLE_SCHEME"        SDK="$IOS_SDK"      POD_LINT="NO"   BUILDCMD="clean build"
+    - PROJECT_FILE="$LIB_PROJECT"       DESTINATION="OS=10.0,name=Apple TV 1080p"       SCHEME="$TVOS_FRAMEWORK_SCHEME"     SDK="$TVOS_SDK"     POD_LINT="NO"   BUILDCMD="clean test build"
+    - PROJECT_FILE="$LIB_PROJECT"       DESTINATION="OS=3.0,name=Apple Watch - 42mm"    SCHEME="$WATCHOS_FRAMEWORK_SCHEME"  SDK="$WATCHOS_SDK"  POD_LINT="NO"   BUILDCMD="clean build"
+    # SDK not available in Xcode 8 yet - PROJECT_FILE="$IOSDEMO_PROJECT"   DESTINATION="OS=8.1,name=iPhone 5"              SCHEME="$IOS_EXAMPLE_SCHEME"        SDK="$IOS_SDK"      POD_LINT="NO"   BUILDCMD="clean build"
+    # SDK not available in Xcode 8 yet - PROJECT_FILE="$IOSDEMO_PROJECT"   DESTINATION="OS=8.2,name=iPhone 5S"             SCHEME="$IOS_EXAMPLE_SCHEME"        SDK="$IOS_SDK"      POD_LINT="NO"   BUILDCMD="clean build"
+    # SDK not available in Xcode 8 yet - PROJECT_FILE="$IOSDEMO_PROJECT"   DESTINATION="OS=8.3,name=iPhone 6"              SCHEME="$IOS_EXAMPLE_SCHEME"        SDK="$IOS_SDK"      POD_LINT="NO"   BUILDCMD="clean build"
+    # SDK not available in Xcode 8 yet - PROJECT_FILE="$IOSDEMO_PROJECT"   DESTINATION="OS=8.4,name=iPad Retina"           SCHEME="$IOS_EXAMPLE_SCHEME"        SDK="$IOS_SDK"      POD_LINT="NO"   BUILDCMD="clean build"
+    # SDK not available in Xcode 8 yet - PROJECT_FILE="$IOSDEMO_PROJECT"   DESTINATION="OS=9.0,name=iPhone 6 Plus"         SCHEME="$IOS_EXAMPLE_SCHEME"        SDK="$IOS_SDK"      POD_LINT="NO"   BUILDCMD="clean build"
+    # SDK not available in Xcode 8 yet - PROJECT_FILE="$IOSDEMO_PROJECT"   DESTINATION="OS=9.1,name=iPhone 6S"             SCHEME="$IOS_EXAMPLE_SCHEME"        SDK="$IOS_SDK"      POD_LINT="NO"   BUILDCMD="clean build"
+    # SDK not available in Xcode 8 yet - PROJECT_FILE="$IOSDEMO_PROJECT"   DESTINATION="OS=9.2,name=iPhone 6S Plus"        SCHEME="$IOS_EXAMPLE_SCHEME"        SDK="$IOS_SDK"      POD_LINT="NO"   BUILDCMD="clean build"
+    # SDK not available in Xcode 8 yet - PROJECT_FILE="$IOSDEMO_PROJECT"   DESTINATION="OS=9.3,name=iPad Retina"           SCHEME="$IOS_EXAMPLE_SCHEME"        SDK="$IOS_SDK"      POD_LINT="NO"   BUILDCMD="clean build"
+    - PROJECT_FILE="$IOSDEMO_PROJECT"   DESTINATION="OS=10.0,name=iPad Retina"          SCHEME="$IOS_EXAMPLE_SCHEME"        SDK="$IOS_SDK"      POD_LINT="NO"   BUILDCMD="clean build"
     - PROJECT_FILE="$OSXDEMO_PROJECT"   DESTINATION="arch=x86_64"                       SCHEME="$OSX_EXAMPLE_SCHEME"        SDK="$OSX_SDK"      POD_LINT="NO"   BUILDCMD="clean build"
-    - PROJECT_FILE="$TVOSDEMO_PROJECT"  DESTINATION="OS=9.2,name=Apple TV 1080p"        SCHEME="$TVOS_EXAMPLE_SCHEME"       SDK="$TVOS_SDK"     POD_LINT="NO"   BUILDCMD="clean build"
+    # SDK not available in Xcode 8 yet - PROJECT_FILE="$TVOSDEMO_PROJECT"  DESTINATION="OS=9.2,name=Apple TV 1080p"        SCHEME="$TVOS_EXAMPLE_SCHEME"       SDK="$TVOS_SDK"     POD_LINT="NO"   BUILDCMD="clean build"
+    - PROJECT_FILE="$TVOSDEMO_PROJECT"  DESTINATION="OS=10.0,name=Apple TV 1080p"        SCHEME="$TVOS_EXAMPLE_SCHEME"      SDK="$TVOS_SDK"     POD_LINT="NO"   BUILDCMD="clean build"
 before_install:
   - brew update
 script:
   - set -o pipefail
   - xcodebuild -version
   - xcodebuild -showsdks
+  - xcrun simctl list
 
   - if [ $POD_LINT == "YES" ]; then pod lib lint; fi
   - if [ $POD_LINT == "NO" ]; then  xcodebuild -UseSanitizedBuildSystemEnvironment=YES -project "$PROJECT_FILE" -scheme "$SCHEME" -destination "$DESTINATION" -configuration Debug ONLY_ACTIVE_ARCH=NO ENABLE_TESTABILITY=YES $BUILDCMD | xcpretty -c; fi
