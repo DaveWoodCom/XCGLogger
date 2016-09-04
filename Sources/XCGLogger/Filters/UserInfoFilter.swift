@@ -111,7 +111,7 @@ open class UserInfoFilter: FilterProtocol {
             if let messageItemsSet: Set<String> = messageItemsObject as? Set<String> {
                 matched = itemsToMatch.intersection(messageItemsSet).count > 0
             }
-            else if let messageItemsArray:Array<String> = messageItemsObject as? Array<String> {
+            else if let messageItemsArray: Array<String> = messageItemsObject as? Array<String> {
                 matched = itemsToMatch.intersection(messageItemsArray).count > 0
             }
             else if let messageItem = messageItemsObject as? String {
