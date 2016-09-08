@@ -401,7 +401,7 @@ public class XCGLogger: CustomDebugStringConvertible {
         
         #if os(OSX)
         public init(fg: NSColor, bg: NSColor? = nil) {
-        if let fgColorSpaceCorrected = fg.colorUsingColorSpaceName(NSCalibratedRGBColorSpace) {
+        if let fgColorSpaceCorrected = fg.usingColorSpaceName(NSCalibratedRGBColorSpace) {
         self.fg = (Int(fgColorSpaceCorrected.redComponent * 255), Int(fgColorSpaceCorrected.greenComponent * 255), Int(fgColorSpaceCorrected.blueComponent * 255))
         }
         else {
@@ -409,7 +409,7 @@ public class XCGLogger: CustomDebugStringConvertible {
         }
         
         if let bg = bg,
-        let bgColorSpaceCorrected = bg.colorUsingColorSpaceName(NSCalibratedRGBColorSpace) {
+        let bgColorSpaceCorrected = bg.usingColorSpaceName(NSCalibratedRGBColorSpace) {
         
         self.bg = (Int(bgColorSpaceCorrected.redComponent * 255), Int(bgColorSpaceCorrected.greenComponent * 255), Int(bgColorSpaceCorrected.blueComponent * 255))
         }
