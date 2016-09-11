@@ -55,6 +55,10 @@
 		5501A3F11D77506F00CB8ABE /* XcodeColorsLogFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5501A3E71D77506F00CB8ABE /* XcodeColorsLogFormatter.swift */; };
 		5501A3F21D77506F00CB8ABE /* XcodeColorsLogFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5501A3E71D77506F00CB8ABE /* XcodeColorsLogFormatter.swift */; };
 		5501A3F31D77506F00CB8ABE /* XcodeColorsLogFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5501A3E71D77506F00CB8ABE /* XcodeColorsLogFormatter.swift */; };
+		5535F8BF1D853F7E001550E2 /* XCGLogger.h in Headers */ = {isa = PBXBuildFile; fileRef = 5535F8BE1D853F7E001550E2 /* XCGLogger.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		5535F8C01D853F7E001550E2 /* XCGLogger.h in Headers */ = {isa = PBXBuildFile; fileRef = 5535F8BE1D853F7E001550E2 /* XCGLogger.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		5535F8C11D853F7E001550E2 /* XCGLogger.h in Headers */ = {isa = PBXBuildFile; fileRef = 5535F8BE1D853F7E001550E2 /* XCGLogger.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		5535F8C21D853F7E001550E2 /* XCGLogger.h in Headers */ = {isa = PBXBuildFile; fileRef = 5535F8BE1D853F7E001550E2 /* XCGLogger.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		554DF41019D76FA9005708BE /* XCGLogger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 554DF40F19D76FA9005708BE /* XCGLogger.swift */; };
 		554DF43319D77155005708BE /* XCGLogger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 554DF40F19D76FA9005708BE /* XCGLogger.swift */; };
 		556DA17F1D78B41600C7E546 /* FileNameFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 556DA17D1D78B41600C7E546 /* FileNameFilter.swift */; };
@@ -88,12 +92,8 @@
 		55C4DD5D1D781D850074C21F /* Base64LogFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55C4DD5B1D781D850074C21F /* Base64LogFormatter.swift */; };
 		55C4DD5E1D781D850074C21F /* Base64LogFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55C4DD5B1D781D850074C21F /* Base64LogFormatter.swift */; };
 		55C4DD5F1D781D850074C21F /* Base64LogFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55C4DD5B1D781D850074C21F /* Base64LogFormatter.swift */; };
-		55DA396819D7737B0032F026 /* XCGLogger.h in Headers */ = {isa = PBXBuildFile; fileRef = 55DA396519D7737B0032F026 /* XCGLogger.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		55DA396B19D7737B0032F026 /* XCGLogger.h in Headers */ = {isa = PBXBuildFile; fileRef = 55DA396719D7737B0032F026 /* XCGLogger.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		55E37F621BFC64C600392B9C /* XCGLogger.h in Headers */ = {isa = PBXBuildFile; fileRef = 55E37F611BFC648800392B9C /* XCGLogger.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		55E3EE5119D76F280068C3A7 /* XCGLogger.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55E3EE4519D76F280068C3A7 /* XCGLogger.framework */; };
 		55E3EE5819D76F280068C3A7 /* XCGLoggerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55E3EE5719D76F280068C3A7 /* XCGLoggerTests.swift */; };
-		70C0D5C01B99EAFC00C4F3BA /* XCGLogger.h in Headers */ = {isa = PBXBuildFile; fileRef = 55DA396519D7737B0032F026 /* XCGLogger.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		70CB94181B99E728007802FF /* XCGLogger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 554DF40F19D76FA9005708BE /* XCGLogger.swift */; };
 /* End PBXBuildFile section */
 
@@ -142,6 +142,7 @@
 		5501A3E61D77506F00CB8ABE /* LogFormatterProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LogFormatterProtocol.swift; sourceTree = "<group>"; };
 		5501A3E71D77506F00CB8ABE /* XcodeColorsLogFormatter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = XcodeColorsLogFormatter.swift; sourceTree = "<group>"; };
 		5515A3DF1BA119FA0047BA31 /* XCGLogger.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = XCGLogger.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		5535F8BE1D853F7E001550E2 /* XCGLogger.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XCGLogger.h; sourceTree = "<group>"; };
 		554DF40F19D76FA9005708BE /* XCGLogger.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = XCGLogger.swift; sourceTree = "<group>"; };
 		554DF41719D76FE7005708BE /* XCGLogger.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = XCGLogger.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		556DA17D1D78B41600C7E546 /* FileNameFilter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FileNameFilter.swift; sourceTree = "<group>"; };
@@ -153,12 +154,9 @@
 		55A4B4F21D7AB0980006463B /* DevFilter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DevFilter.swift; sourceTree = "<group>"; };
 		55BB1F011B79DC7500709779 /* XCGLoggerTests (OS X).xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "XCGLoggerTests (OS X).xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		55C4DD5B1D781D850074C21F /* Base64LogFormatter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Base64LogFormatter.swift; sourceTree = "<group>"; };
-		55DA396519D7737B0032F026 /* XCGLogger.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XCGLogger.h; sourceTree = "<group>"; };
-		55DA396719D7737B0032F026 /* XCGLogger.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XCGLogger.h; sourceTree = "<group>"; };
 		55E37F5D1BFC646800392B9C /* Info-iOS.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Info-iOS.plist"; sourceTree = "<group>"; };
 		55E37F5E1BFC647400392B9C /* Info-OSX.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Info-OSX.plist"; sourceTree = "<group>"; };
 		55E37F601BFC648800392B9C /* Info-tvOS.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Info-tvOS.plist"; sourceTree = "<group>"; };
-		55E37F611BFC648800392B9C /* XCGLogger.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = XCGLogger.h; sourceTree = "<group>"; };
 		55E3EE4519D76F280068C3A7 /* XCGLogger.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = XCGLogger.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		55E3EE5019D76F280068C3A7 /* XCGLoggerTests (iOS).xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "XCGLoggerTests (iOS).xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		55E3EE5619D76F280068C3A7 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -293,7 +291,6 @@
 		55DA396419D7737B0032F026 /* iOS */ = {
 			isa = PBXGroup;
 			children = (
-				55DA396519D7737B0032F026 /* XCGLogger.h */,
 				55E37F5D1BFC646800392B9C /* Info-iOS.plist */,
 			);
 			path = iOS;
@@ -302,7 +299,6 @@
 		55DA396619D7737B0032F026 /* OSX */ = {
 			isa = PBXGroup;
 			children = (
-				55DA396719D7737B0032F026 /* XCGLogger.h */,
 				55E37F5E1BFC647400392B9C /* Info-OSX.plist */,
 			);
 			path = OSX;
@@ -311,7 +307,6 @@
 		55E37F5F1BFC648800392B9C /* tvOS */ = {
 			isa = PBXGroup;
 			children = (
-				55E37F611BFC648800392B9C /* XCGLogger.h */,
 				55E37F601BFC648800392B9C /* Info-tvOS.plist */,
 			);
 			path = tvOS;
@@ -359,6 +354,7 @@
 		55E3EE4819D76F280068C3A7 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				5535F8BE1D853F7E001550E2 /* XCGLogger.h */,
 				55DA396419D7737B0032F026 /* iOS */,
 				55DA396619D7737B0032F026 /* OSX */,
 				55E37F5F1BFC648800392B9C /* tvOS */,
@@ -390,7 +386,7 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				55E37F621BFC64C600392B9C /* XCGLogger.h in Headers */,
+				5535F8C21D853F7E001550E2 /* XCGLogger.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -398,7 +394,7 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				55DA396B19D7737B0032F026 /* XCGLogger.h in Headers */,
+				5535F8C01D853F7E001550E2 /* XCGLogger.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -406,7 +402,7 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				55DA396819D7737B0032F026 /* XCGLogger.h in Headers */,
+				5535F8BF1D853F7E001550E2 /* XCGLogger.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -414,7 +410,7 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				70C0D5C01B99EAFC00C4F3BA /* XCGLogger.h in Headers */,
+				5535F8C11D853F7E001550E2 /* XCGLogger.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
