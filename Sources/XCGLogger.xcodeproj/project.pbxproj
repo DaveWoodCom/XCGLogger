@@ -147,8 +147,8 @@
 		554DF41719D76FE7005708BE /* XCGLogger.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = XCGLogger.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		556DA17D1D78B41600C7E546 /* FileNameFilter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FileNameFilter.swift; sourceTree = "<group>"; };
 		556DA17E1D78B41600C7E546 /* FilterProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FilterProtocol.swift; sourceTree = "<group>"; };
-		558EEB851D6BAC61006A9C7A /* XCGLoggerTests (watchOS).xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "XCGLoggerTests (watchOS).xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
-		558EEB921D6BAC66006A9C7A /* XCGLoggerTests (tvOS).xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "XCGLoggerTests (tvOS).xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
+		558EEB851D6BAC61006A9C7A /* XCGLoggerTests_watchOS.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = XCGLoggerTests_watchOS.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		558EEB921D6BAC66006A9C7A /* XCGLoggerTests_tvOS.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = XCGLoggerTests_tvOS.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		55A4B4E81D7A99FB0006463B /* TagFilter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TagFilter.swift; sourceTree = "<group>"; };
 		55A4B4ED1D7AADA00006463B /* UserInfoFilter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserInfoFilter.swift; sourceTree = "<group>"; };
 		55A4B4F21D7AB0980006463B /* DevFilter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DevFilter.swift; sourceTree = "<group>"; };
@@ -158,7 +158,7 @@
 		55E37F5E1BFC647400392B9C /* Info-OSX.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Info-OSX.plist"; sourceTree = "<group>"; };
 		55E37F601BFC648800392B9C /* Info-tvOS.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Info-tvOS.plist"; sourceTree = "<group>"; };
 		55E3EE4519D76F280068C3A7 /* XCGLogger.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = XCGLogger.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		55E3EE5019D76F280068C3A7 /* XCGLoggerTests (iOS).xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "XCGLoggerTests (iOS).xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
+		55E3EE5019D76F280068C3A7 /* XCGLoggerTests_iOS.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = XCGLoggerTests_iOS.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		55E3EE5619D76F280068C3A7 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		55E3EE5719D76F280068C3A7 /* XCGLoggerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = XCGLoggerTests.swift; sourceTree = "<group>"; };
 		70CB94201B99E728007802FF /* XCGLogger.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = XCGLogger.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -325,13 +325,13 @@
 			isa = PBXGroup;
 			children = (
 				55E3EE4519D76F280068C3A7 /* XCGLogger.framework */,
-				55E3EE5019D76F280068C3A7 /* XCGLoggerTests (iOS).xctest */,
+				55E3EE5019D76F280068C3A7 /* XCGLoggerTests_iOS.xctest */,
 				554DF41719D76FE7005708BE /* XCGLogger.framework */,
 				55BB1F011B79DC7500709779 /* XCGLoggerTests (OS X).xctest */,
 				70CB94201B99E728007802FF /* XCGLogger.framework */,
-				558EEB851D6BAC61006A9C7A /* XCGLoggerTests (watchOS).xctest */,
+				558EEB851D6BAC61006A9C7A /* XCGLoggerTests_watchOS.xctest */,
 				5515A3DF1BA119FA0047BA31 /* XCGLogger.framework */,
-				558EEB921D6BAC66006A9C7A /* XCGLoggerTests (tvOS).xctest */,
+				558EEB921D6BAC66006A9C7A /* XCGLoggerTests_tvOS.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -453,9 +453,9 @@
 			productReference = 554DF41719D76FE7005708BE /* XCGLogger.framework */;
 			productType = "com.apple.product-type.framework";
 		};
-		558EEB7A1D6BAC61006A9C7A /* XCGLoggerTests (watchOS) */ = {
+		558EEB7A1D6BAC61006A9C7A /* XCGLoggerTests_watchOS */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 558EEB821D6BAC61006A9C7A /* Build configuration list for PBXNativeTarget "XCGLoggerTests (watchOS)" */;
+			buildConfigurationList = 558EEB821D6BAC61006A9C7A /* Build configuration list for PBXNativeTarget "XCGLoggerTests_watchOS" */;
 			buildPhases = (
 				558EEB7D1D6BAC61006A9C7A /* Sources */,
 				558EEB7F1D6BAC61006A9C7A /* Frameworks */,
@@ -466,14 +466,14 @@
 			dependencies = (
 				550F31551D6C271600919165 /* PBXTargetDependency */,
 			);
-			name = "XCGLoggerTests (watchOS)";
+			name = XCGLoggerTests_watchOS;
 			productName = XCGLoggerTests;
-			productReference = 558EEB851D6BAC61006A9C7A /* XCGLoggerTests (watchOS).xctest */;
+			productReference = 558EEB851D6BAC61006A9C7A /* XCGLoggerTests_watchOS.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
-		558EEB871D6BAC66006A9C7A /* XCGLoggerTests (tvOS) */ = {
+		558EEB871D6BAC66006A9C7A /* XCGLoggerTests_tvOS */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 558EEB8F1D6BAC66006A9C7A /* Build configuration list for PBXNativeTarget "XCGLoggerTests (tvOS)" */;
+			buildConfigurationList = 558EEB8F1D6BAC66006A9C7A /* Build configuration list for PBXNativeTarget "XCGLoggerTests_tvOS" */;
 			buildPhases = (
 				558EEB8A1D6BAC66006A9C7A /* Sources */,
 				558EEB8C1D6BAC66006A9C7A /* Frameworks */,
@@ -484,14 +484,14 @@
 			dependencies = (
 				550F31571D6C271F00919165 /* PBXTargetDependency */,
 			);
-			name = "XCGLoggerTests (tvOS)";
+			name = XCGLoggerTests_tvOS;
 			productName = XCGLoggerTests;
-			productReference = 558EEB921D6BAC66006A9C7A /* XCGLoggerTests (tvOS).xctest */;
+			productReference = 558EEB921D6BAC66006A9C7A /* XCGLoggerTests_tvOS.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
-		55BB1EF51B79DC7500709779 /* XCGLoggerTests (OS X) */ = {
+		55BB1EF51B79DC7500709779 /* XCGLoggerTests_OSX */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 55BB1EFE1B79DC7500709779 /* Build configuration list for PBXNativeTarget "XCGLoggerTests (OS X)" */;
+			buildConfigurationList = 55BB1EFE1B79DC7500709779 /* Build configuration list for PBXNativeTarget "XCGLoggerTests_OSX" */;
 			buildPhases = (
 				55BB1EF81B79DC7500709779 /* Sources */,
 				55BB1EFB1B79DC7500709779 /* Frameworks */,
@@ -502,7 +502,7 @@
 			dependencies = (
 				550F31531D6C270E00919165 /* PBXTargetDependency */,
 			);
-			name = "XCGLoggerTests (OS X)";
+			name = XCGLoggerTests_OSX;
 			productName = XCGLoggerTests;
 			productReference = 55BB1F011B79DC7500709779 /* XCGLoggerTests (OS X).xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
@@ -525,9 +525,9 @@
 			productReference = 55E3EE4519D76F280068C3A7 /* XCGLogger.framework */;
 			productType = "com.apple.product-type.framework";
 		};
-		55E3EE4F19D76F280068C3A7 /* XCGLoggerTests (iOS) */ = {
+		55E3EE4F19D76F280068C3A7 /* XCGLoggerTests_iOS */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 55E3EE5E19D76F280068C3A7 /* Build configuration list for PBXNativeTarget "XCGLoggerTests (iOS)" */;
+			buildConfigurationList = 55E3EE5E19D76F280068C3A7 /* Build configuration list for PBXNativeTarget "XCGLoggerTests_iOS" */;
 			buildPhases = (
 				55E3EE4C19D76F280068C3A7 /* Sources */,
 				55E3EE4D19D76F280068C3A7 /* Frameworks */,
@@ -538,9 +538,9 @@
 			dependencies = (
 				55E3EE5319D76F280068C3A7 /* PBXTargetDependency */,
 			);
-			name = "XCGLoggerTests (iOS)";
+			name = XCGLoggerTests_iOS;
 			productName = XCGLoggerTests;
-			productReference = 55E3EE5019D76F280068C3A7 /* XCGLoggerTests (iOS).xctest */;
+			productReference = 55E3EE5019D76F280068C3A7 /* XCGLoggerTests_iOS.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
 		70CB94161B99E728007802FF /* XCGLogger (watchOS) */ = {
@@ -609,10 +609,10 @@
 				554DF41619D76FE7005708BE /* XCGLogger (OS X) */,
 				70CB94161B99E728007802FF /* XCGLogger (watchOS) */,
 				5515A3DE1BA119FA0047BA31 /* XCGLogger (tvOS) */,
-				55E3EE4F19D76F280068C3A7 /* XCGLoggerTests (iOS) */,
-				55BB1EF51B79DC7500709779 /* XCGLoggerTests (OS X) */,
-				558EEB7A1D6BAC61006A9C7A /* XCGLoggerTests (watchOS) */,
-				558EEB871D6BAC66006A9C7A /* XCGLoggerTests (tvOS) */,
+				55E3EE4F19D76F280068C3A7 /* XCGLoggerTests_iOS */,
+				55BB1EF51B79DC7500709779 /* XCGLoggerTests_OSX */,
+				558EEB7A1D6BAC61006A9C7A /* XCGLoggerTests_watchOS */,
+				558EEB871D6BAC66006A9C7A /* XCGLoggerTests_tvOS */,
 			);
 		};
 /* End PBXProject section */
@@ -843,7 +843,6 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CLANG_ENABLE_MODULES = YES;
-				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
 				CURRENT_PROJECT_VERSION = 1;
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				DEFINES_MODULE = YES;
@@ -868,7 +867,6 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CLANG_ENABLE_MODULES = YES;
-				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
 				COPY_PHASE_STRIP = NO;
 				CURRENT_PROJECT_VERSION = 1;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
@@ -1038,8 +1036,9 @@
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "";
 				COPY_PHASE_STRIP = NO;
-				CURRENT_PROJECT_VERSION = "4.0.0-beta.2";
+				CURRENT_PROJECT_VERSION = "4.0.0-beta.3";
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
@@ -1093,8 +1092,9 @@
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "";
 				COPY_PHASE_STRIP = YES;
-				CURRENT_PROJECT_VERSION = "4.0.0-beta.2";
+				CURRENT_PROJECT_VERSION = "4.0.0-beta.3";
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
@@ -1195,7 +1195,6 @@
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				APPLICATION_EXTENSION_API_ONLY = YES;
 				CLANG_ENABLE_MODULES = YES;
-				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
 				DEFINES_MODULE = YES;
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
@@ -1220,7 +1219,6 @@
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				APPLICATION_EXTENSION_API_ONLY = YES;
 				CLANG_ENABLE_MODULES = YES;
-				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
 				DEFINES_MODULE = YES;
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
@@ -1260,7 +1258,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		558EEB821D6BAC61006A9C7A /* Build configuration list for PBXNativeTarget "XCGLoggerTests (watchOS)" */ = {
+		558EEB821D6BAC61006A9C7A /* Build configuration list for PBXNativeTarget "XCGLoggerTests_watchOS" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				558EEB831D6BAC61006A9C7A /* Debug */,
@@ -1269,7 +1267,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		558EEB8F1D6BAC66006A9C7A /* Build configuration list for PBXNativeTarget "XCGLoggerTests (tvOS)" */ = {
+		558EEB8F1D6BAC66006A9C7A /* Build configuration list for PBXNativeTarget "XCGLoggerTests_tvOS" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				558EEB901D6BAC66006A9C7A /* Debug */,
@@ -1278,7 +1276,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		55BB1EFE1B79DC7500709779 /* Build configuration list for PBXNativeTarget "XCGLoggerTests (OS X)" */ = {
+		55BB1EFE1B79DC7500709779 /* Build configuration list for PBXNativeTarget "XCGLoggerTests_OSX" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				55BB1EFF1B79DC7500709779 /* Debug */,
@@ -1305,7 +1303,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		55E3EE5E19D76F280068C3A7 /* Build configuration list for PBXNativeTarget "XCGLoggerTests (iOS)" */ = {
+		55E3EE5E19D76F280068C3A7 /* Build configuration list for PBXNativeTarget "XCGLoggerTests_iOS" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				55E3EE5F19D76F280068C3A7 /* Debug */,

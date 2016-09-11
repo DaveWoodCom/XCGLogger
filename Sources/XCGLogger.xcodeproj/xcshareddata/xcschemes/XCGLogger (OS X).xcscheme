@@ -34,7 +34,7 @@
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "55BB1EF51B79DC7500709779"
                BuildableName = "XCGLoggerTests (OS X).xctest"
-               BlueprintName = "XCGLoggerTests (OS X)"
+               BlueprintName = "XCGLoggerTests_OSX"
                ReferencedContainer = "container:XCGLogger.xcodeproj">
             </BuildableReference>
          </TestableReference>

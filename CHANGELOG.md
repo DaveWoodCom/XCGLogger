@@ -1,5 +1,6 @@
 #Change Log
 
+* **Version 4.0.0-beta.3**: *(2016/09/11)* - Fixed issue with CocoaPods using multiple `XCGLogger.h` files, added Objective-C exception handling to fix #123
 * **Version 4.0.0-beta.2**: *(2016/09/04)* - Updated docs, added filtering by tag and developer, added demo for filters
 * **Version 4.0.0-beta.1**: *(2016/09/01)* - First beta for Swift 3 compatibility, including a lot of architecture changes
 * **Version 3.5.1**: *(2016/08/28)* - Added documentation, improved tests. This will likely be the last version for Swift 2.x.

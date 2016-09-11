@@ -26,7 +26,7 @@ FOUNDATION_EXPORT const unsigned char XCGLoggerVersionString[];
  
  @note Loosely based on the code here: https://stackoverflow.com/a/35003095/144857 and here: https://github.com/williamFalcon/SwiftTryCatch
  */
-void _try(void(^_Nonnull tryBlock)(void), void(^_Nonnull catchBlock)(NSException* _Nonnull exception), void(^_Nonnull finallyBlock)(void)) {
+NS_INLINE void _try(void(^_Nonnull tryBlock)(void), void(^_Nonnull catchBlock)(NSException* _Nonnull exception), void(^_Nonnull finallyBlock)(void)) {
     @try {
         tryBlock();
     }
@@ -45,7 +45,7 @@ void _try(void(^_Nonnull tryBlock)(void), void(^_Nonnull catchBlock)(NSException
 
  @note Loosely based on the code here: https://github.com/williamFalcon/SwiftTryCatch
  */
-void _throw(NSException* _Nonnull exception)
+NS_INLINE void _throw(NSException* _Nonnull exception)
 {
     @throw exception;
 }
