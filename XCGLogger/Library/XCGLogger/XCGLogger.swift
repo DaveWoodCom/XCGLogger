@@ -565,7 +565,7 @@ public class XCGLogger: CustomDebugStringConvertible {
         public static let logQueueIdentifier = "com.cerebralgardens.xcglogger.queue"
 
         /// Library version number
-        public static let versionString = "3.5.1"
+        public static let versionString = "3.5.2"
     }
     public typealias constants = Constants // Preserve backwards compatibility: Constants should be capitalized since it's a type
 
