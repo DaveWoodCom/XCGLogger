@@ -36,12 +36,12 @@ public struct XCGLogDetails {
     /// The line number that generated this log
     public var lineNumber: Int
 
-    public init(logLevel: XCGLogger.LogLevel, date: NSDate, logMessage: String, functionName: StaticString, fileName: StaticString, lineNumber: Int) {
+    public init(logLevel: XCGLogger.LogLevel, date: NSDate, logMessage: String, functionName: String, fileName: String, lineNumber: Int) {
         self.logLevel = logLevel
         self.date = date
         self.logMessage = logMessage
-        self.functionName = String(functionName)
-        self.fileName = String(fileName)
+        self.functionName = functionName
+        self.fileName = fileName
         self.lineNumber = lineNumber
     }
 }
@@ -948,6 +948,21 @@ public class XCGLogger: CustomDebugStringConvertible {
     /// Log a message if the logger's log level is equal to or lower than the specified level.
     ///
     /// - Parameters:
+    ///     - logLevel:     Specified log level **Default:** *Debug*.
+    ///     - functionName: Normally omitted **Default:** *#function*.
+    ///     - fileName:     Normally omitted **Default:** *#file*.
+    ///     - lineNumber:   Normally omitted **Default:** *#line*.
+    ///     - closure:      A closure that returns the object to be logged.
+    ///
+    /// - Returns:  Nothing
+    ///
+    public class func logln(logLevel: LogLevel = .Debug, functionName: String = #function, fileName: String = #file, lineNumber: Int = #line, closure: () -> Any?) {
+        self.defaultInstance().logln(logLevel, functionName: functionName, fileName: fileName, lineNumber: lineNumber, closure: closure)
+    }
+
+    /// Log a message if the logger's log level is equal to or lower than the specified level.
+    ///
+    /// - Parameters:
     ///     - closure:      A closure that returns the object to be logged.
     ///     - logLevel:     Specified log level **Default:** *Debug*.
     ///     - functionName: Normally omitted **Default:** *#function*.
@@ -972,6 +987,21 @@ public class XCGLogger: CustomDebugStringConvertible {
     /// - Returns:  Nothing
     ///
     public func logln(logLevel: LogLevel = .Debug, functionName: StaticString = #function, fileName: StaticString = #file, lineNumber: Int = #line, @noescape closure: () -> Any?) {
+        logln(logLevel, functionName: String(functionName), fileName: String(fileName), lineNumber: lineNumber, closure: closure)
+    }
+
+    /// Log a message if the logger's log level is equal to or lower than the specified level.
+    ///
+    /// - Parameters:
+    ///     - logLevel:     Specified log level **Default:** *Debug*.
+    ///     - functionName: Normally omitted **Default:** *#function*.
+    ///     - fileName:     Normally omitted **Default:** *#file*.
+    ///     - lineNumber:   Normally omitted **Default:** *#line*.
+    ///     - closure:      A closure that returns the object to be logged.
+    ///
+    /// - Returns:  Nothing
+    ///
+    public func logln(logLevel: LogLevel = .Debug, functionName: String = #function, fileName: String = #file, lineNumber: Int = #line, @noescape closure: () -> Any?) {
         let enabledLogDestinations = self.logDestinations.filter({$0.isEnabledForLogLevel(logLevel)})
         guard enabledLogDestinations.count > 0 else { return }
         guard let closureResult = closure() else { return }
