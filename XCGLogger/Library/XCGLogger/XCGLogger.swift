@@ -972,20 +972,12 @@ public class XCGLogger: CustomDebugStringConvertible {
     /// - Returns:  Nothing
     ///
     public func logln(logLevel: LogLevel = .Debug, functionName: StaticString = #function, fileName: StaticString = #file, lineNumber: Int = #line, @noescape closure: () -> Any?) {
-        var logDetails: XCGLogDetails!
-        for logDestination in self.logDestinations {
-            guard logDestination.isEnabledForLogLevel(logLevel) else {
-                continue
-            }
+        let enabledLogDestinations = self.logDestinations.filter({$0.isEnabledForLogLevel(logLevel)})
+        guard enabledLogDestinations.count > 0 else { return }
+        guard let closureResult = closure() else { return }
 
-            if logDetails == nil {
-                guard let closureResult = closure() else {
-                    break
-                }
-
-                logDetails = XCGLogDetails(logLevel: logLevel, date: NSDate(), logMessage: String(closureResult), functionName: functionName, fileName: fileName, lineNumber: lineNumber)
-            }
-
+        let logDetails: XCGLogDetails = XCGLogDetails(logLevel: logLevel, date: NSDate(), logMessage: String(closureResult), functionName: functionName, fileName: fileName, lineNumber: lineNumber)
+        for logDestination in enabledLogDestinations {
             logDestination.processLogDetails(logDetails)
         }
     }
