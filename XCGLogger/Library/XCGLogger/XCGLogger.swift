@@ -430,7 +430,12 @@ public class XCGFileLogDestination: XCGBaseLogDestination {
 
                     if let appendMarker = appendMarker,
                       let encodedData = "\(appendMarker)\n".dataUsingEncoding(NSUTF8StringEncoding) {
-                        self.logFileHandle?.writeData(encodedData)
+                        _try({
+                            self.logFileHandle?.writeData(encodedData)
+                        },
+                        catch: { (exception: NSException) in
+                            self.owner._logln("Objective-C Exception occurred: \(exception)", logLevel: .Error)
+                        })
                     }
                 }
             }
@@ -521,7 +526,12 @@ public class XCGFileLogDestination: XCGBaseLogDestination {
 
         let outputClosure = {
             if let encodedData = "\(text)\n".dataUsingEncoding(NSUTF8StringEncoding) {
-                self.logFileHandle?.writeData(encodedData)
+                _try({
+                    self.logFileHandle?.writeData(encodedData)
+                },
+                catch: { (exception: NSException) in
+                    self.owner._logln("Objective-C Exception occurred: \(exception)", logLevel: .Error)
+                })
             }
         }
 
@@ -1805,4 +1815,23 @@ public func < (lhs:XCGLogger.LogLevel, rhs:XCGLogger.LogLevel) -> Bool {
 
 func extractClassName(someObject: Any) -> String {
     return (someObject is Any.Type) ? "\(someObject)" : "\(someObject.dynamicType)"
+}
+
+// MARK: - Swiftier interface to the Objective-C exception handling functions
+/// Throw an Objective-C exception with the specified name/message/info
+///
+/// - parameter name:     The name of the exception to throw
+/// - parameter message:  The message to include in the exception (why it occurred)
+/// - parameter userInfo: A dictionary with arbitrary info to be passed along with the exception
+func _try(tryClosure: () -> (), catch catchClosure: (exception: NSException) -> (), finally finallyClosure: () -> () = {}) {
+    _try(tryClosure, catchClosure, finallyClosure)
+}
+
+/// Throw an Objective-C exception with the specified name/message/info
+///
+/// - parameter name:     The name of the exception to throw
+/// - parameter message:  The message to include in the exception (why it occurred)
+/// - parameter userInfo: A dictionary with arbitrary info to be passed along with the exception
+func _throw(name: String, message: String? = nil, userInfo: [NSObject: AnyObject]? = nil) {
+    _throw(NSException(name: name, reason: message ?? name, userInfo: userInfo))
 }
