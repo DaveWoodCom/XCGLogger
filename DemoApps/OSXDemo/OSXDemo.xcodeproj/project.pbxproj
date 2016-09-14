@@ -327,7 +327,7 @@
 		5501A3221D75FF2C00CB8ABE /* XCGLoggerTests (iOS).xctest */ = {
 			isa = PBXReferenceProxy;
 			fileType = wrapper.cfbundle;
-			path = "XCGLoggerTests (iOS).xctest";
+			path = XCGLoggerTests_iOS.xctest;
 			remoteRef = 5501A3211D75FF2C00CB8ABE /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
@@ -341,14 +341,14 @@
 		5501A3261D75FF2C00CB8ABE /* XCGLoggerTests (watchOS).xctest */ = {
 			isa = PBXReferenceProxy;
 			fileType = wrapper.cfbundle;
-			path = "XCGLoggerTests (watchOS).xctest";
+			path = XCGLoggerTests_watchOS.xctest;
 			remoteRef = 5501A3251D75FF2C00CB8ABE /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 		5501A3281D75FF2C00CB8ABE /* XCGLoggerTests (tvOS).xctest */ = {
 			isa = PBXReferenceProxy;
 			fileType = wrapper.cfbundle;
-			path = "XCGLoggerTests (tvOS).xctest";
+			path = XCGLoggerTests_tvOS.xctest;
 			remoteRef = 5501A3271D75FF2C00CB8ABE /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
@@ -438,7 +438,7 @@
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				CODE_SIGN_IDENTITY = "-";
 				COPY_PHASE_STRIP = NO;
-				CURRENT_PROJECT_VERSION = "4.0.0-beta.3";
+				CURRENT_PROJECT_VERSION = "4.0.0-beta.4";
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
@@ -485,7 +485,7 @@
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				CODE_SIGN_IDENTITY = "-";
 				COPY_PHASE_STRIP = YES;
-				CURRENT_PROJECT_VERSION = "4.0.0-beta.3";
+				CURRENT_PROJECT_VERSION = "4.0.0-beta.4";
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
