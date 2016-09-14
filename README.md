@@ -53,7 +53,7 @@ in your repository folder.
 
 Add the following line to your `Cartfile`.
 
-```github "DaveWoodCom/XCGLogger" ~> 4.0.0-beta.3```
+```github "DaveWoodCom/XCGLogger" ~> 4.0.0-beta.4```
 
 Then run `carthage update --no-use-binaries` or just `carthage update`. For details of the installation and usage of Carthage, visit [it's project page][carthage].
 
@@ -75,7 +75,8 @@ Then run `pod install`. For details of the installation and usage of CocoaPods, 
 
 Use:
 * XCGLogger version [4.0.0][xcglogger-4.0.0] for Swift 3.0
-* XCGLogger version [3.5.1][xcglogger-3.5.1] for Swift 2.2-2.3
+* XCGLogger version [3.6.0][xcglogger-3.6.0] for Swift 2.3
+* XCGLogger version [3.5.3][xcglogger-3.5.3] for Swift 2.2
 * XCGLogger version [3.2][xcglogger-3.2] for Swift 2.0-2.1
 * XCGLogger version [2.x][xcglogger-2.x] for Swift 1.2
 * XCGLogger version [1.x][xcglogger-1.x] for Swift 1.1 and below.
@@ -523,9 +524,9 @@ The change log is now in it's own file: [CHANGELOG.md](CHANGELOG.md)
 [badge-platforms]: https://img.shields.io/badge/Platforms-OS%20X%20%7C%20iOS%20%7C%20tvOS%20%7C%20watchOS-lightgray.svg?style=flat
 [badge-license]: https://img.shields.io/badge/License-MIT-lightgrey.svg?style=flat
 [badge-travis]: https://img.shields.io/travis/DaveWoodCom/XCGLogger/swift_3.0.svg?style=flat
-[badge-swiftpm]: https://img.shields.io/badge/Swift_Package_Manager-v4.0.0--beta.3-64a6dd.svg?style=flat
+[badge-swiftpm]: https://img.shields.io/badge/Swift_Package_Manager-v4.0.0--beta.4-64a6dd.svg?style=flat
 [badge-cocoapods]: https://img.shields.io/cocoapods/v/XCGLogger.svg?style=flat
-[badge-carthage]: https://img.shields.io/badge/Carthage-v4.0.0--beta.3-64a6dd.svg?style=flat
+[badge-carthage]: https://img.shields.io/badge/Carthage-v4.0.0--beta.4-64a6dd.svg?style=flat
 
 [badge-sponsors]: https://img.shields.io/badge/Sponsors-Cerebral%20Gardens-orange.svg?style=flat
 [badge-twitter]: https://img.shields.io/twitter/follow/DaveWoodX.svg?style=social
@@ -538,7 +539,8 @@ The change log is now in it's own file: [CHANGELOG.md](CHANGELOG.md)
 [Firebase]: https://www.firebase.com/
 
 [xcglogger-4.0.0]: https://github.com/DaveWoodCom/XCGLogger/tree/swift_3.0
-[xcglogger-3.5.1]: https://github.com/DaveWoodCom/XCGLogger/releases/tag/Version_3.5.1
+[xcglogger-3.6.0]: https://github.com/DaveWoodCom/XCGLogger/releases/tag/Version_3.6.0
+[xcglogger-3.5.3]: https://github.com/DaveWoodCom/XCGLogger/releases/tag/Version_3.5.3
 [xcglogger-3.2]: https://github.com/DaveWoodCom/XCGLogger/releases/tag/Version_3.2
 [xcglogger-2.x]: https://github.com/DaveWoodCom/XCGLogger/releases/tag/Version_2.4
 [xcglogger-1.x]: https://github.com/DaveWoodCom/XCGLogger/releases/tag/Version_1.8.1
