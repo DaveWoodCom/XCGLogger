@@ -239,10 +239,11 @@ open class XCGLogger: CustomDebugStringConvertible {
     ///
     /// - Parameters:
     ///     - closure:      A closure that returns the object to be logged.
-    ///     - level:     Specified log level **Default:** *Debug*.
+    ///     - level:        Specified log level **Default:** *Debug*.
     ///     - functionName: Normally omitted **Default:** *#function*.
     ///     - fileName:     Normally omitted **Default:** *#file*.
     ///     - lineNumber:   Normally omitted **Default:** *#line*.
+    ///     - userInfo:     Dictionary for adding arbitrary data to the log message, can be used by filters/formatters etc
     ///
     /// - Returns:  Nothing
     ///
@@ -253,10 +254,11 @@ open class XCGLogger: CustomDebugStringConvertible {
     /// Log a message if the logger's log level is equal to or lower than the specified level.
     ///
     /// - Parameters:
-    ///     - level:     Specified log level **Default:** *Debug*.
+    ///     - level:        Specified log level **Default:** *Debug*.
     ///     - functionName: Normally omitted **Default:** *#function*.
     ///     - fileName:     Normally omitted **Default:** *#file*.
     ///     - lineNumber:   Normally omitted **Default:** *#line*.
+    ///     - userInfo:     Dictionary for adding arbitrary data to the log message, can be used by filters/formatters etc
     ///     - closure:      A closure that returns the object to be logged.
     ///
     /// - Returns:  Nothing
@@ -272,6 +274,7 @@ open class XCGLogger: CustomDebugStringConvertible {
     ///     - functionName: Normally omitted **Default:** *#function*.
     ///     - fileName:     Normally omitted **Default:** *#file*.
     ///     - lineNumber:   Normally omitted **Default:** *#line*.
+    ///     - userInfo:     Dictionary for adding arbitrary data to the log message, can be used by filters/formatters etc
     ///     - closure:      A closure that returns the object to be logged.
     ///
     /// - Returns:  Nothing
@@ -284,10 +287,11 @@ open class XCGLogger: CustomDebugStringConvertible {
     ///
     /// - Parameters:
     ///     - closure:      A closure that returns the object to be logged.
-    ///     - level:     Specified log level **Default:** *Debug*.
+    ///     - level:        Specified log level **Default:** *Debug*.
     ///     - functionName: Normally omitted **Default:** *#function*.
     ///     - fileName:     Normally omitted **Default:** *#file*.
     ///     - lineNumber:   Normally omitted **Default:** *#line*.
+    ///     - userInfo:     Dictionary for adding arbitrary data to the log message, can be used by filters/formatters etc
     ///
     /// - Returns:  Nothing
     ///
@@ -298,10 +302,11 @@ open class XCGLogger: CustomDebugStringConvertible {
     /// Log a message if the logger's log level is equal to or lower than the specified level.
     ///
     /// - Parameters:
-    ///     - level:     Specified log level **Default:** *Debug*.
+    ///     - level:        Specified log level **Default:** *Debug*.
     ///     - functionName: Normally omitted **Default:** *#function*.
     ///     - fileName:     Normally omitted **Default:** *#file*.
     ///     - lineNumber:   Normally omitted **Default:** *#line*.
+    ///     - userInfo:     Dictionary for adding arbitrary data to the log message, can be used by filters/formatters etc
     ///     - closure:      A closure that returns the object to be logged.
     ///
     /// - Returns:  Nothing
@@ -317,6 +322,7 @@ open class XCGLogger: CustomDebugStringConvertible {
     ///     - functionName: Normally omitted **Default:** *#function*.
     ///     - fileName:     Normally omitted **Default:** *#file*.
     ///     - lineNumber:   Normally omitted **Default:** *#line*.
+    ///     - userInfo:     Dictionary for adding arbitrary data to the log message, can be used by filters/formatters etc
     ///     - closure:      A closure that returns the object to be logged.
     ///
     /// - Returns:  Nothing
@@ -335,8 +341,8 @@ open class XCGLogger: CustomDebugStringConvertible {
     /// Execute some code only when at the specified log level.
     ///
     /// - Parameters:
-    ///     - level:     Specified log level **Default:** *Debug*.
-    ///     - closure:      The code closure to be executed.
+    ///     - level:    Specified log level **Default:** *Debug*.
+    ///     - closure:  The code closure to be executed.
     ///
     /// - Returns:  Nothing.
     ///
@@ -348,7 +354,7 @@ open class XCGLogger: CustomDebugStringConvertible {
     ///
     /// - Parameters:
     ///     - level:     Specified log level **Default:** *Debug*.
-    ///     - closure:      The code closure to be executed.
+    ///     - closure:   The code closure to be executed.
     ///
     /// - Returns:  Nothing.
     ///
@@ -361,8 +367,7 @@ open class XCGLogger: CustomDebugStringConvertible {
     /// Generate logs to display your app's vitals (app name, version, etc) as well as XCGLogger's version and log level.
     ///
     /// - Parameters:
-    ///     - level:     Specified log level **Default:** *Debug*.
-    ///     - closure:      The code closure to be executed.
+    ///     - selectedDestination:     A specific destination to log the vitals on, if omitted, will log to all destinations
     ///
     /// - Returns:  Nothing.
     ///
@@ -408,6 +413,7 @@ open class XCGLogger: CustomDebugStringConvertible {
     ///     - functionName: Normally omitted **Default:** *#function*.
     ///     - fileName:     Normally omitted **Default:** *#file*.
     ///     - lineNumber:   Normally omitted **Default:** *#line*.
+    ///     - userInfo:     Dictionary for adding arbitrary data to the log message, can be used by filters/formatters etc
     ///
     /// - Returns:  Nothing.
     ///
@@ -422,6 +428,7 @@ open class XCGLogger: CustomDebugStringConvertible {
     ///     - functionName: Normally omitted **Default:** *#function*.
     ///     - fileName:     Normally omitted **Default:** *#file*.
     ///     - lineNumber:   Normally omitted **Default:** *#line*.
+    ///     - userInfo:     Dictionary for adding arbitrary data to the log message, can be used by filters/formatters etc
     ///
     /// - Returns:  Nothing.
     ///
@@ -435,6 +442,7 @@ open class XCGLogger: CustomDebugStringConvertible {
     ///     - functionName: Normally omitted **Default:** *#function*.
     ///     - fileName:     Normally omitted **Default:** *#file*.
     ///     - lineNumber:   Normally omitted **Default:** *#line*.
+    ///     - userInfo:     Dictionary for adding arbitrary data to the log message, can be used by filters/formatters etc
     ///     - closure:      A closure that returns the object to be logged.
     ///
     /// - Returns:  Nothing.
@@ -449,6 +457,7 @@ open class XCGLogger: CustomDebugStringConvertible {
     ///     - functionName: Normally omitted **Default:** *#function*.
     ///     - fileName:     Normally omitted **Default:** *#file*.
     ///     - lineNumber:   Normally omitted **Default:** *#line*.
+    ///     - userInfo:     Dictionary for adding arbitrary data to the log message, can be used by filters/formatters etc
     ///
     /// - Returns:  Nothing.
     ///
@@ -463,6 +472,7 @@ open class XCGLogger: CustomDebugStringConvertible {
     ///     - functionName: Normally omitted **Default:** *#function*.
     ///     - fileName:     Normally omitted **Default:** *#file*.
     ///     - lineNumber:   Normally omitted **Default:** *#line*.
+    ///     - userInfo:     Dictionary for adding arbitrary data to the log message, can be used by filters/formatters etc
     ///
     /// - Returns:  Nothing.
     ///
@@ -476,6 +486,7 @@ open class XCGLogger: CustomDebugStringConvertible {
     ///     - functionName: Normally omitted **Default:** *#function*.
     ///     - fileName:     Normally omitted **Default:** *#file*.
     ///     - lineNumber:   Normally omitted **Default:** *#line*.
+    ///     - userInfo:     Dictionary for adding arbitrary data to the log message, can be used by filters/formatters etc
     ///     - closure:      A closure that returns the object to be logged.
     ///
     /// - Returns:  Nothing.
@@ -491,6 +502,7 @@ open class XCGLogger: CustomDebugStringConvertible {
     ///     - functionName: Normally omitted **Default:** *#function*.
     ///     - fileName:     Normally omitted **Default:** *#file*.
     ///     - lineNumber:   Normally omitted **Default:** *#line*.
+    ///     - userInfo:     Dictionary for adding arbitrary data to the log message, can be used by filters/formatters etc
     ///
     /// - Returns:  Nothing.
     ///
@@ -505,6 +517,7 @@ open class XCGLogger: CustomDebugStringConvertible {
     ///     - functionName: Normally omitted **Default:** *#function*.
     ///     - fileName:     Normally omitted **Default:** *#file*.
     ///     - lineNumber:   Normally omitted **Default:** *#line*.
+    ///     - userInfo:     Dictionary for adding arbitrary data to the log message, can be used by filters/formatters etc
     ///
     /// - Returns:  Nothing.
     ///
@@ -518,6 +531,7 @@ open class XCGLogger: CustomDebugStringConvertible {
     ///     - functionName: Normally omitted **Default:** *#function*.
     ///     - fileName:     Normally omitted **Default:** *#file*.
     ///     - lineNumber:   Normally omitted **Default:** *#line*.
+    ///     - userInfo:     Dictionary for adding arbitrary data to the log message, can be used by filters/formatters etc
     ///     - closure:      A closure that returns the object to be logged.
     ///
     /// - Returns:  Nothing.
@@ -532,6 +546,7 @@ open class XCGLogger: CustomDebugStringConvertible {
     ///     - functionName: Normally omitted **Default:** *#function*.
     ///     - fileName:     Normally omitted **Default:** *#file*.
     ///     - lineNumber:   Normally omitted **Default:** *#line*.
+    ///     - userInfo:     Dictionary for adding arbitrary data to the log message, can be used by filters/formatters etc
     ///
     /// - Returns:  Nothing.
     ///
@@ -546,6 +561,7 @@ open class XCGLogger: CustomDebugStringConvertible {
     ///     - functionName: Normally omitted **Default:** *#function*.
     ///     - fileName:     Normally omitted **Default:** *#file*.
     ///     - lineNumber:   Normally omitted **Default:** *#line*.
+    ///     - userInfo:     Dictionary for adding arbitrary data to the log message, can be used by filters/formatters etc
     ///
     /// - Returns:  Nothing.
     ///
@@ -559,6 +575,7 @@ open class XCGLogger: CustomDebugStringConvertible {
     ///     - functionName: Normally omitted **Default:** *#function*.
     ///     - fileName:     Normally omitted **Default:** *#file*.
     ///     - lineNumber:   Normally omitted **Default:** *#line*.
+    ///     - userInfo:     Dictionary for adding arbitrary data to the log message, can be used by filters/formatters etc
     ///     - closure:      A closure that returns the object to be logged.
     ///
     /// - Returns:  Nothing.
@@ -574,6 +591,7 @@ open class XCGLogger: CustomDebugStringConvertible {
     ///     - functionName: Normally omitted **Default:** *#function*.
     ///     - fileName:     Normally omitted **Default:** *#file*.
     ///     - lineNumber:   Normally omitted **Default:** *#line*.
+    ///     - userInfo:     Dictionary for adding arbitrary data to the log message, can be used by filters/formatters etc
     ///
     /// - Returns:  Nothing.
     ///
@@ -588,6 +606,7 @@ open class XCGLogger: CustomDebugStringConvertible {
     ///     - functionName: Normally omitted **Default:** *#function*.
     ///     - fileName:     Normally omitted **Default:** *#file*.
     ///     - lineNumber:   Normally omitted **Default:** *#line*.
+    ///     - userInfo:     Dictionary for adding arbitrary data to the log message, can be used by filters/formatters etc
     ///
     /// - Returns:  Nothing.
     ///
@@ -601,6 +620,7 @@ open class XCGLogger: CustomDebugStringConvertible {
     ///     - functionName: Normally omitted **Default:** *#function*.
     ///     - fileName:     Normally omitted **Default:** *#file*.
     ///     - lineNumber:   Normally omitted **Default:** *#line*.
+    ///     - userInfo:     Dictionary for adding arbitrary data to the log message, can be used by filters/formatters etc
     ///     - closure:      A closure that returns the object to be logged.
     ///
     /// - Returns:  Nothing.
@@ -615,6 +635,7 @@ open class XCGLogger: CustomDebugStringConvertible {
     ///     - functionName: Normally omitted **Default:** *#function*.
     ///     - fileName:     Normally omitted **Default:** *#file*.
     ///     - lineNumber:   Normally omitted **Default:** *#line*.
+    ///     - userInfo:     Dictionary for adding arbitrary data to the log message, can be used by filters/formatters etc
     ///
     /// - Returns:  Nothing.
     ///
@@ -629,6 +650,7 @@ open class XCGLogger: CustomDebugStringConvertible {
     ///     - functionName: Normally omitted **Default:** *#function*.
     ///     - fileName:     Normally omitted **Default:** *#file*.
     ///     - lineNumber:   Normally omitted **Default:** *#line*.
+    ///     - userInfo:     Dictionary for adding arbitrary data to the log message, can be used by filters/formatters etc
     ///
     /// - Returns:  Nothing.
     ///
@@ -642,6 +664,7 @@ open class XCGLogger: CustomDebugStringConvertible {
     ///     - functionName: Normally omitted **Default:** *#function*.
     ///     - fileName:     Normally omitted **Default:** *#file*.
     ///     - lineNumber:   Normally omitted **Default:** *#line*.
+    ///     - userInfo:     Dictionary for adding arbitrary data to the log message, can be used by filters/formatters etc
     ///     - closure:      A closure that returns the object to be logged.
     ///
     /// - Returns:  Nothing.
@@ -657,6 +680,7 @@ open class XCGLogger: CustomDebugStringConvertible {
     ///     - functionName: Normally omitted **Default:** *#function*.
     ///     - fileName:     Normally omitted **Default:** *#file*.
     ///     - lineNumber:   Normally omitted **Default:** *#line*.
+    ///     - userInfo:     Dictionary for adding arbitrary data to the log message, can be used by filters/formatters etc
     ///
     /// - Returns:  Nothing.
     ///
@@ -671,6 +695,7 @@ open class XCGLogger: CustomDebugStringConvertible {
     ///     - functionName: Normally omitted **Default:** *#function*.
     ///     - fileName:     Normally omitted **Default:** *#file*.
     ///     - lineNumber:   Normally omitted **Default:** *#line*.
+    ///     - userInfo:     Dictionary for adding arbitrary data to the log message, can be used by filters/formatters etc
     ///
     /// - Returns:  Nothing.
     ///
@@ -684,6 +709,7 @@ open class XCGLogger: CustomDebugStringConvertible {
     ///     - functionName: Normally omitted **Default:** *#function*.
     ///     - fileName:     Normally omitted **Default:** *#file*.
     ///     - lineNumber:   Normally omitted **Default:** *#line*.
+    ///     - userInfo:     Dictionary for adding arbitrary data to the log message, can be used by filters/formatters etc
     ///     - closure:      A closure that returns the object to be logged.
     ///
     /// - Returns:  Nothing.
@@ -698,6 +724,7 @@ open class XCGLogger: CustomDebugStringConvertible {
     ///     - functionName: Normally omitted **Default:** *#function*.
     ///     - fileName:     Normally omitted **Default:** *#file*.
     ///     - lineNumber:   Normally omitted **Default:** *#line*.
+    ///     - userInfo:     Dictionary for adding arbitrary data to the log message, can be used by filters/formatters etc
     ///
     /// - Returns:  Nothing.
     ///
@@ -712,6 +739,7 @@ open class XCGLogger: CustomDebugStringConvertible {
     ///     - functionName: Normally omitted **Default:** *#function*.
     ///     - fileName:     Normally omitted **Default:** *#file*.
     ///     - lineNumber:   Normally omitted **Default:** *#line*.
+    ///     - userInfo:     Dictionary for adding arbitrary data to the log message, can be used by filters/formatters etc
     ///
     /// - Returns:  Nothing.
     ///
@@ -725,6 +753,7 @@ open class XCGLogger: CustomDebugStringConvertible {
     ///     - functionName: Normally omitted **Default:** *#function*.
     ///     - fileName:     Normally omitted **Default:** *#file*.
     ///     - lineNumber:   Normally omitted **Default:** *#line*.
+    ///     - userInfo:     Dictionary for adding arbitrary data to the log message, can be used by filters/formatters etc
     ///     - closure:      A closure that returns the object to be logged.
     ///
     /// - Returns:  Nothing.
@@ -740,6 +769,7 @@ open class XCGLogger: CustomDebugStringConvertible {
     ///     - functionName: Normally omitted **Default:** *#function*.
     ///     - fileName:     Normally omitted **Default:** *#file*.
     ///     - lineNumber:   Normally omitted **Default:** *#line*.
+    ///     - userInfo:     Dictionary for adding arbitrary data to the log message, can be used by filters/formatters etc
     ///
     /// - Returns:  Nothing.
     ///
@@ -754,6 +784,7 @@ open class XCGLogger: CustomDebugStringConvertible {
     ///     - functionName: Normally omitted **Default:** *#function*.
     ///     - fileName:     Normally omitted **Default:** *#file*.
     ///     - lineNumber:   Normally omitted **Default:** *#line*.
+    ///     - userInfo:     Dictionary for adding arbitrary data to the log message, can be used by filters/formatters etc
     ///
     /// - Returns:  Nothing.
     ///
@@ -767,6 +798,7 @@ open class XCGLogger: CustomDebugStringConvertible {
     ///     - functionName: Normally omitted **Default:** *#function*.
     ///     - fileName:     Normally omitted **Default:** *#file*.
     ///     - lineNumber:   Normally omitted **Default:** *#line*.
+    ///     - userInfo:     Dictionary for adding arbitrary data to the log message, can be used by filters/formatters etc
     ///     - closure:      A closure that returns the object to be logged.
     ///
     /// - Returns:  Nothing.
@@ -781,6 +813,7 @@ open class XCGLogger: CustomDebugStringConvertible {
     ///     - functionName: Normally omitted **Default:** *#function*.
     ///     - fileName:     Normally omitted **Default:** *#file*.
     ///     - lineNumber:   Normally omitted **Default:** *#line*.
+    ///     - userInfo:     Dictionary for adding arbitrary data to the log message, can be used by filters/formatters etc
     ///
     /// - Returns:  Nothing.
     ///
@@ -795,6 +828,7 @@ open class XCGLogger: CustomDebugStringConvertible {
     ///     - functionName: Normally omitted **Default:** *#function*.
     ///     - fileName:     Normally omitted **Default:** *#file*.
     ///     - lineNumber:   Normally omitted **Default:** *#line*.
+    ///     - userInfo:     Dictionary for adding arbitrary data to the log message, can be used by filters/formatters etc
     ///
     /// - Returns:  Nothing.
     ///
@@ -808,6 +842,7 @@ open class XCGLogger: CustomDebugStringConvertible {
     ///     - functionName: Normally omitted **Default:** *#function*.
     ///     - fileName:     Normally omitted **Default:** *#file*.
     ///     - lineNumber:   Normally omitted **Default:** *#line*.
+    ///     - userInfo:     Dictionary for adding arbitrary data to the log message, can be used by filters/formatters etc
     ///     - closure:      A closure that returns the object to be logged.
     ///
     /// - Returns:  Nothing.
@@ -823,6 +858,7 @@ open class XCGLogger: CustomDebugStringConvertible {
     ///     - functionName: Normally omitted **Default:** *#function*.
     ///     - fileName:     Normally omitted **Default:** *#file*.
     ///     - lineNumber:   Normally omitted **Default:** *#line*.
+    ///     - userInfo:     Dictionary for adding arbitrary data to the log message, can be used by filters/formatters etc
     ///
     /// - Returns:  Nothing.
     ///
@@ -837,6 +873,7 @@ open class XCGLogger: CustomDebugStringConvertible {
     ///     - functionName: Normally omitted **Default:** *#function*.
     ///     - fileName:     Normally omitted **Default:** *#file*.
     ///     - lineNumber:   Normally omitted **Default:** *#line*.
+    ///     - userInfo:     Dictionary for adding arbitrary data to the log message, can be used by filters/formatters etc
     ///
     /// - Returns:  Nothing.
     ///
@@ -850,6 +887,7 @@ open class XCGLogger: CustomDebugStringConvertible {
     ///     - functionName: Normally omitted **Default:** *#function*.
     ///     - fileName:     Normally omitted **Default:** *#file*.
     ///     - lineNumber:   Normally omitted **Default:** *#line*.
+    ///     - userInfo:     Dictionary for adding arbitrary data to the log message, can be used by filters/formatters etc
     ///     - closure:      A closure that returns the object to be logged.
     ///
     /// - Returns:  Nothing.
@@ -864,6 +902,7 @@ open class XCGLogger: CustomDebugStringConvertible {
     ///     - functionName: Normally omitted **Default:** *#function*.
     ///     - fileName:     Normally omitted **Default:** *#file*.
     ///     - lineNumber:   Normally omitted **Default:** *#line*.
+    ///     - userInfo:     Dictionary for adding arbitrary data to the log message, can be used by filters/formatters etc
     ///
     /// - Returns:  Nothing.
     ///
@@ -878,6 +917,7 @@ open class XCGLogger: CustomDebugStringConvertible {
     ///     - functionName: Normally omitted **Default:** *#function*.
     ///     - fileName:     Normally omitted **Default:** *#file*.
     ///     - lineNumber:   Normally omitted **Default:** *#line*.
+    ///     - userInfo:     Dictionary for adding arbitrary data to the log message, can be used by filters/formatters etc
     ///
     /// - Returns:  Nothing.
     ///
@@ -891,6 +931,7 @@ open class XCGLogger: CustomDebugStringConvertible {
     ///     - functionName: Normally omitted **Default:** *#function*.
     ///     - fileName:     Normally omitted **Default:** *#file*.
     ///     - lineNumber:   Normally omitted **Default:** *#line*.
+    ///     - userInfo:     Dictionary for adding arbitrary data to the log message, can be used by filters/formatters etc
     ///     - closure:      A closure that returns the object to be logged.
     ///
     /// - Returns:  Nothing.
