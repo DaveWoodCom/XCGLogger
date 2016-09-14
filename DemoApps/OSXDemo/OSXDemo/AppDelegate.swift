@@ -27,7 +27,19 @@ let log: XCGLogger = {
     systemDestination.showLevel = true
     systemDestination.showFileName = true
     systemDestination.showLineNumber = true
-    systemDestination.showDate = true
+
+    // Add colour to the console destination.
+    // - Note: You need the XcodeColors Plug-in https://github.com/robbiehanson/XcodeColors installed in Xcode
+    // - to see colours in the Xcode console. Plug-ins have been disabled in Xcode 8, so offically you can not see
+    // - coloured logs in Xcode 8.
+    //let xcodeColorsLogFormatter: XcodeColorsLogFormatter = XcodeColorsLogFormatter()
+    //xcodeColorsLogFormatter.colorize(level: .verbose, with: .lightGrey)
+    //xcodeColorsLogFormatter.colorize(level: .debug, with: .darkGrey)
+    //xcodeColorsLogFormatter.colorize(level: .info, with: .blue)
+    //xcodeColorsLogFormatter.colorize(level: .warning, with: .orange)
+    //xcodeColorsLogFormatter.colorize(level: .error, with: .red)
+    //xcodeColorsLogFormatter.colorize(level: .severe, with: .white, on: .red)
+    //systemDestination.formatters = [xcodeColorsLogFormatter]
 
     // Add the destination to the logger
     log.add(destination: systemDestination)
