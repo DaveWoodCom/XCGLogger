@@ -1,6 +1,7 @@
 #Change Log
 
-* **Version 3.5.2**: *(2016/09/13)* - Backported Objective-C exception handling, removed escaping from closures, fixed issue using String/StaticString for function/file names. This will likely be the last version for Swift 2.x.
+* **Version 3.5.3**: *(2016/09/14)* - Fixed podspec. This will likely be the last version for Swift 2.x.
+* **Version 3.5.2**: *(2016/09/13)* - Backported Objective-C exception handling, removed escaping from closures, fixed issue using String/StaticString for function/file names.
 * **Version 3.5.1**: *(2016/08/28)* - Added documentation, improved tests.
 * **Version 3.5**: *(2016/08/23)* - Added the ability to log anything, no longer limited to strings, or required to use string interpolation. Thanks to @Zyphrax #130 and @mishimay #140. Can also now call a logging method with no parameters, such as `log.debug()`. This will log the result of customizable `testNoMessageClosure` property. By default that's just an empty string, but should allow for some interesting features, (like an automatic counter). 
 * **Version 3.4**: *(2016/08/21)* - Finally added an option to append to an existing log file, and added a basic log rotation method. Other bug fixes.

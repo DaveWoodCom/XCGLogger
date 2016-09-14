@@ -52,7 +52,7 @@ in your repository folder.
 
 Add the following line to your `Cartfile`.
 
-```github "DaveWoodCom/XCGLogger" ~> 3.5.2```
+```github "DaveWoodCom/XCGLogger" ~> 3.5.3```
 
 Then run `carthage update --no-use-binaries` or just `carthage update`. For details of the installation and usage of Carthage, visit [it's project page](https://github.com/Carthage/Carthage).
 
@@ -65,7 +65,7 @@ source 'https://github.com/CocoaPods/Specs.git'
 platform :ios, '8.0'
 use_frameworks!
 
-pod 'XCGLogger', '~> 3.5.2'
+pod 'XCGLogger', '~> 3.5.3'
 ```
 
 Then run `pod install`. For details of the installation and usage of CocoaPods, visit [it's official web site](https://cocoapods.org/).
@@ -74,7 +74,7 @@ Then run `pod install`. For details of the installation and usage of CocoaPods, 
 
 Use:
 * XCGLogger version [4.0.0](https://github.com/DaveWoodCom/XCGLogger/tree/swift_3.0) for Swift 3.0
-* XCGLogger version [3.5.2](https://github.com/DaveWoodCom/XCGLogger/releases/tag/Version_3.5.2) for Swift 2.2
+* XCGLogger version [3.5.3](https://github.com/DaveWoodCom/XCGLogger/releases/tag/Version_3.5.3) for Swift 2.2
 * XCGLogger version [3.2](https://github.com/DaveWoodCom/XCGLogger/releases/tag/Version_3.2) for Swift 2.0-2.1
 * XCGLogger version [2.x](https://github.com/DaveWoodCom/XCGLogger/releases/tag/Version_2.4) for Swift 1.2
 * XCGLogger version [1.x](https://github.com/DaveWoodCom/XCGLogger/releases/tag/Version_1.8.1) for Swift 1.1 and below.
