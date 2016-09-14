@@ -292,16 +292,12 @@ open class XCGLogger: CustomDebugStringConvertible {
     /// - Returns:  Nothing
     ///
     open func logln(_ level: Level = .debug, functionName: StaticString = #function, fileName: StaticString = #file, lineNumber: Int = #line, userInfo: [String: Any] = [:], closure: () -> Any?) {
-        var logDetails: LogDetails!
-        for destination in self.destinations {
-            guard destination.isEnabledFor(level: level) else { continue }
+        let enabledDestinations = destinations.filter({$0.isEnabledFor(level: level)})
+        guard enabledDestinations.count > 0 else { return }
+        guard let closureResult = closure() else { return }
 
-            if logDetails == nil {
-                guard let closureResult = closure() else { break }
-
-                logDetails = LogDetails(level: level, date: Date(), message: String(describing: closureResult), functionName: functionName, fileName: fileName, lineNumber: lineNumber, userInfo: userInfo)
-            }
-
+        let logDetails: LogDetails = LogDetails(level: level, date: Date(), message: String(describing: closureResult), functionName: functionName, fileName: fileName, lineNumber: lineNumber, userInfo: userInfo)
+        for destination in enabledDestinations {
             destination.process(logDetails: logDetails)
         }
     }
