@@ -53,7 +53,7 @@ in your repository folder.
 
 Add the following line to your `Cartfile`.
 
-```github "DaveWoodCom/XCGLogger" ~> 4.0.0-beta.4```
+```github "DaveWoodCom/XCGLogger" ~> 4.0.0```
 
 Then run `carthage update --no-use-binaries` or just `carthage update`. For details of the installation and usage of Carthage, visit [it's project page][carthage].
 
@@ -97,7 +97,7 @@ import XCGLogger
 In your AppDelegate (or other global file), declare a global constant to the default XCGLogger instance.
 
 ```Swift
-let log = XCGLogger.defaultInstance()
+let log = XCGLogger.default
 ```
 
 In the
@@ -471,7 +471,7 @@ You can also create custom filters or formatters. Take a look at the provided ve
 
 ##Third Party Tools That Work With XCGLogger
 
-**Note**: These plug-ins no longer work in Xcode 8. File a [bug report](http://openradar.appspot.com/27447585) if you'd like to see plug-ins return to Xcode.
+**Note**: These plug-ins no longer 'officially' work in Xcode 8. File a [bug report](http://openradar.appspot.com/27447585) if you'd like to see plug-ins return to Xcode. See [below](#xcode_8_tips) for a workaround...
 
 [**XcodeColors:**][XcodeColors] Enable colour in the Xcode console
 <br />
@@ -482,6 +482,46 @@ You can also create custom filters or formatters. Take a look at the provided ve
 [**XCGLoggerNSLoggerConnector:**][XCGLoggerNSLoggerConnector] Send your logs to [NSLogger][NSLogger]
 <br />
 [**firelog:**][Firelog] Send your logs to [Firebase][Firebase]
+
+##Xcode 8 Tips
+
+###Restore Plug-In Support
+
+One of the biggest issues you'll notice when using Xcode 8, is that by default it will no longer load plug-ins. Personally, I really like the benefits the plug-ins add to Xcode, especially XcodeColors. With so many other frameworks, or even Xcode itself spewing messages into the debug console, it's really helpful to be able to have your logs stand out with colour. It is currently possible to re-enable plug-ins in Xcode 8. If you do so, you'll be able to use the new `XcodeColorsLogFormatter` class to colour your log messages again. See the demo apps for example code.
+
+**Be Warned**: If you follow these instructions to re-enable plug-ins, there could be unforeseen consequences. I would definitely only do this on a development machine, with the assumption that you have another machine (or at least an unmodified version of Xcode) to do your App Store/Distribution builds. **Do not** attempt to upload a binary to Apple that was built with a modified version of Xcode. **I take no responsibility for anything that happens if you follow these instructions. You have been warned**.
+
+Now, assuming you've read the above warning, and you have a development only machine, and you really want to use your awesome plug-ins, here's my recommended method to re-enable plug-ins.
+
+1. Clone the [unsign](https://github.com/steakknife/unsign) repository.
+2. Build it following their dead-simple instructions (`make`).
+3. Close Xcode if it's open.
+4. In your favourite shell/terminal, execute the following commands (may need to be root, or just `sudo`):
+
+
+	`cd /Applications/Xcode.app/Contents/MacOS` *Substitute another Xcode path if you like*
+	
+	`/path/to/unsign Xcode` *Creates a new `Xcode.unsigned` binary*
+	
+	`mv Xcode Xcode.signed` *Move the original file*
+	
+	`ln -sf Xcode.unsigned Xcode` *Link the unsigned version to the original filename*
+
+5. Launch Xcode and use your favourite plug-ins. You may have to reauthorize access to your keychain, but it should be a one time task.
+6. You can flip back and forth between the signed and unsigned versions by repeating the `ln -sf Xcode.unsigned Xcode` command, just changing `.unsigned` to `.signed` etc.
+7. Do not use this version of Xcode to submit apps!
+8. Pray Apple doesn't disable this workaround.
+9. File a radar requesting official plug-in support again. You can dup this [radar](http://openradar.appspot.com/27447585).
+
+Thanks to [@inket](https://github.com/inket/update_xcode_plugins) and [@steakknife](https://github.com/steakknife/unsign) for providing the knowledge and tools for this tip!
+
+###Disable Xcode's Log Noise
+
+For some reason, the simulators in the final version of Xcode 8 are printing lots of their own debug messages to the console. These messages make reading your own debug logs cumbersome. You can prevent those logs from being displayed by adding the environment variable `OS_ACTIVITY_MODE` to your debug scheme, and setting the value to `disable`.
+
+<img src="https://raw.githubusercontent.com/DaveWoodCom/XCGLogger/swift_3.0/ReadMeImages/OSActivityMode.png" alt="Environment Variable" style="width: 690px; height: 401px;" />
+
+Thanks to [@rustyshelf](https://twitter.com/rustyshelf/status/775505191160328194) and [@bersaelor](https://twitter.com/bersaelor/status/776317530549919744) for this tip!
 
 ##To Do
 
