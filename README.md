@@ -379,7 +379,7 @@ log.dateFormatter = dateFormatter
 
 ###Enhancing Log Messages With Colour
 
-XCGLogger supports adding formatting codes to your log messages to enable colour in various places. The original option was to use the [XcodeColors plug-in][XcodeColors]. However, Xcode 8 no longer supports plug-ins. You can still view your logs in colour, just not in Xcode 8 at the moment. You can still use Xcode 7 if desired (after adding the Swift 3 toolchain), or you can use the new ANSI colour support to add colour to your fileDestination objects and view your logs via a terminal window. This gives you some extra options such as adding Bold, Italics, or (please don't) Blinking!
+XCGLogger supports adding formatting codes to your log messages to enable colour in various places. The original option was to use the [XcodeColors plug-in][XcodeColors]. However, Xcode 8 no longer officially supports plug-ins. You can still view your logs in colour, just not in Xcode 8 at the moment ([see note below](#restore-plug-in-support)). You can still use Xcode 7 if desired (after adding the Swift 3 toolchain), or you can use the new ANSI colour support to add colour to your fileDestination objects and view your logs via a terminal window. This gives you some extra options such as adding Bold, Italics, or (please don't) Blinking!
 
 Once enabled, each log level can have its own colour. These colours can be customized as desired. If using multiple loggers, you could alternatively set each logger to its own colour.
 
