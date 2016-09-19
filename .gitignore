@@ -226,3 +226,6 @@ CVS
 .ssh/*
 id_rsa*
 id_dsa*
+
+# Carthage
+Carthage/Build
