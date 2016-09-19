@@ -15,7 +15,7 @@
 * **Version 3.1.1**: *(2015/11/18)* - Minor clean up, fixes an app submission issue for tvOS
 * **Version 3.1**: *(2015/10/23)* - Initial support for tvOS
 * **Version 3.1b1**: *(2015/09/09)* - Initial support for tvOS
-* **Version 3.0**: *(2015/09/09)* - Bug fix, and WatchOS 2 suppport (thanks @ymyzk)
+* **Version 3.0**: *(2015/09/09)* - Bug fix, and WatchOS 2 support (thanks @ymyzk)
 * **Version 2.4**: *(2015/09/09)* - Minor bug fix, likely the last release for Swift 1.x
 * **Version 3.0b3**: *(2015/08/24)* - Added option to include the log identifier in log messages #79
 * **Version 2.3**: *(2015/08/24)* - Added option to include the log identifier in log messages #79
