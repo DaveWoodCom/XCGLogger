@@ -138,10 +138,10 @@
 				5501A31C1D75FF2C00CB8ABE /* XCGLogger.framework */,
 				5501A31E1D75FF2C00CB8ABE /* XCGLogger.framework */,
 				5501A3201D75FF2C00CB8ABE /* XCGLogger.framework */,
-				5501A3221D75FF2C00CB8ABE /* XCGLoggerTests (iOS).xctest */,
+				5501A3221D75FF2C00CB8ABE /* XCGLoggerTests_iOS.xctest */,
 				5501A3241D75FF2C00CB8ABE /* XCGLoggerTests (OS X).xctest */,
-				5501A3261D75FF2C00CB8ABE /* XCGLoggerTests (watchOS).xctest */,
-				5501A3281D75FF2C00CB8ABE /* XCGLoggerTests (tvOS).xctest */,
+				5501A3261D75FF2C00CB8ABE /* XCGLoggerTests_watchOS.xctest */,
+				5501A3281D75FF2C00CB8ABE /* XCGLoggerTests_tvOS.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -324,7 +324,7 @@
 			remoteRef = 5501A31F1D75FF2C00CB8ABE /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
-		5501A3221D75FF2C00CB8ABE /* XCGLoggerTests (iOS).xctest */ = {
+		5501A3221D75FF2C00CB8ABE /* XCGLoggerTests_iOS.xctest */ = {
 			isa = PBXReferenceProxy;
 			fileType = wrapper.cfbundle;
 			path = XCGLoggerTests_iOS.xctest;
@@ -338,14 +338,14 @@
 			remoteRef = 5501A3231D75FF2C00CB8ABE /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
-		5501A3261D75FF2C00CB8ABE /* XCGLoggerTests (watchOS).xctest */ = {
+		5501A3261D75FF2C00CB8ABE /* XCGLoggerTests_watchOS.xctest */ = {
 			isa = PBXReferenceProxy;
 			fileType = wrapper.cfbundle;
 			path = XCGLoggerTests_watchOS.xctest;
 			remoteRef = 5501A3251D75FF2C00CB8ABE /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
-		5501A3281D75FF2C00CB8ABE /* XCGLoggerTests (tvOS).xctest */ = {
+		5501A3281D75FF2C00CB8ABE /* XCGLoggerTests_tvOS.xctest */ = {
 			isa = PBXReferenceProxy;
 			fileType = wrapper.cfbundle;
 			path = XCGLoggerTests_tvOS.xctest;

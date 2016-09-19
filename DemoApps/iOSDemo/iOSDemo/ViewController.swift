@@ -10,28 +10,6 @@
 import UIKit
 import XCGLogger
 
-let sensitiveTag = "Sensitive"
-let userInfoSensitive: [String: Any] = [XCGLogger.Constants.userInfoKeyTags: [sensitiveTag]]
-
-func +<Key: Hashable, Value> (lhs: Dictionary<Key, Value>, rhs: Dictionary<Key, Value>) -> Dictionary<Key, Value> {
-    var merged = lhs
-    rhs.forEach { key, value in
-        merged[key] = value
-    }
-    return merged
-}
-
-struct Tag {
-    static let sensitive = [XCGLogger.Constants.userInfoKeyTags: ["sensitive"]]
-    static let ui = [XCGLogger.Constants.userInfoKeyTags: ["ui"]]
-    static let data = [XCGLogger.Constants.userInfoKeyTags: ["data"]]
-}
-
-struct Dev {
-    static let dave = [XCGLogger.Constants.userInfoKeyDevs: ["dave"]]
-    static let sabby = [XCGLogger.Constants.userInfoKeyDevs: ["sabby"]]
-}
-
 class ViewController: UIViewController {
 
     @IBOutlet var logLevelLabel: UILabel!
@@ -96,27 +74,34 @@ class ViewController: UIViewController {
     }
 
     @IBAction func verboseSensitiveButtonTouchUpInside(_ sender: AnyObject) {
-        log.verbose("Verbose (Sensitive) button tapped", userInfo: userInfoSensitive)
+        // Can add multiple Dev/Tag objects together using the | operator
+        log.verbose("Verbose (Sensitive) button tapped", userInfo: Dev.dave | Tag.sensitive)
     }
 
     @IBAction func debugSensitiveButtonTouchUpInside(_ sender: AnyObject) {
-        log.debug("Debug (Sensitive) button tapped", userInfo: userInfoSensitive)
+        log.debug("Debug (Sensitive) button tapped", userInfo: Dev.dave | Tag.sensitive)
     }
 
     @IBAction func infoSensitiveButtonTouchUpInside(_ sender: AnyObject) {
-        log.info("Info (Sensitive) button tapped", userInfo: Tag.sensitive + Dev.dave)
+        // Can create a custom tag name on the fly by passing in the tag name as a string
+        log.info("Info (Sensitive) button tapped", userInfo: Dev.dave | Tag.sensitive | Tag("informative"))
     }
 
     @IBAction func warningSensitiveButtonTouchUpInside(_ sender: AnyObject) {
-        log.warning("Warning (Sensitive) button tapped", userInfo: Tag.sensitive + Dev.dave)
+        // Can add a bunch of Dev/Tag objects
+        log.warning("Warning (Sensitive) button tapped", userInfo: Dev.sabby | Dev.dave | Tag.sensitive | Tag.ui)
     }
 
     @IBAction func errorSensitiveButtonTouchUpInside(_ sender: AnyObject) {
-        log.error("Error (Sensitive) button tapped", userInfo: userInfoSensitive)
+        // Can create multiple custom tags on the fly using the Tag.names() short cut
+        log.error("Error (Sensitive) button tapped", userInfo: Dev.dave | Tag.sensitive | Tag.names("button", "bug"))
     }
 
     @IBAction func severeSensitiveButtonTouchUpInside(_ sender: AnyObject) {
-        log.severe("Severe (Sensitive) button tapped", userInfo: userInfoSensitive)
+        // Since we actually need a Dictionary<String: Any> for the userInfo parameter, we can't pass in a single Tag
+        // object, we need to manually convert it to a dictionary by accessing the .dictionary property. As you see
+        // above, this is done automatically for you when using more than one
+        log.severe("Severe (Sensitive) button tapped", userInfo: Tag.sensitive.dictionary)
     }
 
     @IBAction func logLevelSliderValueChanged(_ sender: AnyObject) {
@@ -150,7 +135,7 @@ class ViewController: UIViewController {
 
     @IBAction func enableFilterSwitchValueChanged(_ sender: AnyObject) {
         if enableFilterSwitch.isOn {
-            log.filters = [TagFilter(excludeFrom: [sensitiveTag])]
+            log.filters = [TagFilter(excludeFrom: [Tag.sensitive])]
         }
         else {
             log.filters = []

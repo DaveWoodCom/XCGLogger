@@ -55,6 +55,19 @@ let log: XCGLogger = {
     return log
 }()
 
+// Create custom tags for your logs
+extension Tag {
+    static let sensitive = Tag("sensitive")
+    static let ui = Tag("ui")
+    static let data = Tag("data")
+}
+
+// Create custom developers for your logs
+extension Dev {
+    static let dave = Dev("dave")
+    static let sabby = Dev("sabby")
+}
+
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
