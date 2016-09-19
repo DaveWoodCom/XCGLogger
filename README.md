@@ -534,9 +534,9 @@ The change log is now in it's own file: [CHANGELOG.md](CHANGELOG.md)
 [badge-platforms]: https://img.shields.io/badge/Platforms-OS%20X%20%7C%20iOS%20%7C%20tvOS%20%7C%20watchOS-lightgray.svg?style=flat
 [badge-license]: https://img.shields.io/badge/License-MIT-lightgrey.svg?style=flat
 [badge-travis]: https://img.shields.io/travis/DaveWoodCom/XCGLogger/swift_3.0.svg?style=flat
-[badge-swiftpm]: https://img.shields.io/badge/Swift_Package_Manager-v4.0.0--beta.4-64a6dd.svg?style=flat
+[badge-swiftpm]: https://img.shields.io/badge/Swift_Package_Manager-v4.0.0--beta.5-64a6dd.svg?style=flat
 [badge-cocoapods]: https://img.shields.io/cocoapods/v/XCGLogger.svg?style=flat
-[badge-carthage]: https://img.shields.io/badge/Carthage-v4.0.0--beta.4-64a6dd.svg?style=flat
+[badge-carthage]: https://img.shields.io/badge/Carthage-v4.0.0--beta.5-64a6dd.svg?style=flat
 
 [badge-sponsors]: https://img.shields.io/badge/Sponsors-Cerebral%20Gardens-orange.svg?style=flat
 [badge-twitter]: https://img.shields.io/twitter/follow/DaveWoodX.svg?style=social
