@@ -480,8 +480,6 @@ You can also create custom filters or formatters. Take a look at the provided ve
 **Note**: These may not yet work with the Swift 3 version of XCGLogger.
 
 [**XCGLoggerNSLoggerConnector:**][XCGLoggerNSLoggerConnector] Send your logs to [NSLogger][NSLogger]
-<br />
-[**firelog:**][Firelog] Send your logs to [Firebase][Firebase]
 
 ##Xcode 8 Tips
 
