@@ -445,7 +445,12 @@ public class XCGFileLogDestination: XCGBaseLogDestination {
                 return
             }
 
-            let logDetails = XCGLogDetails(logLevel: .Info, date: NSDate(), logMessage: "XCGLogger " + (fileExists && shouldAppend ? "appending" : "writing") + " log to: " + writeToFileURL.absoluteString, functionName: "", fileName: "", lineNumber: 0)
+            #if swift(>=2.3)
+                let logFileName = writeToFileURL.absoluteString!
+            #else
+                let logFileName = writeToFileURL.absoluteString
+            #endif
+            let logDetails = XCGLogDetails(logLevel: .Info, date: NSDate(), logMessage: "XCGLogger " + (fileExists && shouldAppend ? "appending" : "writing") + " log to: " + logFileName, functionName: "", fileName: "", lineNumber: 0)
             owner._logln(logDetails.logMessage, logLevel: logDetails.logLevel)
             if owner.logDestination(identifier) == nil {
                 processInternalLogDetails(logDetails)
@@ -565,7 +570,7 @@ public class XCGLogger: CustomDebugStringConvertible {
         public static let logQueueIdentifier = "com.cerebralgardens.xcglogger.queue"
 
         /// Library version number
-        public static let versionString = "3.5.3"
+        public static let versionString = "3.6.0"
     }
     public typealias constants = Constants // Preserve backwards compatibility: Constants should be capitalized since it's a type
 

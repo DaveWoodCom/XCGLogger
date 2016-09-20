@@ -1,10 +1,10 @@
 #XCGLogger
 
-[![Swift 2.2](https://img.shields.io/badge/Swift-2.2-orange.svg?style=flat)](https://swift.org/)
+[![Swift 2.3](https://img.shields.io/badge/Swift-2.3-orange.svg?style=flat)](https://swift.org/)
 [![Platforms OS X | iOS | tvOS | watchOS](https://img.shields.io/badge/Platforms-OS%20X%20%7C%20iOS%20%7C%20tvOS%20%7C%20watchOS-lightgray.svg?style=flat)](https://swift.org/)
 [![License MIT](https://img.shields.io/badge/License-MIT-lightgrey.svg?style=flat)](https://github.com/DaveWoodCom/XCGLogger/blob/master/LICENSE.txt)
 
-[![Travis CI](https://img.shields.io/travis/DaveWoodCom/XCGLogger/master.svg?style=flat)](https://travis-ci.org/DaveWoodCom/XCGLogger)
+[![Travis CI](https://img.shields.io/travis/DaveWoodCom/XCGLogger/swift_2.3.svg?style=flat)](https://travis-ci.org/DaveWoodCom/XCGLogger)
 [![Carthage compatible](https://img.shields.io/badge/Carthage-compatible-brightgreen.svg?style=flat)](https://github.com/Carthage/Carthage)
 [![CocoaPods Version](https://img.shields.io/cocoapods/v/XCGLogger.svg?style=flat)](https://cocoapods.org/pods/XCGLogger)
 
@@ -52,7 +52,7 @@ in your repository folder.
 
 Add the following line to your `Cartfile`.
 
-```github "DaveWoodCom/XCGLogger" ~> 3.5.3```
+```github "DaveWoodCom/XCGLogger" ~> 3.6.0```
 
 Then run `carthage update --no-use-binaries` or just `carthage update`. For details of the installation and usage of Carthage, visit [it's project page](https://github.com/Carthage/Carthage).
 
@@ -65,7 +65,7 @@ source 'https://github.com/CocoaPods/Specs.git'
 platform :ios, '8.0'
 use_frameworks!
 
-pod 'XCGLogger', '~> 3.5.3'
+pod 'XCGLogger', '~> 3.6.0'
 ```
 
 Then run `pod install`. For details of the installation and usage of CocoaPods, visit [it's official web site](https://cocoapods.org/).
@@ -74,6 +74,7 @@ Then run `pod install`. For details of the installation and usage of CocoaPods, 
 
 Use:
 * XCGLogger version [4.0.0](https://github.com/DaveWoodCom/XCGLogger/tree/swift_3.0) for Swift 3.0
+* XCGLogger version [3.6.0](https://github.com/DaveWoodCom/XCGLogger/releases/tag/Version_3.6.0) for Swift 2.3
 * XCGLogger version [3.5.3](https://github.com/DaveWoodCom/XCGLogger/releases/tag/Version_3.5.3) for Swift 2.2
 * XCGLogger version [3.2](https://github.com/DaveWoodCom/XCGLogger/releases/tag/Version_3.2) for Swift 2.0-2.1
 * XCGLogger version [2.x](https://github.com/DaveWoodCom/XCGLogger/releases/tag/Version_2.4) for Swift 1.2
