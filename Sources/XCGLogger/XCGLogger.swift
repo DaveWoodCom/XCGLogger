@@ -126,24 +126,24 @@ open class XCGLogger: CustomDebugStringConvertible {
         return Statics.logQueue
     }
 
-    /// The date formatter object to use when displaying the dates of log messages (internal storage)
-    internal var _dateFormatter: DateFormatter? = nil
+    /// A custom date formatter object to use when displaying the dates of log messages (internal storage)
+    internal var _customDateFormatter: DateFormatter? = nil
     /// The date formatter object to use when displaying the dates of log messages
     open var dateFormatter: DateFormatter? {
         get {
-            if _dateFormatter != nil {
-                return _dateFormatter
+            struct Statics {
+                static var dateFormatter: DateFormatter = {
+                    let defaultDateFormatter = DateFormatter()
+                    defaultDateFormatter.locale = NSLocale.current
+                    defaultDateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss.SSS"
+                    return defaultDateFormatter
+                }()
             }
 
-            let defaultDateFormatter = DateFormatter()
-            defaultDateFormatter.locale = NSLocale.current
-            defaultDateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss.SSS"
-            _dateFormatter = defaultDateFormatter
-
-            return _dateFormatter
+            return _customDateFormatter ?? Statics.dateFormatter
         }
         set {
-            _dateFormatter = newValue
+            _customDateFormatter = newValue
         }
     }
 
