@@ -52,6 +52,14 @@ let log: XCGLogger = {
     //}
 #endif
 
+    // You can also change the labels for each log level, most useful for alternate languages, French, German etc, but Emoji's are more fun
+    //    log.levelDescriptions[.verbose] = "🗯"
+    //    log.levelDescriptions[.debug] = "🔹"
+    //    log.levelDescriptions[.info] = "ℹ️"
+    //    log.levelDescriptions[.warning] = "⚠️"
+    //    log.levelDescriptions[.error] = "‼️"
+    //    log.levelDescriptions[.severe] = "💣"
+
     return log
 }()
 

@@ -488,6 +488,40 @@ class XCGLoggerTests: XCTestCase {
         XCTAssert(testDestination.numberOfUnexpectedLogMessages == 0, "Fail: Received an unexpected log line")
     }
 
+    /// Test log level override strings work
+    func test_00170_LevelDescriptionOverrides() {
+        let log: XCGLogger = XCGLogger(identifier: functionIdentifier())
+        log.outputLevel = .debug
+
+        let testDestination: TestDestination = TestDestination(identifier: log.identifier + ".testDestination")
+        testDestination.showThreadName = false
+        testDestination.showLevel = true
+        testDestination.showFileName = true
+        testDestination.showLineNumber = false
+        testDestination.showDate = false
+        log.add(destination: testDestination)
+
+        let testString = "Every human being has a basic instinct: to help each other out."
+
+        // Override at the logger level
+        log.levelDescriptions[.severe] = "❌"
+
+        testDestination.add(expectedLogMessage: "[❌] [\(fileName)] \(#function) > \(testString)")
+        XCTAssert(testDestination.remainingNumberOfExpectedLogMessages == 1, "Fail: Didn't correctly load all of the expected log messages")
+        log.severe(testString)
+        XCTAssert(testDestination.remainingNumberOfExpectedLogMessages == 0, "Fail: Didn't receive all expected log lines")
+        XCTAssert(testDestination.numberOfUnexpectedLogMessages == 0, "Fail: Received an unexpected log line")
+
+        // Override at the destination level
+        testDestination.levelDescriptions[.severe] = "❌❌❌"
+
+        testDestination.add(expectedLogMessage: "[❌❌❌] [\(fileName)] \(#function) > \(testString)")
+        XCTAssert(testDestination.remainingNumberOfExpectedLogMessages == 1, "Fail: Didn't correctly load all of the expected log messages")
+        log.severe(testString)
+        XCTAssert(testDestination.remainingNumberOfExpectedLogMessages == 0, "Fail: Didn't receive all expected log lines")
+        XCTAssert(testDestination.numberOfUnexpectedLogMessages == 0, "Fail: Received an unexpected log line")
+    }
+
     func test_00200_TestLogFiltersAreApplied() {
         let log: XCGLogger = XCGLogger(identifier: functionIdentifier())
         log.outputLevel = .debug

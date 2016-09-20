@@ -50,6 +50,9 @@ open class BaseDestination: DestinationProtocol, CustomDebugStringConvertible {
     /// Option: whether or not to output the date the log was created
     open var showDate: Bool = true
 
+    /// Option: override descriptions of log levels
+    open var levelDescriptions: [XCGLogger.Level: String] = [:]
+
     // MARK: - CustomDebugStringConvertible
     open var debugDescription: String {
         get {
@@ -81,7 +84,7 @@ open class BaseDestination: DestinationProtocol, CustomDebugStringConvertible {
         }
 
         if showLevel {
-            extendedDetails += "[\(logDetails.level)] "
+            extendedDetails += "[\(levelDescriptions[logDetails.level] ?? owner.levelDescriptions[logDetails.level] ?? logDetails.level.description)] "
         }
 
         if showLogIdentifier {

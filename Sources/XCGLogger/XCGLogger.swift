@@ -111,6 +111,9 @@ open class XCGLogger: CustomDebugStringConvertible {
     /// Option: a closure to execute whenever a logging method is called without a log message
     open var noMessageClosure: () -> Any? = { return "" }
 
+    /// Option: override descriptions of log levels
+    open var levelDescriptions: [XCGLogger.Level: String] = [:]
+
     /// Array of log formatters to apply to messages before they're output
     open var formatters: [LogFormatterProtocol]? = nil
 
