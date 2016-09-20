@@ -96,6 +96,10 @@
 		55C4DD5D1D781D850074C21F /* Base64LogFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55C4DD5B1D781D850074C21F /* Base64LogFormatter.swift */; };
 		55C4DD5E1D781D850074C21F /* Base64LogFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55C4DD5B1D781D850074C21F /* Base64LogFormatter.swift */; };
 		55C4DD5F1D781D850074C21F /* Base64LogFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55C4DD5B1D781D850074C21F /* Base64LogFormatter.swift */; };
+		55DD51981D915C2C0025B5AD /* PrePostFixLogFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55DD51971D915C2C0025B5AD /* PrePostFixLogFormatter.swift */; };
+		55DD51991D915C2C0025B5AD /* PrePostFixLogFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55DD51971D915C2C0025B5AD /* PrePostFixLogFormatter.swift */; };
+		55DD519A1D915C2C0025B5AD /* PrePostFixLogFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55DD51971D915C2C0025B5AD /* PrePostFixLogFormatter.swift */; };
+		55DD519B1D915C2C0025B5AD /* PrePostFixLogFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55DD51971D915C2C0025B5AD /* PrePostFixLogFormatter.swift */; };
 		55E3EE5119D76F280068C3A7 /* XCGLogger.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55E3EE4519D76F280068C3A7 /* XCGLogger.framework */; };
 		55E3EE5819D76F280068C3A7 /* XCGLoggerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55E3EE5719D76F280068C3A7 /* XCGLoggerTests.swift */; };
 		70CB94181B99E728007802FF /* XCGLogger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 554DF40F19D76FA9005708BE /* XCGLogger.swift */; };
@@ -159,6 +163,7 @@
 		55AC33DE1D8FB4FE00614D28 /* UserInfoHelpers.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserInfoHelpers.swift; sourceTree = "<group>"; };
 		55BB1F011B79DC7500709779 /* XCGLoggerTests (OS X).xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "XCGLoggerTests (OS X).xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		55C4DD5B1D781D850074C21F /* Base64LogFormatter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Base64LogFormatter.swift; sourceTree = "<group>"; };
+		55DD51971D915C2C0025B5AD /* PrePostFixLogFormatter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PrePostFixLogFormatter.swift; path = XCGLogger/LogFormatters/PrePostFixLogFormatter.swift; sourceTree = SOURCE_ROOT; };
 		55E37F5D1BFC646800392B9C /* Info-iOS.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Info-iOS.plist"; sourceTree = "<group>"; };
 		55E37F5E1BFC647400392B9C /* Info-OSX.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Info-OSX.plist"; sourceTree = "<group>"; };
 		55E37F601BFC648800392B9C /* Info-tvOS.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Info-tvOS.plist"; sourceTree = "<group>"; };
@@ -278,6 +283,7 @@
 				5501A3E61D77506F00CB8ABE /* LogFormatterProtocol.swift */,
 				5501A3E51D77506F00CB8ABE /* ANSIColorLogFormatter.swift */,
 				5501A3E71D77506F00CB8ABE /* XcodeColorsLogFormatter.swift */,
+				55DD51971D915C2C0025B5AD /* PrePostFixLogFormatter.swift */,
 				55C4DD5B1D781D850074C21F /* Base64LogFormatter.swift */,
 			);
 			path = LogFormatters;
@@ -703,6 +709,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				55DD519B1D915C2C0025B5AD /* PrePostFixLogFormatter.swift in Sources */,
 				5501A3AD1D76282F00CB8ABE /* DispatchQueue+XCGAdditions.swift in Sources */,
 				5501A3911D76250600CB8ABE /* ConsoleDestination.swift in Sources */,
 				5501A38C1D7624B900CB8ABE /* DestinationProtocol.swift in Sources */,
@@ -730,6 +737,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				55DD51991D915C2C0025B5AD /* PrePostFixLogFormatter.swift in Sources */,
 				5501A3AB1D76282F00CB8ABE /* DispatchQueue+XCGAdditions.swift in Sources */,
 				5501A38F1D76250600CB8ABE /* ConsoleDestination.swift in Sources */,
 				5501A38A1D7624B900CB8ABE /* DestinationProtocol.swift in Sources */,
@@ -781,6 +789,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				55DD51981D915C2C0025B5AD /* PrePostFixLogFormatter.swift in Sources */,
 				5501A3AA1D76282F00CB8ABE /* DispatchQueue+XCGAdditions.swift in Sources */,
 				5501A38E1D76250600CB8ABE /* ConsoleDestination.swift in Sources */,
 				5501A3891D7624B900CB8ABE /* DestinationProtocol.swift in Sources */,
@@ -816,6 +825,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				55DD519A1D915C2C0025B5AD /* PrePostFixLogFormatter.swift in Sources */,
 				5501A3AC1D76282F00CB8ABE /* DispatchQueue+XCGAdditions.swift in Sources */,
 				5501A3901D76250600CB8ABE /* ConsoleDestination.swift in Sources */,
 				5501A38B1D7624B900CB8ABE /* DestinationProtocol.swift in Sources */,

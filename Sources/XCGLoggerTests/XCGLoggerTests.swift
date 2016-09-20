@@ -522,6 +522,71 @@ class XCGLoggerTests: XCTestCase {
         XCTAssert(testDestination.numberOfUnexpectedLogMessages == 0, "Fail: Received an unexpected log line")
     }
 
+    /// Test prefix/postfix formatter works
+    func test_00180_PrePostFixLogFormatter() {
+        let log: XCGLogger = XCGLogger(identifier: functionIdentifier())
+        log.outputLevel = .verbose
+
+        let testDestination: TestDestination = TestDestination(identifier: log.identifier + ".testDestination")
+        testDestination.showThreadName = false
+        testDestination.showLevel = true
+        testDestination.showFileName = true
+        testDestination.showLineNumber = false
+        testDestination.showDate = false
+        testDestination.outputLevel = .verbose
+        log.add(destination: testDestination)
+
+        let testString = "Everything is awesome!"
+
+        let prePostFixLogFormatter = PrePostFixLogFormatter()
+
+        // Set a specific level
+        prePostFixLogFormatter.apply(prefix: "🗯🗯🗯", postfix: "🗯🗯🗯", to: .verbose)
+        prePostFixLogFormatter.apply(prefix: "🔹🔹🔹", postfix: "🔹🔹🔹", to: .debug)
+        prePostFixLogFormatter.apply(prefix: "ℹ️ℹ️ℹ️", postfix: "ℹ️ℹ️ℹ️", to: .info)
+        prePostFixLogFormatter.apply(prefix: "⚠️⚠️⚠️", postfix: "⚠️⚠️⚠️", to: .warning)
+        prePostFixLogFormatter.apply(prefix: "‼️‼️‼️", postfix: "‼️‼️‼️", to: .error)
+        prePostFixLogFormatter.apply(prefix: "💣💣💣", postfix: "💣💣💣", to: .severe)
+        log.formatters = [prePostFixLogFormatter]
+
+        testDestination.add(expectedLogMessage: "🗯🗯🗯[\(XCGLogger.Level.verbose)] [\(fileName)] \(#function) > \(testString)🗯🗯🗯")
+        testDestination.add(expectedLogMessage: "🔹🔹🔹[\(XCGLogger.Level.debug)] [\(fileName)] \(#function) > \(testString)🔹🔹🔹")
+        testDestination.add(expectedLogMessage: "ℹ️ℹ️ℹ️[\(XCGLogger.Level.info)] [\(fileName)] \(#function) > \(testString)ℹ️ℹ️ℹ️")
+        testDestination.add(expectedLogMessage: "⚠️⚠️⚠️[\(XCGLogger.Level.warning)] [\(fileName)] \(#function) > \(testString)⚠️⚠️⚠️")
+        testDestination.add(expectedLogMessage: "‼️‼️‼️[\(XCGLogger.Level.error)] [\(fileName)] \(#function) > \(testString)‼️‼️‼️")
+        testDestination.add(expectedLogMessage: "💣💣💣[\(XCGLogger.Level.severe)] [\(fileName)] \(#function) > \(testString)💣💣💣")
+        XCTAssert(testDestination.remainingNumberOfExpectedLogMessages == 6, "Fail: Didn't correctly load all of the expected log messages")
+        log.verbose(testString)
+        log.debug(testString)
+        log.info(testString)
+        log.warning(testString)
+        log.error(testString)
+        log.severe(testString)
+
+        XCTAssert(testDestination.remainingNumberOfExpectedLogMessages == 0, "Fail: Didn't receive all expected log lines")
+        XCTAssert(testDestination.numberOfUnexpectedLogMessages == 0, "Fail: Received an unexpected log line")
+
+        // Set no prefix, no postfix, and no level, should clear everything
+        prePostFixLogFormatter.apply()
+
+        testDestination.add(expectedLogMessage: "[\(XCGLogger.Level.info)] [\(fileName)] \(#function) > \(testString)")
+        XCTAssert(testDestination.remainingNumberOfExpectedLogMessages == 1, "Fail: Didn't correctly load all of the expected log messages")
+        log.info(testString)
+        XCTAssert(testDestination.remainingNumberOfExpectedLogMessages == 0, "Fail: Didn't receive all expected log lines")
+        XCTAssert(testDestination.numberOfUnexpectedLogMessages == 0, "Fail: Received an unexpected log line")
+
+        // Set with no level specified, so it should be applied to all levels
+        prePostFixLogFormatter.apply(prefix: ">>> ", postfix: " <<<")
+
+        testDestination.add(expectedLogMessage: ">>> [\(XCGLogger.Level.debug)] [\(fileName)] \(#function) > \(testString) <<<")
+        testDestination.add(expectedLogMessage: ">>> [\(XCGLogger.Level.warning)] [\(fileName)] \(#function) > \(testString) <<<")
+        XCTAssert(testDestination.remainingNumberOfExpectedLogMessages == 2, "Fail: Didn't correctly load all of the expected log messages")
+        log.debug(testString)
+        log.warning(testString)
+        XCTAssert(testDestination.remainingNumberOfExpectedLogMessages == 0, "Fail: Didn't receive all expected log lines")
+        XCTAssert(testDestination.numberOfUnexpectedLogMessages == 0, "Fail: Received an unexpected log line")
+    }
+
     func test_00200_TestLogFiltersAreApplied() {
         let log: XCGLogger = XCGLogger(identifier: functionIdentifier())
         log.outputLevel = .debug
