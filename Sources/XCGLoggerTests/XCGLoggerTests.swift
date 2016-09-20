@@ -768,6 +768,34 @@ class XCGLoggerTests: XCTestCase {
         XCTAssert(testDestination.numberOfUnexpectedLogMessages == 0, "Fail: Received an unexpected log line")
     }
 
+    // Performance Testing
+    //    func test_80000_BasicPerformanceTest() {
+    //        let log: XCGLogger = XCGLogger(identifier: functionIdentifier(), includeDefaultDestinations: false)
+    //        log.outputLevel = .debug
+    //
+    //        let testDestination: TestDestination = TestDestination(identifier: log.identifier + ".testDestination")
+    //        testDestination.showLogIdentifier = true
+    //        testDestination.showFunctionName = true
+    //        testDestination.showThreadName = true
+    //        testDestination.showFileName = true
+    //        testDestination.showLineNumber = true
+    //        testDestination.showLevel = true
+    //        testDestination.showDate = true
+    //        log.add(destination: testDestination)
+    //
+    //        self.measure() {
+    //            for _ in 1 ..< 100 {
+    //                for _ in 1 ..< 1000 {
+    //                    log.debug("Thanks for all the fish!")
+    //                }
+    //                testDestination.reset()
+    //            }
+    //        }
+    //        // 2.224, relative standard deviation: 2.820%, values: [2.361247, 2.271706, 2.268338, 2.179494, 2.182855, 2.177256, 2.187814, 2.191347, 2.148568, 2.272234]
+    //        // 2.281, relative standard deviation: 3.712%, values: [2.393395, 2.443988, 2.328165, 2.206496, 2.160873, 2.304157, 2.256671, 2.273773, 2.252598, 2.189970]
+    //        // 2.301, relative standard deviation: 2.122%, values: [2.377062, 2.386740, 2.347364, 2.262827, 2.289801, 2.294484, 2.272225, 2.252910, 2.240331, 2.290241]
+    //    }
+
     func test_99999_LastTest() {
         // Add a final test that just waits a second, so any tests using the background can finish outputting results
         Thread.sleep(forTimeInterval: 1.0)
