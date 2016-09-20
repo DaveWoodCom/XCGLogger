@@ -1,5 +1,6 @@
 #Change Log
 
+* **Version 4.0.0**: *(2016/09/20)* - First full release for Swift 3.0. Squeezed in a couple of feature requests: ability to change log level labels, and a formatter to add a prefix and/or postfix to messages.
 * **Version 4.0.0-beta.5**: *(2016/09/19)* - Tweaked userInfo handling for Tags/Devs, introduced subspecs for CocoaPods, made the userInfo helpers optional (consider them experimental and subject to change even after 4.0.0 is actually moved out of beta status).
 * **Version 4.0.0-beta.4**: *(2016/09/14)* - Removed escaping from closures, fixed issue using String/StaticString for function/file names.
 * **Version 3.6.0**: *(2016/09/14)* - Updated for Swift 2.3.
