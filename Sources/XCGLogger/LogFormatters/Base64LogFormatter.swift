@@ -27,6 +27,10 @@ open class Base64LogFormatter: LogFormatterProtocol, CustomDebugStringConvertibl
         return message
     }
 
+    /// Initializer, doesn't do anything other than make the class publicly available
+    public init() {
+    }
+
     // MARK: - CustomDebugStringConvertible
     open var debugDescription: String {
         get {
