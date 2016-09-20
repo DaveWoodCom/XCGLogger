@@ -77,13 +77,7 @@ open class BaseDestination: DestinationProtocol, CustomDebugStringConvertible {
         var extendedDetails: String = ""
 
         if showDate {
-            var formattedDate: String = logDetails.date.description
-            if let dateFormatter = owner.dateFormatter {
-                formattedDate = dateFormatter.string(from: logDetails.date)
-            }
-
-            // extendedDetails += "\(formattedDate) " // Note: Leaks in Swift versions prior to Swift 3
-            extendedDetails += formattedDate + " "
+            extendedDetails += "\((owner.dateFormatter != nil) ? owner.dateFormatter!.string(from: logDetails.date) : logDetails.date.description) "
         }
 
         if showLevel {
@@ -91,8 +85,7 @@ open class BaseDestination: DestinationProtocol, CustomDebugStringConvertible {
         }
 
         if showLogIdentifier {
-            // extendedDetails += "[\(owner.identifier)] " // Note: Leaks in Swift versions prior to Swift 3
-            extendedDetails += "[" + owner.identifier + "] "
+            extendedDetails += "[\(owner.identifier)] "
         }
 
         if showThreadName {
@@ -101,31 +94,29 @@ open class BaseDestination: DestinationProtocol, CustomDebugStringConvertible {
             }
             else {
                 if let threadName = Thread.current.name, !threadName.isEmpty {
-                    extendedDetails += "[" + threadName + "] "
+                    extendedDetails += "[\(threadName)] "
                 }
                 else if let queueName = DispatchQueue.currentQueueLabel, !queueName.isEmpty {
-                    extendedDetails += "[" + queueName + "] "
+                    extendedDetails += "[\(queueName)] "
                 }
                 else {
-                    extendedDetails += "[" + String(format: "%p", Thread.current) + "] "
+                    extendedDetails += String(format: "[%p] ", Thread.current)
                 }
             }
         }
 
         if showFileName {
-            extendedDetails += "[" + (logDetails.fileName as NSString).lastPathComponent + (showLineNumber ? ":" + String(logDetails.lineNumber) : "") + "] "
+            extendedDetails += "[\((logDetails.fileName as NSString).lastPathComponent)\((showLineNumber ? ":" + String(logDetails.lineNumber) : ""))] "
         }
         else if showLineNumber {
-            extendedDetails += "[" + String(logDetails.lineNumber) + "] "
+            extendedDetails += "[\(logDetails.lineNumber)] "
         }
 
         if showFunctionName {
-            // extendedDetails += "\(logDetails.functionName) " // Note: Leaks in Swift versions prior to Swift 3
-            extendedDetails += logDetails.functionName + " "
+            extendedDetails += "\(logDetails.functionName) "
         }
 
-        // output(logDetails, message: "\(extendedDetails)> \(logDetails.message)") // Note: Leaks in Swift versions prior to Swift 3
-        output(logDetails: logDetails, message: extendedDetails + "> " + logDetails.message)
+        output(logDetails: logDetails, message: "\(extendedDetails)> \(logDetails.message)")
     }
 
     /// Process the log details (internal use, same as process(logDetails:) but omits function/file/line info).
@@ -141,13 +132,7 @@ open class BaseDestination: DestinationProtocol, CustomDebugStringConvertible {
         var extendedDetails: String = ""
 
         if showDate {
-            var formattedDate: String = logDetails.date.description
-            if let dateFormatter = owner.dateFormatter {
-                formattedDate = dateFormatter.string(from: logDetails.date)
-            }
-
-            // extendedDetails += "\(formattedDate) " // Note: Leaks in Swift versions prior to Swift 3
-            extendedDetails += formattedDate + " "
+            extendedDetails += "\((owner.dateFormatter != nil) ? owner.dateFormatter!.string(from: logDetails.date) : logDetails.date.description) "
         }
 
         if showLevel {
@@ -155,12 +140,10 @@ open class BaseDestination: DestinationProtocol, CustomDebugStringConvertible {
         }
 
         if showLogIdentifier {
-            // extendedDetails += "[\(owner.identifier)] " // Note: Leaks in Swift versions prior to Swift 3
-            extendedDetails += "[" + owner.identifier + "] "
+            extendedDetails += "[\(owner.identifier)] "
         }
 
-        // output(logDetails, message: "\(extendedDetails)> \(logDetails.message)") // Note: Leaks in Swift versions prior to Swift 3
-        output(logDetails: logDetails, message: extendedDetails + "> " + logDetails.message)
+        output(logDetails: logDetails, message: "\(extendedDetails)> \(logDetails.message)")
     }
 
     // MARK: - Misc methods
