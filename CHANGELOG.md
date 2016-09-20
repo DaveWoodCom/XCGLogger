@@ -1,7 +1,14 @@
 #Change Log
 
-* **Version 3.5.3**: *(2016/09/14)* - Fixed podspec. This will likely be the last version for Swift 2.x.
+* **Version 4.0.0**: *(2016/09/20)* - First full release for Swift 3.0. Squeezed in a couple of feature requests: ability to change log level labels, and a formatter to add a prefix and/or postfix to messages.
+* **Version 4.0.0-beta.5**: *(2016/09/19)* - Tweaked userInfo handling for Tags/Devs, introduced subspecs for CocoaPods, made the userInfo helpers optional (consider them experimental and subject to change even after 4.0.0 is actually moved out of beta status).
+* **Version 4.0.0-beta.4**: *(2016/09/14)* - Removed escaping from closures, fixed issue using String/StaticString for function/file names.
+* **Version 3.6.0**: *(2016/09/14)* - Updated for Swift 2.3.
+* **Version 3.5.3**: *(2016/09/14)* - Fixed podspec.
 * **Version 3.5.2**: *(2016/09/13)* - Backported Objective-C exception handling, removed escaping from closures, fixed issue using String/StaticString for function/file names.
+* **Version 4.0.0-beta.3**: *(2016/09/11)* - Fixed issue with CocoaPods using multiple `XCGLogger.h` files, added Objective-C exception handling to fix #123
+* **Version 4.0.0-beta.2**: *(2016/09/04)* - Updated docs, added filtering by tag and developer, added demo for filters
+* **Version 4.0.0-beta.1**: *(2016/09/01)* - First beta for Swift 3 compatibility, including a lot of architecture changes
 * **Version 3.5.1**: *(2016/08/28)* - Added documentation, improved tests.
 * **Version 3.5**: *(2016/08/23)* - Added the ability to log anything, no longer limited to strings, or required to use string interpolation. Thanks to @Zyphrax #130 and @mishimay #140. Can also now call a logging method with no parameters, such as `log.debug()`. This will log the result of customizable `testNoMessageClosure` property. By default that's just an empty string, but should allow for some interesting features, (like an automatic counter). 
 * **Version 3.4**: *(2016/08/21)* - Finally added an option to append to an existing log file, and added a basic log rotation method. Other bug fixes.
@@ -10,7 +17,7 @@
 * **Version 3.1.1**: *(2015/11/18)* - Minor clean up, fixes an app submission issue for tvOS
 * **Version 3.1**: *(2015/10/23)* - Initial support for tvOS
 * **Version 3.1b1**: *(2015/09/09)* - Initial support for tvOS
-* **Version 3.0**: *(2015/09/09)* - Bug fix, and WatchOS 2 suppport (thanks @ymyzk)
+* **Version 3.0**: *(2015/09/09)* - Bug fix, and WatchOS 2 support (thanks @ymyzk)
 * **Version 2.4**: *(2015/09/09)* - Minor bug fix, likely the last release for Swift 1.x
 * **Version 3.0b3**: *(2015/08/24)* - Added option to include the log identifier in log messages #79
 * **Version 2.3**: *(2015/08/24)* - Added option to include the log identifier in log messages #79
