@@ -10,11 +10,43 @@
 // MARK: - FileDestination
 /// A standard destination that outputs log details to a file
 open class FileDestination: BaseDestination {
-    // MARK: - Properties
+
+    public enum Rotation {
+      case none
+      case atAppStart
+      case whileWriting
+
+      public var description: String {
+        switch self {
+        case .none:
+          return "None"
+        case .atAppStart:
+          return "AtAppStartOnly"
+        case .whileWriting:
+          return "AlsoWhileWriting"
+        }
+      }
+    }
+
+    // MARK: - User accessible properties
+
+    open var rotation = Rotation.none
+    open var rotationFileSizeBytes = 1024 * 1024  // 1M
+    open var rotationFilesMax = 1
+    open var rotationFileDateFormat = "-yyyy-MM-dd'T'HH:mm"
+    open var rotationFileHasSuffix = true
+
     /// Logger that owns the destination object
     open override var owner: XCGLogger? {
         didSet {
             if owner != nil {
+                let path = writeToFileURL!.path
+                let indexAfterSlash = path.range(of: "/", options: .backwards)!.upperBound
+                logFileDirectory = path.substring(to: indexAfterSlash)
+
+                if self.rotation != .none {
+                    self.rotateFileAuto()
+                }
                 openFile()
             }
             else {
@@ -28,13 +60,16 @@ open class FileDestination: BaseDestination {
 
     /// FileURL of the file to log to
     open var writeToFileURL: URL? = nil {
-        didSet {
+        didSet {  // Note: will not be called (See https://bugs.swift.org/browse/SR-1118)
             openFile()
         }
     }
 
     /// File handle for the log file
     internal var logFileHandle: FileHandle? = nil
+
+    /// Log file directory
+    private var logFileDirectory: String? = nil  // including trailing "/"
 
     /// Option: whether or not to append to the log file if it already exists
     internal var shouldAppend: Bool
@@ -170,6 +205,7 @@ open class FileDestination: BaseDestination {
                 try fileManager.moveItem(atPath: writeToFileURL.path, toPath: archiveToFileURL.path)
             }
             catch let error as NSError {
+                rotationFailedBefore = true
                 openFile()
                 owner?._logln("Unable to rotate file \(writeToFileURL.path) to \(archiveToFileURL.path): \(error.localizedDescription)", level: .error)
                 return false
@@ -213,6 +249,9 @@ open class FileDestination: BaseDestination {
                     self.owner?._logln("Objective-C Exception occurred: \(exception)", level: .error)
                 })
             }
+
+            guard self.rotation == .whileWriting else {return}
+            self.rotateFileAuto()
         }
         
         if let logQueue = logQueue {
@@ -221,5 +260,128 @@ open class FileDestination: BaseDestination {
         else {
             outputClosure()
         }
+    }
+
+    /// private properties for log rotation
+    private var rotationFailedBefore = false
+    private var rotateAutoCalledBefore = false
+    private var logFileBaseName = ""
+    private var logFileSuffix = ""  // including leading "." if there is suffix
+
+    /// Rotate log file if it has exceeded the file size limit
+    ///
+    /// - Parameters:  None
+    ///
+    /// - Returns:  Nothing
+    ///
+    func rotateFileAuto() {
+      let fileManager = FileManager.default
+      let path = writeToFileURL!.path
+
+      // prepare parts of rotation file name for future use
+      if (!rotateAutoCalledBefore) {
+        let indexAfterSlash = path.range(of: "/", options: .backwards)!.upperBound
+        let fileName = path.substring(from: indexAfterSlash)
+
+        logFileBaseName = fileName
+        logFileSuffix = ""
+
+        // if there is a "." in file name and the file does use suffix
+        if let dotRange = fileName.range(of: ".", options: .backwards),
+          rotationFileHasSuffix {
+          logFileBaseName = fileName.substring(to: dotRange.lowerBound)
+          logFileSuffix = fileName.substring(from: dotRange.lowerBound)
+        }
+        rotateAutoCalledBefore = true
+      }
+
+      guard !rotationFailedBefore else {return}  // having seen failure before
+      guard fileManager.fileExists(atPath: path) else {return}
+      var action = ""  // for the catch clause to report error
+
+      do {
+        // quit if log file is not large enough yet
+        action = "get attributes of " + path
+        let fileAttr = try fileManager.attributesOfItem(atPath: path)
+        let fileSize = fileAttr[FileAttributeKey.size] as! NSNumber
+        guard fileSize.intValue > rotationFileSizeBytes else {return}
+
+        // form rotation file name
+        let formatter = DateFormatter()
+        formatter.locale = NSLocale(localeIdentifier: "en_US_POSIX") as Locale!
+        formatter.dateFormat = rotationFileDateFormat
+        let dateString = formatter.string(from: Date())
+        let rotationFilePath = logFileDirectory! + logFileBaseName + dateString + logFileSuffix
+
+        // actually rotate
+        let ret = rotateFile(to: rotationFilePath)
+        guard ret else {return}  // no new file => no need to delete old ones
+
+        // rotation successful.  delete older files
+        let filesToDelete = logFilesNewestFirst().suffix(from: rotationFilesMax + 1)
+        for f in filesToDelete {
+          action = "delete " + f
+          try fileManager.removeItem(atPath: f)
+        }
+      } catch let error as NSError {
+        owner?._logln("Failed to \(action): \(error.localizedDescription)", level: .error)
+        return
+      }
+    }
+
+    /// Return all log files, sorted, newest first
+    ///
+    /// - Parameters:  None
+    ///
+    /// - Returns:  Array of log files, sorted
+    ///
+    private func logFilesNewestFirst() -> [String] {
+      var sortedFiles = [String]()
+      var action = ""
+
+      do {
+        let fileManager = FileManager.default
+
+        // assemble a dictionary of date:file
+        var fileDateMap = [NSDate: String]()
+        let iter = fileManager.enumerator(atPath: logFileDirectory!)
+        while let element = iter?.nextObject() as? String {
+          let filePath = logFileDirectory! + element
+          action = "get attributes of " + filePath
+          let fileAttr = try fileManager.attributesOfItem(atPath: filePath)
+          let creationDate = fileAttr[FileAttributeKey.creationDate] as! NSDate
+          fileDateMap[creationDate] = filePath
+        }
+
+        // sort the dates in the dictionary, newest first
+        let compareDates: (NSDate, NSDate) -> Bool = {
+          return $0.compare($1 as Date) == ComparisonResult.orderedDescending
+        }
+        let sortedDates = Array(fileDateMap.keys).sorted(by: compareDates)
+
+        // assemble array of files using sorted dates
+        for key in sortedDates {
+           sortedFiles.append(fileDateMap[key]!)
+        }
+        return sortedFiles
+
+      } catch let error as NSError {
+        owner?._logln("Failed to \(action): \(error.localizedDescription)", level: .error)
+        return []
+      }
+    }
+
+    /// Return given number of most recent log files, newest first
+    ///
+    /// - Parameters: number of files to be returned
+    ///
+    /// - Returns: Array of log file URLs, sorted
+    ///
+    func mostRecentLogFiles(numFiles: Int) -> [URL] {
+      var URLs = [URL]()
+      for f in logFilesNewestFirst().prefix(upTo: numFiles) {
+        URLs.append(URL(fileURLWithPath: f))
+      }
+      return URLs
     }
 }

@@ -1119,6 +1119,12 @@ open class XCGLogger: CustomDebugStringConvertible {
 
         destination.owner = self
         destinations.append(destination)
+
+        // save file destination for func mostRecentLogFiles()
+        if (destination is FileDestination) {
+          fileDestination = destination as? FileDestination
+        }
+
         return true
     }
 
@@ -1206,6 +1212,20 @@ open class XCGLogger: CustomDebugStringConvertible {
 
             return description
         }
+    }
+
+    // store file destination, if any, for func mostRecentLogFiles()
+    private var fileDestination: FileDestination?
+
+    /// Return given number of most recent log files, newest first
+    ///
+    /// - Parameters: number of files to be returned
+    ///
+    /// - Returns: Array of log file URLs, sorted
+    ///
+    open func mostRecentLogFiles(numFiles: Int) -> [URL] {
+      guard let _ = fileDestination else {return []}
+      return fileDestination!.mostRecentLogFiles(numFiles: numFiles)
     }
 }
 
