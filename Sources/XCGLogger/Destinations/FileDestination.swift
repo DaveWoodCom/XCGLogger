@@ -13,17 +13,17 @@ open class FileDestination: BaseDestination {
 
     public enum Rotation {
       case none
-      case atAppStart
-      case whileWriting
+      case onlyAtAppStart
+      case alsoWhileWriting
 
       public var description: String {
         switch self {
         case .none:
           return "None"
-        case .atAppStart:
-          return "AtAppStartOnly"
-        case .whileWriting:
-          return "AlsoWhileWriting"
+        case .onlyAtAppStart:
+          return "onlyAtAppStart"
+        case .alsoWhileWriting:
+          return "alsoWhileWriting"
         }
       }
     }
@@ -45,7 +45,7 @@ open class FileDestination: BaseDestination {
                 logFileDirectory = path.substring(to: indexAfterSlash)
 
                 if self.rotation != .none {
-                    self.rotateFileAuto()
+                    self.rotateFileAuto(cause: .onlyAtAppStart)
                 }
                 openFile()
             }
@@ -69,7 +69,7 @@ open class FileDestination: BaseDestination {
     internal var logFileHandle: FileHandle? = nil
 
     /// Log file directory
-    private var logFileDirectory: String? = nil  // including trailing "/"
+    internal var logFileDirectory: String? = nil  // including trailing "/"
 
     /// Option: whether or not to append to the log file if it already exists
     internal var shouldAppend: Bool
@@ -250,8 +250,8 @@ open class FileDestination: BaseDestination {
                 })
             }
 
-            guard self.rotation == .whileWriting else {return}
-            self.rotateFileAuto()
+            guard self.rotation == .alsoWhileWriting else {return}
+            self.rotateFileAuto(cause: .alsoWhileWriting)
         }
         
         if let logQueue = logQueue {
@@ -270,11 +270,11 @@ open class FileDestination: BaseDestination {
 
     /// Rotate log file if it has exceeded the file size limit
     ///
-    /// - Parameters:  None
+    /// - Parameters:  What causes the rotation attempt
     ///
     /// - Returns:  Nothing
     ///
-    func rotateFileAuto() {
+    func rotateFileAuto(cause: Rotation) {  // parameter unnecessary. for clarity only
       let fileManager = FileManager.default
       let path = writeToFileURL!.path
 
@@ -314,14 +314,19 @@ open class FileDestination: BaseDestination {
         let rotationFilePath = logFileDirectory! + logFileBaseName + dateString + logFileSuffix
 
         // actually rotate
+        owner?._logln("Auto rotate for \(cause.description) at size \(fileSize.intValue)", level: .info)
+
         let ret = rotateFile(to: rotationFilePath)
         guard ret else {return}  // no new file => no need to delete old ones
 
         // rotation successful.  delete older files
-        let filesToDelete = logFilesNewestFirst().suffix(from: rotationFilesMax + 1)
-        for f in filesToDelete {
+        let allLogFiles = logFilesNewestFirst()
+        guard allLogFiles.count > rotationFilesMax + 1 else {return}
+
+        for f in allLogFiles.suffix(from: rotationFilesMax + 1) {  // add 1 for main log file
           action = "delete " + f
           try fileManager.removeItem(atPath: f)
+          owner?._logln("Delete old log file \(f)", level: .info)
         }
       } catch let error as NSError {
         owner?._logln("Failed to \(action): \(error.localizedDescription)", level: .error)
@@ -363,6 +368,7 @@ open class FileDestination: BaseDestination {
         for key in sortedDates {
            sortedFiles.append(fileDateMap[key]!)
         }
+
         return sortedFiles
 
       } catch let error as NSError {
@@ -379,8 +385,11 @@ open class FileDestination: BaseDestination {
     ///
     func mostRecentLogFiles(numFiles: Int) -> [URL] {
       var URLs = [URL]()
-      for f in logFilesNewestFirst().prefix(upTo: numFiles) {
+      var counter = 0
+      for f in logFilesNewestFirst() {
         URLs.append(URL(fileURLWithPath: f))
+        counter += 1
+        guard counter < numFiles else {break}
       }
       return URLs
     }
