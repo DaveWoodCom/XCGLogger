@@ -396,7 +396,8 @@
 				55E3EE5719D76F280068C3A7 /* XCGLoggerTests.swift */,
 				55E3EE5519D76F280068C3A7 /* Supporting Files */,
 			);
-			path = XCGLoggerTests;
+			name = XCGLoggerTests;
+			path = ../Tests/XCGLoggerTests;
 			sourceTree = "<group>";
 		};
 		55E3EE5519D76F280068C3A7 /* Supporting Files */ = {
@@ -979,7 +980,7 @@
 					"DEBUG=1",
 					"$(inherited)",
 				);
-				INFOPLIST_FILE = "$(SRCROOT)/XCGLoggerTests/Info.plist";
+				INFOPLIST_FILE = "$(SRCROOT)/../Tests/XCGLoggerTests/Info.plist";
 				PRODUCT_BUNDLE_IDENTIFIER = com.cerebralgardens.xcglogger.tests;
 				PRODUCT_MODULE_NAME = XCGLoggerTests_iOS;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -990,7 +991,7 @@
 		558EEB841D6BAC61006A9C7A /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				INFOPLIST_FILE = "$(SRCROOT)/XCGLoggerTests/Info.plist";
+				INFOPLIST_FILE = "$(SRCROOT)/../Tests/XCGLoggerTests/Info.plist";
 				PRODUCT_BUNDLE_IDENTIFIER = com.cerebralgardens.xcglogger.tests;
 				PRODUCT_MODULE_NAME = XCGLoggerTests_iOS;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -1005,7 +1006,7 @@
 					"DEBUG=1",
 					"$(inherited)",
 				);
-				INFOPLIST_FILE = "$(SRCROOT)/XCGLoggerTests/Info.plist";
+				INFOPLIST_FILE = "$(SRCROOT)/../Tests/XCGLoggerTests/Info.plist";
 				PRODUCT_BUNDLE_IDENTIFIER = com.cerebralgardens.xcglogger.tests;
 				PRODUCT_MODULE_NAME = XCGLoggerTests_iOS;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -1016,7 +1017,7 @@
 		558EEB911D6BAC66006A9C7A /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				INFOPLIST_FILE = "$(SRCROOT)/XCGLoggerTests/Info.plist";
+				INFOPLIST_FILE = "$(SRCROOT)/../Tests/XCGLoggerTests/Info.plist";
 				PRODUCT_BUNDLE_IDENTIFIER = com.cerebralgardens.xcglogger.tests;
 				PRODUCT_MODULE_NAME = XCGLoggerTests_iOS;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -1032,7 +1033,7 @@
 					"DEBUG=1",
 					"$(inherited)",
 				);
-				INFOPLIST_FILE = "$(SRCROOT)/XCGLoggerTests/Info.plist";
+				INFOPLIST_FILE = "$(SRCROOT)/../Tests/XCGLoggerTests/Info.plist";
 				PRODUCT_BUNDLE_IDENTIFIER = com.cerebralgardens.xcglogger.tests;
 				PRODUCT_MODULE_NAME = XCGLoggerTests_OSX;
 				PRODUCT_NAME = "XCGLoggerTests (OS X)";
@@ -1045,7 +1046,7 @@
 			buildSettings = {
 				COMBINE_HIDPI_IMAGES = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				INFOPLIST_FILE = "$(SRCROOT)/XCGLoggerTests/Info.plist";
+				INFOPLIST_FILE = "$(SRCROOT)/../Tests/XCGLoggerTests/Info.plist";
 				PRODUCT_BUNDLE_IDENTIFIER = com.cerebralgardens.xcglogger.tests;
 				PRODUCT_MODULE_NAME = XCGLoggerTests_OSX;
 				PRODUCT_NAME = "XCGLoggerTests (OS X)";
@@ -1208,7 +1209,7 @@
 					"DEBUG=1",
 					"$(inherited)",
 				);
-				INFOPLIST_FILE = "$(SRCROOT)/XCGLoggerTests/Info.plist";
+				INFOPLIST_FILE = "$(SRCROOT)/../Tests/XCGLoggerTests/Info.plist";
 				PRODUCT_BUNDLE_IDENTIFIER = com.cerebralgardens.xcglogger.tests;
 				PRODUCT_MODULE_NAME = XCGLoggerTests_iOS;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -1218,7 +1219,7 @@
 		55E3EE6019D76F280068C3A7 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				INFOPLIST_FILE = "$(SRCROOT)/XCGLoggerTests/Info.plist";
+				INFOPLIST_FILE = "$(SRCROOT)/../Tests/XCGLoggerTests/Info.plist";
 				PRODUCT_BUNDLE_IDENTIFIER = com.cerebralgardens.xcglogger.tests;
 				PRODUCT_MODULE_NAME = XCGLoggerTests_iOS;
 				PRODUCT_NAME = "$(TARGET_NAME)";

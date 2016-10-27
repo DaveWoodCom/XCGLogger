@@ -7,6 +7,9 @@
 //  Some rights reserved: https://github.com/DaveWoodCom/XCGLogger/blob/master/LICENSE.txt
 //
 
+import Dispatch
+import Foundation
+
 // MARK: - BaseDestination
 /// A base class destination that doesn't actually output the log anywhere and is intented to be subclassed
 open class BaseDestination: DestinationProtocol, CustomDebugStringConvertible {

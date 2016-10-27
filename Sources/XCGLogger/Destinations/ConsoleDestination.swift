@@ -7,6 +7,8 @@
 //  Some rights reserved: https://github.com/DaveWoodCom/XCGLogger/blob/master/LICENSE.txt
 //
 
+import Dispatch
+
 // MARK: - ConsoleDestination
 /// A standard destination that outputs log details to the console
 open class ConsoleDestination: BaseDestination {
