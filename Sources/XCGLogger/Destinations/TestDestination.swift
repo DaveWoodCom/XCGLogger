@@ -7,6 +7,8 @@
 //  Some rights reserved: https://github.com/DaveWoodCom/XCGLogger/blob/master/LICENSE.txt
 //
 
+import Dispatch
+
 // MARK: - TestDestination
 /// A destination for testing, preload it with the expected logs, send your logs, then check for success
 open class TestDestination: BaseDestination {

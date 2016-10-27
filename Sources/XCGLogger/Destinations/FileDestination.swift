@@ -7,6 +7,9 @@
 //  Some rights reserved: https://github.com/DaveWoodCom/XCGLogger/blob/master/LICENSE.txt
 //
 
+import Dispatch
+import Foundation
+
 // MARK: - FileDestination
 /// A standard destination that outputs log details to a file
 open class FileDestination: BaseDestination {
@@ -99,12 +102,12 @@ open class FileDestination: BaseDestination {
                     if let appendMarker = appendMarker,
                         let encodedData = "\(appendMarker)\n".data(using: String.Encoding.utf8) {
 
-                        _try({
+//                        _try({
                             self.logFileHandle?.write(encodedData)
-                        },
-                        catch: { (exception: NSException) in
-                            owner._logln("Objective-C Exception occurred: \(exception)", level: .error)
-                        })
+//                        },
+//                        catch: { (exception: NSException) in
+//                            owner._logln("Objective-C Exception occurred: \(exception)", level: .error)
+//                        })
                     }
                 }
             }
@@ -206,12 +209,12 @@ open class FileDestination: BaseDestination {
             self.applyFormatters(logDetails: &logDetails, message: &message)
 
             if let encodedData = "\(message)\n".data(using: String.Encoding.utf8) {
-                _try({
+//                _try({
                     self.logFileHandle?.write(encodedData)
-                },
-                catch: { (exception: NSException) in
-                    self.owner?._logln("Objective-C Exception occurred: \(exception)", level: .error)
-                })
+//                },
+//                catch: { (exception: NSException) in
+//                    self.owner?._logln("Objective-C Exception occurred: \(exception)", level: .error)
+//                })
             }
         }
         
