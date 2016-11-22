@@ -366,6 +366,8 @@ open class XCGLogger: CustomDebugStringConvertible {
                 default:
                     throw(FlagParsingError.unrecognisedLoggingArgument(argument))
                 }
+            } else {
+                unusedArguments.append(argument)
             }
         }
 
