@@ -7,6 +7,9 @@
 //  Some rights reserved: https://github.com/DaveWoodCom/XCGLogger/blob/master/LICENSE.txt
 //
 
+import Dispatch
+import Foundation
+
 // MARK: - AppleSystemLogDestination
 /// A standard destination that outputs log details to the Apple System Log using NSLog instead of print
 open class AppleSystemLogDestination: BaseDestination {
