@@ -7,6 +7,8 @@
 //  Some rights reserved: https://github.com/DaveWoodCom/XCGLogger/blob/master/LICENSE.txt
 //
 
+import Foundation
+
 /// Extract the type name from the given object
 ///
 /// - parameter someObject: the object for which you need the type name
