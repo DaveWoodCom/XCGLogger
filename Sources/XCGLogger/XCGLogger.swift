@@ -288,10 +288,10 @@ open class XCGLogger: CustomDebugStringConvertible {
                 var maybeParameter: String?
 
                 if let argumentDelimiter = argument.range(of: "=") {
-                    argumentName = argument[argument.index(argument.startIndex, offsetBy: 2)..<argumentDelimiter.lowerBound].lowercased()
+                    argumentName = argument[argument.index(argument.startIndex, offsetBy: 6)..<argumentDelimiter.lowerBound].lowercased()
                     maybeParameter = argument[argumentDelimiter.upperBound..<argument.endIndex]
                 } else {
-                    argumentName = argument[argument.index(argument.startIndex, offsetBy: 2)..<argument.endIndex]
+                    argumentName = argument[argument.index(argument.startIndex, offsetBy: 6)..<argument.endIndex]
                 }
 
                 switch argumentName {
