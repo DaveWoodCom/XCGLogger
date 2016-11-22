@@ -259,6 +259,10 @@ open class XCGLogger: CustomDebugStringConvertible {
     open func setup(fromCommandLineArguments arguments: [String]) throws -> [String] {
         var unusedArguments = [String]()
 
+        if 0 < arguments.count {
+            unusedArguments.append(arguments[0])
+        }
+
         var doneWithArguments = false
 
         var maybeLogToConsole: Bool?
@@ -272,7 +276,7 @@ open class XCGLogger: CustomDebugStringConvertible {
         var maybeLogLineNumbers: Bool?
         var maybeLogDates: Bool?
 
-        for argument in arguments {
+        for argument in arguments.dropFirst() {
             if doneWithArguments || argument == "--" {
                 doneWithArguments = true
                 unusedArguments.append(argument)
