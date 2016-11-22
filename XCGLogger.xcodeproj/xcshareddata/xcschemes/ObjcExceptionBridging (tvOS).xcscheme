@@ -15,7 +15,7 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "7573B4F71DE41B5000726CE1"
-               BuildableName = "ObjcExceptionBridging (tvOS).framework"
+               BuildableName = "ObjcExceptionBridging.framework"
                BlueprintName = "ObjcExceptionBridging (tvOS)"
                ReferencedContainer = "container:XCGLogger.xcodeproj">
             </BuildableReference>
@@ -46,7 +46,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "7573B4F71DE41B5000726CE1"
-            BuildableName = "ObjcExceptionBridging (tvOS).framework"
+            BuildableName = "ObjcExceptionBridging.framework"
             BlueprintName = "ObjcExceptionBridging (tvOS)"
             ReferencedContainer = "container:XCGLogger.xcodeproj">
          </BuildableReference>
@@ -64,7 +64,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "7573B4F71DE41B5000726CE1"
-            BuildableName = "ObjcExceptionBridging (tvOS).framework"
+            BuildableName = "ObjcExceptionBridging.framework"
             BlueprintName = "ObjcExceptionBridging (tvOS)"
             ReferencedContainer = "container:XCGLogger.xcodeproj">
          </BuildableReference>
