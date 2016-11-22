@@ -237,6 +237,255 @@ open class XCGLogger: CustomDebugStringConvertible {
         logAppDetails()
     }
 
+    enum FlagParsingError: Error {
+        case unrecognisedLoggingArgument(String)
+        case unrecognisedLogLevel(String)
+        case unrecognisedLogDestination(String)
+        case missingParameter(String)
+        case unrecognisedBooleanParameter(String)
+        case missingLogFilePath
+        case internalInconsistencyWithLogDestinations
+    }
+
+    /// A method to configure the logger based on command-line arguments.
+    ///
+    /// - Note: This method is expected to be chained behind another setup() method, or custom setup of some kind.  Establish your desired defaults before calling it, and those will be appropriately extended, overriden, or otherwise tweaked as specified by the user via the command line arguments.
+    ///
+    /// - Parameters:
+    ///     - fromCommandLineArguments: The command line arguments to parse.
+    ///
+    /// - Returns:  Any unused command line arguments.
+    ///
+    open func setup(fromCommandLineArguments arguments: [String]) throws -> [String] {
+        var unusedArguments = [String]()
+
+        var doneWithArguments = false
+
+        var maybeLogToConsole: Bool?
+        var maybeLogToFiles: [String]?
+        var maybeLogLevel: Level?
+        var maybeLogIdentifiers: Bool?
+        var maybeLogFunctionNames: Bool?
+        var maybeLogThreadNames: Bool?
+        var maybeLogLevels: Bool?
+        var maybeLogFileNames: Bool?
+        var maybeLogLineNumbers: Bool?
+        var maybeLogDates: Bool?
+
+        for argument in arguments {
+            if doneWithArguments || argument == "--" {
+                doneWithArguments = true
+                unusedArguments.append(argument)
+                continue
+            }
+
+            if argument.lowercased().hasPrefix("--log-") {
+                let argumentName: String
+                var maybeParameter: String?
+
+                if let argumentDelimiter = argument.range(of: "=") {
+                    argumentName = argument[argument.index(argument.startIndex, offsetBy: 2)..<argumentDelimiter.lowerBound].lowercased()
+                    maybeParameter = argument[argumentDelimiter.upperBound..<argument.endIndex]
+                } else {
+                    argumentName = argument[argument.index(argument.startIndex, offsetBy: 2)..<argument.endIndex]
+                }
+
+                switch argumentName {
+                case "to":
+                    if let parameter = maybeParameter {
+                        maybeLogToConsole = false
+
+                        let targets = parameter.components(separatedBy: ",").map { $0.trimmingCharacters(in: CharacterSet.whitespacesAndNewlines) }
+
+                        for target in targets {
+                            if .orderedSame == target.caseInsensitiveCompare("console") {
+                                maybeLogToConsole = true
+                            } else if .orderedSame == target.caseInsensitiveCompare("null") {
+                                maybeLogToConsole = false
+                                maybeLogToFiles = nil
+                            } else if target.lowercased().hasPrefix("file") {
+                                if let delimiter = target.range(of: ":") {
+                                    let filePath = target.substring(from: delimiter.upperBound).trimmingCharacters(in: CharacterSet.whitespacesAndNewlines)
+
+                                    if var logToFiles = maybeLogToFiles {
+                                        logToFiles.append(filePath)
+                                    } else {
+                                        maybeLogToFiles = [filePath]
+                                    }
+                                } else {
+                                    throw(FlagParsingError.missingLogFilePath)
+                                }
+                            } else {
+                                throw(FlagParsingError.unrecognisedLogDestination(target))
+                            }
+                        }
+                    } else {
+                        throw(FlagParsingError.missingParameter(argumentName))
+                    }
+                case "level":
+                    if let parameter = maybeParameter {
+                        switch parameter {
+                        case "verbose":
+                            maybeLogLevel = .verbose
+                        case "debug":
+                            maybeLogLevel = .debug
+                        case "info":
+                            maybeLogLevel = .info
+                        case "warning":
+                            maybeLogLevel = .warning
+                        case "error":
+                            maybeLogLevel = .error
+                        case "severe":
+                            maybeLogLevel = .severe
+                        case "none":
+                            maybeLogLevel = .none
+                        default:
+                            throw(FlagParsingError.unrecognisedLogLevel(parameter))
+                        }
+                    } else {
+                        throw(FlagParsingError.missingParameter(argumentName))
+                    }
+                case "identifiers":
+                    maybeLogIdentifiers = try parseOptionalBoolean(maybeParameter, defaultValue: true)
+                case "function-names":
+                    maybeLogFunctionNames = try parseOptionalBoolean(maybeParameter, defaultValue: true)
+                case "thread-names":
+                    maybeLogThreadNames = try parseOptionalBoolean(maybeParameter, defaultValue: true)
+                case "levels":
+                    maybeLogLevels = try parseOptionalBoolean(maybeParameter, defaultValue: true)
+                case "file-names":
+                    maybeLogFileNames = try parseOptionalBoolean(maybeParameter, defaultValue: true)
+                case "line-numbers":
+                    maybeLogLineNumbers = try parseOptionalBoolean(maybeParameter, defaultValue: true)
+                case "dates":
+                    maybeLogDates = try parseOptionalBoolean(maybeParameter, defaultValue: true)
+                default:
+                    throw(FlagParsingError.unrecognisedLoggingArgument(argument))
+                }
+            }
+        }
+
+        if let logLevel = maybeLogLevel {
+            outputLevel = logLevel
+        }
+
+        // First fix up the destinations to match what the user specified - if they specified anything.  The following tries to preserve any existing destinations which also fit the user's intentions, allowing e.g. the developer to pre-configure some default destinations and have them intuitively overriden or merely tweaked based on the user's additional preferences.
+        if let logToConsole = maybeLogToConsole {
+            let existingConsoleDestinations = destinations(filteredBy: { $0 is ConsoleDestination })
+
+            if logToConsole {
+                if existingConsoleDestinations.isEmpty {
+                    let standardConsoleDestination = ConsoleDestination(identifier: XCGLogger.Constants.baseConsoleDestinationIdentifier)
+
+                    standardConsoleDestination.showLogIdentifier = maybeLogIdentifiers ?? true
+                    standardConsoleDestination.showFunctionName = maybeLogFunctionNames ?? true
+                    standardConsoleDestination.showThreadName = maybeLogThreadNames ?? true
+                    standardConsoleDestination.showLevel = maybeLogLevels ?? true
+                    standardConsoleDestination.showFileName = maybeLogFileNames ?? true
+                    standardConsoleDestination.showLineNumber = maybeLogLineNumbers ?? true
+                    standardConsoleDestination.showDate = maybeLogDates ?? true
+                    standardConsoleDestination.outputLevel = maybeLogLevel ?? self.outputLevel
+
+                    add(destination: standardConsoleDestination)
+                }
+            } else {
+                existingConsoleDestinations.forEach { remove(destination: $0); return }
+            }
+        }
+
+        if var logToFiles = maybeLogToFiles {
+            let existingFileDestinations = destinations(filteredBy: { $0 is FileDestination })
+
+            for untypedExistingFileDestination in existingFileDestinations {
+                if let existingFileDestination = untypedExistingFileDestination as? FileDestination {
+                    if let existingFilePath = existingFileDestination.writeToFileURL {
+                        if let matchingPathIndex = logToFiles.index(of: existingFilePath.path) {
+                            logToFiles.remove(at: matchingPathIndex)
+                        } else {
+                            remove(destination: existingFileDestination)
+                        }
+                    }
+                } else {
+                    throw(FlagParsingError.internalInconsistencyWithLogDestinations)
+                }
+            }
+
+            for path in logToFiles {
+                let newFileDestination = FileDestination(writeToFile: path, identifier: "\(XCGLogger.Constants.fileDestinationIdentifier).\(path)")
+
+                newFileDestination.showLogIdentifier = maybeLogIdentifiers ?? true
+                newFileDestination.showFunctionName = maybeLogFunctionNames ?? true
+                newFileDestination.showThreadName = maybeLogThreadNames ?? true
+                newFileDestination.showLevel = maybeLogLevels ?? true
+                newFileDestination.showFileName = maybeLogFileNames ?? true
+                newFileDestination.showLineNumber = maybeLogLineNumbers ?? true
+                newFileDestination.showDate = maybeLogDates ?? true
+                newFileDestination.outputLevel = maybeLogLevel ?? self.outputLevel
+
+                add(destination: newFileDestination)
+            }
+        }
+
+        // Now go through all existing destinations and make sure any of the user's preferences override any defaults.
+        //
+        // This is technically redundant in some cases with the prior code for creating new destinations, but to avoid that redundancy would require more work and more code duplication than it's worth.
+        self.destinations.forEach { (destination) in
+            if let baseDestination = destination as? BaseDestination {
+                if let logIdentifiers = maybeLogIdentifiers {
+                    baseDestination.showLogIdentifier = logIdentifiers
+                }
+
+                if let logFunctionNames = maybeLogFunctionNames {
+                    baseDestination.showFunctionName = logFunctionNames
+                }
+
+                if let logThreadNames = maybeLogThreadNames {
+                    baseDestination.showThreadName = logThreadNames
+                }
+
+                if let logLevels = maybeLogLevels {
+                    baseDestination.showLevel = logLevels
+                }
+
+                if let logFileNames = maybeLogFileNames {
+                    baseDestination.showFileName = logFileNames
+                }
+
+                if let logLineNumbers = maybeLogLineNumbers {
+                    baseDestination.showLineNumber = logLineNumbers
+                }
+
+                if let logDates = maybeLogDates {
+                    baseDestination.showDate = logDates
+                }
+
+                // Note:  the log level is actually a proprety of DestinationProtocol, and as such should technically be set on *all* destinations, regardless of type.  However, DestinationProtocol can apply to structs, not just classes, and when it does 'destination' in this loop is merely a copy, not a reference to the 'real' instance stored in self.destinations.
+                if let logLevel = maybeLogLevel {
+                    baseDestination.outputLevel = logLevel
+                }
+            } // Else should we log a warning here?
+        }
+
+        logAppDetails()
+
+        return unusedArguments
+    }
+
+    private func parseOptionalBoolean(_ maybeString: String?, defaultValue: Bool) throws -> Bool {
+        if let string = maybeString {
+            switch string.lowercased() {
+            case "true", "yes":
+                return true
+            case "false", "no":
+                return false
+            default:
+                throw(FlagParsingError.unrecognisedBooleanParameter(string))
+            }
+        } else {
+            return defaultValue
+        }
+    }
+
     // MARK: - Logging methods
     /// Log a message if the logger's log level is equal to or lower than the specified level.
     ///
@@ -1094,6 +1343,24 @@ open class XCGLogger: CustomDebugStringConvertible {
         }
 
         return nil
+    }
+
+    /// Get the destinations matching the given filter closure.
+    ///
+    /// - Parameters:
+    ///     - filteredBy:   A closure that takes as DestinationProtocol as its argument and returns whether or not it matches.
+    ///
+    /// - Returns:  An array of matching destinations, or an empty array if none match.    ///
+    open func destinations(filteredBy closure: (DestinationProtocol) -> Bool) -> [DestinationProtocol] {
+        var matches = [DestinationProtocol]()
+
+        for destination in destinations {
+            if closure(destination) {
+                matches.append(destination)
+            }
+        }
+
+        return matches
     }
 
     /// Add a new destination to the logger.
