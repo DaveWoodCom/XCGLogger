@@ -8,6 +8,7 @@
 //
 
 import Foundation
+import ObjcExceptionBridging
 
 /// Extract the type name from the given object
 ///
@@ -25,7 +26,7 @@ func extractTypeName(_ someObject: Any) -> String {
 /// - parameter message:  The message to include in the exception (why it occurred)
 /// - parameter userInfo: A dictionary with arbitrary info to be passed along with the exception
 func _try(_ tryClosure: @escaping () -> (), catch catchClosure: @escaping (_ exception: NSException) -> (), finally finallyClosure: (() -> ())? = nil) {
-    _try(tryClosure, catchClosure, finallyClosure ?? {})
+    _try(tryClosure, catch: catchClosure, finally: finallyClosure ?? {})
 }
 
 /// Throw an Objective-C exception with the specified name/message/info
