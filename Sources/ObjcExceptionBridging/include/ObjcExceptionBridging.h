@@ -1,21 +1,22 @@
 //
-//  XCGLogger.h
+//  ObjcExceptionBridging.h
 //  XCGLogger: https://github.com/DaveWoodCom/XCGLogger
 //
-//  Created by Dave Wood on 2014-06-06.
-//  Copyright (c) 2014 Dave Wood, Cerebral Gardens.
+//  Created by Wade Tregaskis on 21/11/16.
+//  Copyright © 2016 Wade Tregaskis.
 //  Some rights reserved: https://github.com/DaveWoodCom/XCGLogger/blob/master/LICENSE.txt
 //
 
 #import <Foundation/Foundation.h>
 
-//! Project version number for XCGLogger.
-FOUNDATION_EXPORT double XCGLoggerVersionNumber;
 
-//! Project version string for XCGLogger.
-FOUNDATION_EXPORT const unsigned char XCGLoggerVersionString[];
+//! Project version number for ObjcExceptionBridging.
+FOUNDATION_EXPORT double ObjcExceptionBridgingVersionNumber;
 
-// In this header, you should import all the public headers of your framework using statements like #import <XCGLogger/PublicHeader.h>
+//! Project version string for ObjcExceptionBridging.
+FOUNDATION_EXPORT const unsigned char ObjcExceptionBridgingVersionString[];
+
+// In this header, you should import all the public headers of your framework using statements like #import <ObjcExceptionBridging/PublicHeader.h>
 
 /**
  Execute Swift code that could generate an Objective-C exception in here to catch and handle it gracefully (ie don't crash)
@@ -49,3 +50,4 @@ NS_INLINE void _throw(NSException* _Nonnull exception)
 {
     @throw exception;
 }
+
