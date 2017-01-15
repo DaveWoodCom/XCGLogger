@@ -430,7 +430,7 @@ class XCGLoggerTests: XCTestCase {
         let intName: String = extractTypeName(4)
 
         let optionalString: String? = nil
-        let optionalName: String = extractTypeName(optionalString)
+        let optionalName: String = extractTypeName(optionalString as Any)
 
         log.debug("className: \(className)")
         log.debug("stringName: \(stringName)")
@@ -865,6 +865,125 @@ class XCGLoggerTests: XCTestCase {
 
         XCTAssert(testDestination.remainingNumberOfExpectedLogMessages == 0, "Fail: Didn't receive all expected log lines")
         XCTAssert(testDestination.numberOfUnexpectedLogMessages == 0, "Fail: Received an unexpected log line")
+    }
+
+    // please fix the test name.
+    // I don't know the meaning of the 5-digit test number :(
+    func test_xxxxx_AutoLogRotation() {
+      let documentsDirectory: URL = {
+        let urls = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)
+        return urls[urls.endIndex - 1]
+      }()
+      let fileManager = FileManager.default
+
+      let log: XCGLogger = XCGLogger(identifier: functionIdentifier())
+
+      let logDir = documentsDirectory.appendingPathComponent("logs")
+      if !FileManager.default.fileExists(atPath: logDir.path) {
+        do {
+          try FileManager.default.createDirectory(atPath: logDir.path, withIntermediateDirectories: false, attributes: nil)
+        } catch let error as NSError {
+          print(error.localizedDescription);
+        }
+      }
+
+      var currentLogFiles = [URL]()
+
+      // create a file destination, add logs until rotation happends.
+      // keep doing so until rotation file pronning happens
+      while true {
+        print("===== create file destination")
+
+        let logPath = logDir.appendingPathComponent("XCGLogger-log.txt")
+        let fileDestination = FileDestination(writeToFile: logPath,
+                                              identifier:   "advancedLogger.fileDestination",
+                                              shouldAppend: true,
+                                              appendMarker: "-- App restarted --")
+
+        // Optionally set some configuration options
+        fileDestination.outputLevel = .debug
+        fileDestination.showLogIdentifier = false
+        fileDestination.showFunctionName = true
+        fileDestination.showThreadName = true
+        fileDestination.showLevel = true
+        fileDestination.showFileName = true
+        fileDestination.showLineNumber = true
+
+        fileDestination.showDate = true
+
+        // experiment with log rotation
+
+        let random = arc4random_uniform(2)
+        fileDestination.rotation = (random == 0) ? .onlyAtAppStart : .alsoWhileWriting
+        fileDestination.rotationFileSizeBytes = 1024
+        fileDestination.rotationFilesMax = 3
+        fileDestination.rotationFileDateFormat = "-yyyy-MM-dd'T'HH:mm:ss:SSS"
+
+        // Process this destination in the background
+        fileDestination.logQueue = XCGLogger.logQueue
+
+        XCTAssert(fileDestination.owner == nil, "Fail: newly created FileDestination has an owner set when it should be nil")
+        XCTAssert(fileDestination.logFileHandle == nil, "Fail: FileDestination has opened a file before it was assigned to a logger")
+
+        print("===== add file destination")
+
+        // Add the destination to the logger
+        log.add(destination: fileDestination)
+
+        XCTAssert(fileDestination.owner === log, "Fail: file destination did not have the correct owner set")
+        XCTAssert(fileDestination.logFileHandle != nil, "Fail: FileDestination been assigned to a logger, but no file has been opened")
+
+        // Add basic app info, version info etc, to the start of the logs
+        log.logAppDetails()
+
+        /* fill log file faster.  With 1K log file max size, it's not needed
+        for i in 0...5 {
+          log.debug("\(i) a very very very very very very very very very long string to fill the log")
+        }
+        */
+
+        let logFiles = log.mostRecentLogFiles(numFiles: 100)  // round up all files
+
+        let logFileSubset = log.mostRecentLogFiles(numFiles: 2)
+        XCTAssert(logFileSubset.count <= 2, "Fail: too many files are returned")
+
+        print("===== remove file destination")
+
+        log.remove(destination: fileDestination)
+
+        XCTAssert(fileDestination.owner == nil, "Fail: newly created FileDestination has an owner set when it should be nil")
+        XCTAssert(fileDestination.logFileHandle == nil, "Fail: FileDestination has opened a file before it was assigned to a logger")
+
+        // determine when the test stops.  If the number of log files is going
+        // up, then pruning hasn't happened yet.  If the set of log files stays
+        // unchanged, then pruning hasn't happened in the last loop.  Otherwise
+        // pruning has happened and we quit the loop.
+        guard (logFiles.count != currentLogFiles.count || logFiles == currentLogFiles) else {
+          currentLogFiles = logFiles
+          break
+        }
+        currentLogFiles = logFiles
+
+        for f in currentLogFiles {
+          print("===== current log file", f)
+        }
+
+        print("===== dividing line between file destination add/remove loops =====")
+
+        // add no more than 1 log file each second because the creationDate
+        // returned by apple is very coarse, not finer than a second.
+        sleep(1)
+      }
+
+      // clean up
+      for f in currentLogFiles {
+        do {
+          try fileManager.removeItem(atPath: f.path)
+          print("===== clean up -- delete", f)
+        } catch {
+          print("===== failed to delete", f)
+        }
+      }
     }
 
     // Performance Testing

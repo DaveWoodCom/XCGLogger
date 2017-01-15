@@ -75,6 +75,12 @@ Specifying the pod `XCGLogger` on its own will include the core framework. We're
 
 Then run `pod install`. For details of the installation and usage of CocoaPods, visit [it's official web site][cocoapods].
 
+###Swift Package Manager
+
+Add the following entry to your package's dependencies:
+
+`.Package(url: "https://github.com/DaveWoodCom/XCGLogger.git", majorVersion: 4)`
+
 ###Backwards Compatibility
 
 Use:

@@ -7,6 +7,9 @@
 //  Some rights reserved: https://github.com/DaveWoodCom/XCGLogger/blob/master/LICENSE.txt
 //
 
+import Foundation
+import ObjcExceptionBridging
+
 /// Extract the type name from the given object
 ///
 /// - parameter someObject: the object for which you need the type name
@@ -23,7 +26,7 @@ func extractTypeName(_ someObject: Any) -> String {
 /// - parameter message:  The message to include in the exception (why it occurred)
 /// - parameter userInfo: A dictionary with arbitrary info to be passed along with the exception
 func _try(_ tryClosure: @escaping () -> (), catch catchClosure: @escaping (_ exception: NSException) -> (), finally finallyClosure: (() -> ())? = nil) {
-    _try(tryClosure, catchClosure, finallyClosure ?? {})
+    _try_objc(tryClosure, catchClosure, finallyClosure ?? {})
 }
 
 /// Throw an Objective-C exception with the specified name/message/info
@@ -32,5 +35,5 @@ func _try(_ tryClosure: @escaping () -> (), catch catchClosure: @escaping (_ exc
 /// - parameter message:  The message to include in the exception (why it occurred)
 /// - parameter userInfo: A dictionary with arbitrary info to be passed along with the exception
 func _throw(name: String, message: String? = nil, userInfo: [AnyHashable: Any]? = nil) {
-    _throw(NSException(name: NSExceptionName(rawValue: name), reason: message ?? name, userInfo: userInfo))
+    _throw_objc(NSException(name: NSExceptionName(rawValue: name), reason: message ?? name, userInfo: userInfo))
 }
