@@ -103,6 +103,10 @@
 		55E3EE5119D76F280068C3A7 /* XCGLogger.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55E3EE4519D76F280068C3A7 /* XCGLogger.framework */; };
 		55E3EE5819D76F280068C3A7 /* XCGLoggerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55E3EE5719D76F280068C3A7 /* XCGLoggerTests.swift */; };
 		70CB94181B99E728007802FF /* XCGLogger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 554DF40F19D76FA9005708BE /* XCGLogger.swift */; };
+		82A828611E2EA14C0048F596 /* LogFolderDestination.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82A828601E2EA14C0048F596 /* LogFolderDestination.swift */; };
+		82A828621E2EA14C0048F596 /* LogFolderDestination.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82A828601E2EA14C0048F596 /* LogFolderDestination.swift */; };
+		82A828631E2EA14C0048F596 /* LogFolderDestination.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82A828601E2EA14C0048F596 /* LogFolderDestination.swift */; };
+		82A828641E2EA14C0048F596 /* LogFolderDestination.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82A828601E2EA14C0048F596 /* LogFolderDestination.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -172,6 +176,7 @@
 		55E3EE5619D76F280068C3A7 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		55E3EE5719D76F280068C3A7 /* XCGLoggerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = XCGLoggerTests.swift; sourceTree = "<group>"; };
 		70CB94201B99E728007802FF /* XCGLogger.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = XCGLogger.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		82A828601E2EA14C0048F596 /* LogFolderDestination.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LogFolderDestination.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -246,6 +251,7 @@
 				5501A38D1D76250600CB8ABE /* ConsoleDestination.swift */,
 				5501A3921D76251600CB8ABE /* AppleSystemLogDestination.swift */,
 				5501A3971D76256500CB8ABE /* FileDestination.swift */,
+				82A828601E2EA14C0048F596 /* LogFolderDestination.swift */,
 				5501A39C1D76258600CB8ABE /* TestDestination.swift */,
 			);
 			path = Destinations;
@@ -724,6 +730,7 @@
 				5501A3BD1D762E1B00CB8ABE /* LogDetails.swift in Sources */,
 				5501A3F31D77506F00CB8ABE /* XcodeColorsLogFormatter.swift in Sources */,
 				5501A3B81D762DD500CB8ABE /* HelperFunctions.swift in Sources */,
+				82A828641E2EA14C0048F596 /* LogFolderDestination.swift in Sources */,
 				55A4B4F61D7AB0980006463B /* DevFilter.swift in Sources */,
 				5501A3961D76251600CB8ABE /* AppleSystemLogDestination.swift in Sources */,
 				55C4DD5F1D781D850074C21F /* Base64LogFormatter.swift in Sources */,
@@ -752,6 +759,7 @@
 				5501A3BB1D762E1B00CB8ABE /* LogDetails.swift in Sources */,
 				5501A3F11D77506F00CB8ABE /* XcodeColorsLogFormatter.swift in Sources */,
 				5501A3B61D762DD500CB8ABE /* HelperFunctions.swift in Sources */,
+				82A828621E2EA14C0048F596 /* LogFolderDestination.swift in Sources */,
 				55A4B4F41D7AB0980006463B /* DevFilter.swift in Sources */,
 				5501A3941D76251600CB8ABE /* AppleSystemLogDestination.swift in Sources */,
 				55C4DD5D1D781D850074C21F /* Base64LogFormatter.swift in Sources */,
@@ -804,6 +812,7 @@
 				5501A3BA1D762E1B00CB8ABE /* LogDetails.swift in Sources */,
 				5501A3F01D77506F00CB8ABE /* XcodeColorsLogFormatter.swift in Sources */,
 				5501A3B51D762DD500CB8ABE /* HelperFunctions.swift in Sources */,
+				82A828611E2EA14C0048F596 /* LogFolderDestination.swift in Sources */,
 				55A4B4F31D7AB0980006463B /* DevFilter.swift in Sources */,
 				5501A3931D76251600CB8ABE /* AppleSystemLogDestination.swift in Sources */,
 				55C4DD5C1D781D850074C21F /* Base64LogFormatter.swift in Sources */,
@@ -840,6 +849,7 @@
 				5501A3BC1D762E1B00CB8ABE /* LogDetails.swift in Sources */,
 				5501A3F21D77506F00CB8ABE /* XcodeColorsLogFormatter.swift in Sources */,
 				5501A3B71D762DD500CB8ABE /* HelperFunctions.swift in Sources */,
+				82A828631E2EA14C0048F596 /* LogFolderDestination.swift in Sources */,
 				55A4B4F51D7AB0980006463B /* DevFilter.swift in Sources */,
 				5501A3951D76251600CB8ABE /* AppleSystemLogDestination.swift in Sources */,
 				55C4DD5E1D781D850074C21F /* Base64LogFormatter.swift in Sources */,
