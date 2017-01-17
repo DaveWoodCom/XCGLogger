@@ -430,7 +430,7 @@ class XCGLoggerTests: XCTestCase {
         let intName: String = extractTypeName(4)
 
         let optionalString: String? = nil
-        let optionalName: String = extractTypeName(optionalString)
+        let optionalName: String = extractTypeName(optionalString as Any)
 
         log.debug("className: \(className)")
         log.debug("stringName: \(stringName)")
@@ -785,12 +785,11 @@ class XCGLoggerTests: XCTestCase {
         XCTAssert(testDestination.remainingNumberOfExpectedLogMessages == linesToLog.count, "Fail: Didn't correctly load all of the expected log messages")
 
         let myConcurrentQueue = DispatchQueue(label: log.identifier + ".concurrentQueue", attributes: .concurrent)
-        // TODO: Switch to DispatchQueue.apply() when/if it is implemented in Swift 3.0
-        // see: SE-0088 - https://github.com/apple/swift-evolution/blob/7fcba970b88a5de3d302d291dc7bc9dfba0f9399/proposals/0088-libdispatch-for-swift3.md
-        // myConcurrentQueue.apply(linesToLog.count) { (index: Int) in
-        __dispatch_apply(linesToLog.count, myConcurrentQueue, { (index: Int) -> () in
-            log.debug(linesToLog[index])
-        })
+        myConcurrentQueue.sync {
+            DispatchQueue.concurrentPerform(iterations: linesToLog.count) { (index: Int) -> () in
+                log.debug(linesToLog[index])
+            }
+        }
 
         XCTAssert(testDestination.remainingNumberOfExpectedLogMessages == 0, "Fail: Didn't receive all expected log lines")
         XCTAssert(testDestination.numberOfUnexpectedLogMessages == 0, "Fail: Received an unexpected log line")
@@ -818,14 +817,13 @@ class XCGLoggerTests: XCTestCase {
         XCTAssert(testDestination.remainingNumberOfExpectedLogMessages == linesToLog.count, "Fail: Didn't correctly load all of the expected log messages")
 
         let myConcurrentQueue = DispatchQueue(label: log.identifier + ".concurrentQueue", attributes: .concurrent)
-        // TODO: Switch to DispatchQueue.apply() when/if it is implemented in Swift 3.0
-        // see: SE-0088 - https://github.com/apple/swift-evolution/blob/7fcba970b88a5de3d302d291dc7bc9dfba0f9399/proposals/0088-libdispatch-for-swift3.md
-        // myConcurrentQueue.apply(linesToLog.count) { (index: Int) in
-        __dispatch_apply(linesToLog.count, myConcurrentQueue, { (index: Int) -> () in
-            log.debug {
-                return "\(linesToLog[index])"
+        myConcurrentQueue.sync {
+            DispatchQueue.concurrentPerform(iterations: linesToLog.count) { (index: Int) -> () in
+                log.debug {
+                    return "\(linesToLog[index])"
+                }
             }
-        })
+        }
 
         XCTAssert(testDestination.remainingNumberOfExpectedLogMessages == 0, "Fail: Didn't receive all expected log lines")
         XCTAssert(testDestination.numberOfUnexpectedLogMessages == 0, "Fail: Received an unexpected log line")

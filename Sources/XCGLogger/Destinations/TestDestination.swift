@@ -11,9 +11,6 @@
 /// A destination for testing, preload it with the expected logs, send your logs, then check for success
 open class TestDestination: BaseDestination {
     // MARK: - Properties
-    /// The dispatch queue to process the log on
-    open var logQueue: DispatchQueue? = nil
-
     /// Array of all expected log messages
     open var expectedLogMessages: [String] = []
 
