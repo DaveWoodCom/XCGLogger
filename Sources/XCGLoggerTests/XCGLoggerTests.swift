@@ -430,7 +430,7 @@ class XCGLoggerTests: XCTestCase {
         let intName: String = extractTypeName(4)
 
         let optionalString: String? = nil
-        let optionalName: String = extractTypeName(optionalString)
+        let optionalName: String = extractTypeName(optionalString ?? "")
 
         log.debug("className: \(className)")
         log.debug("stringName: \(stringName)")
@@ -440,7 +440,7 @@ class XCGLoggerTests: XCTestCase {
         XCTAssert(className == "XCGLogger", "Fail: Didn't extract the correct class name")
         XCTAssert(stringName == "String", "Fail: Didn't extract the correct class name")
         XCTAssert(intName == "Int", "Fail: Didn't extract the correct class name")
-        XCTAssert(optionalName == "Optional<String>", "Fail: Didn't extract the correct class name")
+        XCTAssert(optionalName == "String", "Fail: Didn't extract the correct class name")
     }
 
     func test_00160_TestLogFormattersAreApplied() {
