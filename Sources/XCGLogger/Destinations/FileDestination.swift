@@ -383,7 +383,7 @@ open class FileDestination: BaseDestination {
     ///
     /// - Returns: Array of log file URLs, sorted
     ///
-    func mostRecentLogFiles(numFiles: Int) -> [URL] {
+    open func mostRecentLogFiles(numFiles: Int) -> [URL] {
       var URLs = [URL]()
       var counter = 0
       for f in logFilesNewestFirst() {
