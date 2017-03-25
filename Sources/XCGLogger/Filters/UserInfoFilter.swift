@@ -68,7 +68,7 @@ open class UserInfoFilter: FilterProtocol {
     ///
     /// - Returns:      Nothing
     ///
-    @discardableResult open func add<S: Sequence>(items: S) where S.Iterator.Element == String {
+    open func add<S: Sequence>(items: S) where S.Iterator.Element == String {
         for item in items {
             add(item: item)
         }
