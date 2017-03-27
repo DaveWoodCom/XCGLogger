@@ -499,7 +499,7 @@ Make sure your XCGLogger.framework is added to your Unit Test Target's Build Pha
 
 I've also added a run script to make sure framework is copied from Carthage folder.
 
-<img src="https://raw.githubusercontent.com/ugenlik/XCGLogger/swift_3.0/ReadMeImages/urunphase.png" alt="Environment Variable" style="width: 690px; height: 401px;" />
+<img src="https://github.com/ugenlik/XCGLogger/blob/master/ReadMeImages/urunphase.png" />
 
 
 If your unit test's host application is set to None and your app's classes are using `XCGLogger` you will see an error like 
