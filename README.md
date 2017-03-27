@@ -493,6 +493,53 @@ For some reason, the simulators in the final version of Xcode 8 are printing lot
 
 Thanks to [@rustyshelf](https://twitter.com/rustyshelf/status/775505191160328194) and [@bersaelor](https://twitter.com/bersaelor/status/776317530549919744) for this tip!
 
+### Using with Unit Tests. [after Carthage or Manual framework install] 
+
+Make sure your XCGLogger.framework is added to your Unit Test Target's Build Phases -> Link Binary With Libraries. 
+
+I've also added a run script to make sure framework is copied from Carthage folder.
+
+<img src="https://raw.githubusercontent.com/ugenlik/XCGLogger/swift_3.0/ReadMeImages/urunphase.png" alt="Environment Variable" style="width: 690px; height: 401px;" />
+
+
+If your unit test's host application is set to None and your app's classes are using `XCGLogger` you will see an error like 
+
+```
+Ambiguous reference to member 'log'
+```
+This is happening because XCTest is runnning your unit tests one by one and it doesnt access to your XCGLogger constructor in your AppDelegate file. So your one time init doesn't exist and it is failinf to find the correct references.
+
+To solve this you will need a one time init method that will construct your `XCGLogger`
+
+Create a new class in your test target, make sure it is named `TestSetup` 
+
+```Swift
+import XCGLogger
+
+let log: XCGLogger = {
+    // Setup XCGLogger
+    let log = XCGLogger.default
+    
+    return log
+}()
+
+
+class TestSetup: NSObject {
+    override init() {
+        
+    }
+}
+```
+
+then go to your test targets info settings and add a new row `Principal class` and Value will be `YourTestTargetName.TestSetup` , for detail read go to http://stackoverflow.com/questions/29822457/how-to-run-one-time-setup-code-before-executing-any-xctest
+
+
+<img src="https://i.stack.imgur.com/NMcGX.png"/>
+
+
+This should do the trick.... 
+
+
 ##To Do
 
 - Add more examples of some advanced use cases
