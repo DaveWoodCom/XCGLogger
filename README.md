@@ -380,11 +380,11 @@ By using Swift build flags, different log levels can be used in debugging versus
 Go to Build Settings -> Swift Compiler - Custom Flags -> Other Swift Flags and add `-DDEBUG` to the Debug entry.
 
 ```Swift
-# if DEBUG
+#if DEBUG
     log.setup(level: .debug, showThreadName: true, showLevel: true, showFileNames: true, showLineNumbers: true)
-# else
+#else
     log.setup(level: .severe, showThreadName: true, showLevel: true, showFileNames: true, showLineNumbers: true)
-# endif
+#endif
 ```
 
 You can set any number of options up in a similar fashion. See the updated iOSDemo app for an example of using different log destinations based on options, search for `USE_NSLOG`.
