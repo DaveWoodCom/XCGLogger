@@ -12,7 +12,7 @@
 [![badge-sponsors]][cerebral-gardens]
 [![badge-twitter]][twitter-davewoodx]
 
-##tl;dr
+## tl;dr
 XCGLogger is the original debug log module for use in Swift projects. 
 
 Swift does not include a C preprocessor so developers are unable to use the debug log `#define` macros they would use in Objective-C. This means our traditional way of generating nice debug logs no longer works. Resorting to just plain old `print` calls means you lose a lot of helpful information, or requires you to type a lot more code.
@@ -27,10 +27,10 @@ to this:
 
 ```2014-06-09 06:44:43.600 [Debug] [AppDelegate.swift:40] application(_:didFinishLaunchingWithOptions:): Simple message```
 
-####Example
+#### Example
 <img src="https://raw.githubusercontent.com/DaveWoodCom/XCGLogger/master/ReadMeImages/SampleLog.png" alt="Example" style="width: 690px;" />
 
-###Communication _(Hat Tip AlamoFire)_
+### Communication _(Hat Tip AlamoFire)_
 
 * If you need help, use [Stack Overflow][stackoverflow] (Tag '[xcglogger][stackoverflow]').
 * If you'd like to ask a general question, use [Stack Overflow][stackoverflow].
@@ -39,9 +39,9 @@ to this:
 * If you want to contribute, submit a pull request.
 * If you use XCGLogger, please Star the project on [GitHub][github-xcglogger]
 
-##Installation
+## Installation
 
-###Git Submodule
+### Git Submodule
 
 Execute:
 
@@ -49,7 +49,7 @@ Execute:
 	
 in your repository folder.
 
-###[Carthage][carthage]
+### [Carthage][carthage]
 
 Add the following line to your `Cartfile`.
 
@@ -57,7 +57,7 @@ Add the following line to your `Cartfile`.
 
 Then run `carthage update --no-use-binaries` or just `carthage update`. For details of the installation and usage of Carthage, visit [it's project page][carthage].
 
-###[CocoaPods][cocoapods]
+### [CocoaPods][cocoapods]
 
 Add something similar to the following lines to your `Podfile`. You may need to adjust based on your platform, version/branch etc.
 
@@ -75,7 +75,7 @@ Specifying the pod `XCGLogger` on its own will include the core framework. We're
 
 Then run `pod install`. For details of the installation and usage of CocoaPods, visit [it's official web site][cocoapods].
 
-###Backwards Compatibility
+### Backwards Compatibility
 
 Use:
 * XCGLogger version [4.0.0][xcglogger-4.0.0] for Swift 3.0
@@ -85,7 +85,7 @@ Use:
 * XCGLogger version [2.x][xcglogger-2.x] for Swift 1.2
 * XCGLogger version [1.x][xcglogger-1.x] for Swift 1.1 and below.
 
-##Basic Usage (Quick Start)
+## Basic Usage (Quick Start)
 
 _This quick start method is intended just to get you up and running with the logger. You should however use the [advanced usage below](#advanced-usage-recommended) to get the most out of this library._
 
@@ -136,7 +136,7 @@ log.severe("A severe error occurred, we are likely about to crash now")
 
 The different methods set the log level of the message. XCGLogger will only print messages with a log level that is greater to or equal to it's current log level setting. So a logger with a level of `.error` will only output log messages with a level of `.error`, or `.severe`.
 
-##Advanced Usage (Recommended)
+## Advanced Usage (Recommended)
 
 XCGLogger aims to be simple to use and get you up and running quickly with as few as 2 lines of code above. But it allows for much greater control and flexibility. 
 
@@ -195,7 +195,7 @@ Each log destination can have its own log level. As a convenience, you can set t
 
 **Note**: A destination object can only be added to one logger object, adding it to a second will remove it from the first.
 
-###Initialization Using A Closure
+### Initialization Using A Closure
 
 Alternatively you can use a closure to initialize your global variable, so that all initialization is done in one place
 ```Swift
@@ -210,7 +210,7 @@ let log: XCGLogger = {
 
 **Note**: This creates the log object lazily, which means it's not created until it's actually needed. This delays the initial output of the app information details. Because of this, I recommend forcing the log object to be created at app launch by adding the line `let _ = log` at the top of your `didFinishLaunching` method if you don't already log something on app launch.
 
-###Log Anything
+### Log Anything
 
 You can log strings:
 
@@ -228,7 +228,7 @@ log.debug((4, 2))
 log.debug(["Device": "iPhone", "Version": 7])
 ```
 
-###Filtering Log Messages
+### Filtering Log Messages
 
 New to XCGLogger 4, you can now create filters to apply to your logger (or to specific destinations). Create and configure your filters (examples below), and then add them to the logger or destination objects by setting the optional `filters` property to an array containing the filters. Filters are applied in the order they exist in the array. During processing, each filter is asked if the log message should be excluded from the log. If any filter excludes the log message, it's excluded. Filters have no way to reverse the exclusion of another filter.
 
@@ -236,7 +236,7 @@ If a destination's `filters` property is `nil`, the log's `filters` property is 
 
 **Note**: Unlike destinations, you can add the same filter object to multiple loggers and/or multiple destinations.
 
-####Filter by Filename
+#### Filter by Filename
 
 To exclude all log messages from a specific file, create an exclusion filter like so:
 
@@ -250,7 +250,7 @@ log.filters = [FileNameFilter(excludeFrom: ["AppDelegate.swift"], excludePathWhe
 
 To include log messages only for a specific set to files, create the filter using the `includeFrom:` initializer. It's also possible to just toggle the `inverse` property to flip the exclusion filter to an inclusion filter.
 	
-####Filter by Tag
+#### Filter by Tag
 
 In order to filter log messages by tag, you must of course be able to set a tag on the log messages. Each log message can now have additional, user defined data attached to them, to be used by filters (and/or formatters etc). This is handled with a `userInfo: Dictionary<String, Any>` object. The dictionary key should be a namespaced string to avoid collisions with future additions. Official keys will begin with `com.cerebralgardens.xcglogger`. The tag key can be accessed by `XCGLogger.Constants.userInfoKeyTags`. You definitely don't want to be typing that, so feel free to create a global shortcut: `let tags = XCGLogger.Constants.userInfoKeyTags`. Now you can easily tag your logs:
 
@@ -271,11 +271,11 @@ log.filters = [TagFilter(excludeFrom: [sensitiveTag])]
 
 Just like the `FileNameFilter`, you can use `includeFrom:` or toggle `inverse` to include only log messages that have the specified tags.
 
-####Filter by Developer
+#### Filter by Developer
 
 Filtering by developer is exactly like filtering by tag, only using the `userInfo` key of `XCGLogger.Constants.userInfoKeyDevs`. In fact, both filters are subclasses of the `UserInfoFilter` class that you can use to create additional filters. See [Extending XCGLogger](#extending-xcglogger) below.
 
-####Mixing and Matching
+#### Mixing and Matching
 
 In large projects with multiple developers, you'll probably want to start tagging log messages, as well as indicate the developer that added the message.
 
@@ -313,7 +313,7 @@ There are some current issues I see with these `UserInfoHelpers`, which is why I
 1. The overloaded operator `|` merges dictionaries so long as there are no `Set`s. If one of the dictionaries contains a `Set`, it'll use one of them, without merging them. Preferring the left hand side if both sides have a set for the same key.
 2. Since the `userInfo:` parameter needs a dictionary, you can't pass in a single Dev or Tag object. You need to use at least two with the `|` operator to have it automatically convert to a compatible dictionary. If you only want one Tag for example, you must access the `.dictionary` parameter manually: `userInfo: Tag("Blah").dictionary`.
 
-###Selectively Executing Code
+### Selectively Executing Code
 
 All log methods operate on closures. Using the same syntactic sugar as Swift's `assert()` function, this approach ensures we don't waste resources building log messages that won't be output anyway, while at the same time preserving a clean call site.
 
@@ -338,7 +338,7 @@ log.debug {
 
 In cases where you wish to selectively execute code without generating a log line, return `nil`, or use one of the methods: `verboseExec`, `debugExec`, `infoExec`, `warningExec`, `errorExec`, and `severeExec`.
 
-###Custom Date Formats
+### Custom Date Formats
 
 You can create your own `DateFormatter` object and assign it to the logger.
 
@@ -349,7 +349,7 @@ dateFormatter.locale = Locale.current
 log.dateFormatter = dateFormatter
 ```
 
-###Enhancing Log Messages With Colour
+### Enhancing Log Messages With Colour
 
 XCGLogger supports adding formatting codes to your log messages to enable colour in various places. The original option was to use the [XcodeColors plug-in][XcodeColors]. However, Xcode 8 no longer officially supports plug-ins. You can still view your logs in colour, just not in Xcode 8 at the moment ([see note below](#restore-plug-in-support)). You can still use Xcode 7 if desired (after adding the Swift 3 toolchain), or you can use the new ANSI colour support to add colour to your fileDestination objects and view your logs via a terminal window. This gives you some extra options such as adding Bold, Italics, or (please don't) Blinking!
 
@@ -374,7 +374,7 @@ As with filters, you can use the same formatter objects for multiple loggers and
 
 See [Extending XCGLogger](#extending-xcglogger) below for info on creating your own custom formatters.
 
-###Alternate Configurations
+### Alternate Configurations
 
 By using Swift build flags, different log levels can be used in debugging versus staging/production.
 Go to Build Settings -> Swift Compiler - Custom Flags -> Other Swift Flags and add `-DDEBUG` to the Debug entry.
@@ -389,7 +389,7 @@ Go to Build Settings -> Swift Compiler - Custom Flags -> Other Swift Flags and a
 
 You can set any number of options up in a similar fashion. See the updated iOSDemo app for an example of using different log destinations based on options, search for `USE_NSLOG`.
 
-###Background Log Processing
+### Background Log Processing
 
 By default, the supplied log destinations will process the logs on the thread they're called on. This is to ensure the log message is displayed immediately when debugging an application. You can add a breakpoint immediately after a log call and see the results when the breakpoint hits.
 
@@ -418,7 +418,7 @@ This works extremely well when combined with the [Alternate Configurations](#alt
 #endif
 ```
 
-###Append To Existing Log File
+### Append To Existing Log File
 
 When using the advanced configuration of the logger (see [Advanced Usage above](#advanced-usage-recommended)), you can now specify that the logger append to an existing log file, instead of automatically overwriting it.
 
@@ -427,7 +427,7 @@ Add the optional `shouldAppend:` parameter when initializing the `FileDestinatio
 ```let fileDestination = FileDestination(writeToFile: "/path/to/file", identifier: "advancedLogger.fileDestination", shouldAppend: true, appendMarker: "-- Relauched App --")```
 
 
-###Log File Rotation
+### Log File Rotation
 
 When logging to a file, you have the option to rotate the log file to an archived destination, and have the logger automatically create a new log file in place of the old one.
 
@@ -435,13 +435,13 @@ Using the `FileDestination` object in your logger call the `rotateFile(to:)` met
 
 **Hint**: see the `destination(withIdentifier:)` method on XCGLogger, to get your current `FileDestination` object, or save a reference to it when you create it using the [Advanced Usage options above](#advanced-usage-recommended).
 
-###Extending XCGLogger
+### Extending XCGLogger
 
 You can create alternate log destinations (besides the built in ones). Your custom log destination must implement the `DestinationProtocol` protocol. Instantiate your object, configure it, and then add it to the `XCGLogger` object with `add(destination:)`. Take a look at `ConsoleDestination` and `FileDestination` for examples.
 
 You can also create custom filters or formatters. Take a look at the provided versions as a starting point. Note that filters and formatters have the ability to alter the log messages as they're processed. This means you can create a filter that strips passwords, highlights specific words, encrypts messages, etc.
 
-##Third Party Tools That Work With XCGLogger
+## Third Party Tools That Work With XCGLogger
 
 **Note**: These plug-ins no longer 'officially' work in Xcode 8. File a [bug report](http://openradar.appspot.com/27447585) if you'd like to see plug-ins return to Xcode. See [below](#xcode_8_tips) for a workaround...
 
@@ -453,9 +453,9 @@ You can also create custom filters or formatters. Take a look at the provided ve
 
 [**XCGLoggerNSLoggerConnector:**][XCGLoggerNSLoggerConnector] Send your logs to [NSLogger][NSLogger]
 
-##Xcode 8 Tips
+## Xcode 8 Tips
 
-###Restore Plug-In Support
+### Restore Plug-In Support
 
 One of the biggest issues you'll notice when using Xcode 8, is that by default it will no longer load plug-ins. Personally, I really like the benefits the plug-ins add to Xcode, especially XcodeColors. With so many other frameworks, or even Xcode itself spewing messages into the debug console, it's really helpful to be able to have your logs stand out with colour. It is currently possible to re-enable plug-ins in Xcode 8. If you do so, you'll be able to use the new `XcodeColorsLogFormatter` class to colour your log messages again. See the demo apps for example code.
 
@@ -485,7 +485,7 @@ Now, assuming you've read the above warning, and you have a development only mac
 
 Thanks to [@inket](https://github.com/inket/update_xcode_plugins) and [@steakknife](https://github.com/steakknife/unsign) for providing the knowledge and tools for this tip!
 
-###Disable Xcode's Log Noise
+### Disable Xcode's Log Noise
 
 For some reason, the simulators in the final version of Xcode 8 are printing lots of their own debug messages to the console. These messages make reading your own debug logs cumbersome. You can prevent those logs from being displayed by adding the environment variable `OS_ACTIVITY_MODE` to your debug scheme, and setting the value to `disable`.
 
@@ -493,14 +493,14 @@ For some reason, the simulators in the final version of Xcode 8 are printing lot
 
 Thanks to [@rustyshelf](https://twitter.com/rustyshelf/status/775505191160328194) and [@bersaelor](https://twitter.com/bersaelor/status/776317530549919744) for this tip!
 
-##To Do
+## To Do
 
 - Add more examples of some advanced use cases
 - Add additional log destination types
 - Add Objective-C support
 - Add Linux support
 
-##More
+## More
 
 If you find this library helpful, you'll definitely find these other tools helpful:
 
@@ -513,7 +513,7 @@ Also, please check out some of my other projects:
 Rudoku: [App Store](https://itunes.apple.com/app/apple-store/id965105321?pt=17255&ct=github&mt=8&at=11lMGu)  
 TV Tune Up: https://www.cerebralgardens.com/tvtuneup  
 
-###Change Log
+### Change Log
 
 The change log is now in it's own file: [CHANGELOG.md](CHANGELOG.md)
 
