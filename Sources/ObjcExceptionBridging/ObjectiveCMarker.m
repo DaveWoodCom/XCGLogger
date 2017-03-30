@@ -1,1 +1,3 @@
-// This file only exists to make the Swift Package Manager recognise this module as Objective-C code.
+//
+// This file is unused and only exists so the Swift Package Manager can identify this module as one using Objective-C.
+//
