@@ -430,7 +430,7 @@ class XCGLoggerTests: XCTestCase {
         let intName: String = extractTypeName(4)
 
         let optionalString: String? = nil
-        let optionalName: String = extractTypeName(optionalString)
+        let optionalName: String = extractTypeName(optionalString as Any)
 
         log.debug("className: \(className)")
         log.debug("stringName: \(stringName)")
