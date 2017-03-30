@@ -7,7 +7,7 @@
 //  Some rights reserved: https://github.com/DaveWoodCom/XCGLogger/blob/master/LICENSE.txt
 //
 
-#if os(OSX)
+#if os(macOS)
     import AppKit
 #elseif os(iOS) || os(tvOS) || os(watchOS)
     import UIKit

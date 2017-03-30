@@ -7,7 +7,7 @@
 //  Some rights reserved: https://github.com/DaveWoodCom/XCGLogger/blob/master/LICENSE.txt
 //
 
-#if os(OSX)
+#if os(macOS)
     import AppKit
 #elseif os(iOS) || os(tvOS) || os(watchOS)
     import UIKit
@@ -77,7 +77,7 @@ open class XcodeColorsLogFormatter: LogFormatterProtocol, CustomDebugStringConve
             self.blue = blue
         }
 
-#if os(OSX)
+#if os(macOS)
         public init(color: NSColor) {
             if let colorSpaceCorrected = color.usingColorSpaceName(NSCalibratedRGBColorSpace) {
                 self.red = Int(colorSpaceCorrected.redComponent * 255)

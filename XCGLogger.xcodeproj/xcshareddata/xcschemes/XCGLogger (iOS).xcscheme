@@ -29,8 +29,8 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "55E3EE4F19D76F280068C3A7"
-               BuildableName = "XCGLoggerTests_iOS.xctest"
-               BlueprintName = "XCGLoggerTests_iOS"
+               BuildableName = "XCGLoggerTests (iOS).xctest"
+               BlueprintName = "XCGLoggerTests (iOS)"
                ReferencedContainer = "container:XCGLogger.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
@@ -47,8 +47,8 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "55E3EE4F19D76F280068C3A7"
-               BuildableName = "XCGLoggerTests_iOS.xctest"
-               BlueprintName = "XCGLoggerTests_iOS"
+               BuildableName = "XCGLoggerTests (iOS).xctest"
+               BlueprintName = "XCGLoggerTests (iOS)"
                ReferencedContainer = "container:XCGLogger.xcodeproj">
             </BuildableReference>
          </TestableReference>

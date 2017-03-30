@@ -10,7 +10,7 @@
 		555FFCB319D77B1800F62246 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 555FFCB219D77B1800F62246 /* AppDelegate.swift */; };
 		555FFCB519D77B1800F62246 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 555FFCB419D77B1800F62246 /* Images.xcassets */; };
 		555FFCB819D77B1800F62246 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 555FFCB619D77B1800F62246 /* MainMenu.xib */; };
-		555FFCC419D77B1800F62246 /* OSXDemoTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 555FFCC319D77B1800F62246 /* OSXDemoTests.swift */; };
+		555FFCC419D77B1800F62246 /* macOSDemoTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 555FFCC319D77B1800F62246 /* macOSDemoTests.swift */; };
 		756B0F1C1DE6BE2500A1566A /* XCGLogger.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 756B0F071DE6BE0A00A1566A /* XCGLogger.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 /* End PBXBuildFile section */
 
@@ -20,7 +20,7 @@
 			containerPortal = 555FFCA519D77B1800F62246 /* Project object */;
 			proxyType = 1;
 			remoteGlobalIDString = 555FFCAC19D77B1800F62246;
-			remoteInfo = OSXDemo;
+			remoteInfo = macOSDemo;
 		};
 		756B0F041DE6BE0A00A1566A /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -62,7 +62,7 @@
 			containerPortal = 5501A30E1D75FF2C00CB8ABE /* XCGLogger.xcodeproj */;
 			proxyType = 2;
 			remoteGlobalIDString = 55BB1F011B79DC7500709779;
-			remoteInfo = XCGLoggerTests_OSX;
+			remoteInfo = XCGLoggerTests_macOS;
 		};
 		756B0F101DE6BE0A00A1566A /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -124,14 +124,14 @@
 
 /* Begin PBXFileReference section */
 		5501A30E1D75FF2C00CB8ABE /* XCGLogger.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = XCGLogger.xcodeproj; path = ../../../XCGLogger.xcodeproj; sourceTree = "<group>"; };
-		555FFCAD19D77B1800F62246 /* OSXDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = OSXDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		555FFCAD19D77B1800F62246 /* macOSDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = macOSDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		555FFCB119D77B1800F62246 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		555FFCB219D77B1800F62246 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		555FFCB419D77B1800F62246 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		555FFCB719D77B1800F62246 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/MainMenu.xib; sourceTree = "<group>"; };
-		555FFCBD19D77B1800F62246 /* OSXDemoTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = OSXDemoTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		555FFCBD19D77B1800F62246 /* macOSDemoTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = macOSDemoTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		555FFCC219D77B1800F62246 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		555FFCC319D77B1800F62246 /* OSXDemoTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OSXDemoTests.swift; sourceTree = "<group>"; };
+		555FFCC319D77B1800F62246 /* macOSDemoTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = macOSDemoTests.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -155,8 +155,8 @@
 		555FFCA419D77B1800F62246 = {
 			isa = PBXGroup;
 			children = (
-				555FFCAF19D77B1800F62246 /* OSXDemo */,
-				555FFCC019D77B1800F62246 /* OSXDemoTests */,
+				555FFCAF19D77B1800F62246 /* macOSDemo */,
+				555FFCC019D77B1800F62246 /* macOSDemoTests */,
 				555FFCAE19D77B1800F62246 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -164,13 +164,13 @@
 		555FFCAE19D77B1800F62246 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				555FFCAD19D77B1800F62246 /* OSXDemo.app */,
-				555FFCBD19D77B1800F62246 /* OSXDemoTests.xctest */,
+				555FFCAD19D77B1800F62246 /* macOSDemo.app */,
+				555FFCBD19D77B1800F62246 /* macOSDemoTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
 		};
-		555FFCAF19D77B1800F62246 /* OSXDemo */ = {
+		555FFCAF19D77B1800F62246 /* macOSDemo */ = {
 			isa = PBXGroup;
 			children = (
 				555FFCB219D77B1800F62246 /* AppDelegate.swift */,
@@ -179,7 +179,7 @@
 				555FFCCD19D77B2300F62246 /* Libraries */,
 				555FFCB019D77B1800F62246 /* Supporting Files */,
 			);
-			path = OSXDemo;
+			path = macOSDemo;
 			sourceTree = "<group>";
 		};
 		555FFCB019D77B1800F62246 /* Supporting Files */ = {
@@ -190,13 +190,13 @@
 			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
-		555FFCC019D77B1800F62246 /* OSXDemoTests */ = {
+		555FFCC019D77B1800F62246 /* macOSDemoTests */ = {
 			isa = PBXGroup;
 			children = (
-				555FFCC319D77B1800F62246 /* OSXDemoTests.swift */,
+				555FFCC319D77B1800F62246 /* macOSDemoTests.swift */,
 				555FFCC119D77B1800F62246 /* Supporting Files */,
 			);
-			path = OSXDemoTests;
+			path = macOSDemoTests;
 			sourceTree = "<group>";
 		};
 		555FFCC119D77B1800F62246 /* Supporting Files */ = {
@@ -222,10 +222,10 @@
 				756B0F071DE6BE0A00A1566A /* XCGLogger.framework */,
 				756B0F091DE6BE0A00A1566A /* XCGLogger.framework */,
 				756B0F0B1DE6BE0A00A1566A /* XCGLogger.framework */,
-				756B0F0D1DE6BE0A00A1566A /* XCGLoggerTests_iOS.xctest */,
-				756B0F0F1DE6BE0A00A1566A /* XCGLoggerTests (OS X).xctest */,
-				756B0F111DE6BE0A00A1566A /* XCGLoggerTests_watchOS.xctest */,
-				756B0F131DE6BE0A00A1566A /* XCGLoggerTests_tvOS.xctest */,
+				756B0F0D1DE6BE0A00A1566A /* XCGLoggerTests (iOS).xctest */,
+				756B0F0F1DE6BE0A00A1566A /* XCGLoggerTests (macOS).xctest */,
+				756B0F111DE6BE0A00A1566A /* XCGLoggerTests (watchOS).xctest */,
+				756B0F131DE6BE0A00A1566A /* XCGLoggerTests (tvOS).xctest */,
 				756B0F151DE6BE0A00A1566A /* ObjcExceptionBridging.framework */,
 				756B0F171DE6BE0A00A1566A /* ObjcExceptionBridging.framework */,
 				756B0F191DE6BE0A00A1566A /* ObjcExceptionBridging.framework */,
@@ -237,9 +237,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		555FFCAC19D77B1800F62246 /* OSXDemo */ = {
+		555FFCAC19D77B1800F62246 /* macOSDemo */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 555FFCC719D77B1800F62246 /* Build configuration list for PBXNativeTarget "OSXDemo" */;
+			buildConfigurationList = 555FFCC719D77B1800F62246 /* Build configuration list for PBXNativeTarget "macOSDemo" */;
 			buildPhases = (
 				555FFCA919D77B1800F62246 /* Sources */,
 				555FFCAA19D77B1800F62246 /* Frameworks */,
@@ -250,14 +250,14 @@
 			);
 			dependencies = (
 			);
-			name = OSXDemo;
-			productName = OSXDemo;
-			productReference = 555FFCAD19D77B1800F62246 /* OSXDemo.app */;
+			name = macOSDemo;
+			productName = macOSDemo;
+			productReference = 555FFCAD19D77B1800F62246 /* macOSDemo.app */;
 			productType = "com.apple.product-type.application";
 		};
-		555FFCBC19D77B1800F62246 /* OSXDemoTests */ = {
+		555FFCBC19D77B1800F62246 /* macOSDemoTests */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 555FFCCA19D77B1800F62246 /* Build configuration list for PBXNativeTarget "OSXDemoTests" */;
+			buildConfigurationList = 555FFCCA19D77B1800F62246 /* Build configuration list for PBXNativeTarget "macOSDemoTests" */;
 			buildPhases = (
 				555FFCB919D77B1800F62246 /* Sources */,
 				555FFCBA19D77B1800F62246 /* Frameworks */,
@@ -268,9 +268,9 @@
 			dependencies = (
 				555FFCBF19D77B1800F62246 /* PBXTargetDependency */,
 			);
-			name = OSXDemoTests;
-			productName = OSXDemoTests;
-			productReference = 555FFCBD19D77B1800F62246 /* OSXDemoTests.xctest */;
+			name = macOSDemoTests;
+			productName = macOSDemoTests;
+			productReference = 555FFCBD19D77B1800F62246 /* macOSDemoTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
 /* End PBXNativeTarget section */
@@ -294,7 +294,7 @@
 					};
 				};
 			};
-			buildConfigurationList = 555FFCA819D77B1800F62246 /* Build configuration list for PBXProject "OSXDemo" */;
+			buildConfigurationList = 555FFCA819D77B1800F62246 /* Build configuration list for PBXProject "macOSDemo" */;
 			compatibilityVersion = "Xcode 3.2";
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
@@ -313,8 +313,8 @@
 			);
 			projectRoot = "";
 			targets = (
-				555FFCAC19D77B1800F62246 /* OSXDemo */,
-				555FFCBC19D77B1800F62246 /* OSXDemoTests */,
+				555FFCAC19D77B1800F62246 /* macOSDemo */,
+				555FFCBC19D77B1800F62246 /* macOSDemoTests */,
 			);
 		};
 /* End PBXProject section */
@@ -348,31 +348,31 @@
 			remoteRef = 756B0F0A1DE6BE0A00A1566A /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
-		756B0F0D1DE6BE0A00A1566A /* XCGLoggerTests_iOS.xctest */ = {
+		756B0F0D1DE6BE0A00A1566A /* XCGLoggerTests (iOS).xctest */ = {
 			isa = PBXReferenceProxy;
 			fileType = wrapper.cfbundle;
-			path = XCGLoggerTests_iOS.xctest;
+			path = "XCGLoggerTests (iOS).xctest";
 			remoteRef = 756B0F0C1DE6BE0A00A1566A /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
-		756B0F0F1DE6BE0A00A1566A /* XCGLoggerTests (OS X).xctest */ = {
+		756B0F0F1DE6BE0A00A1566A /* XCGLoggerTests (macOS).xctest */ = {
 			isa = PBXReferenceProxy;
 			fileType = wrapper.cfbundle;
-			path = "XCGLoggerTests (OS X).xctest";
+			path = "XCGLoggerTests (macOS).xctest";
 			remoteRef = 756B0F0E1DE6BE0A00A1566A /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
-		756B0F111DE6BE0A00A1566A /* XCGLoggerTests_watchOS.xctest */ = {
+		756B0F111DE6BE0A00A1566A /* XCGLoggerTests (watchOS).xctest */ = {
 			isa = PBXReferenceProxy;
 			fileType = wrapper.cfbundle;
-			path = XCGLoggerTests_watchOS.xctest;
+			path = "XCGLoggerTests (watchOS).xctest";
 			remoteRef = 756B0F101DE6BE0A00A1566A /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
-		756B0F131DE6BE0A00A1566A /* XCGLoggerTests_tvOS.xctest */ = {
+		756B0F131DE6BE0A00A1566A /* XCGLoggerTests (tvOS).xctest */ = {
 			isa = PBXReferenceProxy;
 			fileType = wrapper.cfbundle;
-			path = XCGLoggerTests_tvOS.xctest;
+			path = "XCGLoggerTests (tvOS).xctest";
 			remoteRef = 756B0F121DE6BE0A00A1566A /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
@@ -438,7 +438,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				555FFCC419D77B1800F62246 /* OSXDemoTests.swift in Sources */,
+				555FFCC419D77B1800F62246 /* macOSDemoTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -447,7 +447,7 @@
 /* Begin PBXTargetDependency section */
 		555FFCBF19D77B1800F62246 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = 555FFCAC19D77B1800F62246 /* OSXDemo */;
+			target = 555FFCAC19D77B1800F62246 /* macOSDemo */;
 			targetProxy = 555FFCBE19D77B1800F62246 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
@@ -557,7 +557,7 @@
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				COMBINE_HIDPI_IMAGES = YES;
-				INFOPLIST_FILE = OSXDemo/Info.plist;
+				INFOPLIST_FILE = macOSDemo/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.cerebralgardens.xcglogger.osxdemo;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -571,7 +571,7 @@
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				COMBINE_HIDPI_IMAGES = YES;
-				INFOPLIST_FILE = OSXDemo/Info.plist;
+				INFOPLIST_FILE = macOSDemo/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.cerebralgardens.xcglogger.osxdemo;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -592,12 +592,12 @@
 					"DEBUG=1",
 					"$(inherited)",
 				);
-				INFOPLIST_FILE = OSXDemoTests/Info.plist;
+				INFOPLIST_FILE = macOSDemoTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.cerebralgardens.xcglogger.osxdemo.tests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 3.0;
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/OSXDemo.app/Contents/MacOS/OSXDemo";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/macOSDemo.app/Contents/MacOS/macOSDemo";
 			};
 			name = Debug;
 		};
@@ -610,19 +610,19 @@
 					"$(DEVELOPER_FRAMEWORKS_DIR)",
 					"$(inherited)",
 				);
-				INFOPLIST_FILE = OSXDemoTests/Info.plist;
+				INFOPLIST_FILE = macOSDemoTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.cerebralgardens.xcglogger.osxdemo.tests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 3.0;
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/OSXDemo.app/Contents/MacOS/OSXDemo";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/macOSDemo.app/Contents/MacOS/macOSDemo";
 			};
 			name = Release;
 		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		555FFCA819D77B1800F62246 /* Build configuration list for PBXProject "OSXDemo" */ = {
+		555FFCA819D77B1800F62246 /* Build configuration list for PBXProject "macOSDemo" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				555FFCC519D77B1800F62246 /* Debug */,
@@ -631,7 +631,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		555FFCC719D77B1800F62246 /* Build configuration list for PBXNativeTarget "OSXDemo" */ = {
+		555FFCC719D77B1800F62246 /* Build configuration list for PBXNativeTarget "macOSDemo" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				555FFCC819D77B1800F62246 /* Debug */,
@@ -640,7 +640,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		555FFCCA19D77B1800F62246 /* Build configuration list for PBXNativeTarget "OSXDemoTests" */ = {
+		555FFCCA19D77B1800F62246 /* Build configuration list for PBXNativeTarget "macOSDemoTests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				555FFCCB19D77B1800F62246 /* Debug */,

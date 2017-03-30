@@ -1,8 +1,8 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="10117" systemVersion="15G31" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="12118" systemVersion="16E195" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
-        <deployment identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="10117"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="12118"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
         <customObject id="-2" userLabel="File's Owner" customClass="NSApplication">
@@ -12,7 +12,7 @@
         </customObject>
         <customObject id="-1" userLabel="First Responder" customClass="FirstResponder"/>
         <customObject id="-3" userLabel="Application" customClass="NSObject"/>
-        <customObject id="Voe-Tx-rLC" customClass="AppDelegate" customModule="OSXDemo" customModuleProvider="target">
+        <customObject id="Voe-Tx-rLC" customClass="AppDelegate" customModule="macOSDemo" customModuleProvider="target">
             <connections>
                 <outlet property="currentLogLevelTextField" destination="N7c-0c-rmu" id="YT6-zm-ffe"/>
                 <outlet property="generateTestLogTextField" destination="4Bc-zj-lM9" id="Qti-fk-tNx"/>
@@ -24,11 +24,11 @@
         <customObject id="YLy-65-1bz" customClass="NSFontManager"/>
         <menu title="Main Menu" systemMenu="main" id="AYu-sK-qS6">
             <items>
-                <menuItem title="OSX Demo" id="1Xt-HY-uBw" userLabel="Menu Item - OSX Demo">
+                <menuItem title="macOSDemo" id="1Xt-HY-uBw" userLabel="Menu Item - macOSDemo">
                     <modifierMask key="keyEquivalentModifierMask"/>
-                    <menu key="submenu" title="OSX Demo" systemMenu="apple" id="uQy-DD-JDr">
+                    <menu key="submenu" title="macOSDemo" systemMenu="apple" id="uQy-DD-JDr">
                         <items>
-                            <menuItem title="About OSX Demo" id="5kV-Vb-QxS">
+                            <menuItem title="About macOSDemo" id="5kV-Vb-QxS">
                                 <modifierMask key="keyEquivalentModifierMask"/>
                                 <connections>
                                     <action selector="orderFrontStandardAboutPanel:" target="-1" id="Exp-CZ-Vem"/>
@@ -42,7 +42,7 @@
                                 <menu key="submenu" title="Services" systemMenu="services" id="hz9-B4-Xy5"/>
                             </menuItem>
                             <menuItem isSeparatorItem="YES" id="4je-JR-u6R"/>
-                            <menuItem title="Hide OSX Demo" keyEquivalent="h" id="Olw-nP-bQN">
+                            <menuItem title="Hide macOSDemo" keyEquivalent="h" id="Olw-nP-bQN">
                                 <connections>
                                     <action selector="hide:" target="-1" id="PnN-Uc-m68"/>
                                 </connections>
@@ -60,7 +60,7 @@
                                 </connections>
                             </menuItem>
                             <menuItem isSeparatorItem="YES" id="kCx-OE-vgT"/>
-                            <menuItem title="Quit OSX Demo" keyEquivalent="q" id="4sb-4s-VLi">
+                            <menuItem title="Quit macOSDemo" keyEquivalent="q" id="4sb-4s-VLi">
                                 <connections>
                                     <action selector="terminate:" target="-1" id="Te7-pn-YzF"/>
                                 </connections>
@@ -95,7 +95,7 @@
                 </menuItem>
             </items>
         </menu>
-        <window title="OSX Demo" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" releasedWhenClosed="NO" animationBehavior="default" id="QvC-M9-y7g">
+        <window title="macOSDemo" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" releasedWhenClosed="NO" frameAutosaveName="" animationBehavior="default" id="QvC-M9-y7g">
             <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES" resizable="YES"/>
             <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
             <rect key="contentRect" x="335" y="390" width="500" height="471"/>
@@ -104,7 +104,7 @@
                 <rect key="frame" x="0.0" y="0.0" width="500" height="471"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="ucO-Qd-aGf">
+                    <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" allowsCharacterPickerTouchBarItem="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ucO-Qd-aGf">
                         <rect key="frame" x="18" y="434" width="112" height="17"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="17" id="FOO-Fw-iPD"/>
@@ -115,7 +115,7 @@
                             <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                         </textFieldCell>
                     </textField>
-                    <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="4Bc-zj-lM9">
+                    <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" allowsCharacterPickerTouchBarItem="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4Bc-zj-lM9">
                         <rect key="frame" x="18" y="384" width="464" height="17"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="17" id="8Hh-2Q-Tf1"/>
@@ -126,7 +126,7 @@
                             <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                         </textFieldCell>
                     </textField>
-                    <textField horizontalHuggingPriority="249" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="N7c-0c-rmu">
+                    <textField horizontalHuggingPriority="249" verticalHuggingPriority="750" allowsCharacterPickerTouchBarItem="NO" translatesAutoresizingMaskIntoConstraints="NO" id="N7c-0c-rmu">
                         <rect key="frame" x="134" y="434" width="348" height="17"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="17" id="gMX-YL-FgI"/>
@@ -225,7 +225,7 @@
                             <action selector="severeButtonTouchUpInside:" target="Voe-Tx-rLC" id="rP1-al-h6i"/>
                         </connections>
                     </button>
-                    <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="LIO-Xd-f4A">
+                    <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" allowsCharacterPickerTouchBarItem="NO" translatesAutoresizingMaskIntoConstraints="NO" id="LIO-Xd-f4A">
                         <rect key="frame" x="20" y="58" width="460" height="90"/>
                         <constraints>
                             <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="90" id="IyT-30-Vjg"/>

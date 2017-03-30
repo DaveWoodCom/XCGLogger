@@ -1,6 +1,6 @@
 //
-//  OSXDemoTests.swift
-//  OSXDemoTests
+//  macOSDemoTests.swift
+//  macOSDemoTests
 //
 //  Created by Dave Wood on 2014-09-27.
 //  Copyright (c) 2014 Cerebral Gardens. All rights reserved.
@@ -9,7 +9,7 @@
 import Cocoa
 import XCTest
 
-class OSXDemoTests: XCTestCase {
+class macOSDemoTests: XCTestCase {
 
     override func setUp() {
         super.setUp()

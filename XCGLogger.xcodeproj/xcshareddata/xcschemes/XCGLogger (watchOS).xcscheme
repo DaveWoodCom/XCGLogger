@@ -29,8 +29,8 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "558EEB7A1D6BAC61006A9C7A"
-               BuildableName = "XCGLoggerTests_watchOS.xctest"
-               BlueprintName = "XCGLoggerTests_watchOS"
+               BuildableName = "XCGLoggerTests (watchOS).xctest"
+               BlueprintName = "XCGLoggerTests (watchOS)"
                ReferencedContainer = "container:XCGLogger.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>

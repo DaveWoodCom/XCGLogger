@@ -121,7 +121,7 @@ application(_ application: UIApplication, didFinishLaunchingWithOptions launchOp
 or
 
 ```Swift
-applicationDidFinishLaunching(_ notification: Notification) // OS X
+applicationDidFinishLaunching(_ notification: Notification) // macOS
 ```
 
 function, configure the options you need:
