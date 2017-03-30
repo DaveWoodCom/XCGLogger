@@ -1179,19 +1179,16 @@ open class XCGLogger: CustomDebugStringConvertible {
     /// - Parameters:
     ///     - message:   Message to log.
     ///     - level:     Specified log level.
+    ///     - source:    The destination calling this method
     ///
     /// - Returns:  Nothing
     ///
-    internal func _logln(_ message: String, level: Level = .debug) {
-
-        var logDetails: LogDetails? = nil
+    internal func _logln(_ message: String, level: Level = .debug, source sourceDestination: DestinationProtocol? = nil) {
+        let logDetails: LogDetails = LogDetails(level: level, date: Date(), message: message, functionName: "", fileName: "", lineNumber: 0, userInfo: XCGLogger.Constants.internalUserInfo)
         for destination in self.destinations {
-            if (destination.isEnabledFor(level:level)) {
-                if logDetails == nil {
-                    logDetails = LogDetails(level: level, date: Date(), message: message, functionName: "", fileName: "", lineNumber: 0, userInfo: XCGLogger.Constants.internalUserInfo)
-                }
-
-                destination.processInternal(logDetails: logDetails!)
+            if level >= .error && sourceDestination?.identifier == destination.identifier { continue }
+            if (destination.isEnabledFor(level: level)) {
+                destination.processInternal(logDetails: logDetails)
             }
         }
     }

@@ -106,13 +106,13 @@ open class FileDestination: BaseDestination {
                             self.logFileHandle?.write(encodedData)
                         },
                         catch: { (exception: NSException) in
-                            owner._logln("Objective-C Exception occurred: \(exception)", level: .error)
+                            owner._logln("Objective-C Exception occurred: \(exception)", level: .error, source: self)
                         })
                     }
                 }
             }
             catch let error as NSError {
-                owner._logln("Attempt to open log file for \(fileExists && shouldAppend ? "appending" : "writing") failed: \(error.localizedDescription)", level: .error)
+                owner._logln("Attempt to open log file for \(fileExists && shouldAppend ? "appending" : "writing") failed: \(error.localizedDescription)", level: .error, source: self)
                 logFileHandle = nil
                 return
             }
@@ -120,7 +120,7 @@ open class FileDestination: BaseDestination {
             owner.logAppDetails(selectedDestination: self)
 
             let logDetails = LogDetails(level: .info, date: Date(), message: "XCGLogger " + (fileExists && shouldAppend ? "appending" : "writing") + " log to: " + writeToFileURL.absoluteString, functionName: "", fileName: "", lineNumber: 0, userInfo: XCGLogger.Constants.internalUserInfo)
-            owner._logln(logDetails.message, level: logDetails.level)
+            owner._logln(logDetails.message, level: logDetails.level, source: self)
             if owner.destination(withIdentifier: identifier) == nil {
                 processInternal(logDetails: logDetails)
             }
@@ -174,11 +174,11 @@ open class FileDestination: BaseDestination {
             }
             catch let error as NSError {
                 openFile()
-                owner?._logln("Unable to rotate file \(writeToFileURL.path) to \(archiveToFileURL.path): \(error.localizedDescription)", level: .error)
+                owner?._logln("Unable to rotate file \(writeToFileURL.path) to \(archiveToFileURL.path): \(error.localizedDescription)", level: .error, source: self)
                 return false
             }
 
-            owner?._logln("Rotated file \(writeToFileURL.path) to \(archiveToFileURL.path)", level: .info)
+            owner?._logln("Rotated file \(writeToFileURL.path) to \(archiveToFileURL.path)", level: .info, source: self)
             openFile()
             return true
         }
@@ -213,7 +213,7 @@ open class FileDestination: BaseDestination {
                     self.logFileHandle?.write(encodedData)
                 },
                 catch: { (exception: NSException) in
-                    self.owner?._logln("Objective-C Exception occurred: \(exception)", level: .error)
+                    self.owner?._logln("Objective-C Exception occurred: \(exception)", level: .error, source: self)
                 })
             }
         }
