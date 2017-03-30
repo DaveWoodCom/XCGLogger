@@ -3,7 +3,7 @@
 //  iOSDemoTests
 //
 //  Created by Dave Wood on 2014-09-27.
-//  Copyright (c) 2014 Cerebral Gardens. All rights reserved.
+//  Copyright © 2014 Cerebral Gardens. All rights reserved.
 //
 
 import UIKit

@@ -2,13 +2,12 @@
 //  ObjcExceptionBridging.h
 //  XCGLogger: https://github.com/DaveWoodCom/XCGLogger
 //
-//  Created by Wade Tregaskis on 21/11/16.
-//  Copyright © 2016 Wade Tregaskis.
+//  Created by Dave Wood on 2014-06-06.
+//  Copyright © 2014 Dave Wood, Cerebral Gardens.
 //  Some rights reserved: https://github.com/DaveWoodCom/XCGLogger/blob/master/LICENSE.txt
 //
 
 #import <Foundation/Foundation.h>
-
 
 //! Project version number for ObjcExceptionBridging.
 FOUNDATION_EXPORT double ObjcExceptionBridgingVersionNumber;
@@ -50,4 +49,3 @@ NS_INLINE void _throw_objc(NSException* _Nonnull exception)
 {
     @throw exception;
 }
-
