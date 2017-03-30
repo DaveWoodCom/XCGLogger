@@ -559,7 +559,7 @@
 				COMBINE_HIDPI_IMAGES = YES;
 				INFOPLIST_FILE = macOSDemo/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.cerebralgardens.xcglogger.osxdemo;
+				PRODUCT_BUNDLE_IDENTIFIER = com.cerebralgardens.xcglogger.demo.macos;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 3.0;
 			};
@@ -573,7 +573,7 @@
 				COMBINE_HIDPI_IMAGES = YES;
 				INFOPLIST_FILE = macOSDemo/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.cerebralgardens.xcglogger.osxdemo;
+				PRODUCT_BUNDLE_IDENTIFIER = com.cerebralgardens.xcglogger.demo.macos;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 3.0;
 			};
@@ -594,7 +594,7 @@
 				);
 				INFOPLIST_FILE = macOSDemoTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.cerebralgardens.xcglogger.osxdemo.tests;
+				PRODUCT_BUNDLE_IDENTIFIER = com.cerebralgardens.xcglogger.demo.macos.tests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 3.0;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/macOSDemo.app/Contents/MacOS/macOSDemo";
@@ -612,7 +612,7 @@
 				);
 				INFOPLIST_FILE = macOSDemoTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.cerebralgardens.xcglogger.osxdemo.tests;
+				PRODUCT_BUNDLE_IDENTIFIER = com.cerebralgardens.xcglogger.demo.macos.tests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 3.0;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/macOSDemo.app/Contents/MacOS/macOSDemo";

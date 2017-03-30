@@ -28,7 +28,7 @@
 		<string>UIInterfaceOrientationPortraitUpsideDown</string>
 	</array>
 	<key>WKCompanionAppBundleIdentifier</key>
-	<string>com.cerebralgardens.xcglogger.iosdemo</string>
+	<string>com.cerebralgardens.xcglogger.demo.ios</string>
 	<key>WKWatchKitApp</key>
 	<true/>
 </dict>
