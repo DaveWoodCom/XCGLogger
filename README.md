@@ -494,13 +494,15 @@ Now, assuming you've read the above warning, and you have a development only mac
 
 Thanks to [@inket](https://github.com/inket/update_xcode_plugins) and [@steakknife](https://github.com/steakknife/unsign) for providing the knowledge and tools for this tip!
 
-### Disable Xcode's Log Noise
-
-For some reason, the simulators in the final version of Xcode 8 are printing lots of their own debug messages to the console. These messages make reading your own debug logs cumbersome. You can prevent those logs from being displayed by adding the environment variable `OS_ACTIVITY_MODE` to your debug scheme, and setting the value to `disable`.
-
-<img src="https://raw.githubusercontent.com/DaveWoodCom/XCGLogger/swift_3.0/ReadMeImages/OSActivityMode.png" alt="Environment Variable" style="width: 690px; height: 401px;" />
-
-Thanks to [@rustyshelf](https://twitter.com/rustyshelf/status/775505191160328194) and [@bersaelor](https://twitter.com/bersaelor/status/776317530549919744) for this tip!
+<!-- This tip no longer works as of macOS 10.12.4, it appears to disable all logs, on iOS now. 
+-- ### Disable Xcode's Log Noise
+-- 
+-- For some reason, the simulators in the final version of Xcode 8 are printing lots of their own debug messages to the console. These messages make reading your own debug logs cumbersome. You can prevent those logs from being displayed by adding the environment variable `OS_ACTIVITY_MODE` to your debug scheme, and setting the value to `disable`.
+-- 
+-- <img src="https://raw.githubusercontent.com/DaveWoodCom/XCGLogger/swift_3.0/ReadMeImages/OSActivityMode.png" alt="Environment Variable" style="width: 690px; height: 401px;" />
+-- 
+-- Thanks to [@rustyshelf](https://twitter.com/rustyshelf/status/775505191160328194) and [@bersaelor](https://twitter.com/bersaelor/status/776317530549919744) for this tip!
+-->
 
 ## To Do
 
