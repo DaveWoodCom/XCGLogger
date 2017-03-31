@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		55CDE4461E8E4D5C00580B51 /* ObjcExceptionBridging.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 756B0F441DE6BFB300A1566A /* ObjcExceptionBridging.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		55F24E361BA11CF100747329 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55F24E351BA11CF100747329 /* AppDelegate.swift */; };
 		55F24E381BA11CF100747329 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55F24E371BA11CF100747329 /* ViewController.swift */; };
 		55F24E3B1BA11CF100747329 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 55F24E391BA11CF100747329 /* Main.storyboard */; };
@@ -116,6 +117,7 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
+				55CDE4461E8E4D5C00580B51 /* ObjcExceptionBridging.framework in Embed Frameworks */,
 				756B0F451DE6BFBC00A1566A /* XCGLogger.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";

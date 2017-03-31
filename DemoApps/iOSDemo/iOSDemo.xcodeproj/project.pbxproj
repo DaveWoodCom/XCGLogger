@@ -22,6 +22,8 @@
 		558EA9461BA0FCEC00848990 /* GlanceController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 558EA9451BA0FCEC00848990 /* GlanceController.swift */; };
 		558EA9481BA0FCEC00848990 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 558EA9471BA0FCEC00848990 /* Assets.xcassets */; };
 		558EA94C1BA0FCEC00848990 /* watchOSDemo.app in Embed Watch Content */ = {isa = PBXBuildFile; fileRef = 558EA92C1BA0FCEC00848990 /* watchOSDemo.app */; };
+		55CDE4351E8E4BCD00580B51 /* ObjcExceptionBridging.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 756B0EDA1DE6BB1200A1566A /* ObjcExceptionBridging.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		55CDE4361E8E4BE400580B51 /* ObjcExceptionBridging.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 756B0EDE1DE6BB1200A1566A /* ObjcExceptionBridging.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		756B0EF31DE6BD6800A1566A /* XCGLogger.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 756B0ECA1DE6BB1200A1566A /* XCGLogger.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		756B0EF41DE6BDA900A1566A /* XCGLogger.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 756B0ECE1DE6BB1200A1566A /* XCGLogger.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 /* End PBXBuildFile section */
@@ -141,6 +143,7 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
+				55CDE4351E8E4BCD00580B51 /* ObjcExceptionBridging.framework in Embed Frameworks */,
 				756B0EF31DE6BD6800A1566A /* XCGLogger.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
@@ -174,6 +177,7 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
+				55CDE4361E8E4BE400580B51 /* ObjcExceptionBridging.framework in Embed Frameworks */,
 				756B0EF41DE6BDA900A1566A /* XCGLogger.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";

@@ -11,6 +11,7 @@
 		555FFCB519D77B1800F62246 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 555FFCB419D77B1800F62246 /* Images.xcassets */; };
 		555FFCB819D77B1800F62246 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 555FFCB619D77B1800F62246 /* MainMenu.xib */; };
 		555FFCC419D77B1800F62246 /* macOSDemoTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 555FFCC319D77B1800F62246 /* macOSDemoTests.swift */; };
+		55AFD2851E8E4DE1002930FB /* ObjcExceptionBridging.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 756B0F171DE6BE0A00A1566A /* ObjcExceptionBridging.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		756B0F1C1DE6BE2500A1566A /* XCGLogger.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 756B0F071DE6BE0A00A1566A /* XCGLogger.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 /* End PBXBuildFile section */
 
@@ -115,6 +116,7 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
+				55AFD2851E8E4DE1002930FB /* ObjcExceptionBridging.framework in Embed Frameworks */,
 				756B0F1C1DE6BE2500A1566A /* XCGLogger.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
