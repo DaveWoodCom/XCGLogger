@@ -86,44 +86,43 @@ open class FileDestination: BaseDestination {
             closeFile()
         }
 
-        if let writeToFileURL = writeToFileURL {
+        guard let writeToFileURL = writeToFileURL else { return }
 
-            let fileManager: FileManager = FileManager.default
-            let fileExists: Bool = fileManager.fileExists(atPath: writeToFileURL.path)
-            if !shouldAppend || !fileExists {
-                fileManager.createFile(atPath: writeToFileURL.path, contents: nil, attributes: nil)
-            }
+        let fileManager: FileManager = FileManager.default
+        let fileExists: Bool = fileManager.fileExists(atPath: writeToFileURL.path)
+        if !shouldAppend || !fileExists {
+            fileManager.createFile(atPath: writeToFileURL.path, contents: nil, attributes: nil)
+        }
 
-            do {
-                logFileHandle = try FileHandle(forWritingTo: writeToFileURL)
-                if fileExists && shouldAppend {
-                    logFileHandle?.seekToEndOfFile()
+        do {
+            logFileHandle = try FileHandle(forWritingTo: writeToFileURL)
+            if fileExists && shouldAppend {
+                logFileHandle?.seekToEndOfFile()
 
-                    if let appendMarker = appendMarker,
-                        let encodedData = "\(appendMarker)\n".data(using: String.Encoding.utf8) {
+                if let appendMarker = appendMarker,
+                    let encodedData = "\(appendMarker)\n".data(using: String.Encoding.utf8) {
 
-                        _try({
-                            self.logFileHandle?.write(encodedData)
-                        },
-                        catch: { (exception: NSException) in
-                            owner._logln("Objective-C Exception occurred: \(exception)", level: .error, source: self)
-                        })
-                    }
+                    _try({
+                        self.logFileHandle?.write(encodedData)
+                    },
+                    catch: { (exception: NSException) in
+                        owner._logln("Objective-C Exception occurred: \(exception)", level: .error, source: self)
+                    })
                 }
             }
-            catch let error as NSError {
-                owner._logln("Attempt to open log file for \(fileExists && shouldAppend ? "appending" : "writing") failed: \(error.localizedDescription)", level: .error, source: self)
-                logFileHandle = nil
-                return
-            }
+        }
+        catch let error as NSError {
+            owner._logln("Attempt to open log file for \(fileExists && shouldAppend ? "appending" : "writing") failed: \(error.localizedDescription)", level: .error, source: self)
+            logFileHandle = nil
+            return
+        }
 
-            owner.logAppDetails(selectedDestination: self)
+        owner.logAppDetails(selectedDestination: self)
 
-            let logDetails = LogDetails(level: .info, date: Date(), message: "XCGLogger " + (fileExists && shouldAppend ? "appending" : "writing") + " log to: " + writeToFileURL.absoluteString, functionName: "", fileName: "", lineNumber: 0, userInfo: XCGLogger.Constants.internalUserInfo)
-            owner._logln(logDetails.message, level: logDetails.level, source: self)
-            if owner.destination(withIdentifier: identifier) == nil {
-                processInternal(logDetails: logDetails)
-            }
+        let logDetails = LogDetails(level: .info, date: Date(), message: "XCGLogger " + (fileExists && shouldAppend ? "appending" : "writing") + " log to: " + writeToFileURL.absoluteString, functionName: "", fileName: "", lineNumber: 0, userInfo: XCGLogger.Constants.internalUserInfo)
+        owner._logln(logDetails.message, level: logDetails.level, source: self)
+        if owner.destination(withIdentifier: identifier) == nil {
+            processInternal(logDetails: logDetails)
         }
     }
 
