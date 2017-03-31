@@ -557,9 +557,9 @@ The change log is now in it's own file: [CHANGELOG.md](CHANGELOG.md)
 [Firelog]: http://jogabo.github.io/firelog/
 [Firebase]: https://www.firebase.com/
 
-[xcglogger-4.0.0]: https://github.com/DaveWoodCom/XCGLogger/releases/tag/Version_4.0.0
-[xcglogger-3.6.0]: https://github.com/DaveWoodCom/XCGLogger/releases/tag/Version_3.6.0
-[xcglogger-3.5.3]: https://github.com/DaveWoodCom/XCGLogger/releases/tag/Version_3.5.3
-[xcglogger-3.2]: https://github.com/DaveWoodCom/XCGLogger/releases/tag/Version_3.2
-[xcglogger-2.x]: https://github.com/DaveWoodCom/XCGLogger/releases/tag/Version_2.4
-[xcglogger-1.x]: https://github.com/DaveWoodCom/XCGLogger/releases/tag/Version_1.8.1
+[xcglogger-4.0.0]: https://github.com/DaveWoodCom/XCGLogger/releases/tag/4.0.0
+[xcglogger-3.6.0]: https://github.com/DaveWoodCom/XCGLogger/releases/tag/3.6.0
+[xcglogger-3.5.3]: https://github.com/DaveWoodCom/XCGLogger/releases/tag/3.5.3
+[xcglogger-3.2]: https://github.com/DaveWoodCom/XCGLogger/releases/tag/3.2.0
+[xcglogger-2.x]: https://github.com/DaveWoodCom/XCGLogger/releases/tag/2.4.0
+[xcglogger-1.x]: https://github.com/DaveWoodCom/XCGLogger/releases/tag/1.8.1
