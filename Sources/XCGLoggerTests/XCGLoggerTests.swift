@@ -159,7 +159,7 @@ class XCGLoggerTests: XCTestCase {
     func test_00054_FileDestinationOpenedFile() {
         let log: XCGLogger = XCGLogger(identifier: functionIdentifier())
 
-        let logPath: String = ("/tmp/XCGLogger_Testing.log" as NSString).expandingTildeInPath
+        let logPath = "/tmp/XCGLogger_Testing.log"
         var fileDestination: FileDestination = FileDestination(writeToFile: logPath, identifier: log.identifier + ".fileDestination.1", shouldAppend: true)
 
         XCTAssert(fileDestination.owner == nil, "Fail: newly created FileDestination has an owner set when it should be nil")
@@ -175,6 +175,54 @@ class XCGLoggerTests: XCTestCase {
 
         XCTAssert(fileDestination.owner === log, "Fail: file destination did not have the correct owner set")
         XCTAssert(fileDestination.logFileHandle != nil, "Fail: FileDestination been assigned to a logger, but no file has been opened")
+    }
+
+    /// Test that log destination correctly rotates file
+    func test_00056_LogFolderDestinationRotatedFile() {
+        let log: XCGLogger = XCGLogger(identifier: functionIdentifier())
+        let logFolderPath = "/tmp/XCGLogger_Test00056"
+
+        let logFolderDestination = LogFolderDestination(writeToFolder: logFolderPath)
+        logFolderDestination.logFileFormat = "yyyyMMddHHss-SSS"
+
+        log.add(destination: logFolderDestination)
+        XCTAssert(logFolderDestination.owner === log, "Fail: LogFolderDestination did not have the correct owner set")
+
+        // Simulate that the last log item was yesterday
+        let yesterday = Date().addingTimeInterval(-24 * 60 * 60)
+        logFolderDestination.lastLogDetails = LogDetails(level: .debug, date: yesterday, message: "", functionName: "", fileName: "", lineNumber: 0)
+
+        // Trigger a rotation
+        let currentFileURL = logFolderDestination.writeToFileURL
+        log.debug("Test")
+
+        let rotatedFileURL = logFolderDestination.writeToFileURL
+        XCTAssert(rotatedFileURL != currentFileURL, "Fail: LogFolderDestination file did not rotate")
+    }
+
+    /// Test that log destination correctly cleans the folder
+    func test_00057_LogFolderDestinationCleansFolder() {
+        let logFolderPath = "/tmp/XCGLogger_Test00057"
+        let logFilesToKeep = 5
+
+        // Create a clean log folder
+        let fileManager = FileManager.default
+        try? fileManager.removeItem(atPath: logFolderPath)
+
+        // Let our destination create the folder
+        let logFolderDestination = LogFolderDestination(writeToFolder: logFolderPath)
+        logFolderDestination.logFilesToKeep = logFilesToKeep
+
+        // Create a few test files
+        for i in 1...20 {
+            let filePath = "\(logFolderPath)/\(i).\(logFolderDestination.logFileExtension)"
+            try? "test".write(toFile: filePath, atomically: true, encoding: .utf8)
+        }
+
+        logFolderDestination.cleanUpLogs()
+        let logFiles = logFolderDestination.logFileURLs()
+
+        XCTAssert(logFiles.count == logFilesToKeep, "Fail: LogFolderDestination did not properly clean up the folder")
     }
 
     /// Test that closures for a log aren't executed via string interpolation if they aren't needed

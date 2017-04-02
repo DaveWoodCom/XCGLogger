@@ -40,18 +40,15 @@ open class FileDestination: BaseQueuedDestination {
     internal var appendMarker: String?
 
     // MARK: - Life Cycle
-    public init(owner: XCGLogger? = nil, writeToFile: Any, identifier: String = "", shouldAppend: Bool = false, appendMarker: String? = "-- ** ** ** --") {
+    public init(owner: XCGLogger? = nil, writeToFile: Any?, identifier: String = "", shouldAppend: Bool = false, appendMarker: String? = "-- ** ** ** --") {
         self.shouldAppend = shouldAppend
         self.appendMarker = appendMarker
 
         if writeToFile is NSString {
             writeToFileURL = URL(fileURLWithPath: writeToFile as! String)
         }
-        else if writeToFile is URL {
-            writeToFileURL = writeToFile as? URL
-        }
         else {
-            writeToFileURL = nil
+            writeToFileURL = writeToFile as? URL
         }
 
         super.init(owner: owner, identifier: identifier)
@@ -130,6 +127,25 @@ open class FileDestination: BaseQueuedDestination {
     private func closeFile() {
         logFileHandle?.closeFile()
         logFileHandle = nil
+    }
+
+    /// Suspend logging temporarily and execute the provided closure.
+    /// You can use this method to perform operations on the log file without it being locked.
+    ///
+    /// A log queue is required otherwise log messages might slip passed us.
+    ///
+    /// - Parameters:
+    ///     - closure:    The code to execute while the file is accessible.
+    ///
+    /// - Returns:  Nothing
+    ///
+    open func executeWhileSuspended(_ closure: @escaping () -> Void) {
+        precondition(logQueue != nil, "LogQueue should be set")
+
+        logQueue?.async { [weak logFileHandle] in
+            logFileHandle?.synchronizeFile()
+            closure()
+        }
     }
 
     /// Rotate the log file, storing the existing log file in the specified location.
