@@ -9,7 +9,7 @@
 
 // MARK: - TestDestination
 /// A destination for testing, preload it with the expected logs, send your logs, then check for success
-open class TestDestination: BaseDestination {
+open class TestDestination: BaseQueuedDestination {
     // MARK: - Properties
     /// Array of all expected log messages
     open var expectedLogMessages: [String] = []

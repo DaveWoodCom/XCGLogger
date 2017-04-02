@@ -9,7 +9,7 @@
 
 // MARK: - ConsoleDestination
 /// A standard destination that outputs log details to the console
-open class ConsoleDestination: BaseDestination {
+open class ConsoleDestination: BaseQueuedDestination {
     // MARK: - Overridden Methods
     /// Print the log to the console.
     ///

@@ -9,7 +9,7 @@
 
 // MARK: - FileDestination
 /// A standard destination that outputs log details to a file
-open class FileDestination: BaseDestination {
+open class FileDestination: BaseQueuedDestination {
     // MARK: - Properties
     /// Logger that owns the destination object
     open override var owner: XCGLogger? {

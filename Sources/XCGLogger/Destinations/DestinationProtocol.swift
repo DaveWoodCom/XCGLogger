@@ -10,6 +10,7 @@
 // MARK: - DestinationProtocol
 /// Protocol for destination classes to conform to
 public protocol DestinationProtocol: CustomDebugStringConvertible {
+    // MARK: - Properties
     /// Logger that owns the destination object
     var owner: XCGLogger? {get set}
 
@@ -28,6 +29,7 @@ public protocol DestinationProtocol: CustomDebugStringConvertible {
     /// Array of log filters to apply to messages before they're output
     var filters: [FilterProtocol]? { get set }
 
+    // MARK: - Methods
     /// Process the log details.
     ///
     /// - Parameters:

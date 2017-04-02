@@ -17,9 +17,6 @@ open class BaseDestination: DestinationProtocol, CustomDebugStringConvertible {
     /// Identifier for the destination (should be unique)
     open var identifier: String
 
-    /// The dispatch queue to process the log on
-    open var logQueue: DispatchQueue? = nil
-
     /// Log level for this destination
     open var outputLevel: XCGLogger.Level = .debug
 
@@ -167,45 +164,16 @@ open class BaseDestination: DestinationProtocol, CustomDebugStringConvertible {
     }
 
     // MARK: - Methods that must be overriden in subclasses
-    /// Apply filters and formatters to the message before queuing it to be written by the write method.
+    /// Output the log to the destination.
     ///
     /// - Parameters:
     ///     - logDetails:   The log details.
-    ///     - message:   Message ready to be formatted for output.
-    ///
-    /// - Returns:  Nothing
-    ///
-    open func output(logDetails: LogDetails, message: String) {
-      let outputClosure = {
-        var logDetails = logDetails
-        var message = message
-
-        // Apply filters, if any indicate we should drop the message, we abort before doing the actual logging
-        if self.shouldExclude(logDetails: &logDetails, message: &message) {
-          return
-        }
-
-        self.applyFormatters(logDetails: &logDetails, message: &message)
-        self.write(message: message)
-      }
-
-      if let logQueue = logQueue {
-        logQueue.async(execute: outputClosure)
-      }
-      else {
-        outputClosure()
-      }
-    }
-
-    /// Write the log message to the destination.
-    ///
-    /// - Parameters:
     ///     - message:   Formatted/processed message ready for output.
     ///
     /// - Returns:  Nothing
     ///
-    open func write(message: String) {
-      // Do something with the message in an overridden version of this method
-      precondition(false, "Must override this")
+    open func output(logDetails: LogDetails, message: String) {
+        // Do something with the text in an overridden version of this method
+        precondition(false, "Must override this")
     }
 }

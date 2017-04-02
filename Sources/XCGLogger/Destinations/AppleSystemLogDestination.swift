@@ -9,7 +9,7 @@
 
 // MARK: - AppleSystemLogDestination
 /// A standard destination that outputs log details to the Apple System Log using NSLog instead of print
-open class AppleSystemLogDestination: BaseDestination {
+open class AppleSystemLogDestination: BaseQueuedDestination {
     // MARK: - Properties
     /// Option: whether or not to output the date the log was created (Always false for this destination)
     open override var showDate: Bool {
