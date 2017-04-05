@@ -66,6 +66,18 @@
 		556DA1851D78B41600C7E546 /* FilterProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 556DA17E1D78B41600C7E546 /* FilterProtocol.swift */; };
 		556DA1861D78B41600C7E546 /* FilterProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 556DA17E1D78B41600C7E546 /* FilterProtocol.swift */; };
 		557C47E41BA125F800C9A174 /* XCGLogger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 554DF40F19D76FA9005708BE /* XCGLogger.swift */; };
+		558A04531E95A6A200D975BD /* AutoRotatingFileDestination.swift in Sources */ = {isa = PBXBuildFile; fileRef = 558A04521E95A6A200D975BD /* AutoRotatingFileDestination.swift */; };
+		558A04541E95A6A200D975BD /* AutoRotatingFileDestination.swift in Sources */ = {isa = PBXBuildFile; fileRef = 558A04521E95A6A200D975BD /* AutoRotatingFileDestination.swift */; };
+		558A04551E95A6A200D975BD /* AutoRotatingFileDestination.swift in Sources */ = {isa = PBXBuildFile; fileRef = 558A04521E95A6A200D975BD /* AutoRotatingFileDestination.swift */; };
+		558A04561E95A6A200D975BD /* AutoRotatingFileDestination.swift in Sources */ = {isa = PBXBuildFile; fileRef = 558A04521E95A6A200D975BD /* AutoRotatingFileDestination.swift */; };
+		558A04581E95A6AF00D975BD /* URL+XCGAdditions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 558A04571E95A6AF00D975BD /* URL+XCGAdditions.swift */; };
+		558A04591E95A6AF00D975BD /* URL+XCGAdditions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 558A04571E95A6AF00D975BD /* URL+XCGAdditions.swift */; };
+		558A045A1E95A6AF00D975BD /* URL+XCGAdditions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 558A04571E95A6AF00D975BD /* URL+XCGAdditions.swift */; };
+		558A045B1E95A6AF00D975BD /* URL+XCGAdditions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 558A04571E95A6AF00D975BD /* URL+XCGAdditions.swift */; };
+		558A045D1E95A6E600D975BD /* BaseQueuedDestination.swift in Sources */ = {isa = PBXBuildFile; fileRef = 558A045C1E95A6E600D975BD /* BaseQueuedDestination.swift */; };
+		558A045E1E95A6E600D975BD /* BaseQueuedDestination.swift in Sources */ = {isa = PBXBuildFile; fileRef = 558A045C1E95A6E600D975BD /* BaseQueuedDestination.swift */; };
+		558A045F1E95A6E600D975BD /* BaseQueuedDestination.swift in Sources */ = {isa = PBXBuildFile; fileRef = 558A045C1E95A6E600D975BD /* BaseQueuedDestination.swift */; };
+		558A04601E95A6E600D975BD /* BaseQueuedDestination.swift in Sources */ = {isa = PBXBuildFile; fileRef = 558A045C1E95A6E600D975BD /* BaseQueuedDestination.swift */; };
 		558EEB7E1D6BAC61006A9C7A /* XCGLoggerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55E3EE5719D76F280068C3A7 /* XCGLoggerTests.swift */; };
 		558EEB801D6BAC61006A9C7A /* XCGLogger.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55E3EE4519D76F280068C3A7 /* XCGLogger.framework */; };
 		558EEB8B1D6BAC66006A9C7A /* XCGLoggerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55E3EE5719D76F280068C3A7 /* XCGLoggerTests.swift */; };
@@ -190,6 +202,9 @@
 		554DF41719D76FE7005708BE /* XCGLogger.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = XCGLogger.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		556DA17D1D78B41600C7E546 /* FileNameFilter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FileNameFilter.swift; sourceTree = "<group>"; };
 		556DA17E1D78B41600C7E546 /* FilterProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FilterProtocol.swift; sourceTree = "<group>"; };
+		558A04521E95A6A200D975BD /* AutoRotatingFileDestination.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AutoRotatingFileDestination.swift; sourceTree = "<group>"; };
+		558A04571E95A6AF00D975BD /* URL+XCGAdditions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "URL+XCGAdditions.swift"; sourceTree = "<group>"; };
+		558A045C1E95A6E600D975BD /* BaseQueuedDestination.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BaseQueuedDestination.swift; sourceTree = "<group>"; };
 		558EEB851D6BAC61006A9C7A /* XCGLoggerTests (watchOS).xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "XCGLoggerTests (watchOS).xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		558EEB921D6BAC66006A9C7A /* XCGLoggerTests (tvOS).xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "XCGLoggerTests (tvOS).xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		55A4B4E81D7A99FB0006463B /* TagFilter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TagFilter.swift; sourceTree = "<group>"; };
@@ -321,9 +336,11 @@
 			children = (
 				5501A3881D7624B900CB8ABE /* DestinationProtocol.swift */,
 				5501A3831D761F9A00CB8ABE /* BaseDestination.swift */,
+				558A045C1E95A6E600D975BD /* BaseQueuedDestination.swift */,
 				5501A38D1D76250600CB8ABE /* ConsoleDestination.swift */,
 				5501A3921D76251600CB8ABE /* AppleSystemLogDestination.swift */,
 				5501A3971D76256500CB8ABE /* FileDestination.swift */,
+				558A04521E95A6A200D975BD /* AutoRotatingFileDestination.swift */,
 				5501A39C1D76258600CB8ABE /* TestDestination.swift */,
 			);
 			path = Destinations;
@@ -333,6 +350,7 @@
 			isa = PBXGroup;
 			children = (
 				5501A3A91D76282F00CB8ABE /* DispatchQueue+XCGAdditions.swift */,
+				558A04571E95A6AF00D975BD /* URL+XCGAdditions.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -960,11 +978,13 @@
 				5501A3AD1D76282F00CB8ABE /* DispatchQueue+XCGAdditions.swift in Sources */,
 				5501A3911D76250600CB8ABE /* ConsoleDestination.swift in Sources */,
 				5501A38C1D7624B900CB8ABE /* DestinationProtocol.swift in Sources */,
+				558A04601E95A6E600D975BD /* BaseQueuedDestination.swift in Sources */,
 				55A4B4EC1D7A99FB0006463B /* TagFilter.swift in Sources */,
 				5501A3EB1D77506F00CB8ABE /* ANSIColorLogFormatter.swift in Sources */,
 				5501A3871D761F9A00CB8ABE /* BaseDestination.swift in Sources */,
 				55A4B4F11D7AADA00006463B /* UserInfoFilter.swift in Sources */,
 				5501A3A81D7625DA00CB8ABE /* TestDestination.swift in Sources */,
+				558A04561E95A6A200D975BD /* AutoRotatingFileDestination.swift in Sources */,
 				556DA1821D78B41600C7E546 /* FileNameFilter.swift in Sources */,
 				556DA1861D78B41600C7E546 /* FilterProtocol.swift in Sources */,
 				55AC33E21D8FB4FE00614D28 /* UserInfoHelpers.swift in Sources */,
@@ -975,6 +995,7 @@
 				5501A3961D76251600CB8ABE /* AppleSystemLogDestination.swift in Sources */,
 				55C4DD5F1D781D850074C21F /* Base64LogFormatter.swift in Sources */,
 				5501A3EF1D77506F00CB8ABE /* LogFormatterProtocol.swift in Sources */,
+				558A045B1E95A6AF00D975BD /* URL+XCGAdditions.swift in Sources */,
 				5501A39B1D76256500CB8ABE /* FileDestination.swift in Sources */,
 				557C47E41BA125F800C9A174 /* XCGLogger.swift in Sources */,
 			);
@@ -988,11 +1009,13 @@
 				5501A3AB1D76282F00CB8ABE /* DispatchQueue+XCGAdditions.swift in Sources */,
 				5501A38F1D76250600CB8ABE /* ConsoleDestination.swift in Sources */,
 				5501A38A1D7624B900CB8ABE /* DestinationProtocol.swift in Sources */,
+				558A045E1E95A6E600D975BD /* BaseQueuedDestination.swift in Sources */,
 				55A4B4EA1D7A99FB0006463B /* TagFilter.swift in Sources */,
 				5501A3E91D77506F00CB8ABE /* ANSIColorLogFormatter.swift in Sources */,
 				5501A3851D761F9A00CB8ABE /* BaseDestination.swift in Sources */,
 				55A4B4EF1D7AADA00006463B /* UserInfoFilter.swift in Sources */,
 				5501A3A61D7625D900CB8ABE /* TestDestination.swift in Sources */,
+				558A04541E95A6A200D975BD /* AutoRotatingFileDestination.swift in Sources */,
 				556DA1801D78B41600C7E546 /* FileNameFilter.swift in Sources */,
 				556DA1841D78B41600C7E546 /* FilterProtocol.swift in Sources */,
 				55AC33E01D8FB4FE00614D28 /* UserInfoHelpers.swift in Sources */,
@@ -1003,6 +1026,7 @@
 				5501A3941D76251600CB8ABE /* AppleSystemLogDestination.swift in Sources */,
 				55C4DD5D1D781D850074C21F /* Base64LogFormatter.swift in Sources */,
 				5501A3ED1D77506F00CB8ABE /* LogFormatterProtocol.swift in Sources */,
+				558A04591E95A6AF00D975BD /* URL+XCGAdditions.swift in Sources */,
 				5501A3991D76256500CB8ABE /* FileDestination.swift in Sources */,
 				554DF43319D77155005708BE /* XCGLogger.swift in Sources */,
 			);
@@ -1040,11 +1064,13 @@
 				5501A3AA1D76282F00CB8ABE /* DispatchQueue+XCGAdditions.swift in Sources */,
 				5501A38E1D76250600CB8ABE /* ConsoleDestination.swift in Sources */,
 				5501A3891D7624B900CB8ABE /* DestinationProtocol.swift in Sources */,
+				558A045D1E95A6E600D975BD /* BaseQueuedDestination.swift in Sources */,
 				55A4B4E91D7A99FB0006463B /* TagFilter.swift in Sources */,
 				5501A3E81D77506F00CB8ABE /* ANSIColorLogFormatter.swift in Sources */,
 				5501A3841D761F9A00CB8ABE /* BaseDestination.swift in Sources */,
 				55A4B4EE1D7AADA00006463B /* UserInfoFilter.swift in Sources */,
 				5501A3A51D7625D900CB8ABE /* TestDestination.swift in Sources */,
+				558A04531E95A6A200D975BD /* AutoRotatingFileDestination.swift in Sources */,
 				556DA17F1D78B41600C7E546 /* FileNameFilter.swift in Sources */,
 				556DA1831D78B41600C7E546 /* FilterProtocol.swift in Sources */,
 				55AC33DF1D8FB4FE00614D28 /* UserInfoHelpers.swift in Sources */,
@@ -1055,6 +1081,7 @@
 				5501A3931D76251600CB8ABE /* AppleSystemLogDestination.swift in Sources */,
 				55C4DD5C1D781D850074C21F /* Base64LogFormatter.swift in Sources */,
 				5501A3EC1D77506F00CB8ABE /* LogFormatterProtocol.swift in Sources */,
+				558A04581E95A6AF00D975BD /* URL+XCGAdditions.swift in Sources */,
 				5501A3981D76256500CB8ABE /* FileDestination.swift in Sources */,
 				554DF41019D76FA9005708BE /* XCGLogger.swift in Sources */,
 			);
@@ -1076,11 +1103,13 @@
 				5501A3AC1D76282F00CB8ABE /* DispatchQueue+XCGAdditions.swift in Sources */,
 				5501A3901D76250600CB8ABE /* ConsoleDestination.swift in Sources */,
 				5501A38B1D7624B900CB8ABE /* DestinationProtocol.swift in Sources */,
+				558A045F1E95A6E600D975BD /* BaseQueuedDestination.swift in Sources */,
 				55A4B4EB1D7A99FB0006463B /* TagFilter.swift in Sources */,
 				5501A3EA1D77506F00CB8ABE /* ANSIColorLogFormatter.swift in Sources */,
 				5501A3861D761F9A00CB8ABE /* BaseDestination.swift in Sources */,
 				55A4B4F01D7AADA00006463B /* UserInfoFilter.swift in Sources */,
 				5501A3A71D7625D900CB8ABE /* TestDestination.swift in Sources */,
+				558A04551E95A6A200D975BD /* AutoRotatingFileDestination.swift in Sources */,
 				556DA1811D78B41600C7E546 /* FileNameFilter.swift in Sources */,
 				556DA1851D78B41600C7E546 /* FilterProtocol.swift in Sources */,
 				55AC33E11D8FB4FE00614D28 /* UserInfoHelpers.swift in Sources */,
@@ -1091,6 +1120,7 @@
 				5501A3951D76251600CB8ABE /* AppleSystemLogDestination.swift in Sources */,
 				55C4DD5E1D781D850074C21F /* Base64LogFormatter.swift in Sources */,
 				5501A3EE1D77506F00CB8ABE /* LogFormatterProtocol.swift in Sources */,
+				558A045A1E95A6AF00D975BD /* URL+XCGAdditions.swift in Sources */,
 				5501A39A1D76256500CB8ABE /* FileDestination.swift in Sources */,
 				70CB94181B99E728007802FF /* XCGLogger.swift in Sources */,
 			);
