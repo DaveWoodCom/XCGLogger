@@ -50,6 +50,12 @@ open class XCGLogger: CustomDebugStringConvertible {
 
         /// Internal userInfo
         internal static let internalUserInfo: [String: Any] = [XCGLogger.Constants.userInfoKeyInternal: true]
+
+        /// Extended file attributed key to use when storing the logger's identifier on an archived log file
+        public static let extendedAttributeArchivedLogIdentifierKey = "\(baseIdentifier).archived.by"
+
+        /// Extended file attributed key to use when storing the time a log file was archived
+        public static let extendedAttributeArchivedLogTimestampKey = "\(baseIdentifier).archived.at"
     }
 
     // MARK: - Enums

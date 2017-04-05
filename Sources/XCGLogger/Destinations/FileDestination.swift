@@ -196,6 +196,18 @@ open class FileDestination: BaseQueuedDestination {
                 return false
             }
 
+            do {
+                if let identifierData: Data = identifier.data(using: .utf8) {
+                    try archiveToFileURL.setExtendedAttribute(data: identifierData, forName: XCGLogger.Constants.extendedAttributeArchivedLogIdentifierKey)
+                }
+                if let timestampData: Data = "\(Date().timeIntervalSince1970)".data(using: .utf8) {
+                    try archiveToFileURL.setExtendedAttribute(data: timestampData, forName: XCGLogger.Constants.extendedAttributeArchivedLogTimestampKey)
+                }
+            }
+            catch let error as NSError {
+                owner?._logln("Unable to set extended file attributes on file \(archiveToFileURL.path): \(error.localizedDescription)", level: .error)
+            }
+
             owner?._logln("Rotated file \(writeToFileURL.path) to \(archiveToFileURL.path)", level: .info)
             openFile()
             closure?(true)
