@@ -530,8 +530,8 @@ class XCGLoggerTests: XCTestCase {
         let base64LogFormatter: Base64LogFormatter = Base64LogFormatter()
         log.formatters = [base64LogFormatter]
 
-        // "[Debug] [XCGLoggerTests.swift] test_00160_TestLogFormattersAreApplied() > Black on Blue" base64 encoded
-        testDestination.add(expectedLogMessage: "W0RlYnVnXSBbWENHTG9nZ2VyVGVzdHMuc3dpZnRdIHRlc3RfMDAxNjBfVGVzdExvZ0Zvcm1hdHRlcnNBcmVBcHBsaWVkKCkgPiBCbGFjayBvbiBCbHVl")
+        // "[Debug] [XCGLoggerTests.swift] test_00160_testLogFormattersAreApplied() > Black on Blue" base64 encoded
+        testDestination.add(expectedLogMessage: "W0RlYnVnXSBbWENHTG9nZ2VyVGVzdHMuc3dpZnRdIHRlc3RfMDAxNjBfdGVzdExvZ0Zvcm1hdHRlcnNBcmVBcHBsaWVkKCkgPiBCbGFjayBvbiBCbHVl")
         XCTAssert(testDestination.remainingNumberOfExpectedLogMessages == 1, "Fail: Didn't correctly load all of the expected log messages")
         log.debug(testString)
         XCTAssert(testDestination.remainingNumberOfExpectedLogMessages == 0, "Fail: Didn't receive all expected log lines")
