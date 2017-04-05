@@ -178,52 +178,100 @@ class XCGLoggerTests: XCTestCase {
         XCTAssert(fileDestination.logFileHandle != nil, "Fail: FileDestination been assigned to a logger, but no file has been opened")
     }
 
-    /// Test that log destination correctly rotates file
-    func test_00056_LogFolderDestinationRotatedFile() {
-        let log: XCGLogger = XCGLogger(identifier: functionIdentifier())
-        let logFolderPath = "/tmp/XCGLogger_Test00056"
+    func test_00055_checkExtendedFileAttributeURLExtensions() {
+        let fileManager: FileManager = FileManager.default
+        let testFileURL: URL = URL(fileURLWithPath: NSTemporaryDirectory().appending("XCGLogger_\(UUID().uuidString).txt"))
+        let sampleData: Data = functionIdentifier().data(using: .utf8) ?? "\(Date())".data(using: .utf8)!
+        let testKey: String = XCGLogger.Constants.extendedAttributeArchivedLogIdentifierKey
 
-        let logFolderDestination = LogFolderDestination(writeToFolder: logFolderPath)
-        logFolderDestination.logFileFormat = "yyyyMMddHHss-SSS"
+        fileManager.createFile(atPath: testFileURL.path, contents: sampleData)
+        var extendedAttributes: [String] = try! testFileURL.listExtendedAttributes()
+        XCTAssert(extendedAttributes.count == 0, "Fail: new file should have no extended attributes")
 
-        log.add(destination: logFolderDestination)
-        XCTAssert(logFolderDestination.owner === log, "Fail: LogFolderDestination did not have the correct owner set")
+        var attributeData: Data? = try! testFileURL.extendedAttribute(forName: testKey)
+        XCTAssert(attributeData == nil, "Fail: new file should not have a specific extended attribute")
 
-        // Simulate that the last log item was yesterday
-        let yesterday = Date().addingTimeInterval(-24 * 60 * 60)
-        logFolderDestination.lastLogDetails = LogDetails(level: .debug, date: yesterday, message: "", functionName: "", fileName: "", lineNumber: 0)
+        try? testFileURL.setExtendedAttribute(data: sampleData, forName: testKey)
+        attributeData = try! testFileURL.extendedAttribute(forName: testKey)
+        XCTAssert(attributeData == sampleData, "Fail: write, then read of sample data resulted in mismatched data")
 
-        // Trigger a rotation
-        let currentFileURL = logFolderDestination.writeToFileURL
-        log.debug("Test")
+        extendedAttributes = try! testFileURL.listExtendedAttributes()
+        XCTAssert(extendedAttributes.count == 1 && extendedAttributes.first ?? "" == testKey, "Fail: test file should have 1 extended attribute that we just set")
 
-        let rotatedFileURL = logFolderDestination.writeToFileURL
-        XCTAssert(rotatedFileURL != currentFileURL, "Fail: LogFolderDestination file did not rotate")
+        try? testFileURL.removeExtendedAttribute(forName: testKey)
+        extendedAttributes = try! testFileURL.listExtendedAttributes()
+        XCTAssert(extendedAttributes.count == 0, "Fail: file should have no extended attributes once we remove the one we set")
+
+        try? fileManager.removeItem(at: testFileURL)
     }
 
-    /// Test that log destination correctly cleans the folder
-    func test_00057_LogFolderDestinationCleansFolder() {
-        let logFolderPath = "/tmp/XCGLogger_Test00057"
-        let logFilesToKeep = 5
-
-        // Create a clean log folder
-        let fileManager = FileManager.default
-        try? fileManager.removeItem(atPath: logFolderPath)
-
-        // Let our destination create the folder
-        let logFolderDestination = LogFolderDestination(writeToFolder: logFolderPath)
-        logFolderDestination.logFilesToKeep = logFilesToKeep
-
-        // Create a few test files
-        for i in 1...20 {
-            let filePath = "\(logFolderPath)/\(i).\(logFolderDestination.logFileExtension)"
-            try? "test".write(toFile: filePath, atomically: true, encoding: .utf8)
+    /// Test that log destination correctly rotates file
+    func test_00056_checkAutoRotatingFileDestinationBehavesAsExpected() {
+        let log: XCGLogger = XCGLogger(identifier: functionIdentifier())
+        log.outputLevel = .debug
+        if var logConsoleDestination = log.destination(withIdentifier: XCGLogger.Constants.baseConsoleDestinationIdentifier) {
+            logConsoleDestination.outputLevel = .info
         }
 
-        logFolderDestination.cleanUpLogs()
-        let logFiles = logFolderDestination.logFileURLs()
+        let logFileURL: URL = URL(fileURLWithPath: NSTemporaryDirectory().appending("XCGLogger_\(UUID().uuidString).log"))
+        let autoRotatingFileDestination: AutoRotatingFileDestination = AutoRotatingFileDestination(writeToFile: logFileURL, identifier: log.identifier + ".autoRotatingFileDestination.\(UUID().uuidString)")
+        log.add(destination: autoRotatingFileDestination)
 
-        XCTAssert(logFiles.count == logFilesToKeep, "Fail: LogFolderDestination did not properly clean up the folder")
+        var autoRotationClosureExecuted: Bool = false
+        autoRotatingFileDestination.autoRotationCompletion = { (success: Bool) -> Void in
+            autoRotationClosureExecuted = true
+        }
+
+        var archivedLogURLs: [URL] = autoRotatingFileDestination.archivedFileURLs()
+        XCTAssert(archivedLogURLs.count == 0, "Fail: new logger should not have any archived files")
+
+        // Test auto rotation by file size
+        autoRotatingFileDestination.targetMaxFileSize = 2048
+        autoRotatingFileDestination.targetMaxLogFiles = 3
+        autoRotatingFileDestination.targetMaxTimeInterval = 3600
+        for _ in 0 ... 512 {
+            log.debug("\(autoRotatingFileDestination.identifier)")
+            Thread.sleep(forTimeInterval: 0.05)
+        }
+
+        archivedLogURLs = autoRotatingFileDestination.archivedFileURLs()
+        XCTAssert(archivedLogURLs.count > 0, "Fail: logger should have rotated log files")
+        XCTAssert(archivedLogURLs.count < Int(autoRotatingFileDestination.targetMaxLogFiles) * 2, "Fail: logger should have removed some archived log files")
+        XCTAssert(autoRotationClosureExecuted, "Fail: logger hasn't executed the auto rotation closure")
+
+        autoRotatingFileDestination.rotateFile()
+        autoRotatingFileDestination.purgeArchivedLogFiles()
+        archivedLogURLs = autoRotatingFileDestination.archivedFileURLs()
+        XCTAssert(archivedLogURLs.count == 0, "Fail: logger should not have any archived files after purging")
+
+        // Test auto rotation by time interval
+        autoRotatingFileDestination.targetMaxFileSize = .max
+        autoRotatingFileDestination.targetMaxLogFiles = 3
+        autoRotatingFileDestination.targetMaxTimeInterval = 2
+        for _ in 0 ... 30 {
+            log.debug("\(autoRotatingFileDestination.identifier)")
+            Thread.sleep(forTimeInterval: 0.25)
+        }
+
+        archivedLogURLs = autoRotatingFileDestination.archivedFileURLs()
+        XCTAssert(archivedLogURLs.count > 0, "Fail: logger should have rotated log files")
+        XCTAssert(archivedLogURLs.count < Int(autoRotatingFileDestination.targetMaxLogFiles) * 2, "Fail: logger should have removed some archived log files")
+        autoRotatingFileDestination.purgeArchivedLogFiles()
+
+        // Test storing archives in an alternate folder
+        let alternateArchiveFolderURL: URL = URL(fileURLWithPath: NSTemporaryDirectory().appending("XCGLogger_Archives"))
+        autoRotatingFileDestination.archiveFolderURL = alternateArchiveFolderURL
+        log.debug("\(autoRotatingFileDestination.identifier)")
+        autoRotatingFileDestination.rotateFile()
+        archivedLogURLs = autoRotatingFileDestination.archivedFileURLs()
+        if let archivedLogURL = archivedLogURLs.first {
+            XCTAssert(archivedLogURL.resolvingSymlinksInPath().deletingLastPathComponent().path == alternateArchiveFolderURL.resolvingSymlinksInPath().path, "Fail: archived logs are not in the alternate archived log folder")
+        }
+        else {
+            XCTAssert(false, "Fail: should have been an archived log file to test it's path")
+        }
+
+        autoRotatingFileDestination.purgeArchivedLogFiles()
     }
 
     /// Test that closures for a log aren't executed via string interpolation if they aren't needed
