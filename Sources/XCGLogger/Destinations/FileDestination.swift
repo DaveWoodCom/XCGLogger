@@ -157,12 +157,13 @@ open class FileDestination: BaseQueuedDestination {
     ///
     /// - Parameters:
     ///     - archiveToFile:    FileURL or path (as String) to where the existing log file should be rotated to.
+    ///     - closure:          An optional closure to execute after the file has been rotated.
     ///
     /// - Returns:
     ///     - true:     Log file rotated successfully.
     ///     - false:    Error rotating the log file.
     ///
-    @discardableResult open func rotateFile(to archiveToFile: Any) -> Bool {
+    @discardableResult open func rotateFile(to archiveToFile: Any, closure: ((_ success: Bool) -> Void)? = nil) -> Bool {
         var archiveToFileURL: URL? = nil
 
         if archiveToFile is NSString {
@@ -172,6 +173,7 @@ open class FileDestination: BaseQueuedDestination {
             archiveToFileURL = archiveToFile
         }
         else {
+            closure?(false)
             return false
         }
 
@@ -179,7 +181,7 @@ open class FileDestination: BaseQueuedDestination {
           let writeToFileURL = writeToFileURL {
 
             let fileManager: FileManager = FileManager.default
-            guard !fileManager.fileExists(atPath: archiveToFileURL.path) else { return false }
+            guard !fileManager.fileExists(atPath: archiveToFileURL.path) else { closure?(false); return false }
 
             closeFile()
             haveLoggedAppDetails = false
@@ -190,14 +192,17 @@ open class FileDestination: BaseQueuedDestination {
             catch let error as NSError {
                 openFile()
                 owner?._logln("Unable to rotate file \(writeToFileURL.path) to \(archiveToFileURL.path): \(error.localizedDescription)", level: .error)
+                closure?(false)
                 return false
             }
 
             owner?._logln("Rotated file \(writeToFileURL.path) to \(archiveToFileURL.path)", level: .info)
             openFile()
+            closure?(true)
             return true
         }
 
+        closure?(false)
         return false
     }
 
