@@ -51,7 +51,7 @@ class XCGLoggerTests: XCTestCase {
     //    }
 
     /// Test that if we request the default instance multiple times, we always get the same instance
-    func test_00010_DefaultInstance() {
+    func test_00010_defaultInstance() {
         let defaultInstance1: XCGLogger = XCGLogger.default
         let defaultInstance2: XCGLogger = XCGLogger.default
 
@@ -59,7 +59,7 @@ class XCGLoggerTests: XCTestCase {
     }
 
     /// Test that if we request the multiple instances, we get different instances
-    func test_00020_DistinctInstances() {
+    func test_00020_distinctInstances() {
         let instance1: XCGLogger = XCGLogger()
         instance1.identifier = "instance1"
 
@@ -70,7 +70,7 @@ class XCGLoggerTests: XCTestCase {
     }
 
     /// Test our default instance starts with the correct default destinations
-    func test_00022_DefaultInstanceDestinations() {
+    func test_00022_defaultInstanceDestinations() {
         let defaultInstance: XCGLogger = XCGLogger.default
 
         let consoleDestination: ConsoleDestination? = defaultInstance.destination(withIdentifier: XCGLogger.Constants.baseConsoleDestinationIdentifier) as? ConsoleDestination
@@ -97,7 +97,7 @@ class XCGLoggerTests: XCTestCase {
     }
 
     /// Test we can remove existing destinations
-    func test_00040_RemoveDestination() {
+    func test_00040_removeDestination() {
         let log: XCGLogger = XCGLogger(identifier: functionIdentifier())
         log.outputLevel = .debug
 
@@ -114,7 +114,7 @@ class XCGLoggerTests: XCTestCase {
     }
 
     /// Test that we can not add a destination with a duplicate identifier
-    func test_00050_DenyAdditionOfDestinationWithDuplicateIdentifier() {
+    func test_00050_denyAdditionOfDestinationWithDuplicateIdentifier() {
         let log: XCGLogger = XCGLogger(identifier: functionIdentifier())
         log.outputLevel = .debug
 
@@ -134,7 +134,7 @@ class XCGLoggerTests: XCTestCase {
     }
 
     /// Test a destination has it's owner set correctly when added to or removed from a logger
-    func test_00052_CheckDestinationOwner() {
+    func test_00052_checkDestinationOwner() {
         let log1: XCGLogger = XCGLogger(identifier: functionIdentifier() + ".1")
         XCTAssert(log1.destinations.count == 1, "Fail: Logger didn't include the correct default destinations")
 
@@ -156,7 +156,7 @@ class XCGLoggerTests: XCTestCase {
     }
 
     /// Test a file destination correctly opens a file
-    func test_00054_FileDestinationOpenedFile() {
+    func test_00054_fileDestinationOpenedFile() {
         let log: XCGLogger = XCGLogger(identifier: functionIdentifier())
 
         let logPath = "/tmp/XCGLogger_Testing.log"
@@ -226,7 +226,7 @@ class XCGLoggerTests: XCTestCase {
     }
 
     /// Test that closures for a log aren't executed via string interpolation if they aren't needed
-    func test_00060_AvoidStringInterpolationWithAutoclosure() {
+    func test_00060_avoidStringInterpolationWithAutoclosure() {
         let log: XCGLogger = XCGLogger(identifier: functionIdentifier())
         log.outputLevel = .debug
 
@@ -246,7 +246,7 @@ class XCGLoggerTests: XCTestCase {
     }
 
     /// Test that closures for a log execute when required
-    func test_00070_ExecExecutes() {
+    func test_00070_execExecutes() {
         let log: XCGLogger = XCGLogger(identifier: functionIdentifier())
         log.outputLevel = .debug
 
@@ -261,9 +261,10 @@ class XCGLoggerTests: XCTestCase {
     }
 
     /// Test that closures execute exactly once, even when being logged to multiple destinations, and even if they return nil
-    func test_00080_ExecExecutesExactlyOnceWithNilReturnAndMultipleDestinations() {
+    func test_00080_execExecutesExactlyOnceWithNilReturnAndMultipleDestinations() {
         let log: XCGLogger = XCGLogger(identifier: functionIdentifier())
-        log.setup(level: .debug, showLevel: true, showFileNames: true, showLineNumbers: true, writeToFile: "/tmp/test.log")
+        let logPath: String = NSTemporaryDirectory().appending("XCGLogger_\(UUID().uuidString).log")
+        log.setup(level: .debug, showLevel: true, showFileNames: true, showLineNumbers: true, writeToFile: logPath)
 
         var numberOfTimes: Int = 0
         log.debug {
@@ -276,7 +277,7 @@ class XCGLoggerTests: XCTestCase {
     }
 
     /// Test that closures for a log aren't executed if they aren't needed
-    func test_00090_ExecDoesntExecute() {
+    func test_00090_execDoesntExecute() {
         let log: XCGLogger = XCGLogger(identifier: functionIdentifier())
         log.outputLevel = .error
 
@@ -292,7 +293,7 @@ class XCGLoggerTests: XCTestCase {
     }
 
     /// Test that we correctly cache date formatter objects, and don't create new ones each time
-    func test_00100_DateFormatterIsCached() {
+    func test_00100_dateFormatterIsCached() {
         let log: XCGLogger = XCGLogger(identifier: functionIdentifier())
 
         let dateFormatter1 = log.dateFormatter
@@ -302,7 +303,7 @@ class XCGLoggerTests: XCTestCase {
     }
 
     /// Test our custom date formatter works
-    func test_00110_CustomDateFormatter() {
+    func test_00110_customDateFormatter() {
         let log: XCGLogger = XCGLogger(identifier: functionIdentifier())
         log.outputLevel = .debug
 
@@ -344,7 +345,7 @@ class XCGLoggerTests: XCTestCase {
     }
 
     /// Test that we can log a variety of different object types
-    func test_00120_VariousParameters() {
+    func test_00120_variousParameters() {
         let log: XCGLogger = XCGLogger(identifier: functionIdentifier())
         log.setup(level: .verbose, showThreadName: true, showLevel: true, showFileNames: true, showLineNumbers: true, writeToFile: nil)
 
@@ -408,7 +409,7 @@ class XCGLoggerTests: XCTestCase {
     }
 
     /// Test our noMessageClosure works as expected
-    func test_00130_NoMessageClosure() {
+    func test_00130_noMessageClosure() {
         let log: XCGLogger = XCGLogger(identifier: functionIdentifier())
         log.outputLevel = .debug
 
@@ -451,7 +452,7 @@ class XCGLoggerTests: XCTestCase {
         XCTAssert(testDestination.numberOfUnexpectedLogMessages == 0, "Fail: Received an unexpected log line")
     }
 
-    func test_00140_QueueName() {
+    func test_00140_queueName() {
         let logQueue = DispatchQueue(label: functionIdentifier() + ".serialQueue.😆")
 
         let labelDirectlyRead: String = logQueue.label
@@ -469,7 +470,7 @@ class XCGLoggerTests: XCTestCase {
         XCTAssert(labelDirectlyRead == labelExtracted!, "Fail: Didn't get the correct queue label")
     }
 
-    func test_00150_ExtractTypeName() {
+    func test_00150_extractTypeName() {
         let log: XCGLogger = XCGLogger(identifier: functionIdentifier())
         log.outputLevel = .debug
 
@@ -491,7 +492,7 @@ class XCGLoggerTests: XCTestCase {
         XCTAssert(optionalName == "Optional<String>", "Fail: Didn't extract the correct class name")
     }
 
-    func test_00160_TestLogFormattersAreApplied() {
+    func test_00160_testLogFormattersAreApplied() {
         let log: XCGLogger = XCGLogger(identifier: functionIdentifier())
         log.outputLevel = .debug
 
@@ -537,7 +538,7 @@ class XCGLoggerTests: XCTestCase {
     }
 
     /// Test log level override strings work
-    func test_00170_LevelDescriptionOverrides() {
+    func test_00170_levelDescriptionOverrides() {
         let log: XCGLogger = XCGLogger(identifier: functionIdentifier())
         log.outputLevel = .debug
 
@@ -571,7 +572,7 @@ class XCGLoggerTests: XCTestCase {
     }
 
     /// Test prefix/postfix formatter works
-    func test_00180_PrePostFixLogFormatter() {
+    func test_00180_prePostFixLogFormatter() {
         let log: XCGLogger = XCGLogger(identifier: functionIdentifier())
         log.outputLevel = .verbose
 
@@ -635,7 +636,7 @@ class XCGLoggerTests: XCTestCase {
         XCTAssert(testDestination.numberOfUnexpectedLogMessages == 0, "Fail: Received an unexpected log line")
     }
 
-    func test_00200_TestLogFiltersAreApplied() {
+    func test_00200_testLogFiltersAreApplied() {
         let log: XCGLogger = XCGLogger(identifier: functionIdentifier())
         log.outputLevel = .debug
 
@@ -667,7 +668,7 @@ class XCGLoggerTests: XCTestCase {
         XCTAssert(testDestination.numberOfUnexpectedLogMessages == 0, "Fail: Received an unexpected log line")
     }
 
-    func test_00210_TestTagFilter() {
+    func test_00210_testTagFilter() {
         let log: XCGLogger = XCGLogger(identifier: functionIdentifier())
         log.outputLevel = .debug
 
@@ -716,7 +717,7 @@ class XCGLoggerTests: XCTestCase {
         XCTAssert(testDestination.numberOfUnexpectedLogMessages == 0, "Fail: Received an unexpected log line")
     }
 
-    func test_00220_TestDevFilter() {
+    func test_00220_testDevFilter() {
         let log: XCGLogger = XCGLogger(identifier: functionIdentifier())
         log.outputLevel = .debug
 
@@ -783,7 +784,7 @@ class XCGLoggerTests: XCTestCase {
     }
 
     /// Test Objective-C Exception Handling
-    func test_00300_ObjectiveCExceptionHandling() {
+    func test_00300_objectiveCExceptionHandling() {
         let log: XCGLogger = XCGLogger(identifier: functionIdentifier())
         log.outputLevel = .debug
 
@@ -812,7 +813,7 @@ class XCGLoggerTests: XCTestCase {
     }
 
     /// Test logging works correctly when logs are generated from multiple threads
-    func test_01010_MultiThreaded() {
+    func test_01010_multiThreaded() {
         let log: XCGLogger = XCGLogger(identifier: functionIdentifier())
         log.setup(level: .debug, showThreadName: true, showLevel: true, showFileNames: true, showLineNumbers: true, writeToFile: nil)
 
@@ -844,7 +845,7 @@ class XCGLoggerTests: XCTestCase {
     }
 
     /// Test logging with closures works correctly when generated from multiple threads
-    func test_01020_MultiThreaded2() {
+    func test_01020_multiThreaded2() {
         let log: XCGLogger = XCGLogger(identifier: functionIdentifier())
         log.setup(level: .debug, showThreadName: true, showLevel: true, showFileNames: true, showLineNumbers: true, writeToFile: nil)
 
@@ -878,7 +879,7 @@ class XCGLoggerTests: XCTestCase {
     }
 
     /// Test that our background processing works
-    func test_01030_BackgroundLogging() {
+    func test_01030_backgroundLogging() {
         let log: XCGLogger = XCGLogger(identifier: functionIdentifier(), includeDefaultDestinations: false)
 
         let systemDestination = AppleSystemLogDestination(identifier: log.identifier + ".systemDestination")
@@ -941,7 +942,7 @@ class XCGLoggerTests: XCTestCase {
     //        // 2.301, relative standard deviation: 2.122%, values: [2.377062, 2.386740, 2.347364, 2.262827, 2.289801, 2.294484, 2.272225, 2.252910, 2.240331, 2.290241]
     //    }
 
-    func test_99999_LastTest() {
+    func test_99999_lastTest() {
         // Add a final test that just waits a second, so any tests using the background can finish outputting results
         Thread.sleep(forTimeInterval: 1.0)
     }
