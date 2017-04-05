@@ -160,7 +160,7 @@ class XCGLoggerTests: XCTestCase {
         let log: XCGLogger = XCGLogger(identifier: functionIdentifier())
         log.outputLevel = .debug
 
-        let logPath = "/tmp/XCGLogger_Testing.log"
+        let logPath: String = NSTemporaryDirectory().appending("XCGLogger_\(UUID().uuidString).log")
         var fileDestination: FileDestination = FileDestination(writeToFile: logPath, identifier: log.identifier + ".fileDestination.1", shouldAppend: true)
 
         XCTAssert(fileDestination.owner == nil, "Fail: newly created FileDestination has an owner set when it should be nil")
