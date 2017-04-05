@@ -158,6 +158,7 @@ class XCGLoggerTests: XCTestCase {
     /// Test a file destination correctly opens a file
     func test_00054_fileDestinationOpenedFile() {
         let log: XCGLogger = XCGLogger(identifier: functionIdentifier())
+        log.outputLevel = .debug
 
         let logPath = "/tmp/XCGLogger_Testing.log"
         var fileDestination: FileDestination = FileDestination(writeToFile: logPath, identifier: log.identifier + ".fileDestination.1", shouldAppend: true)
