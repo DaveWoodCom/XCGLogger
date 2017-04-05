@@ -40,15 +40,18 @@ open class FileDestination: BaseQueuedDestination {
     internal var appendMarker: String?
 
     // MARK: - Life Cycle
-    public init(owner: XCGLogger? = nil, writeToFile: Any?, identifier: String = "", shouldAppend: Bool = false, appendMarker: String? = "-- ** ** ** --") {
+    public init(owner: XCGLogger? = nil, writeToFile: Any, identifier: String = "", shouldAppend: Bool = false, appendMarker: String? = "-- ** ** ** --") {
         self.shouldAppend = shouldAppend
         self.appendMarker = appendMarker
 
         if writeToFile is NSString {
             writeToFileURL = URL(fileURLWithPath: writeToFile as! String)
         }
+        else if let writeToFile = writeToFile as? URL, writeToFile.isFileURL {
+            writeToFileURL = writeToFile
+        }
         else {
-            writeToFileURL = writeToFile as? URL
+            writeToFileURL = nil
         }
 
         super.init(owner: owner, identifier: identifier)
