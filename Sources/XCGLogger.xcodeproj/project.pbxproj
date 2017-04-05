@@ -100,6 +100,10 @@
 		55C4DD5D1D781D850074C21F /* Base64LogFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55C4DD5B1D781D850074C21F /* Base64LogFormatter.swift */; };
 		55C4DD5E1D781D850074C21F /* Base64LogFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55C4DD5B1D781D850074C21F /* Base64LogFormatter.swift */; };
 		55C4DD5F1D781D850074C21F /* Base64LogFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55C4DD5B1D781D850074C21F /* Base64LogFormatter.swift */; };
+		55D780981E9372F600A51489 /* URL+XCGAdditions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55D780971E9372F600A51489 /* URL+XCGAdditions.swift */; };
+		55D780991E9372F600A51489 /* URL+XCGAdditions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55D780971E9372F600A51489 /* URL+XCGAdditions.swift */; };
+		55D7809A1E9372F600A51489 /* URL+XCGAdditions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55D780971E9372F600A51489 /* URL+XCGAdditions.swift */; };
+		55D7809B1E9372F600A51489 /* URL+XCGAdditions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55D780971E9372F600A51489 /* URL+XCGAdditions.swift */; };
 		55DD51981D915C2C0025B5AD /* PrePostFixLogFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55DD51971D915C2C0025B5AD /* PrePostFixLogFormatter.swift */; };
 		55DD51991D915C2C0025B5AD /* PrePostFixLogFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55DD51971D915C2C0025B5AD /* PrePostFixLogFormatter.swift */; };
 		55DD519A1D915C2C0025B5AD /* PrePostFixLogFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55DD51971D915C2C0025B5AD /* PrePostFixLogFormatter.swift */; };
@@ -172,6 +176,7 @@
 		55AC33DE1D8FB4FE00614D28 /* UserInfoHelpers.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserInfoHelpers.swift; sourceTree = "<group>"; };
 		55BB1F011B79DC7500709779 /* XCGLoggerTests (OS X).xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "XCGLoggerTests (OS X).xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		55C4DD5B1D781D850074C21F /* Base64LogFormatter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Base64LogFormatter.swift; sourceTree = "<group>"; };
+		55D780971E9372F600A51489 /* URL+XCGAdditions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "URL+XCGAdditions.swift"; sourceTree = "<group>"; };
 		55DD51971D915C2C0025B5AD /* PrePostFixLogFormatter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PrePostFixLogFormatter.swift; path = XCGLogger/LogFormatters/PrePostFixLogFormatter.swift; sourceTree = SOURCE_ROOT; };
 		55E37F5D1BFC646800392B9C /* Info-iOS.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Info-iOS.plist"; sourceTree = "<group>"; };
 		55E37F5E1BFC647400392B9C /* Info-OSX.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Info-OSX.plist"; sourceTree = "<group>"; };
@@ -267,6 +272,7 @@
 			isa = PBXGroup;
 			children = (
 				5501A3A91D76282F00CB8ABE /* DispatchQueue+XCGAdditions.swift */,
+				55D780971E9372F600A51489 /* URL+XCGAdditions.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -729,6 +735,7 @@
 				5501A3EB1D77506F00CB8ABE /* ANSIColorLogFormatter.swift in Sources */,
 				5501A3871D761F9A00CB8ABE /* BaseQueuedDestination.swift in Sources */,
 				5506D85B1E90D356004DA6A2 /* BaseDestination.swift in Sources */,
+				55D7809B1E9372F600A51489 /* URL+XCGAdditions.swift in Sources */,
 				55A4B4F11D7AADA00006463B /* UserInfoFilter.swift in Sources */,
 				5501A3A81D7625DA00CB8ABE /* TestDestination.swift in Sources */,
 				556DA1821D78B41600C7E546 /* FileNameFilter.swift in Sources */,
@@ -759,6 +766,7 @@
 				5501A3E91D77506F00CB8ABE /* ANSIColorLogFormatter.swift in Sources */,
 				5501A3851D761F9A00CB8ABE /* BaseQueuedDestination.swift in Sources */,
 				5506D8591E90D356004DA6A2 /* BaseDestination.swift in Sources */,
+				55D780991E9372F600A51489 /* URL+XCGAdditions.swift in Sources */,
 				55A4B4EF1D7AADA00006463B /* UserInfoFilter.swift in Sources */,
 				5501A3A61D7625D900CB8ABE /* TestDestination.swift in Sources */,
 				556DA1801D78B41600C7E546 /* FileNameFilter.swift in Sources */,
@@ -813,6 +821,7 @@
 				5501A3E81D77506F00CB8ABE /* ANSIColorLogFormatter.swift in Sources */,
 				5501A3841D761F9A00CB8ABE /* BaseQueuedDestination.swift in Sources */,
 				5506D8581E90D356004DA6A2 /* BaseDestination.swift in Sources */,
+				55D780981E9372F600A51489 /* URL+XCGAdditions.swift in Sources */,
 				55A4B4EE1D7AADA00006463B /* UserInfoFilter.swift in Sources */,
 				5501A3A51D7625D900CB8ABE /* TestDestination.swift in Sources */,
 				556DA17F1D78B41600C7E546 /* FileNameFilter.swift in Sources */,
@@ -851,6 +860,7 @@
 				5501A3EA1D77506F00CB8ABE /* ANSIColorLogFormatter.swift in Sources */,
 				5501A3861D761F9A00CB8ABE /* BaseQueuedDestination.swift in Sources */,
 				5506D85A1E90D356004DA6A2 /* BaseDestination.swift in Sources */,
+				55D7809A1E9372F600A51489 /* URL+XCGAdditions.swift in Sources */,
 				55A4B4F01D7AADA00006463B /* UserInfoFilter.swift in Sources */,
 				5501A3A71D7625D900CB8ABE /* TestDestination.swift in Sources */,
 				556DA1811D78B41600C7E546 /* FileNameFilter.swift in Sources */,
