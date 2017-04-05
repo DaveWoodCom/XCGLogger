@@ -140,6 +140,7 @@ open class XCGLogger: CustomDebugStringConvertible {
     /// The date formatter object to use when displaying the dates of log messages
     open var dateFormatter: DateFormatter? {
         get {
+            guard _customDateFormatter == nil else { return _customDateFormatter }
             struct Statics {
                 static var dateFormatter: DateFormatter = {
                     let defaultDateFormatter = DateFormatter()
@@ -149,7 +150,7 @@ open class XCGLogger: CustomDebugStringConvertible {
                 }()
             }
 
-            return _customDateFormatter ?? Statics.dateFormatter
+            return Statics.dateFormatter
         }
         set {
             _customDateFormatter = newValue
