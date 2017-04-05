@@ -168,15 +168,15 @@ open class FileDestination: BaseQueuedDestination {
         if archiveToFile is NSString {
             archiveToFileURL = URL(fileURLWithPath: archiveToFile as! String)
         }
-        else if archiveToFile is URL {
-            archiveToFileURL = archiveToFile as? URL
+        else if let archiveToFile = archiveToFile as? URL, archiveToFile.isFileURL {
+            archiveToFileURL = archiveToFile
         }
         else {
             return false
         }
 
         if let archiveToFileURL = archiveToFileURL,
-            let writeToFileURL = writeToFileURL {
+          let writeToFileURL = writeToFileURL {
 
             let fileManager: FileManager = FileManager.default
             guard !fileManager.fileExists(atPath: archiveToFileURL.path) else { return false }
