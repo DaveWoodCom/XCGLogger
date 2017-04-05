@@ -22,7 +22,7 @@ env:
   matrix:
     # Can't do a pod lint with Xcode 8 due to: https://github.com/CocoaPods/CocoaPods/issues/5661
     # Should now be fixed: https://github.com/CocoaPods/Xcodeproj/pull/407 but doesn't look like the updates are on Travis yet
-    - POD_LINT="YES"
+    # - POD_LINT="YES"
     - PROJECT_FILE="$LIB_PROJECT"       DESTINATION="OS=10.3,name=iPhone 7"             SCHEME="$IOS_FRAMEWORK_SCHEME"      SDK="$IOS_SDK"      POD_LINT="NO"   BUILDCMD="clean test build"
     - PROJECT_FILE="$LIB_PROJECT"       DESTINATION="arch=x86_64"                       SCHEME="$MACOS_FRAMEWORK_SCHEME"    SDK="$MACOS_SDK"    POD_LINT="NO"   BUILDCMD="clean test build"
     - PROJECT_FILE="$LIB_PROJECT"       DESTINATION="OS=10.2,name=Apple TV 1080p"       SCHEME="$TVOS_FRAMEWORK_SCHEME"     SDK="$TVOS_SDK"     POD_LINT="NO"   BUILDCMD="clean test build"
