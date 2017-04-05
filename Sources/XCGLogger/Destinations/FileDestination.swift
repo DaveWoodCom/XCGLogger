@@ -128,26 +128,28 @@ open class FileDestination: BaseQueuedDestination {
     /// - Returns:  Nothing
     ///
     private func closeFile() {
+        logFileHandle?.synchronizeFile()
         logFileHandle?.closeFile()
         logFileHandle = nil
     }
 
-    /// Suspend logging temporarily and execute the provided closure.
-    /// You can use this method to perform operations on the log file without it being locked.
-    ///
-    /// A log queue is required otherwise log messages might slip passed us.
+    /// Force any buffered data to be written to the file.
     ///
     /// - Parameters:
-    ///     - closure:    The code to execute while the file is accessible.
+    ///     - closure:  An optional closure to execute after the file has been rotated.
     ///
-    /// - Returns:  Nothing
+    /// - Returns:      Nothing.
     ///
-    open func executeWhileSuspended(_ closure: @escaping () -> Void) {
-        precondition(logQueue != nil, "LogQueue should be set")
-
-        logQueue?.async { [weak logFileHandle] in
+    open func flush(closure: (() -> Void)? = nil) {
+        if let logQueue = logQueue {
+            logQueue.async {
+                self.logFileHandle?.synchronizeFile()
+                closure?()
+            }
+        }
+        else {
             logFileHandle?.synchronizeFile()
-            closure()
+            closure?()
         }
     }
 
