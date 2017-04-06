@@ -45,21 +45,24 @@ let log: XCGLogger = {
     log.add(destination: systemDestination)
 
     // Create a file log destination
-    let logPath: String = ("~/Desktop/XCGLogger_Log.txt" as NSString).expandingTildeInPath
-    let fileDestination = FileDestination(writeToFile: logPath, identifier: "advancedLogger.fileDestination", shouldAppend: true)
+    let logPath: String = ("/tmp/XCGLogger_macOSDemo.log" as NSString).expandingTildeInPath
+    let autoRotatingFileDestination = AutoRotatingFileDestination(writeToFile: logPath, identifier: "advancedLogger.fileDestination", shouldAppend: true)
 
     // Optionally set some configuration options
-    fileDestination.outputLevel = .debug
-    fileDestination.showLogIdentifier = false
-    fileDestination.showFunctionName = true
-    fileDestination.showThreadName = true
-    fileDestination.showLevel = true
-    fileDestination.showFileName = true
-    fileDestination.showLineNumber = true
-    fileDestination.showDate = true
+    autoRotatingFileDestination.outputLevel = .debug
+    autoRotatingFileDestination.showLogIdentifier = false
+    autoRotatingFileDestination.showFunctionName = true
+    autoRotatingFileDestination.showThreadName = true
+    autoRotatingFileDestination.showLevel = true
+    autoRotatingFileDestination.showFileName = true
+    autoRotatingFileDestination.showLineNumber = true
+    autoRotatingFileDestination.showDate = true
+    autoRotatingFileDestination.targetMaxFileSize = 1024 * 5 // 5k, not a good size for production (default is 1 megabyte)
+    autoRotatingFileDestination.targetMaxTimeInterval = 60 // 1 minute, also not good for production (default is 10 minutes)
+    autoRotatingFileDestination.targetMaxLogFiles = 10 // probably good for this demo and production, (default is 10, max is 255)
 
     // Process this destination in the background
-    fileDestination.logQueue = XCGLogger.logQueue
+    autoRotatingFileDestination.logQueue = XCGLogger.logQueue
 
     // Add colour (using the ANSI format) to our file log, you can see the colour when `cat`ing or `tail`ing the file in Terminal on macOS
     let ansiColorLogFormatter: ANSIColorLogFormatter = ANSIColorLogFormatter()
@@ -69,10 +72,10 @@ let log: XCGLogger = {
     ansiColorLogFormatter.colorize(level: .warning, with: .red, options: [.faint])
     ansiColorLogFormatter.colorize(level: .error, with: .red, options: [.bold])
     ansiColorLogFormatter.colorize(level: .severe, with: .white, on: .red)
-    fileDestination.formatters = [ansiColorLogFormatter]
+    autoRotatingFileDestination.formatters = [ansiColorLogFormatter]
 
     // Add the destination to the logger
-    log.add(destination: fileDestination)
+    log.add(destination: autoRotatingFileDestination)
 
     // Add basic app info, version info etc, to the start of the logs
     log.logAppDetails()
