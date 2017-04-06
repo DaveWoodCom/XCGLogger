@@ -154,27 +154,18 @@ open class AutoRotatingFileDestination: FileDestination {
     /// - Returns:      Nothing.
     ///
     open func cleanUpLogFiles() {
-        let archivedFileURLs: [URL] = self.archivedFileURLs()
+        var archivedFileURLs: [URL] = self.archivedFileURLs()
         guard archivedFileURLs.count > Int(targetMaxLogFiles) else { return }
 
-        var archivedDetails: [(url: URL, timestamp: String)] = []
-        for archivedFileURL in archivedFileURLs {
-            guard let timestampOptionalData = try? archivedFileURL.extendedAttribute(forName: XCGLogger.Constants.extendedAttributeArchivedLogTimestampKey) else { continue }
-            guard let timestampData = timestampOptionalData else { continue }
-            guard let timestamp = String(data: timestampData, encoding: .utf8) else { continue }
-            archivedDetails.append((archivedFileURL, timestamp))
-        }
-
-        archivedDetails.sort(by: { (lhs, rhs) -> Bool in lhs.timestamp > rhs.timestamp })
-        archivedDetails.removeFirst(Int(targetMaxLogFiles))
+        archivedFileURLs.removeFirst(Int(targetMaxLogFiles))
 
         let fileManager: FileManager = FileManager.default
-        for archivedDetail in archivedDetails {
+        for archivedFileURL in archivedFileURLs {
             do {
-                try fileManager.removeItem(at: archivedDetail.url)
+                try fileManager.removeItem(at: archivedFileURL)
             }
             catch let error as NSError {
-                owner?._logln("Unable to delete old archived log file \(archivedDetail.url.path): \(error.localizedDescription)", level: .error)
+                owner?._logln("Unable to delete old archived log file \(archivedFileURL.path): \(error.localizedDescription)", level: .error)
             }
         }
     }
@@ -201,20 +192,30 @@ open class AutoRotatingFileDestination: FileDestination {
     ///
     /// - Parameters:   None.
     ///
-    /// - Returns:      An array of file URLs pointing to previously archived log files.
+    /// - Returns:      An array of file URLs pointing to previously archived log files, sorted with the most recent logs first.
     ///
     open func archivedFileURLs() -> [URL] {
         let archiveFolderURL: URL = (self.archiveFolderURL ?? type(of: self).defaultLogFolderURL)
         guard let fileURLs = try? FileManager.default.contentsOfDirectory(at: archiveFolderURL, includingPropertiesForKeys: nil, options: [.skipsHiddenFiles]) else { return [] }
         guard let identifierData: Data = identifier.data(using: .utf8) else { return [] }
 
-        var archivedFileURLs: [URL] = []
+        var archivedDetails: [(url: URL, timestamp: String)] = []
         for fileURL in fileURLs {
             guard let archivedLogIdentifierOptionalData = try? fileURL.extendedAttribute(forName: XCGLogger.Constants.extendedAttributeArchivedLogIdentifierKey) else { continue }
             guard let archivedLogIdentifierData = archivedLogIdentifierOptionalData else { continue }
             guard archivedLogIdentifierData == identifierData else { continue }
 
-            archivedFileURLs.append(fileURL)
+            guard let timestampOptionalData = try? fileURL.extendedAttribute(forName: XCGLogger.Constants.extendedAttributeArchivedLogTimestampKey) else { continue }
+            guard let timestampData = timestampOptionalData else { continue }
+            guard let timestamp = String(data: timestampData, encoding: .utf8) else { continue }
+
+            archivedDetails.append((fileURL, timestamp))
+        }
+
+        archivedDetails.sort(by: { (lhs, rhs) -> Bool in lhs.timestamp > rhs.timestamp })
+        var archivedFileURLs: [URL] = []
+        for archivedDetail in archivedDetails {
+            archivedFileURLs.append(archivedDetail.url)
         }
 
         return archivedFileURLs

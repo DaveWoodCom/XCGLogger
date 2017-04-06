@@ -239,6 +239,15 @@ class XCGLoggerTests: XCTestCase {
         XCTAssert(archivedLogURLs.count < Int(autoRotatingFileDestination.targetMaxLogFiles) * 2, "Fail: logger should have removed some archived log files")
         XCTAssert(autoRotationClosureExecuted, "Fail: logger hasn't executed the auto rotation closure")
 
+        // Test our archivedLogURLs are sorted
+        // - Note: sorting by filename here works because we're using a known date formatter that includes the date in a sortable order.
+        // - If using a custom date formatter, sorting by filename may or may not work, which is why we're using the extended attributes,
+        // - they allow us to sort correctly regardless of filename.
+        let archivedLogURLsSortedByName: [URL] = archivedLogURLs.sorted { (lhs: URL, rhs: URL) -> Bool in
+            return lhs.path > rhs.path
+        }
+        XCTAssert(archivedLogURLs == archivedLogURLsSortedByName, "Fail: archivedLogURLs not sorted correctly")
+
         autoRotatingFileDestination.rotateFile()
         autoRotatingFileDestination.purgeArchivedLogFiles()
         archivedLogURLs = autoRotatingFileDestination.archivedFileURLs()
