@@ -53,7 +53,7 @@ in your repository folder.
 
 Add the following line to your `Cartfile`.
 
-```github "DaveWoodCom/XCGLogger" ~> 4.0.0```
+```github "DaveWoodCom/XCGLogger" ~> 5.0.1```
 
 Then run `carthage update --no-use-binaries` or just `carthage update`. For details of the installation and usage of Carthage, visit [it's project page][carthage].
 
@@ -66,12 +66,12 @@ source 'https://github.com/CocoaPods/Specs.git'
 platform :ios, '8.0'
 use_frameworks!
 
-pod 'XCGLogger', '~> 4.0.0'
+pod 'XCGLogger', '~> 5.0.1'
 ```
 
 Specifying the pod `XCGLogger` on its own will include the core framework. We're starting to add subspecs to allow you to include optional components as well:
 
-`pod 'XCGLogger/UserInfoHelpers', '~> 4.0.0'`: Include some experimental code to help deal with using UserInfo dictionaries to tag log messages.
+`pod 'XCGLogger/UserInfoHelpers', '~> 5.0.1'`: Include some experimental code to help deal with using UserInfo dictionaries to tag log messages.
 
 Then run `pod install`. For details of the installation and usage of CocoaPods, visit [it's official web site][cocoapods].
 
@@ -80,14 +80,13 @@ Then run `pod install`. For details of the installation and usage of CocoaPods, 
 Add the following entry to your package's dependencies:
 
 ```
-.Package(url: "https://github.com/DaveWoodCom/XCGLogger.git",
-	majorVersion: 4)
+.Package(url: "https://github.com/DaveWoodCom/XCGLogger.git", majorVersion: 5)
 ```	
 
 ### Backwards Compatibility
 
 Use:
-* XCGLogger version [4.0.0][xcglogger-4.0.0] for Swift 3.0
+* XCGLogger version [5.0.1][xcglogger-5.0.1] for Swift 3.0-3.1
 * XCGLogger version [3.6.0][xcglogger-3.6.0] for Swift 2.3
 * XCGLogger version [3.5.3][xcglogger-3.5.3] for Swift 2.2
 * XCGLogger version [3.2][xcglogger-3.2] for Swift 2.0-2.1
@@ -436,19 +435,36 @@ Add the optional `shouldAppend:` parameter when initializing the `FileDestinatio
 ```let fileDestination = FileDestination(writeToFile: "/path/to/file", identifier: "advancedLogger.fileDestination", shouldAppend: true, appendMarker: "-- Relauched App --")```
 
 
-### Log File Rotation
+### Automatic Log File Rotation
 
-When logging to a file, you have the option to rotate the log file to an archived destination, and have the logger automatically create a new log file in place of the old one.
+When logging to a file, you have the option to automatically rotate the log file to an archived destination, and have the logger automatically create a new log file in place of the old one.
 
-Using the `FileDestination` object in your logger call the `rotateFile(to:)` method. Pass either a path or file URL to a location you'd like to store the old file. The method will return `true` on success, after which you can do whatever you need with the old file, compress it, email it, etc.
+Create a destination using the `AutoRotatingFileDestination` class and set the following properties:
 
-**Hint**: see the `destination(withIdentifier:)` method on XCGLogger, to get your current `FileDestination` object, or save a reference to it when you create it using the [Advanced Usage options above](#advanced-usage-recommended).
+`targetMaxFileSize`: Auto rotate once the file is larger than this
+
+`targetMaxTimeInterval`: Auto rotate after this many seconds
+
+`targetMaxLogFiles`: Number of archived log files to keep, older ones are automatically deleted
+
+Those are all guidelines for the logger, not hard limits.
 
 ### Extending XCGLogger
 
-You can create alternate log destinations (besides the built in ones). Your custom log destination must implement the `DestinationProtocol` protocol. Instantiate your object, configure it, and then add it to the `XCGLogger` object with `add(destination:)`. Take a look at `ConsoleDestination` and `FileDestination` for examples.
+You can create alternate log destinations (besides the built in ones). Your custom log destination must implement the `DestinationProtocol` protocol. Instantiate your object, configure it, and then add it to the `XCGLogger` object with `add(destination:)`. There are two base destination classes (`BaseDestination` and `BaseQueuedDestination`) you can inherit from to handle most of the process for you, requiring you to only implement one additional method in your custom class. Take a look at `ConsoleDestination` and `FileDestination` for examples.
 
 You can also create custom filters or formatters. Take a look at the provided versions as a starting point. Note that filters and formatters have the ability to alter the log messages as they're processed. This means you can create a filter that strips passwords, highlights specific words, encrypts messages, etc.
+
+## Contributing
+
+XCGLogger is the best logger available for Swift because of the contributions from the community like you. There are many ways you can help continue to make it great.
+
+1. Star the project on [GitHub][github-xcglogger].
+2. Report issues/bugs you find.
+3. Suggest features.
+4. Submit pull requests.
+
+**Note**: when submitting a pull request, please use lots of small commits verses one huge commit. It makes it much easier to merge in when there are several pull requests that need to be combined for a new version.
 
 ## Third Party Tools That Work With XCGLogger
 
@@ -541,13 +557,13 @@ The change log is now in it's own file: [CHANGELOG.md](CHANGELOG.md)
 [github-xcglogger]: https://github.com/DaveWoodCom/XCGLogger
 [stackoverflow]: http://stackoverflow.com/questions/tagged/xcglogger
 
-[badge-language]: https://img.shields.io/badge/Swift-1.x%20%7C%202.x%20%7C%203.0-orange.svg?style=flat
-[badge-platforms]: https://img.shields.io/badge/Platforms-OS%20X%20%7C%20iOS%20%7C%20tvOS%20%7C%20watchOS-lightgray.svg?style=flat
+[badge-language]: https://img.shields.io/badge/Swift-1.x%20%7C%202.x%20%7C%203.x-orange.svg?style=flat
+[badge-platforms]: https://img.shields.io/badge/Platforms-macOS%20%7C%20iOS%20%7C%20tvOS%20%7C%20watchOS-lightgray.svg?style=flat
 [badge-license]: https://img.shields.io/badge/License-MIT-lightgrey.svg?style=flat
-[badge-travis]: https://img.shields.io/travis/DaveWoodCom/XCGLogger/swift_3.0.svg?style=flat
-[badge-swiftpm]: https://img.shields.io/badge/Swift_Package_Manager-v4.0.0-64a6dd.svg?style=flat
+[badge-travis]: https://img.shields.io/travis/DaveWoodCom/XCGLogger/master.svg?style=flat
+[badge-swiftpm]: https://img.shields.io/badge/Swift_Package_Manager-v5.0.1-64a6dd.svg?style=flat
 [badge-cocoapods]: https://img.shields.io/cocoapods/v/XCGLogger.svg?style=flat
-[badge-carthage]: https://img.shields.io/badge/Carthage-v4.0.0-64a6dd.svg?style=flat
+[badge-carthage]: https://img.shields.io/badge/Carthage-v5.0.1-64a6dd.svg?style=flat
 
 [badge-sponsors]: https://img.shields.io/badge/Sponsors-Cerebral%20Gardens-orange.svg?style=flat
 [badge-twitter]: https://img.shields.io/twitter/follow/DaveWoodX.svg?style=social
@@ -559,7 +575,7 @@ The change log is now in it's own file: [CHANGELOG.md](CHANGELOG.md)
 [Firelog]: http://jogabo.github.io/firelog/
 [Firebase]: https://www.firebase.com/
 
-[xcglogger-4.0.0]: https://github.com/DaveWoodCom/XCGLogger/releases/tag/4.0.0
+[xcglogger-5.0.1]: https://github.com/DaveWoodCom/XCGLogger/releases/tag/5.0.1
 [xcglogger-3.6.0]: https://github.com/DaveWoodCom/XCGLogger/releases/tag/3.6.0
 [xcglogger-3.5.3]: https://github.com/DaveWoodCom/XCGLogger/releases/tag/3.5.3
 [xcglogger-3.2]: https://github.com/DaveWoodCom/XCGLogger/releases/tag/3.2.0

@@ -1,5 +1,8 @@
 #Change Log
 
+* **Version 5.0.1**: *(2017/04/06)* - Updated for Xcode 8.3/Swift 3.1. Added a new fancy AutoRotatingFileDestination, that will automatically archive your log files based on size, and/or time interval. Check out the macOS demo app for a usage example. All new tags on the branches for versioning to be compatible with the Swift Package Manager. If you're referencing tags such as `Version_4.0.0`, please convert to the new equivalent tag `4.0.0`.
+* **Version 5.0.0**: *(2017/04/01)* - Invalid version, due to a merged PR that included stray tags. 
+* **Version 4.1.0**: *(2017/04/01)* - Invalid version, due to a merged PR that included stray tags.
 * **Version 4.0.0**: *(2016/09/20)* - First full release for Swift 3.0. Squeezed in a couple of feature requests: ability to change log level labels, and a formatter to add a prefix and/or postfix to messages.
 * **Version 4.0.0-beta.5**: *(2016/09/19)* - Tweaked userInfo handling for Tags/Devs, introduced subspecs for CocoaPods, made the userInfo helpers optional (consider them experimental and subject to change even after 4.0.0 is actually moved out of beta status).
 * **Version 4.0.0-beta.4**: *(2016/09/14)* - Removed escaping from closures, fixed issue using String/StaticString for function/file names.
