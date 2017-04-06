@@ -68,7 +68,7 @@ open class FileNameFilter: FilterProtocol {
     ///
     /// - Returns:          Nothing
     ///
-    @discardableResult open func add<S: Sequence>(fileNames: S) where S.Iterator.Element == String {
+    open func add<S: Sequence>(fileNames: S) where S.Iterator.Element == String {
         for fileName in fileNames {
             add(fileName: fileName)
         }
