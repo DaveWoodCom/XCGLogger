@@ -32,7 +32,7 @@ open class AutoRotatingFileDestination: FileDestination {
     }
 
     /// Option: the desired number of archived log files to keep (number of log files may exceed this, it's a guideline only)
-    open var targetMaxLogFiles: Int8 = 10 {
+    open var targetMaxLogFiles: UInt8 = 10 {
         didSet {
             cleanUpLogFiles()
         }
