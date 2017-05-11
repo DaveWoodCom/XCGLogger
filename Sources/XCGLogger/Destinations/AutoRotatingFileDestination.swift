@@ -140,7 +140,7 @@ open class AutoRotatingFileDestination: FileDestination {
         }
         
         // Because we always start by appending, regardless of the shouldAppend setting, we now need to handle the cases where we don't want to append or that we have now reached the rotation threshold for our current log file
-        if shouldRotate() || !shouldAppend {
+        if !shouldAppend || shouldRotate() { {
             rotateFile()
         }
     }
