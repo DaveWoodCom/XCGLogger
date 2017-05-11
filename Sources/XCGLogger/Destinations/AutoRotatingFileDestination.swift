@@ -88,12 +88,12 @@ open class AutoRotatingFileDestination: FileDestination {
     open class var defaultLogFolderURL: URL {
         #if os(OSX)
             let osxURL = URL(fileURLWithPath: NSTemporaryDirectory()).appendingPathComponet("log")
-            createArchivedLogDirectory(at: osxURL)
+            createArchivedLogDirectoryIfNeeded(at: osxURL)
             return osxURL
         #elseif os(iOS) || os(tvOS) || os(watchOS)
             let urls = FileManager.default.urls(for: .cachesDirectory, in: .userDomainMask)
             let otherURL = urls[urls.endIndex - 1].appendingPathComponent("log")
-            createArchivedLogDirectory(at: otherURL)
+            createArchivedLogDirectoryIfNeeded(at: otherURL)
             return otherURL
         #endif
     }
@@ -153,7 +153,7 @@ open class AutoRotatingFileDestination: FileDestination {
     ///
     /// - Returns:      Nothing.
     ///
-    open class func createArchivedLogDirectory(at url: URL) {
+    open class func createArchivedLogDirectoryIfNeeded(at url: URL) {
         do {
             try FileManager.default.createDirectory(at: url, withIntermediateDirectories: true, attributes: nil)
         } catch let error as NSError {
