@@ -88,12 +88,12 @@ open class AutoRotatingFileDestination: FileDestination {
     open class var defaultLogFolderURL: URL {
         #if os(OSX)
             let osxURL = URL(fileURLWithPath: NSTemporaryDirectory()).appendingPathComponet("log")
-            createArchivedLogDirectoryIfNeeded(at: osxURL)
+            try? FileManager.default.createDirectory(at: osxURL, withIntermediateDirectories: true)
             return osxURL
         #elseif os(iOS) || os(tvOS) || os(watchOS)
             let urls = FileManager.default.urls(for: .cachesDirectory, in: .userDomainMask)
             let otherURL = urls[urls.endIndex - 1].appendingPathComponent("log")
-            createArchivedLogDirectoryIfNeeded(at: otherURL)
+            try? FileManager.default.createDirectory(at: otherURL, withIntermediateDirectories: true)
             return otherURL
         #endif
     }
@@ -140,24 +140,8 @@ open class AutoRotatingFileDestination: FileDestination {
         }
         
         // Because we always start by appending, regardless of the shouldAppend setting, we now need to handle the cases where we don't want to append or that we have now reached the rotation threshold for our current log file
-        if !shouldAppend || shouldRotate() { {
+        if !shouldAppend || shouldRotate() {
             rotateFile()
-        }
-    }
-
-    // MARK: - Folder / File Handling Methods
-    /// Create a directory at a path for archived/rotated logs
-    ///
-    /// - Parameters:   None.
-    ///     - url:   URL where directory should exist
-    ///
-    /// - Returns:      Nothing.
-    ///
-    open class func createArchivedLogDirectoryIfNeeded(at url: URL) {
-        do {
-            try FileManager.default.createDirectory(at: url, withIntermediateDirectories: true, attributes: nil)
-        } catch let error as NSError {
-            XCGLogger.default._logln("Unable to create archived log directory \(url.path): \(error.localizedDescription)", level: .error)
         }
     }
     
