@@ -91,10 +91,14 @@ open class AutoRotatingFileDestination: FileDestination {
     /// A default folder for storing archived logs if one isn't supplied
     open class var defaultLogFolderURL: URL {
         #if os(OSX)
-            return URL(fileURLWithPath: NSTemporaryDirectory()).appendingPathComponent("log")
+            let defaultLogFolderURL = URL(fileURLWithPath: NSTemporaryDirectory()).appendingPathComponent("log")
+            try? FileManager.default.createDirectory(at: defaultLogFolderURL, withIntermediateDirectories: true)
+            return defaultLogFolderURL
         #elseif os(iOS) || os(tvOS) || os(watchOS)
             let urls = FileManager.default.urls(for: .cachesDirectory, in: .userDomainMask)
-            return urls[urls.endIndex - 1].appendingPathComponent("log")
+            let defaultLogFolderURL = urls[urls.endIndex - 1].appendingPathComponent("log")
+            try? FileManager.default.createDirectory(at: defaultLogFolderURL, withIntermediateDirectories: true)
+            return defaultLogFolderURL
         #endif
     }
 
@@ -105,9 +109,11 @@ open class AutoRotatingFileDestination: FileDestination {
         currentLogStartTimeInterval = Date().timeIntervalSince1970
         self.archiveSuffixDateFormatter = archiveSuffixDateFormatter
         self.shouldAppend = shouldAppend
-        self.appendMarker = appendMarker
         self.targetMaxFileSize = maxFileSize
         self.targetMaxTimeInterval = maxTimeInterval
+
+        // Do not keep the append marker around after the superclass uses it otherwise it is logged twice and it is not needed during rotation.
+        self.appendMarker = nil
 
         guard let writeToFileURL = writeToFileURL else { return }
 
@@ -129,16 +135,9 @@ open class AutoRotatingFileDestination: FileDestination {
         if archiveFolderURL == nil {
             archiveFolderURL = type(of: self).defaultLogFolderURL
         }
-
-        guard shouldAppend else {
-            // Because we always start by appending, regardless of the shouldAppend setting, we now need to handle the case where we don't want to append, so we immediate rotate the file
-            // this is just as if we didn't append, but prevents the super class from wiping the contents of the log file when opening it
-            rotateFile()
-            return
-        }
-
+        
         do {
-            // Since we're appending, we need to get the starting file count and start interval of the current log
+            // Initialize starting values for file size and start time so shouldRotate calculations are valid
             let fileAttributes: [FileAttributeKey: Any] = try FileManager.default.attributesOfItem(atPath: filePath)
             currentLogFileSize = fileAttributes[.size] as? UInt64 ?? 0
             currentLogStartTimeInterval = (fileAttributes[.creationDate] as? Date ?? Date()).timeIntervalSince1970
@@ -146,13 +145,13 @@ open class AutoRotatingFileDestination: FileDestination {
         catch let error as NSError {
             owner?._logln("Unable to determine current file attributes of log file: \(error.localizedDescription)", level: .warning)
         }
-
-        if shouldRotate() {
+        
+        // Because we always start by appending, regardless of the shouldAppend setting, we now need to handle the cases where we don't want to append or that we have now reached the rotation threshold for our current log file
+        if !shouldAppend || shouldRotate() {
             rotateFile()
         }
     }
 
-    // MARK: - Folder / File Handling Methods
     /// Scan the log folder and delete log files that are no longer relevant.
     ///
     /// - Parameters:   None.
@@ -254,6 +253,9 @@ open class AutoRotatingFileDestination: FileDestination {
     ///     - false:    The log file doesn't have to be rotated.
     ///
     open func shouldRotate() -> Bool {
+        // Do not rotate until critical setup has been completed so that we do not accidentally rotate once to the defaultLogFolderURL before determining the desired log location
+        guard archiveFolderURL != nil else { return false }
+        
         // File Size
         guard currentLogFileSize < targetMaxFileSize else { return true }
 
