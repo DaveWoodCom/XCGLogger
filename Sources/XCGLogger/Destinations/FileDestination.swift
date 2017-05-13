@@ -42,10 +42,14 @@ open class FileDestination: BaseQueuedDestination {
     /// Option: if appending to the log file, the string to output at the start to mark where the append took place
     internal var appendMarker: String?
 
+    /// Option: Attributes to use when creating a new file
+    internal var fileAttributes: [String: Any]? = nil
+
     // MARK: - Life Cycle
-    public init(owner: XCGLogger? = nil, writeToFile: Any, identifier: String = "", shouldAppend: Bool = false, appendMarker: String? = "-- ** ** ** --") {
+    public init(owner: XCGLogger? = nil, writeToFile: Any, identifier: String = "", shouldAppend: Bool = false, appendMarker: String? = "-- ** ** ** --", attributes: [String: Any]? = nil) {
         self.shouldAppend = shouldAppend
         self.appendMarker = appendMarker
+        self.fileAttributes = attributes
 
         if writeToFile is NSString {
             writeToFileURL = URL(fileURLWithPath: writeToFile as! String)
@@ -88,7 +92,7 @@ open class FileDestination: BaseQueuedDestination {
         let fileManager: FileManager = FileManager.default
         let fileExists: Bool = fileManager.fileExists(atPath: writeToFileURL.path)
         if !shouldAppend || !fileExists {
-            fileManager.createFile(atPath: writeToFileURL.path, contents: nil, attributes: nil)
+            fileManager.createFile(atPath: writeToFileURL.path, contents: nil, attributes: fileAttributes)
         }
 
         do {
