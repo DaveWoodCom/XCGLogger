@@ -160,7 +160,7 @@ let log = XCGLogger(identifier: "advancedLogger", includeDefaultDestinations: fa
 let systemDestination = AppleSystemLogDestination(identifier: "advancedLogger.systemDestination")
 
 // Optionally set some configuration options
-systemDestination.outputLevel = .Debug
+systemDestination.outputLevel = .debug
 systemDestination.showLogIdentifier = false
 systemDestination.showFunctionName = true
 systemDestination.showThreadName = true
@@ -176,7 +176,7 @@ log.add(destination: systemDestination)
 let fileDestination = FileDestination(writeToFile: "/path/to/file", identifier: "advancedLogger.fileDestination")
 
 // Optionally set some configuration options
-fileDestination.outputLevel = .Debug
+fileDestination.outputLevel = .debug
 fileDestination.showLogIdentifier = false
 fileDestination.showFunctionName = true
 fileDestination.showThreadName = true
