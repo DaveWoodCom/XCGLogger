@@ -82,7 +82,7 @@ class XCGLoggerTests: XCTestCase {
         XCTAssert(log.destinations.count == 0, "Fail: Logger included default destinations when it shouldn't have")
     }
 
-    /// Test that we can add additonal destinations
+    /// Test that we can add additional destinations
     func test_00030_addDestination() {
         let log = XCGLogger(identifier: functionIdentifier())
         let destinationCountAtStart = log.destinations.count

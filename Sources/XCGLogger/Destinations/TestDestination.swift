@@ -64,7 +64,7 @@ open class TestDestination: BaseQueuedDestination {
         }
     }
 
-    /// Reset our expections etc for additional tests
+    /// Reset our expectations etc for additional tests
     ///
     /// - Parameters:   Nothing
     ///
