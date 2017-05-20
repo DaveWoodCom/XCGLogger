@@ -10,7 +10,7 @@
 import Foundation
 
 // MARK: - BaseDestination
-/// A base class destination that doesn't actually output the log anywhere and is intented to be subclassed
+/// A base class destination that doesn't actually output the log anywhere and is intended to be subclassed
 open class BaseDestination: DestinationProtocol, CustomDebugStringConvertible {
     // MARK: - Properties
     /// Logger that owns the destination object
@@ -165,7 +165,7 @@ open class BaseDestination: DestinationProtocol, CustomDebugStringConvertible {
         return level >= self.outputLevel
     }
 
-    // MARK: - Methods that must be overriden in subclasses
+    // MARK: - Methods that must be overridden in subclasses
     /// Output the log to the destination.
     ///
     /// - Parameters:

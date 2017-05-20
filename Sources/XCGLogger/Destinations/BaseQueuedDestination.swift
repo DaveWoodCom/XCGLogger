@@ -11,7 +11,7 @@ import Foundation
 import Dispatch
 
 // MARK: - BaseQueuedDestination
-/// A base class destination (with a possible DispatchQueue) that doesn't actually output the log anywhere and is intented to be subclassed
+/// A base class destination (with a possible DispatchQueue) that doesn't actually output the log anywhere and is intended to be subclassed
 open class BaseQueuedDestination: BaseDestination {
     // MARK: - Properties
     /// The dispatch queue to process the log on
@@ -49,7 +49,7 @@ open class BaseQueuedDestination: BaseDestination {
         }
     }
 
-    // MARK: - Methods that must be overriden in subclasses
+    // MARK: - Methods that must be overridden in subclasses
     /// Write the log message to the destination.
     ///
     /// - Parameters:
