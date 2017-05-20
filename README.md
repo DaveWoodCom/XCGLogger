@@ -97,7 +97,7 @@ Use:
 
 _This quick start method is intended just to get you up and running with the logger. You should however use the [advanced usage below](#advanced-usage-recommended) to get the most out of this library._
 
-Add the XCGLogger project as a subproject to your project, and add the appropriate library as a dependancy of your target(s).
+Add the XCGLogger project as a subproject to your project, and add the appropriate library as a dependency of your target(s).
 Under the `General` tab of your target, add `XCGLogger.framework` and `ObjcExceptionBridging.framework` to the `Embedded Binaries` section.
 
 Then, in each source file:
