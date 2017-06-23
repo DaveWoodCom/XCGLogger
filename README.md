@@ -57,6 +57,8 @@ Add the following line to your `Cartfile`.
 
 Then run `carthage update --no-use-binaries` or just `carthage update`. For details of the installation and usage of Carthage, visit [it's project page][carthage].
 
+Developers running 5.0 and above in Swift will need to add `$(SRCROOT)/Carthage/Build/iOS/ObjcExceptionBridging.framework` to their Input Files in the Copy Carthage Frameworks Build Phase. 
+
 ### [CocoaPods][cocoapods]
 
 Add something similar to the following lines to your `Podfile`. You may need to adjust based on your platform, version/branch etc.
