@@ -87,7 +87,7 @@ public struct Dev: UserInfoTaggingProtocol {
 
 /// Overloaded operator to merge userInfo compatible dictionaries together
 /// Note: should correctly handle combining single elements of the same key, or an element and an array, but will skip sets
-public func |<Key: Hashable, Value: Any> (lhs: Dictionary<Key, Value>, rhs: Dictionary<Key, Value>) -> Dictionary<Key, Any> {
+public func |<Key: Any, Value: Any> (lhs: Dictionary<Key, Value>, rhs: Dictionary<Key, Value>) -> Dictionary<Key, Any> {
     var mergedDictionary: Dictionary<Key, Any> = lhs
 
     rhs.forEach { key, rhsValue in
