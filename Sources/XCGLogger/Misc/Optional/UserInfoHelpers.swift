@@ -7,82 +7,92 @@
 //  Some rights reserved: https://github.com/DaveWoodCom/XCGLogger/blob/master/LICENSE.txt
 //
 
-/// Protocol for creating tagging objects (ie, a tag, a developer, etc) to filter log messages by
-public protocol UserInfoTaggingProtocol {
-    /// The name of the tagging object
-    var name: String { get set }
+/// Protocol for creating log userInfo
 
+public protocol UserInfoConvertibleProtocol {
+    
     /// Convert the object to a userInfo compatible dictionary
-    var dictionary: [String: String] { get }
+    var dictionary: [String: Any] { get }
+
+}
+
+/// Protocol for creating tagging objects (ie, a tag, a developer, etc) to filter log messages by
+
+public protocol UserInfoTaggingProtocol: UserInfoConvertibleProtocol {
+
+    associatedtype NameType
+
+    /// The name of the tagging object
+    var name: NameType { get set }
 
     /// initialize the object with a name
-    init(_ name: String)
+    init(_ name: NameType)
+}
+
+/// Protocol for creating tagging object (ie, a tag, a developer, etc) to filter log messages by
+
+public protocol UserInfoTagProtocol: UserInfoTaggingProtocol {
+    /// The userInfo key for tag
+    static var userInfoKey: String { get }
+}
+
+public extension UserInfoTagProtocol {
+    /// Dictionary representation compatible with the userInfo parameter of log messages
+    var dictionary: [String: Any] {
+        return [Self.userInfoKey: name]
+    }
+
+    /// Create a Tag object with a name
+    public static func name(_ name: NameType) -> Self {
+        return Self(name)
+    }
+    
+    /// Generate a userInfo compatible dictionary for the array of names
+    public static func names(_ names: String...) -> [String: [String]] {
+        var tags: [String] = []
+        
+        for name in names {
+            tags.append(name)
+        }
+        
+        return [Self.userInfoKey: tags]
+    }
 }
 
 /// Struction for tagging log messages with Tags
-public struct Tag: UserInfoTaggingProtocol {
+public struct Tag: UserInfoTagProtocol {
 
     /// The name of the tag
     public var name: String
 
-    /// Dictionary representation compatible with the userInfo paramater of log messages
-    public var dictionary: [String: String] {
-        return [XCGLogger.Constants.userInfoKeyTags: name]
-    }
 
     /// Initialize a Tag object with a name
     public init(_ name: String) {
         self.name = name
     }
-
-    /// Create a Tag object with a name
-    public static func name(_ name: String) -> Tag {
-        return Tag(name)
-    }
-
-    /// Generate a userInfo compatible dictionary for the array of tag names
-    public static func names(_ names: String...) -> [String: [String]] {
-        var tags: [String] = []
-
-        for name in names {
-            tags.append(name)
-        }
-
-        return [XCGLogger.Constants.userInfoKeyTags: tags]
+    
+    /// The userInfo key for tag
+    public static var userInfoKey: String {
+        return XCGLogger.Constants.userInfoKeyTags
     }
 }
 
 /// Struction for tagging log messages with Developers
-public struct Dev: UserInfoTaggingProtocol {
+public struct Dev: UserInfoTagProtocol {
 
     /// The name of the developer
     public var name: String
-
-    /// Dictionary representation compatible with the userInfo paramater of log messages
-    public var dictionary: [String: String] {
-        return [XCGLogger.Constants.userInfoKeyDevs: name]
-    }
 
     /// Initialize a Dev object with a name
     public init(_ name: String) {
         self.name = name
     }
-
-    /// Create a Dev object with a name
-    public static func name(_ name: String) -> Dev {
-        return Dev(name)
+    
+    /// The userInfo key for dev
+    public static var userInfoKey: String {
+        return XCGLogger.Constants.userInfoKeyDevs
     }
 
-    /// Generate a userInfo compatible dictionary for the array of dev names
-    public static func names(_ names: String...) -> [String: [String]] {
-        var tags: [String] = []
-
-        for name in names {
-            tags.append(name)
-        }
-
-        return [XCGLogger.Constants.userInfoKeyDevs: tags]
-    }
 }
 
 /// Overloaded operator to merge userInfo compatible dictionaries together
@@ -124,17 +134,17 @@ public func |<Key: Hashable, Value: Any> (lhs: Dictionary<Key, Value>, rhs: Dict
 }
 
 /// Overloaded operator, converts UserInfoTaggingProtocol types to dictionaries and then merges them
-public func | (lhs: UserInfoTaggingProtocol, rhs: UserInfoTaggingProtocol) -> Dictionary<String, Any> {
+public func | <T: UserInfoConvertibleProtocol, U: UserInfoConvertibleProtocol> (lhs: T, rhs: U) -> Dictionary<String, Any> {
     return lhs.dictionary | rhs.dictionary
 }
 
 /// Overloaded operator, converts UserInfoTaggingProtocol types to dictionaries and then merges them
-public func | (lhs: UserInfoTaggingProtocol, rhs: Dictionary<String, Any>) -> Dictionary<String, Any> {
+public func | <T: UserInfoConvertibleProtocol> (lhs: T, rhs: Dictionary<String, Any>) -> Dictionary<String, Any> {
     return lhs.dictionary | rhs
 }
 
 /// Overloaded operator, converts UserInfoTaggingProtocol types to dictionaries and then merges them
-public func | (lhs: Dictionary<String, Any>, rhs: UserInfoTaggingProtocol) -> Dictionary<String, Any> {
+public func | <T: UserInfoConvertibleProtocol> (lhs: Dictionary<String, Any>, rhs: T) -> Dictionary<String, Any> {
     return rhs.dictionary | lhs
 }
 
@@ -148,7 +158,7 @@ public extension UserInfoFilter {
     /// - Parameters:
     ///     - tags: Array of UserInfoTaggingProtocol objects to match against.
     ///
-    public convenience init(includeFrom tags: [UserInfoTaggingProtocol]) {
+    public convenience init<T: UserInfoTaggingProtocol>(includeFrom tags: [T]) where T.NameType == String {
         var names: [String] = []
         for tag in tags {
             names.append(tag.name)
@@ -164,7 +174,7 @@ public extension UserInfoFilter {
     /// - Parameters:
     ///     - tags: Array of UserInfoTaggingProtocol objects to match against.
     ///
-    public convenience init(excludeFrom tags: [UserInfoTaggingProtocol]) {
+    public convenience init<T: UserInfoTaggingProtocol>(excludeFrom tags: [T]) where T.NameType == String {
         var names: [String] = []
         for tag in tags {
             names.append(tag.name)
