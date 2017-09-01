@@ -102,7 +102,7 @@ open class AutoRotatingFileDestination: FileDestination {
         self.archiveSuffixDateFormatter = archiveSuffixDateFormatter
         self.shouldAppend = shouldAppend
         self.appendMarker = appendMarker
-
+        self.targetMaxFileSize = maxFileSize
         guard let writeToFileURL = writeToFileURL else { return }
 
         // Calculate some details for naming archived logs based on the current log file path/name
