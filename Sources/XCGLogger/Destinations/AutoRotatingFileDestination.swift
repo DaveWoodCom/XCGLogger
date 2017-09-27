@@ -9,15 +9,16 @@
 
 import Foundation
 
-fileprivate let AutoRotatingFileDefaultMaxFileSize: UInt64 = 1_048_576
-fileprivate let AutoRotatingFileDefaultMaxTimeInterval: TimeInterval = 600
-
 // MARK: - AutoRotatingFileDestination
 /// A destination that outputs log details to files in a log folder, with auto-rotate options (by size or by time)
 open class AutoRotatingFileDestination: FileDestination {
+    // MARK: - Constants
+    static let autoRotatingFileDefaultMaxFileSize: UInt64 = 1_048_576
+    static let autoRotatingFileDefaultMaxTimeInterval: TimeInterval = 600
+
     // MARK: - Properties
     /// Option: desired maximum size of a log file, if 0, no maximum (log files may exceed this, it's a guideline only)
-    open var targetMaxFileSize: UInt64 = AutoRotatingFileDefaultMaxFileSize {
+    open var targetMaxFileSize: UInt64 = autoRotatingFileDefaultMaxFileSize {
         didSet {
             if targetMaxFileSize < 1 {
                 targetMaxFileSize = .max
@@ -26,7 +27,7 @@ open class AutoRotatingFileDestination: FileDestination {
     }
 
     /// Option: desired maximum time in seconds stored in a log file, if 0, no maximum (log files may exceed this, it's a guideline only)
-    open var targetMaxTimeInterval: TimeInterval = AutoRotatingFileDefaultMaxTimeInterval {
+    open var targetMaxTimeInterval: TimeInterval = autoRotatingFileDefaultMaxTimeInterval {
         didSet {
             if targetMaxTimeInterval < 1 {
                 targetMaxTimeInterval = 0
@@ -98,7 +99,7 @@ open class AutoRotatingFileDestination: FileDestination {
     }
 
     // MARK: - Life Cycle
-    public init(owner: XCGLogger? = nil, writeToFile: Any, identifier: String = "", shouldAppend: Bool = false, appendMarker: String? = "-- ** ** ** --", maxFileSize: UInt64 = AutoRotatingFileDefaultMaxFileSize, maxTimeInterval: TimeInterval = AutoRotatingFileDefaultMaxTimeInterval, archiveSuffixDateFormatter: DateFormatter? = nil) {
+    public init(owner: XCGLogger? = nil, writeToFile: Any, identifier: String = "", shouldAppend: Bool = false, appendMarker: String? = "-- ** ** ** --", maxFileSize: UInt64 = autoRotatingFileDefaultMaxFileSize, maxTimeInterval: TimeInterval = autoRotatingFileDefaultMaxTimeInterval, archiveSuffixDateFormatter: DateFormatter? = nil) {
         super.init(owner: owner, writeToFile: writeToFile, identifier: identifier, shouldAppend: true, appendMarker: shouldAppend ? appendMarker : nil)
 
         currentLogStartTimeInterval = Date().timeIntervalSince1970
