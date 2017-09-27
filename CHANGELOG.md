@@ -1,6 +1,6 @@
 # Change Log
 
-* **Version 5.0.2**: *(2017/09/27)* - Fixed some issues in the AutoRotatingFileDestination class, added fileAttribute options, other fixes
+* **Version 5.0.3**: *(2017/09/27)* - Fixed some issues in the AutoRotatingFileDestination class, added fileAttribute options, other fixes
 * **Version 5.0.1**: *(2017/04/06)* - Updated for Xcode 8.3/Swift 3.1. Added a new fancy AutoRotatingFileDestination, that will automatically archive your log files based on size, and/or time interval. Check out the macOS demo app for a usage example. All new tags on the branches for versioning to be compatible with the Swift Package Manager. If you're referencing tags such as `Version_4.0.0`, please convert to the new equivalent tag `4.0.0`.
 * **Version 5.0.0**: *(2017/04/01)* - Invalid version, due to a merged PR that included stray tags. 
 * **Version 4.1.0**: *(2017/04/01)* - Invalid version, due to a merged PR that included stray tags.
