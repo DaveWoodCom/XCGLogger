@@ -37,7 +37,7 @@ open class FileDestination: BaseQueuedDestination {
     internal var logFileHandle: FileHandle? = nil
 
     /// Option: whether or not to append to the log file if it already exists
-    internal var shouldAppend: Bool = false
+    internal var shouldAppend: Bool
 
     /// Option: if appending to the log file, the string to output at the start to mark where the append took place
     internal var appendMarker: String?
