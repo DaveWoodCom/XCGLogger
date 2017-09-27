@@ -112,9 +112,6 @@ open class AutoRotatingFileDestination: FileDestination {
         self.targetMaxFileSize = maxFileSize
         self.targetMaxTimeInterval = maxTimeInterval
 
-        // Do not keep the append marker around after the superclass uses it otherwise it is logged twice and it is not needed during rotation.
-        self.appendMarker = nil
-
         guard let writeToFileURL = writeToFileURL else { return }
 
         // Calculate some details for naming archived logs based on the current log file path/name
