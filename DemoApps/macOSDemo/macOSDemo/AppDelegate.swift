@@ -46,7 +46,9 @@ let log: XCGLogger = {
 
     // Create a file log destination
     let logPath: String = "/tmp/XCGLogger_macOSDemo.log"
-    let autoRotatingFileDestination = AutoRotatingFileDestination(writeToFile: logPath, identifier: "advancedLogger.fileDestination", shouldAppend: true)
+    let autoRotatingFileDestination = AutoRotatingFileDestination(writeToFile: logPath, identifier: "advancedLogger.fileDestination", shouldAppend: true,
+                                                                  maxFileSize: 1024 * 5, // 5k, not a good size for production (default is 1 megabyte)
+                                                                  maxTimeInterval: 60) // 1 minute, also not good for production (default is 10 minutes)
 
     // Optionally set some configuration options
     autoRotatingFileDestination.outputLevel = .debug
@@ -57,8 +59,6 @@ let log: XCGLogger = {
     autoRotatingFileDestination.showFileName = true
     autoRotatingFileDestination.showLineNumber = true
     autoRotatingFileDestination.showDate = true
-    autoRotatingFileDestination.targetMaxFileSize = 1024 * 5 // 5k, not a good size for production (default is 1 megabyte)
-    autoRotatingFileDestination.targetMaxTimeInterval = 60 // 1 minute, also not good for production (default is 10 minutes)
     autoRotatingFileDestination.targetMaxLogFiles = 10 // probably good for this demo and production, (default is 10, max is 255)
 
     // Process this destination in the background
