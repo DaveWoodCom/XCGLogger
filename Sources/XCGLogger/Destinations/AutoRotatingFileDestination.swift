@@ -13,8 +13,8 @@ import Foundation
 /// A destination that outputs log details to files in a log folder, with auto-rotate options (by size or by time)
 open class AutoRotatingFileDestination: FileDestination {
     // MARK: - Constants
-    static let autoRotatingFileDefaultMaxFileSize: UInt64 = 1_048_576
-    static let autoRotatingFileDefaultMaxTimeInterval: TimeInterval = 600
+    public static let autoRotatingFileDefaultMaxFileSize: UInt64 = 1_048_576
+    public static let autoRotatingFileDefaultMaxTimeInterval: TimeInterval = 600
 
     // MARK: - Properties
     /// Option: desired maximum size of a log file, if 0, no maximum (log files may exceed this, it's a guideline only)
@@ -119,14 +119,14 @@ open class AutoRotatingFileDestination: FileDestination {
         baseFileName = writeToFileURL.lastPathComponent
         if let fileExtensionRange: Range = baseFileName.range(of: ".\(fileExtension)", options: .backwards),
           fileExtensionRange.upperBound >= baseFileName.endIndex {
-            baseFileName = baseFileName[baseFileName.startIndex ..< fileExtensionRange.lowerBound]
+            baseFileName = String(baseFileName[baseFileName.startIndex ..< fileExtensionRange.lowerBound])
         }
 
         let filePath: String = writeToFileURL.path
         let logFileName: String = "\(baseFileName).\(fileExtension)"
         if let logFileNameRange: Range = filePath.range(of: logFileName, options: .backwards),
           logFileNameRange.upperBound >= filePath.endIndex {
-            let archiveFolderPath: String = filePath[filePath.startIndex ..< logFileNameRange.lowerBound]
+            let archiveFolderPath: String = String(filePath[filePath.startIndex ..< logFileNameRange.lowerBound])
             archiveFolderURL = URL(fileURLWithPath: "\(archiveFolderPath)")
         }
         if archiveFolderURL == nil {
