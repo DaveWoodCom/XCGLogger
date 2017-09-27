@@ -107,7 +107,7 @@ open class FileDestination: BaseQueuedDestination {
                         self.logFileHandle?.write(encodedData)
                     },
                     catch: { (exception: NSException) in
-                        owner._logln("Objective-C Exception occurred: \(exception)", level: .error, source: self)
+                        print("Objective-C Exception occurred: \(exception)", level: .error, source: self)
                     })
                 }
             }
@@ -238,7 +238,7 @@ open class FileDestination: BaseQueuedDestination {
                 self.logFileHandle?.write(encodedData)
             },
             catch: { (exception: NSException) in
-                self.owner?._logln("Objective-C Exception occurred: \(exception)", level: .error, source: self)
+                print("Objective-C Exception occurred: \(exception)", level: .error, source: self)
             })
         }
     }
