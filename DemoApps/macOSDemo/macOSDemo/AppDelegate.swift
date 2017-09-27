@@ -45,7 +45,7 @@ let log: XCGLogger = {
     log.add(destination: systemDestination)
 
     // Create a file log destination
-    let logPath: String = ("/tmp/XCGLogger_macOSDemo.log" as NSString).expandingTildeInPath
+    let logPath: String = "/tmp/XCGLogger_macOSDemo.log"
     let autoRotatingFileDestination = AutoRotatingFileDestination(writeToFile: logPath, identifier: "advancedLogger.fileDestination", shouldAppend: true)
 
     // Optionally set some configuration options
