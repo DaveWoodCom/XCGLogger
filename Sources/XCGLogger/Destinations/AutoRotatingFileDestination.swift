@@ -13,8 +13,8 @@ import Foundation
 /// A destination that outputs log details to files in a log folder, with auto-rotate options (by size or by time)
 open class AutoRotatingFileDestination: FileDestination {
     // MARK: - Constants
-    static let autoRotatingFileDefaultMaxFileSize: UInt64 = 1_048_576
-    static let autoRotatingFileDefaultMaxTimeInterval: TimeInterval = 600
+    public static let autoRotatingFileDefaultMaxFileSize: UInt64 = 1_048_576
+    public static let autoRotatingFileDefaultMaxTimeInterval: TimeInterval = 600
 
     // MARK: - Properties
     /// Option: desired maximum size of a log file, if 0, no maximum (log files may exceed this, it's a guideline only)
