@@ -43,10 +43,10 @@ open class FileDestination: BaseQueuedDestination {
     internal var appendMarker: String?
 
     /// Option: Attributes to use when creating a new file
-    internal var fileAttributes: [String: Any]? = nil
+    internal var fileAttributes: [FileAttributeKey: Any]? = nil
 
     // MARK: - Life Cycle
-    public init(owner: XCGLogger? = nil, writeToFile: Any, identifier: String = "", shouldAppend: Bool = false, appendMarker: String? = "-- ** ** ** --", attributes: [String: Any]? = nil) {
+    public init(owner: XCGLogger? = nil, writeToFile: Any, identifier: String = "", shouldAppend: Bool = false, appendMarker: String? = "-- ** ** ** --", attributes: [FileAttributeKey: Any]? = nil) {
         self.shouldAppend = shouldAppend
         self.appendMarker = appendMarker
         self.fileAttributes = attributes
