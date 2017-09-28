@@ -23,10 +23,10 @@ env:
     # Can't do a pod lint with Xcode 8 due to: https://github.com/CocoaPods/CocoaPods/issues/5661
     # Should now be fixed: https://github.com/CocoaPods/Xcodeproj/pull/407 but doesn't look like the updates are on Travis yet
     # - POD_LINT="YES"
-    - PROJECT_FILE="$LIB_PROJECT"       DESTINATION="OS=10.3,name=iPhone 7"             SCHEME="$IOS_FRAMEWORK_SCHEME"      SDK="$IOS_SDK"      POD_LINT="NO"   BUILDCMD="clean test build"
+    - PROJECT_FILE="$LIB_PROJECT"       DESTINATION="OS=10.3.1,name=iPhone 7"             SCHEME="$IOS_FRAMEWORK_SCHEME"      SDK="$IOS_SDK"      POD_LINT="NO"   BUILDCMD="clean test build"
     - PROJECT_FILE="$LIB_PROJECT"       DESTINATION="arch=x86_64"                       SCHEME="$MACOS_FRAMEWORK_SCHEME"    SDK="$MACOS_SDK"    POD_LINT="NO"   BUILDCMD="clean test build"
     - PROJECT_FILE="$LIB_PROJECT"       DESTINATION="OS=10.2,name=Apple TV 1080p"       SCHEME="$TVOS_FRAMEWORK_SCHEME"     SDK="$TVOS_SDK"     POD_LINT="NO"   BUILDCMD="clean test build"
-    - PROJECT_FILE="$LIB_PROJECT"       DESTINATION="id=BE78B202-BB77-4DC8-A6F0-0F648DA89B4A"    SCHEME="$WATCHOS_FRAMEWORK_SCHEME"  SDK="$WATCHOS_SDK"  POD_LINT="NO"   BUILDCMD="clean build" # OS=3.2,name=Apple Watch - 42mm
+    - PROJECT_FILE="$LIB_PROJECT"       DESTINATION="id=96AFA589-B3DD-475D-8B6D-053CE3FFEE2F"    SCHEME="$WATCHOS_FRAMEWORK_SCHEME"  SDK="$WATCHOS_SDK"  POD_LINT="NO"   BUILDCMD="clean build" # OS=3.2,name=Apple Watch Series 2 - 42mm
     - PROJECT_FILE="$IOSDEMO_PROJECT"   DESTINATION="OS=8.1,name=iPhone 5"              SCHEME="$IOS_EXAMPLE_SCHEME"        SDK="$IOS_SDK"      POD_LINT="NO"   BUILDCMD="clean build"
     - PROJECT_FILE="$IOSDEMO_PROJECT"   DESTINATION="OS=8.2,name=iPhone 5S"             SCHEME="$IOS_EXAMPLE_SCHEME"        SDK="$IOS_SDK"      POD_LINT="NO"   BUILDCMD="clean build"
     - PROJECT_FILE="$IOSDEMO_PROJECT"   DESTINATION="OS=8.3,name=iPhone 6"              SCHEME="$IOS_EXAMPLE_SCHEME"        SDK="$IOS_SDK"      POD_LINT="NO"   BUILDCMD="clean build"
@@ -36,10 +36,10 @@ env:
     - PROJECT_FILE="$IOSDEMO_PROJECT"   DESTINATION="OS=9.2,name=iPhone 6S Plus"        SCHEME="$IOS_EXAMPLE_SCHEME"        SDK="$IOS_SDK"      POD_LINT="NO"   BUILDCMD="clean build"
     - PROJECT_FILE="$IOSDEMO_PROJECT"   DESTINATION="OS=9.3,name=iPad Retina"           SCHEME="$IOS_EXAMPLE_SCHEME"        SDK="$IOS_SDK"      POD_LINT="NO"   BUILDCMD="clean build"
     - PROJECT_FILE="$IOSDEMO_PROJECT"   DESTINATION="OS=10.0,name=iPhone SE"            SCHEME="$IOS_EXAMPLE_SCHEME"        SDK="$IOS_SDK"      POD_LINT="NO"   BUILDCMD="clean build"
-    - PROJECT_FILE="$IOSDEMO_PROJECT"   DESTINATION="id=C21C8647-9A49-4DF9-A5EA-E170B92FD08A" SCHEME="$IOS_EXAMPLE_SCHEME"        SDK="$IOS_SDK"      POD_LINT="NO"   BUILDCMD="clean build" # OS=10.1,name=iPad Pro (12.9 inch)
+    - PROJECT_FILE="$IOSDEMO_PROJECT"   DESTINATION="OS=10.3.1,name=iPad Pro (12.9-inch) (2nd generation)" SCHEME="$IOS_EXAMPLE_SCHEME"        SDK="$IOS_SDK"      POD_LINT="NO"   BUILDCMD="clean build"
     - PROJECT_FILE="$IOSDEMO_PROJECT"   DESTINATION="OS=10.2,name=iPad Air"             SCHEME="$IOS_EXAMPLE_SCHEME"        SDK="$IOS_SDK"      POD_LINT="NO"   BUILDCMD="clean build"
-    - PROJECT_FILE="$IOSDEMO_PROJECT"   DESTINATION="OS=10.3,name=iPhone 7"             SCHEME="$IOS_EXAMPLE_SCHEME"        SDK="$IOS_SDK"      POD_LINT="NO"   BUILDCMD="clean build"
-    - PROJECT_FILE="$IOSDEMO_PROJECT"   DESTINATION="OS=10.3,name=iPhone 7 Plus"        SCHEME="$IOS_EXAMPLE_SCHEME"        SDK="$IOS_SDK"      POD_LINT="NO"   BUILDCMD="clean build"
+    - PROJECT_FILE="$IOSDEMO_PROJECT"   DESTINATION="OS=10.3.1,name=iPhone 7"             SCHEME="$IOS_EXAMPLE_SCHEME"        SDK="$IOS_SDK"      POD_LINT="NO"   BUILDCMD="clean build"
+    - PROJECT_FILE="$IOSDEMO_PROJECT"   DESTINATION="OS=10.3.1,name=iPhone 7 Plus"        SCHEME="$IOS_EXAMPLE_SCHEME"        SDK="$IOS_SDK"      POD_LINT="NO"   BUILDCMD="clean build"
     - PROJECT_FILE="$OSXDEMO_PROJECT"   DESTINATION="arch=x86_64"                       SCHEME="$MACOS_EXAMPLE_SCHEME"      SDK="$MACOS_SDK"    POD_LINT="NO"   BUILDCMD="clean build"
     - PROJECT_FILE="$TVOSDEMO_PROJECT"  DESTINATION="OS=9.0,name=Apple TV 1080p"        SCHEME="$TVOS_EXAMPLE_SCHEME"       SDK="$TVOS_SDK"     POD_LINT="NO"   BUILDCMD="clean build"
     - PROJECT_FILE="$TVOSDEMO_PROJECT"  DESTINATION="OS=9.1,name=Apple TV 1080p"        SCHEME="$TVOS_EXAMPLE_SCHEME"       SDK="$TVOS_SDK"     POD_LINT="NO"   BUILDCMD="clean build"
