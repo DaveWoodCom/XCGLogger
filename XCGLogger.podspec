@@ -1,7 +1,7 @@
 Pod::Spec.new do |spec|
 
 	spec.name = 'XCGLogger'
-	spec.version = '5.0.5'
+	spec.version = '6.0.0'
 	spec.summary = 'A debug log module for use in Swift projects.'
 
 	spec.description = <<-DESC
@@ -16,7 +16,7 @@ Pod::Spec.new do |spec|
 	spec.platforms = { :ios => '7.0', :watchos => '2.0', :tvos => '9.0' }
 	spec.requires_arc = true
 
-	spec.source = { :git => 'https://github.com/DaveWoodCom/XCGLogger.git', :tag => '5.0.5' }
+	spec.source = { :git => 'https://github.com/DaveWoodCom/XCGLogger.git', :tag => '6.0.0' }
 
 	spec.ios.deployment_target = '8.0'
 	spec.osx.deployment_target = '10.10'
