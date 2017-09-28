@@ -34,21 +34,6 @@ let log: XCGLogger = {
             ansiColorLogFormatter.colorize(level: .severe, with: .white, on: .red)
             fileDestination.formatters = [ansiColorLogFormatter]
         }
-
-        // Add colour to the console destination.
-        // - Note: You need the XcodeColors Plug-in https://github.com/robbiehanson/XcodeColors installed in Xcode
-        // - to see colours in the Xcode console. Plug-ins have been disabled in Xcode 8, so offically you can not see
-        // - coloured logs in Xcode 8.
-        //if let consoleDestination: ConsoleDestination = log.destination(withIdentifier: XCGLogger.Constants.baseConsoleDestinationIdentifier) as? ConsoleDestination {
-        //    let xcodeColorsLogFormatter: XcodeColorsLogFormatter = XcodeColorsLogFormatter()
-        //    xcodeColorsLogFormatter.colorize(level: .verbose, with: .lightGrey)
-        //    xcodeColorsLogFormatter.colorize(level: .debug, with: .darkGrey)
-        //    xcodeColorsLogFormatter.colorize(level: .info, with: .blue)
-        //    xcodeColorsLogFormatter.colorize(level: .warning, with: .orange)
-        //    xcodeColorsLogFormatter.colorize(level: .error, with: .red)
-        //    xcodeColorsLogFormatter.colorize(level: .severe, with: .white, on: .red)
-        //    consoleDestination.formatters = [xcodeColorsLogFormatter]
-        //}
     #endif
 
     return log
