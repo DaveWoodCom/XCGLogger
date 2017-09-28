@@ -88,7 +88,8 @@ Add the following entry to your package's dependencies:
 ### Backwards Compatibility
 
 Use:
-* XCGLogger version [5.0.5][xcglogger-5.0.5] for Swift 3.0-3.1
+* XCGLogger version [6.0.0][xcglogger-6.0.0] for Swift 4.0
+* XCGLogger version [5.0.5][xcglogger-5.0.5] for Swift 3.0-3.2
 * XCGLogger version [3.6.0][xcglogger-3.6.0] for Swift 2.3
 * XCGLogger version [3.5.3][xcglogger-3.5.3] for Swift 2.2
 * XCGLogger version [3.2][xcglogger-3.2] for Swift 2.0-2.1
@@ -465,6 +466,7 @@ XCGLogger is the best logger available for Swift because of the contributions fr
 2. Report issues/bugs you find.
 3. Suggest features.
 4. Submit pull requests.
+5. Download and install one of my apps: [https://www.cerebralgardens.com/apps/][cerebral-gardens-apps] Try my newest app: [All the Rings][all-the-rings]
 
 **Note**: when submitting a pull request, please use lots of small commits verses one huge commit. It makes it much easier to merge in when there are several pull requests that need to be combined for a new version.
 
@@ -499,12 +501,13 @@ Briefs: http://giveabrief.com/
 
 Also, please check out some of my other projects:
 
-Rudoku: [App Store](https://itunes.apple.com/app/apple-store/id965105321?pt=17255&ct=github&mt=8&at=11lMGu)  
+All the Rings: [App Store](https://itunes.apple.com/app/all-the-rings/id1186956966?pt=17255&ct=github&mt=8&at=11lMGu)  
+Rudoku: [App Store](https://itunes.apple.com/app/rudoku/id965105321?pt=17255&ct=github&mt=8&at=11lMGu)  
 TV Tune Up: https://www.cerebralgardens.com/tvtuneup  
 
 ### Change Log
 
-The change log is now in it's own file: [CHANGELOG.md](CHANGELOG.md)
+The change log is now in its own file: [CHANGELOG.md](CHANGELOG.md)
 
 [xcglogger-logo]: https://github.com/DaveWoodCom/XCGLogger/raw/master/ReadMeImages/XCGLoggerLogo_326x150.png
 [swift.org]: https://swift.org/
@@ -515,11 +518,13 @@ The change log is now in it's own file: [CHANGELOG.md](CHANGELOG.md)
 [cocoapods-xcglogger]: https://cocoapods.org/pods/XCGLogger
 [carthage]: https://github.com/Carthage/Carthage
 [cerebral-gardens]: https://www.cerebralgardens.com/
+[cerebral-gardens-apps]: https://www.cerebralgardens.com/apps/
+[all-the-rings]: https://alltherings.fit/?s=GH3
 [twitter-davewoodx]: https://twitter.com/davewoodx
 [github-xcglogger]: https://github.com/DaveWoodCom/XCGLogger
 [stackoverflow]: http://stackoverflow.com/questions/tagged/xcglogger
 
-[badge-language]: https://img.shields.io/badge/Swift-1.x%20%7C%202.x%20%7C%203.x-orange.svg?style=flat
+[badge-language]: https://img.shields.io/badge/Swift-1.x%20%7C%202.x%20%7C%203.x%20%7C%204.x-orange.svg?style=flat
 [badge-platforms]: https://img.shields.io/badge/Platforms-macOS%20%7C%20iOS%20%7C%20tvOS%20%7C%20watchOS-lightgray.svg?style=flat
 [badge-license]: https://img.shields.io/badge/License-MIT-lightgrey.svg?style=flat
 [badge-travis]: https://img.shields.io/travis/DaveWoodCom/XCGLogger/master.svg?style=flat
@@ -537,6 +542,7 @@ The change log is now in it's own file: [CHANGELOG.md](CHANGELOG.md)
 [Firelog]: http://jogabo.github.io/firelog/
 [Firebase]: https://www.firebase.com/
 
+[xcglogger-6.0.0]: https://github.com/DaveWoodCom/XCGLogger/releases/tag/6.0.0
 [xcglogger-5.0.5]: https://github.com/DaveWoodCom/XCGLogger/releases/tag/5.0.5
 [xcglogger-3.6.0]: https://github.com/DaveWoodCom/XCGLogger/releases/tag/3.6.0
 [xcglogger-3.5.3]: https://github.com/DaveWoodCom/XCGLogger/releases/tag/3.5.3
