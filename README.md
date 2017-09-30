@@ -77,12 +77,39 @@ Specifying the pod `XCGLogger` on its own will include the core framework. We're
 
 Then run `pod install`. For details of the installation and usage of CocoaPods, visit [it's official web site][cocoapods].
 
+Note: It's possible to use multiple pods with a mixture of Swift versions. You may need to ensure each pod is configured for the correct Swift version (check the targets in the pod project of your workspace). If you manually adjust the Swift version for a project, it'll reset the next time you run `pod install`. You can add a `post_install` hook into your podfile to automate setting the correct Swift versions. This is largely untested, and I'm not sure it's a good solution, but it seems to work:
+
+```
+post_install do |installer|
+    installer.pods_project.targets.each do |target|
+        if ['SomeTarget-iOS', 'SomeTarget-watchOS'].include? "#{target}"
+            print "Setting #{target}'s SWIFT_VERSION to 4.0\n"
+            target.build_configurations.each do |config|
+                config.build_settings['SWIFT_VERSION'] = '4.0'
+            end
+        else
+            print "Setting #{target}'s SWIFT_VERSION to Undefined (Xcode will automatically resolve)\n"
+            target.build_configurations.each do |config|
+                config.build_settings.delete('SWIFT_VERSION')
+            end
+        end
+    end
+
+    print "Setting the default SWIFT_VERSION to 3.2\n"
+    installer.pods_project.build_configurations.each do |config|
+        config.build_settings['SWIFT_VERSION'] = '3.2'
+    end
+end
+```
+
+You can adjust that to suit your needs of course.
+
 ### [Swift Package Manager][swiftpm]
 
 Add the following entry to your package's dependencies:
 
 ```
-.Package(url: "https://github.com/DaveWoodCom/XCGLogger.git", majorVersion: 5)
+.Package(url: "https://github.com/DaveWoodCom/XCGLogger.git", majorVersion: 6)
 ```	
 
 ### Backwards Compatibility

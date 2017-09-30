@@ -1,5 +1,6 @@
 # Change Log
 
+* **Version 6.0.1**: *(2017/09/30)* - Set the SWIFT_VERSION value in the Podspec (via `pod_target_xcconfig`)
 * **Version 6.0.0**: *(2017/09/28)* - Updated for Xcode 9 and Swift 4.0
 * **Version 5.0.5**: *(2017/09/28)* - Fixed a warning in Xcode 9 when still using Swift 3
 * **Version 5.0.4**: *(2017/09/27)* - Fixed some issues in the AutoRotatingFileDestination class, added fileAttribute options, other fixes
