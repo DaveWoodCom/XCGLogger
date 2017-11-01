@@ -274,7 +274,7 @@ open class AutoRotatingFileDestination: FileDestination {
     /// - Returns:  Nothing
     ///
     open override func write(message: String) {
-        currentLogFileSize += UInt64(message.characters.count)
+        currentLogFileSize += UInt64(message.count)
 
         super.write(message: message)
 
