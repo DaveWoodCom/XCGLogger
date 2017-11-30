@@ -1,7 +1,7 @@
 Pod::Spec.new do |spec|
 
     spec.name = 'ObjcExceptionBridging'
-    spec.version = '6.0.1'
+    spec.version = '6.0.2'
     spec.summary = 'A bridge to Objective-C exception handling, for use in Swift projects.'
 
     spec.description = <<-DESC
@@ -16,7 +16,7 @@ Pod::Spec.new do |spec|
     spec.platforms = { :ios => '8.0', :watchos => '2.0', :tvos => '9.0' }
     spec.requires_arc = true
 
-    spec.source = { :git => 'https://github.com/DaveWoodCom/XCGLogger.git', :tag => '6.0.1' }
+    spec.source = { :git => 'https://github.com/DaveWoodCom/XCGLogger.git', :tag => '6.0.2' }
 
     spec.ios.deployment_target = '8.0'
     spec.osx.deployment_target = '10.10'
