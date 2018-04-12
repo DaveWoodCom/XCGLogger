@@ -24,7 +24,7 @@ extension URL {
 
             // Retrieve attribute
             let result = data.withUnsafeMutableBytes {
-                getxattr(fileSystemPath, name, $0, data.count, 0, 0)
+                getxattr(fileSystemPath, name, $0, length, 0, 0)
             }
             guard result >= 0 else { throw URL.posixError(errno) }
             return data
@@ -62,7 +62,7 @@ extension URL {
 
             // Retrieve attribute list
             let result = data.withUnsafeMutableBytes {
-                listxattr(fileSystemPath, $0, data.count, 0)
+                listxattr(fileSystemPath, $0, length, 0)
             }
             guard result >= 0 else { throw URL.posixError(errno) }
 
