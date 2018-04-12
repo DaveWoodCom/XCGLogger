@@ -67,7 +67,7 @@ extension URL {
             guard result >= 0 else { throw URL.posixError(errno) }
 
             // Extract attribute names
-            let list = data.split(separator: 0).flatMap {
+            let list = data.split(separator: 0).compactMap {
                 String(data: Data($0), encoding: .utf8)
             }
             return list
