@@ -77,7 +77,7 @@ Specifying the pod `XCGLogger` on its own will include the core framework. We're
 
 Then run `pod install`. For details of the installation and usage of CocoaPods, visit [it's official web site][cocoapods].
 
-Note: It's possible to use multiple pods with a mixture of Swift versions. You may need to ensure each pod is configured for the correct Swift version (check the targets in the pod project of your workspace). If you manually adjust the Swift version for a project, it'll reset the next time you run `pod install`. You can add a `post_install` hook into your podfile to automate setting the correct Swift versions. This is largely untested, and I'm not sure it's a good solution, but it seems to work:
+Note: Before CocoaPods 1.4.0 it was not possible to use multiple pods with a mixture of Swift versions. You may need to ensure each pod is configured for the correct Swift version (check the targets in the pod project of your workspace). If you manually adjust the Swift version for a project, it'll reset the next time you run `pod install`. You can add a `post_install` hook into your podfile to automate setting the correct Swift versions. This is largely untested, and I'm not sure it's a good solution, but it seems to work:
 
 ```
 post_install do |installer|
