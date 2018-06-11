@@ -1,5 +1,6 @@
 # Change Log
 
+* **Version 6.0.3**: *(2018/06/11)* - Fix for Xcode 9.3 warnings/Swift 4.1 (thanks @ijaureguialzo)
 * **Version 6.0.2**: *(2017/11/30)* - Fix for Xcode warning about deprecated .characters (thanks @WeidongGu)
 * **Version 6.0.1**: *(2017/09/30)* - Set the SWIFT_VERSION value in the Podspec (via `pod_target_xcconfig`)
 * **Version 6.0.0**: *(2017/09/28)* - Updated for Xcode 9 and Swift 4.0
