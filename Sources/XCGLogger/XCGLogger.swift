@@ -46,7 +46,7 @@ open class XCGLogger: CustomDebugStringConvertible {
         public static let userInfoKeyInternal = "\(baseIdentifier).internal"
 
         /// Library version number
-        public static let versionString = "6.0.3"
+        public static let versionString = "6.0.4"
 
         /// Internal userInfo
         internal static let internalUserInfo: [String: Any] = [XCGLogger.Constants.userInfoKeyInternal: true]
