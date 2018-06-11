@@ -109,8 +109,8 @@ open class AutoRotatingFileDestination: FileDestination {
         currentLogStartTimeInterval = Date().timeIntervalSince1970
         self.archiveSuffixDateFormatter = archiveSuffixDateFormatter
         self.shouldAppend = shouldAppend
-        self.targetMaxFileSize = maxFileSize
-        self.targetMaxTimeInterval = maxTimeInterval
+        self.targetMaxFileSize = maxFileSize < 1 ? .max : maxFileSize
+        self.targetMaxTimeInterval = maxTimeInterval < 1 ? 0 : maxTimeInterval
         self.targetMaxLogFiles = targetMaxLogFiles
 
         guard let writeToFileURL = writeToFileURL else { return }
