@@ -494,6 +494,7 @@ XCGLogger is the best logger available for Swift because of the contributions fr
 3. Suggest features.
 4. Submit pull requests.
 5. Download and install one of my apps: [https://www.cerebralgardens.com/apps/][cerebral-gardens-apps] Try my newest app: [All the Rings][all-the-rings].
+6. You can visit my [Patreon page] (patreon) and contribute financially.
 
 **Note**: when submitting a pull request, please use lots of small commits verses one huge commit. It makes it much easier to merge in when there are several pull requests that need to be combined for a new version.
 
@@ -548,6 +549,7 @@ The change log is now in its own file: [CHANGELOG.md](CHANGELOG.md)
 [twitter-davewoodx]: https://twitter.com/davewoodx
 [github-xcglogger]: https://github.com/DaveWoodCom/XCGLogger
 [stackoverflow]: https://stackoverflow.com/questions/tagged/xcglogger
+[patreon]: https://www.patreon.com/DaveWoodX
 
 [badge-language]: https://img.shields.io/badge/Swift-1.x%20%7C%202.x%20%7C%203.x%20%7C%204.x-orange.svg?style=flat
 [badge-platforms]: https://img.shields.io/badge/Platforms-macOS%20%7C%20iOS%20%7C%20tvOS%20%7C%20watchOS-lightgray.svg?style=flat
