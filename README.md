@@ -55,7 +55,7 @@ Add the following line to your `Cartfile`.
 
 ```github "DaveWoodCom/XCGLogger" ~> 6.0.2```
 
-Then run `carthage update --no-use-binaries` or just `carthage update`. For details of the installation and usage of Carthage, visit [it's project page][carthage].
+Then run `carthage update --no-use-binaries` or just `carthage update`. For details of the installation and usage of Carthage, visit [its project page][carthage].
 
 Developers running 5.0 and above in Swift will need to add `$(SRCROOT)/Carthage/Build/iOS/ObjcExceptionBridging.framework` to their Input Files in the Copy Carthage Frameworks Build Phase. 
 
@@ -75,7 +75,7 @@ Specifying the pod `XCGLogger` on its own will include the core framework. We're
 
 `pod 'XCGLogger/UserInfoHelpers', '~> 6.0.2'`: Include some experimental code to help deal with using UserInfo dictionaries to tag log messages.
 
-Then run `pod install`. For details of the installation and usage of CocoaPods, visit [it's official web site][cocoapods].
+Then run `pod install`. For details of the installation and usage of CocoaPods, visit [its official web site][cocoapods].
 
 Note: Before CocoaPods 1.4.0 it was not possible to use multiple pods with a mixture of Swift versions. You may need to ensure each pod is configured for the correct Swift version (check the targets in the pod project of your workspace). If you manually adjust the Swift version for a project, it'll reset the next time you run `pod install`. You can add a `post_install` hook into your podfile to automate setting the correct Swift versions. This is largely untested, and I'm not sure it's a good solution, but it seems to work:
 
@@ -172,7 +172,7 @@ log.error("An error occurred, but it's recoverable, just info about what happene
 log.severe("A severe error occurred, we are likely about to crash now")
 ```
 
-The different methods set the log level of the message. XCGLogger will only print messages with a log level that is greater to or equal to it's current log level setting. So a logger with a level of `.error` will only output log messages with a level of `.error`, or `.severe`.
+The different methods set the log level of the message. XCGLogger will only print messages with a log level that is greater to or equal to its current log level setting. So a logger with a level of `.error` will only output log messages with a level of `.error`, or `.severe`.
 
 ## Advanced Usage (Recommended)
 
@@ -431,7 +431,7 @@ You can set any number of options up in a similar fashion. See the updated iOSDe
 
 By default, the supplied log destinations will process the logs on the thread they're called on. This is to ensure the log message is displayed immediately when debugging an application. You can add a breakpoint immediately after a log call and see the results when the breakpoint hits.
 
-However, if you're not actively debugging the application, processing the logs on the current thread can introduce a performance hit. You can now specify a destination process it's logs on a dispatch queue of your choice (or even use a default supplied one).
+However, if you're not actively debugging the application, processing the logs on the current thread can introduce a performance hit. You can now specify a destination process its logs on a dispatch queue of your choice (or even use a default supplied one).
 
 ```Swift
 fileDestination.logQueue = XCGLogger.logQueue
@@ -493,14 +493,14 @@ XCGLogger is the best logger available for Swift because of the contributions fr
 2. Report issues/bugs you find.
 3. Suggest features.
 4. Submit pull requests.
-5. Download and install one of my apps: [https://www.cerebralgardens.com/apps/][cerebral-gardens-apps] Try my newest app: [All the Rings][all-the-rings]
+5. Download and install one of my apps: [https://www.cerebralgardens.com/apps/][cerebral-gardens-apps] Try my newest app: [All the Rings][all-the-rings].
 
 **Note**: when submitting a pull request, please use lots of small commits verses one huge commit. It makes it much easier to merge in when there are several pull requests that need to be combined for a new version.
 
 <!-- Removed these since plug-ins seem to be gone for good now
 ## Third Party Tools That Work With XCGLogger
 
-**Note**: These plug-ins no longer 'officially' work in Xcode. File a [bug report](http://openradar.appspot.com/27447585) if you'd like to see plug-ins return to Xcode.
+**Note**: These plug-ins no longer 'officially' work in Xcode. File a [bug report](https://openradar.appspot.com/27447585) if you'd like to see plug-ins return to Xcode.
 
 [**XcodeColors:**][XcodeColors] Enable colour in the Xcode console
 <br />
@@ -520,17 +520,15 @@ XCGLogger is the best logger available for Swift because of the contributions fr
 
 ## More
 
-If you find this library helpful, you'll definitely find these other tools helpful:
+If you find this library helpful, you'll definitely find this other tool helpful:
 
-Watchdog: http://watchdogforxcode.com/  
-Slender: http://martiancraft.com/products/slender  
-Briefs: http://giveabrief.com/  
+Watchdog: https://watchdogforxcode.com/
 
 Also, please check out some of my other projects:
 
-All the Rings: [App Store](https://itunes.apple.com/app/all-the-rings/id1186956966?pt=17255&ct=github&mt=8&at=11lMGu)  
-Rudoku: [App Store](https://itunes.apple.com/app/rudoku/id965105321?pt=17255&ct=github&mt=8&at=11lMGu)  
-TV Tune Up: https://www.cerebralgardens.com/tvtuneup  
+All the Rings: [App Store](https://itunes.apple.com/app/all-the-rings/id1186956966?pt=17255&ct=github&mt=8&at=11lMGu)
+Rudoku: [App Store](https://itunes.apple.com/app/rudoku/id965105321?pt=17255&ct=github&mt=8&at=11lMGu)
+TV Tune Up: https://www.cerebralgardens.com/tvtuneup
 
 ### Change Log
 
@@ -549,7 +547,7 @@ The change log is now in its own file: [CHANGELOG.md](CHANGELOG.md)
 [all-the-rings]: https://alltherings.fit/?s=GH3
 [twitter-davewoodx]: https://twitter.com/davewoodx
 [github-xcglogger]: https://github.com/DaveWoodCom/XCGLogger
-[stackoverflow]: http://stackoverflow.com/questions/tagged/xcglogger
+[stackoverflow]: https://stackoverflow.com/questions/tagged/xcglogger
 
 [badge-language]: https://img.shields.io/badge/Swift-1.x%20%7C%202.x%20%7C%203.x%20%7C%204.x-orange.svg?style=flat
 [badge-platforms]: https://img.shields.io/badge/Platforms-macOS%20%7C%20iOS%20%7C%20tvOS%20%7C%20watchOS-lightgray.svg?style=flat
