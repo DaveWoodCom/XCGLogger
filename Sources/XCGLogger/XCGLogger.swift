@@ -93,7 +93,7 @@ open class XCGLogger: CustomDebugStringConvertible {
 
     // MARK: - Default instance
     /// The default XCGLogger object
-    open static var `default`: XCGLogger = {
+    public static var `default`: XCGLogger = {
         struct Statics {
             static let instance: XCGLogger = XCGLogger(identifier: XCGLogger.Constants.defaultInstanceIdentifier)
         }
