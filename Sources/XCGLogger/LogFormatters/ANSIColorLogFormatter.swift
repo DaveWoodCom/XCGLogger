@@ -9,7 +9,7 @@
 
 // MARK: - ANSIColorLogFormatter
 /// A log formatter that will add ANSI colour codes to the message
-open class ANSIColorLogFormatter: LogFormatterProtocol, CustomDebugStringConvertible {
+public class ANSIColorLogFormatter: LogFormatterProtocol, CustomDebugStringConvertible {
 
     /// ANSI Escape code
     public static let escape: String = "\u{001b}["
@@ -329,7 +329,7 @@ open class ANSIColorLogFormatter: LogFormatterProtocol, CustomDebugStringConvert
     }
 
     // MARK: - CustomDebugStringConvertible
-    open var debugDescription: String {
+    public var debugDescription: String {
         get {
             var description: String = "\(extractTypeName(self)): "
             for level in XCGLogger.Level.all {

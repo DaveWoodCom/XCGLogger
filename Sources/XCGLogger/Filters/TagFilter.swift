@@ -9,7 +9,7 @@
 
 // MARK: - TagFilter
 /// Filter log messages by tags
-open class TagFilter: UserInfoFilter {
+public class TagFilter: UserInfoFilter {
 
     /// Initializer to create an inclusion list of tags to match against
     ///

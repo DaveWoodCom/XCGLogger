@@ -15,7 +15,7 @@
 
 // MARK: - PrePostFixLogFormatter
 /// A log formatter that will optionally add a prefix, and/or postfix string to a message
-open class PrePostFixLogFormatter: LogFormatterProtocol, CustomDebugStringConvertible {
+public class PrePostFixLogFormatter: LogFormatterProtocol, CustomDebugStringConvertible {
 
     /// Internal cache of the prefix strings for each log level
     internal var prefixStrings: [XCGLogger.Level: String] = [:]
@@ -87,7 +87,7 @@ open class PrePostFixLogFormatter: LogFormatterProtocol, CustomDebugStringConver
     }
 
     // MARK: - CustomDebugStringConvertible
-    open var debugDescription: String {
+    public var debugDescription: String {
         get {
             var description: String = "\(extractTypeName(self)): "
             for level in XCGLogger.Level.all {

@@ -11,10 +11,10 @@ import Foundation
 
 // MARK: - FileNameFilter
 /// Filter log messages by fileName
-open class FileNameFilter: FilterProtocol {
+public class FileNameFilter: FilterProtocol {
 
     /// Option to toggle the match results
-    open var inverse: Bool = false
+    public var inverse: Bool = false
 
     /// Option to match full path or just the fileName
     private var excludePath: Bool = true
@@ -89,7 +89,7 @@ open class FileNameFilter: FilterProtocol {
     }
 
     /// Check if the log message should be excluded from logging.
-    /// 
+    ///
     /// - Note: If the fileName matches
     ///
     /// - Parameters:
@@ -110,7 +110,7 @@ open class FileNameFilter: FilterProtocol {
     }
 
     // MARK: - CustomDebugStringConvertible
-    open var debugDescription: String {
+    public var debugDescription: String {
         get {
             var description: String = "\(extractTypeName(self)): " + (inverse ? "Including only matches for: " : "Excluding matches for: ")
             if fileNamesToMatch.count > 5 {

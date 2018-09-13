@@ -11,23 +11,23 @@ import Dispatch
 
 // MARK: - TestDestination
 /// A destination for testing, preload it with the expected logs, send your logs, then check for success
-open class TestDestination: BaseQueuedDestination {
+public class TestDestination: BaseQueuedDestination {
     // MARK: - Properties
     /// Array of all expected log messages
-    open var expectedLogMessages: [String] = []
+    public var expectedLogMessages: [String] = []
 
     /// Array of received, unexpected log messages
-    open var unexpectedLogMessages: [String] = []
+    public var unexpectedLogMessages: [String] = []
 
     /// Number of log messages still expected
-    open var remainingNumberOfExpectedLogMessages: Int {
+    public var remainingNumberOfExpectedLogMessages: Int {
         get {
             return expectedLogMessages.count
         }
     }
 
     /// Number of unexpected log messages
-    open var numberOfUnexpectedLogMessages: Int {
+    public var numberOfUnexpectedLogMessages: Int {
         get {
             return unexpectedLogMessages.count
         }
@@ -94,7 +94,7 @@ open class TestDestination: BaseQueuedDestination {
             if self.shouldExclude(logDetails: &logDetails, message: &message) {
                 return
             }
-            
+
             applyFormatters(logDetails: &logDetails, message: &message)
 
             let index = expectedLogMessages.index(of: message)
