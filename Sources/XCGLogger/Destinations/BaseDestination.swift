@@ -11,52 +11,52 @@ import Foundation
 
 // MARK: - BaseDestination
 /// A base class destination that doesn't actually output the log anywhere and is intended to be subclassed
-open class BaseDestination: DestinationProtocol, CustomDebugStringConvertible {
+public class BaseDestination: DestinationProtocol, CustomDebugStringConvertible {
     // MARK: - Properties
     /// Logger that owns the destination object
-    open var owner: XCGLogger?
+    public var owner: XCGLogger?
 
     /// Identifier for the destination (should be unique)
-    open var identifier: String
+    public var identifier: String
 
     /// Log level for this destination
-    open var outputLevel: XCGLogger.Level = .debug
+    public var outputLevel: XCGLogger.Level = .debug
 
     /// Flag whether or not we've logged the app details to this destination
-    open var haveLoggedAppDetails: Bool = false
+    public var haveLoggedAppDetails: Bool = false
 
     /// Array of log formatters to apply to messages before they're output
-    open var formatters: [LogFormatterProtocol]? = nil
+    public var formatters: [LogFormatterProtocol]? = nil
 
     /// Array of log filters to apply to messages before they're output
-    open var filters: [FilterProtocol]? = nil
+    public var filters: [FilterProtocol]? = nil
 
     /// Option: whether or not to output the log identifier
-    open var showLogIdentifier: Bool = false
+    public var showLogIdentifier: Bool = false
 
     /// Option: whether or not to output the function name that generated the log
-    open var showFunctionName: Bool = true
+    public var showFunctionName: Bool = true
 
     /// Option: whether or not to output the thread's name the log was created on
-    open var showThreadName: Bool = false
+    public var showThreadName: Bool = false
 
     /// Option: whether or not to output the fileName that generated the log
-    open var showFileName: Bool = true
+    public var showFileName: Bool = true
 
     /// Option: whether or not to output the line number where the log was generated
-    open var showLineNumber: Bool = true
+    public var showLineNumber: Bool = true
 
     /// Option: whether or not to output the log level of the log
-    open var showLevel: Bool = true
+    public var showLevel: Bool = true
 
     /// Option: whether or not to output the date the log was created
-    open var showDate: Bool = true
+    public var showDate: Bool = true
 
     /// Option: override descriptions of log levels
-    open var levelDescriptions: [XCGLogger.Level: String] = [:]
+    public var levelDescriptions: [XCGLogger.Level: String] = [:]
 
     // MARK: - CustomDebugStringConvertible
-    open var debugDescription: String {
+    public var debugDescription: String {
         get {
             return "\(extractTypeName(self)): \(identifier) - Level: \(outputLevel) showLogIdentifier: \(showLogIdentifier) showFunctionName: \(showFunctionName) showThreadName: \(showThreadName) showLevel: \(showLevel) showFileName: \(showFileName) showLineNumber: \(showLineNumber) showDate: \(showDate)"
         }

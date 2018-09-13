@@ -9,7 +9,7 @@
 
 // MARK: - DevFilter
 /// Filter log messages by devs
-open class DevFilter: UserInfoFilter {
+public class DevFilter: UserInfoFilter {
 
     /// Initializer to create an inclusion list of devs to match against
     ///

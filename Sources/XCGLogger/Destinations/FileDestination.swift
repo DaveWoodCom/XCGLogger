@@ -12,7 +12,7 @@ import Dispatch
 
 // MARK: - FileDestination
 /// A standard destination that outputs log details to a file
-open class FileDestination: BaseQueuedDestination {
+public class FileDestination: BaseQueuedDestination {
     // MARK: - Properties
     /// Logger that owns the destination object
     open override var owner: XCGLogger? {
@@ -27,7 +27,7 @@ open class FileDestination: BaseQueuedDestination {
     }
 
     /// FileURL of the file to log to
-    open var writeToFileURL: URL? = nil {
+    public var writeToFileURL: URL? = nil {
         didSet {
             openFile()
         }

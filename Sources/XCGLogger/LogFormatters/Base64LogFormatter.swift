@@ -9,7 +9,7 @@
 
 // MARK: - Base64LogFormatter
 /// An example log formatter to show how encryption could be used to secure log messages, in this case, we just Base64 encode them
-open class Base64LogFormatter: LogFormatterProtocol, CustomDebugStringConvertible {
+public class Base64LogFormatter: LogFormatterProtocol, CustomDebugStringConvertible {
 
     // MARK: - LogFormatterProtocol
     /// Apply some additional formatting to the message if appropriate.
@@ -32,7 +32,7 @@ open class Base64LogFormatter: LogFormatterProtocol, CustomDebugStringConvertibl
     }
 
     // MARK: - CustomDebugStringConvertible
-    open var debugDescription: String {
+    public var debugDescription: String {
         get {
             return "\(extractTypeName(self))"
         }

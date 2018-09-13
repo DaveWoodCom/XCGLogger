@@ -15,7 +15,7 @@
 
 // MARK: - XcodeColorsLogFormatter
 /// A log formatter that will add colour codes for the [XcodeColor plug-in](https://github.com/robbiehanson/XcodeColors) to the message
-open class XcodeColorsLogFormatter: LogFormatterProtocol, CustomDebugStringConvertible {
+public class XcodeColorsLogFormatter: LogFormatterProtocol, CustomDebugStringConvertible {
 
     /// XcodeColors escape code
     public static let escape: String = "\u{001b}["
@@ -244,7 +244,7 @@ open class XcodeColorsLogFormatter: LogFormatterProtocol, CustomDebugStringConve
     }
 
     // MARK: - CustomDebugStringConvertible
-    open var debugDescription: String {
+    public var debugDescription: String {
         get {
             var description: String = "\(extractTypeName(self)): "
             for level in XCGLogger.Level.all {

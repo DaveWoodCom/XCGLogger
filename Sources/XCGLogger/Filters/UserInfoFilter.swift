@@ -10,16 +10,16 @@
 // MARK: - UserInfoFilter
 /// Filter log messages by the contents of a key in the UserInfo dictionary
 /// Note: - This is intended to be subclassed, unlikely you'll use it directly
-open class UserInfoFilter: FilterProtocol {
+public class UserInfoFilter: FilterProtocol {
 
     /// The key to check in the LogDetails.userInfo dictionary
-    open var userInfoKey: String = ""
+    public var userInfoKey: String = ""
 
     /// Option to also apply the filter to internal messages (ie, app details, error's opening files etc)
-    open var applyFilterToInternalMessages: Bool = false
+    public var applyFilterToInternalMessages: Bool = false
 
     /// Option to toggle the match results
-    open var inverse: Bool = false
+    public var inverse: Bool = false
 
     /// Internal list of items to match against
     private var itemsToMatch: Set<String> = []
@@ -127,7 +127,7 @@ open class UserInfoFilter: FilterProtocol {
     }
 
     // MARK: - CustomDebugStringConvertible
-    open var debugDescription: String {
+    public var debugDescription: String {
         get {
             var description: String = "\(extractTypeName(self)): \(applyFilterToInternalMessages ? "(Filtering Internal) " : "")" + (inverse ? "Including only matches for: " : "Excluding matches for: ")
             if itemsToMatch.count > 5 {
@@ -136,7 +136,7 @@ open class UserInfoFilter: FilterProtocol {
             else {
                 description += itemsToMatch.sorted().joined(separator: ", ")
             }
-            
+
             return description
         }
     }

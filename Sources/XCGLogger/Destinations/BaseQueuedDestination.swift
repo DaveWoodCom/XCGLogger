@@ -12,10 +12,10 @@ import Dispatch
 
 // MARK: - BaseQueuedDestination
 /// A base class destination (with a possible DispatchQueue) that doesn't actually output the log anywhere and is intended to be subclassed
-open class BaseQueuedDestination: BaseDestination {
+public class BaseQueuedDestination: BaseDestination {
     // MARK: - Properties
     /// The dispatch queue to process the log on
-    open var logQueue: DispatchQueue? = nil
+    public var logQueue: DispatchQueue? = nil
 
     // MARK: - Life Cycle
 
