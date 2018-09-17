@@ -532,9 +532,9 @@ Watchdog: https://watchdogforxcode.com/
 
 Also, please check out some of my other projects:
 
-All the Rings: [App Store](https://itunes.apple.com/app/all-the-rings/id1186956966?pt=17255&ct=github&mt=8&at=11lMGu)
-Rudoku: [App Store](https://itunes.apple.com/app/rudoku/id965105321?pt=17255&ct=github&mt=8&at=11lMGu)
-TV Tune Up: https://www.cerebralgardens.com/tvtuneup
+- All the Rings: [App Store](https://itunes.apple.com/app/all-the-rings/id1186956966?pt=17255&ct=github&mt=8&at=11lMGu)
+- Rudoku: [App Store](https://itunes.apple.com/app/rudoku/id965105321?pt=17255&ct=github&mt=8&at=11lMGu)
+- TV Tune Up: https://www.cerebralgardens.com/tvtuneup
 
 ### Change Log
 
