@@ -843,12 +843,12 @@
 					};
 					55E3EE4419D76F280068C3A7 = {
 						CreatedOnToolsVersion = 6.1;
-						LastSwiftMigration = 0900;
+						LastSwiftMigration = "";
 						ProvisioningStyle = Automatic;
 					};
 					55E3EE4F19D76F280068C3A7 = {
 						CreatedOnToolsVersion = 6.1;
-						LastSwiftMigration = 0900;
+						LastSwiftMigration = "";
 					};
 					70CB94161B99E728007802FF = {
 						LastSwiftMigration = 0900;
@@ -1515,6 +1515,7 @@
 				PRODUCT_NAME = XCGLogger;
 				SKIP_INSTALL = YES;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 4.2;
 			};
 			name = Debug;
 		};
@@ -1534,6 +1535,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.cerebralgardens.xcglogger;
 				PRODUCT_NAME = XCGLogger;
 				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 4.2;
 			};
 			name = Release;
 		};
@@ -1548,6 +1550,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.cerebralgardens.xcglogger.tests;
 				PRODUCT_MODULE_NAME = XCGLoggerTests_iOS;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 4.2;
 			};
 			name = Debug;
 		};
@@ -1558,6 +1561,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.cerebralgardens.xcglogger.tests;
 				PRODUCT_MODULE_NAME = XCGLoggerTests_iOS;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 4.2;
 			};
 			name = Release;
 		};

@@ -93,13 +93,7 @@ open class XCGLogger: CustomDebugStringConvertible {
 
     // MARK: - Default instance
     /// The default XCGLogger object
-    open static var `default`: XCGLogger = {
-        struct Statics {
-            static let instance: XCGLogger = XCGLogger(identifier: XCGLogger.Constants.defaultInstanceIdentifier)
-        }
-
-        return Statics.instance
-    }()
+    public static let `default`: XCGLogger = XCGLogger(identifier: XCGLogger.Constants.defaultInstanceIdentifier)
 
     // MARK: - Properties
     /// Identifier for this logger object (should be unique)
@@ -127,13 +121,7 @@ open class XCGLogger: CustomDebugStringConvertible {
     open var filters: [FilterProtocol]? = nil
 
     /// The default dispatch queue used for logging
-    open class var logQueue: DispatchQueue {
-        struct Statics {
-            static var logQueue = DispatchQueue(label: XCGLogger.Constants.logQueueIdentifier, attributes: [])
-        }
-
-        return Statics.logQueue
-    }
+    public static let logQueue: DispatchQueue = DispatchQueue(label: XCGLogger.Constants.logQueueIdentifier, attributes: [])
 
     /// A custom date formatter object to use when displaying the dates of log messages (internal storage)
     internal var _customDateFormatter: DateFormatter? = nil
