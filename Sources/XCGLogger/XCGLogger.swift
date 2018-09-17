@@ -93,7 +93,7 @@ open class XCGLogger: CustomDebugStringConvertible {
 
     // MARK: - Default instance
     /// The default XCGLogger object
-    open static var `default`: XCGLogger = {
+    public static var `default`: XCGLogger = {
         struct Statics {
             static let instance: XCGLogger = XCGLogger(identifier: XCGLogger.Constants.defaultInstanceIdentifier)
         }
@@ -1092,7 +1092,7 @@ open class XCGLogger: CustomDebugStringConvertible {
     ///     - identifier:   Identifier of the destination to return.
     ///
     /// - Returns:  The destination with the specified identifier, if one exists, nil otherwise.
-    /// 
+    ///
     open func destination(withIdentifier identifier: String) -> DestinationProtocol? {
         for destination in destinations {
             if destination.identifier == identifier {
