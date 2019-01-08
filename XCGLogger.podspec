@@ -15,7 +15,7 @@ Pod::Spec.new do |spec|
     spec.social_media_url = 'http://twitter.com/DaveWoodX'
     spec.platforms = { :ios => '8.0', :watchos => '2.0', :tvos => '9.0' }
     spec.requires_arc = true
-    spec.swift_version = '4.2'
+    spec.pod_target_xcconfig = { 'SWIFT_VERSION' => '4.2' }
 
     spec.source = { :git => 'https://github.com/DaveWoodCom/XCGLogger.git', :tag => "#{spec.version}" }
 
