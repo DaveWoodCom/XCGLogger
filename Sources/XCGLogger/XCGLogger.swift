@@ -60,7 +60,7 @@ open class XCGLogger: CustomDebugStringConvertible {
 
     // MARK: - Enums
     /// Enum defining our log levels
-    public enum Level: Int, Comparable, CustomStringConvertible {
+    public enum Level: Int, CaseIterable, Comparable, CustomStringConvertible {
         case verbose
         case debug
         case info
@@ -88,6 +88,7 @@ open class XCGLogger: CustomDebugStringConvertible {
             }
         }
 
+        @available(*, deprecated, renamed: "allCases")
         public static let all: [Level] = [.verbose, .debug, .info, .warning, .error, .severe]
     }
 
