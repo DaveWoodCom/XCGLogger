@@ -11,7 +11,7 @@ import UIKit
 import XCGLogger
 
 let appDelegate = UIApplication.shared.delegate as! AppDelegate
-let log: XCGLogger = {
+let _xcode_workaround_log: XCGLogger = { // see bug report: rdar://49294916 or https://openradar.appspot.com/radar?id=4952305786945536
 
 #if USE_NSLOG // Set via Build Settings, under Other Swift Flags
     // Setup XCGLogger
@@ -120,6 +120,7 @@ let log: XCGLogger = {
 
     return log
 }()
+let log: XCGLogger = _xcode_workaround_log
 
 // Create custom tags for your logs
 extension Tag {
