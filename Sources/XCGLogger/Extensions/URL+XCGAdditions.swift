@@ -23,8 +23,8 @@ extension URL {
             var data: Data = Data(count: length)
 
             // Retrieve attribute
-                getxattr(fileSystemPath, name, $0, length, 0, 0)
-            let result: Int = data.withUnsafeMutableBytes {
+            let result: Int = data.withUnsafeMutableBytes { [count = data.count] (body: UnsafeMutableRawBufferPointer) -> Int in
+                getxattr(fileSystemPath, name, body.baseAddress, count, 0, 0)
             }
             guard result >= 0 else { throw URL.posixError(errno) }
             return data
@@ -36,8 +36,8 @@ extension URL {
     /// Set extended attribute.
     func setExtendedAttribute(data: Data, forName name: String) throws {
         try self.withUnsafeFileSystemRepresentation { fileSystemPath in
-                setxattr(fileSystemPath, name, $0, data.count, 0, 0)
-            let result: Int32 = data.withUnsafeBytes {
+            let result: Int32 = data.withUnsafeBytes { [count = data.count] (body: UnsafeRawBufferPointer) -> Int32 in
+                setxattr(fileSystemPath, name, body.baseAddress, count, 0, 0)
             }
             guard result >= 0 else { throw URL.posixError(errno) }
         }
@@ -61,8 +61,8 @@ extension URL {
             var data: Data = Data(count: length)
 
             // Retrieve attribute list
-                listxattr(fileSystemPath, $0, length, 0)
-            let result: Int = data.withUnsafeMutableBytes {
+            let result: Int = data.withUnsafeMutableBytes { [count = data.count] (body: UnsafeMutableRawBufferPointer) -> Int in
+                return listxattr(fileSystemPath, UnsafeMutablePointer<Int8>(OpaquePointer(body.baseAddress)), count, 0)
             }
             guard result >= 0 else { throw URL.posixError(errno) }
 
