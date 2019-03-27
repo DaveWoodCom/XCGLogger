@@ -64,9 +64,12 @@ open class XCGLogger: CustomDebugStringConvertible {
         case verbose
         case debug
         case info
+        case notice
         case warning
         case error
-        case severe
+        case severe // aka critical
+        case alert
+        case emergency
         case none
 
         public var description: String {
@@ -77,19 +80,25 @@ open class XCGLogger: CustomDebugStringConvertible {
                 return "Debug"
             case .info:
                 return "Info"
+            case .notice:
+                return "Notice"
             case .warning:
                 return "Warning"
             case .error:
                 return "Error"
             case .severe:
                 return "Severe"
+            case .alert:
+                return "Alert"
+            case .emergency:
+                return "Emergency"
             case .none:
                 return "None"
             }
         }
 
         @available(*, deprecated, renamed: "allCases")
-        public static let all: [Level] = [.verbose, .debug, .info, .warning, .error, .severe]
+        public static let all: [Level] = [.verbose, .debug, .info, .notice, .warning, .error, .severe, .alert, .emergency]
     }
 
     // MARK: - Default instance

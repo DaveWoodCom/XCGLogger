@@ -173,12 +173,15 @@ Then, whenever you'd like to log something, use one of the convenience methods:
 log.verbose("A verbose message, usually useful when working on a specific problem")
 log.debug("A debug message")
 log.info("An info message, probably useful to power users looking in console.app")
+log.notice("A notice message")
 log.warning("A warning message, may indicate a possible error")
 log.error("An error occurred, but it's recoverable, just info about what happened")
 log.severe("A severe error occurred, we are likely about to crash now")
+log.alert("An alert error occurred, a log destination could be made to email someone")
+log.emergency("An emergency error occurred, a log destination could be made to text someone")
 ```
 
-The different methods set the log level of the message. XCGLogger will only print messages with a log level that is greater to or equal to its current log level setting. So a logger with a level of `.error` will only output log messages with a level of `.error`, or `.severe`.
+The different methods set the log level of the message. XCGLogger will only print messages with a log level that is greater to or equal to its current log level setting. So a logger with a level of `.error` will only output log messages with a level of `.error`, `.severe`, `.alert`, or `.emergency`.
 
 ## Advanced Usage (Recommended)
 
