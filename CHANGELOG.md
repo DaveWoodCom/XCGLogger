@@ -1,5 +1,6 @@
 # Change Log
 
+* **Version 7.0.0**: *(2019/03/26)* - Updated for Xcode 10.2/Swift 5.0, adds additional log levels: notice, alert, and emergency
 * **Version 6.1.0**: *(2018/09/16)* - Fix for Xcode 10.0 warnings/Swift 4.2, other minor tweaks
 * **Version 6.0.4**: *(2018/06/11)* - Fix for Xcode 9.3 warnings/Swift 4.1 (thanks @ijaureguialzo), and other fixes
 * **Version 6.0.2**: *(2017/11/30)* - Fix for Xcode warning about deprecated .characters (thanks @WeidongGu)

@@ -16,15 +16,15 @@ extension URL {
     func extendedAttribute(forName name: String) throws -> Data? {
         let data: Data? = try self.withUnsafeFileSystemRepresentation { (fileSystemPath: (UnsafePointer<Int8>?)) -> Data? in
             // Determine attribute size
-            let length = getxattr(fileSystemPath, name, nil, 0, 0, 0)
+            let length: Int = getxattr(fileSystemPath, name, nil, 0, 0, 0)
             guard length >= 0 else { return nil }
 
             // Create buffer with required size
-            var data = Data(count: length)
+            var data: Data = Data(count: length)
 
             // Retrieve attribute
-            let result = data.withUnsafeMutableBytes {
-                getxattr(fileSystemPath, name, $0, length, 0, 0)
+            let result: Int = data.withUnsafeMutableBytes { [count = data.count] (body: UnsafeMutableRawBufferPointer) -> Int in
+                getxattr(fileSystemPath, name, body.baseAddress, count, 0, 0)
             }
             guard result >= 0 else { throw URL.posixError(errno) }
             return data
@@ -36,8 +36,8 @@ extension URL {
     /// Set extended attribute.
     func setExtendedAttribute(data: Data, forName name: String) throws {
         try self.withUnsafeFileSystemRepresentation { fileSystemPath in
-            let result = data.withUnsafeBytes {
-                setxattr(fileSystemPath, name, $0, data.count, 0, 0)
+            let result: Int32 = data.withUnsafeBytes { [count = data.count] (body: UnsafeRawBufferPointer) -> Int32 in
+                setxattr(fileSystemPath, name, body.baseAddress, count, 0, 0)
             }
             guard result >= 0 else { throw URL.posixError(errno) }
         }
@@ -46,28 +46,28 @@ extension URL {
     /// Remove extended attribute.
     func removeExtendedAttribute(forName name: String) throws {
         try self.withUnsafeFileSystemRepresentation { fileSystemPath in
-            let result = removexattr(fileSystemPath, name, 0)
+            let result: Int32 = removexattr(fileSystemPath, name, 0)
             guard result >= 0 else { throw URL.posixError(errno) }
         }
     }
 
     /// Get list of all extended attributes.
     func listExtendedAttributes() throws -> [String] {
-        let list = try self.withUnsafeFileSystemRepresentation { (fileSystemPath: (UnsafePointer<Int8>?)) -> [String] in
-            let length = listxattr(fileSystemPath, nil, 0, 0)
+        let list: [String] = try self.withUnsafeFileSystemRepresentation { (fileSystemPath: (UnsafePointer<Int8>?)) -> [String] in
+            let length: Int = listxattr(fileSystemPath, nil, 0, 0)
             guard length >= 0 else { throw URL.posixError(errno) }
 
             // Create buffer with required size
-            var data = Data(count: length)
+            var data: Data = Data(count: length)
 
             // Retrieve attribute list
-            let result = data.withUnsafeMutableBytes {
-                listxattr(fileSystemPath, $0, length, 0)
+            let result: Int = data.withUnsafeMutableBytes { [count = data.count] (body: UnsafeMutableRawBufferPointer) -> Int in
+                return listxattr(fileSystemPath, UnsafeMutablePointer<Int8>(OpaquePointer(body.baseAddress)), count, 0)
             }
             guard result >= 0 else { throw URL.posixError(errno) }
 
             // Extract attribute names
-            let list = data.split(separator: 0).compactMap {
+            let list: [String] = data.split(separator: 0).compactMap {
                 String(data: Data($0), encoding: .utf8)
             }
             return list
