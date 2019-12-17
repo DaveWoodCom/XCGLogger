@@ -148,7 +148,7 @@ public extension UserInfoFilter {
     /// - Parameters:
     ///     - tags: Array of UserInfoTaggingProtocol objects to match against.
     ///
-    public convenience init(includeFrom tags: [UserInfoTaggingProtocol]) {
+    convenience init(includeFrom tags: [UserInfoTaggingProtocol]) {
         var names: [String] = []
         for tag in tags {
             names.append(tag.name)
@@ -164,7 +164,7 @@ public extension UserInfoFilter {
     /// - Parameters:
     ///     - tags: Array of UserInfoTaggingProtocol objects to match against.
     ///
-    public convenience init(excludeFrom tags: [UserInfoTaggingProtocol]) {
+    convenience init(excludeFrom tags: [UserInfoTaggingProtocol]) {
         var names: [String] = []
         for tag in tags {
             names.append(tag.name)

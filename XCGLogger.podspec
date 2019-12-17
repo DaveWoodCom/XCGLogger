@@ -1,7 +1,7 @@
 Pod::Spec.new do |spec|
 
     spec.name = 'XCGLogger'
-    spec.version = '6.1.0'
+    spec.version = '7.0.0'
     spec.summary = 'A debug log module for use in Swift projects.'
 
     spec.description = <<-DESC
@@ -23,7 +23,7 @@ Pod::Spec.new do |spec|
     spec.osx.deployment_target = '10.10'
     spec.watchos.deployment_target = '2.0'
     spec.tvos.deployment_target = '9.0'
-    
+
     spec.default_subspecs = 'Core'
 
     # Main XCGLogger Framework

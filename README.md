@@ -56,7 +56,7 @@ in your repository folder.
 
 Add the following line to your `Cartfile`.
 
-```github "DaveWoodCom/XCGLogger" ~> 6.1.0```
+```github "DaveWoodCom/XCGLogger" ~> 7.0.0```
 
 Then run `carthage update --no-use-binaries` or just `carthage update`. For details of the installation and usage of Carthage, visit [its project page][carthage].
 
@@ -71,12 +71,12 @@ source 'https://github.com/CocoaPods/Specs.git'
 platform :ios, '8.0'
 use_frameworks!
 
-pod 'XCGLogger', '~> 6.1.0'
+pod 'XCGLogger', '~> 7.0.0'
 ```
 
 Specifying the pod `XCGLogger` on its own will include the core framework. We're starting to add subspecs to allow you to include optional components as well:
 
-`pod 'XCGLogger/UserInfoHelpers', '~> 6.1.0'`: Include some experimental code to help deal with using UserInfo dictionaries to tag log messages.
+`pod 'XCGLogger/UserInfoHelpers', '~> 7.0.0'`: Include some experimental code to help deal with using UserInfo dictionaries to tag log messages.
 
 Then run `pod install`. For details of the installation and usage of CocoaPods, visit [its official web site][cocoapods].
 
@@ -112,12 +112,13 @@ You can adjust that to suit your needs of course.
 Add the following entry to your package's dependencies:
 
 ```
-.Package(url: "https://github.com/DaveWoodCom/XCGLogger.git", majorVersion: 6)
+.Package(url: "https://github.com/DaveWoodCom/XCGLogger.git", majorVersion: 7)
 ```	
 
 ### Backwards Compatibility
 
 Use:
+* XCGLogger version [7.0.0][xcglogger-7.0.0] for Swift 5.0
 * XCGLogger version [6.1.0][xcglogger-6.1.0] for Swift 4.2
 * XCGLogger version [6.0.4][xcglogger-6.0.4] for Swift 4.1
 * XCGLogger version [6.0.2][xcglogger-6.0.2] for Swift 4.0
@@ -172,12 +173,15 @@ Then, whenever you'd like to log something, use one of the convenience methods:
 log.verbose("A verbose message, usually useful when working on a specific problem")
 log.debug("A debug message")
 log.info("An info message, probably useful to power users looking in console.app")
+log.notice("A notice message")
 log.warning("A warning message, may indicate a possible error")
 log.error("An error occurred, but it's recoverable, just info about what happened")
 log.severe("A severe error occurred, we are likely about to crash now")
+log.alert("An alert error occurred, a log destination could be made to email someone")
+log.emergency("An emergency error occurred, a log destination could be made to text someone")
 ```
 
-The different methods set the log level of the message. XCGLogger will only print messages with a log level that is greater to or equal to its current log level setting. So a logger with a level of `.error` will only output log messages with a level of `.error`, or `.severe`.
+The different methods set the log level of the message. XCGLogger will only print messages with a log level that is greater to or equal to its current log level setting. So a logger with a level of `.error` will only output log messages with a level of `.error`, `.severe`, `.alert`, or `.emergency`.
 
 ## Advanced Usage (Recommended)
 
@@ -406,9 +410,12 @@ if let fileDestination: FileDestination = log.destination(withIdentifier: XCGLog
     ansiColorLogFormatter.colorize(level: .verbose, with: .colorIndex(number: 244), options: [.faint])
     ansiColorLogFormatter.colorize(level: .debug, with: .black)
     ansiColorLogFormatter.colorize(level: .info, with: .blue, options: [.underline])
+    ansiColorLogFormatter.colorize(level: .notice, with: .green, options: [.italic])
     ansiColorLogFormatter.colorize(level: .warning, with: .red, options: [.faint])
     ansiColorLogFormatter.colorize(level: .error, with: .red, options: [.bold])
     ansiColorLogFormatter.colorize(level: .severe, with: .white, on: .red)
+    ansiColorLogFormatter.colorize(level: .alert, with: .white, on: .red, options: [.bold])
+    ansiColorLogFormatter.colorize(level: .emergency, with: .white, on: .red, options: [.bold, .blink])
     fileDestination.formatters = [ansiColorLogFormatter]
 }
 ```
@@ -557,13 +564,13 @@ The change log is now in its own file: [CHANGELOG.md](CHANGELOG.md)
 [stackoverflow]: https://stackoverflow.com/questions/tagged/xcglogger
 [patreon-davewoodx]: https://www.patreon.com/DaveWoodX
 
-[badge-language]: https://img.shields.io/badge/Swift-1.x%20%7C%202.x%20%7C%203.x%20%7C%204.x-orange.svg?style=flat
+[badge-language]: https://img.shields.io/badge/Swift-1.x%20%7C%202.x%20%7C%203.x%20%7C%204.x%20%7C%205.x-orange.svg?style=flat
 [badge-platforms]: https://img.shields.io/badge/Platforms-macOS%20%7C%20iOS%20%7C%20tvOS%20%7C%20watchOS-lightgray.svg?style=flat
 [badge-license]: https://img.shields.io/badge/License-MIT-lightgrey.svg?style=flat
 [badge-travis]: https://img.shields.io/travis/DaveWoodCom/XCGLogger/master.svg?style=flat
-[badge-swiftpm]: https://img.shields.io/badge/Swift_Package_Manager-v6.1.0-64a6dd.svg?style=flat
+[badge-swiftpm]: https://img.shields.io/badge/Swift_Package_Manager-v7.0.0-64a6dd.svg?style=flat
 [badge-cocoapods]: https://img.shields.io/cocoapods/v/XCGLogger.svg?style=flat
-[badge-carthage]: https://img.shields.io/badge/Carthage-v6.1.0-64a6dd.svg?style=flat
+[badge-carthage]: https://img.shields.io/badge/Carthage-v7.0.0-64a6dd.svg?style=flat
 
 [badge-sponsors]: https://img.shields.io/badge/Sponsors-Cerebral%20Gardens-orange.svg?style=flat
 [badge-mastodon]: https://img.shields.io/badge/Mastodon-DaveWoodX-606A84.svg?style=flat
@@ -577,6 +584,7 @@ The change log is now in its own file: [CHANGELOG.md](CHANGELOG.md)
 [Firelog]: http://jogabo.github.io/firelog/
 [Firebase]: https://www.firebase.com/
 
+[xcglogger-7.0.0]: https://github.com/DaveWoodCom/XCGLogger/releases/tag/7.0.0
 [xcglogger-6.1.0]: https://github.com/DaveWoodCom/XCGLogger/releases/tag/6.1.0
 [xcglogger-6.0.4]: https://github.com/DaveWoodCom/XCGLogger/releases/tag/6.0.4
 [xcglogger-6.0.2]: https://github.com/DaveWoodCom/XCGLogger/releases/tag/6.0.2

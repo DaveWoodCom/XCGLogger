@@ -40,7 +40,7 @@ open class PrePostFixLogFormatter: LogFormatterProtocol, CustomDebugStringConver
             guard prefix != nil || postfix != nil else { clearFormatting(); return }
 
             // No level specified, so, apply to all levels
-            for level in XCGLogger.Level.all {
+            for level in XCGLogger.Level.allCases {
                 self.apply(prefix: prefix, postfix: postfix, to: level)
             }
             return
@@ -90,7 +90,7 @@ open class PrePostFixLogFormatter: LogFormatterProtocol, CustomDebugStringConver
     open var debugDescription: String {
         get {
             var description: String = "\(extractTypeName(self)): "
-            for level in XCGLogger.Level.all {
+            for level in XCGLogger.Level.allCases {
                 description += "\n\t- \(level) > \(prefixStrings[level] ?? "None") | \(postfixStrings[level] ?? "None")"
             }
 

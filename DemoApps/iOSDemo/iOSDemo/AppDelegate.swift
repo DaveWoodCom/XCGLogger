@@ -11,7 +11,7 @@ import UIKit
 import XCGLogger
 
 let appDelegate = UIApplication.shared.delegate as! AppDelegate
-let log: XCGLogger = {
+let _xcode_workaround_log: XCGLogger = { // see bug report: rdar://49294916 or https://openradar.appspot.com/radar?id=4952305786945536
 
 #if USE_NSLOG // Set via Build Settings, under Other Swift Flags
     // Setup XCGLogger
@@ -35,9 +35,12 @@ let log: XCGLogger = {
         ansiColorLogFormatter.colorize(level: .verbose, with: .colorIndex(number: 244), options: [.faint])
         ansiColorLogFormatter.colorize(level: .debug, with: .black)
         ansiColorLogFormatter.colorize(level: .info, with: .blue, options: [.underline])
+        ansiColorLogFormatter.colorize(level: .notice, with: .green, options: [.italic])
         ansiColorLogFormatter.colorize(level: .warning, with: .red, options: [.faint])
         ansiColorLogFormatter.colorize(level: .error, with: .red, options: [.bold])
         ansiColorLogFormatter.colorize(level: .severe, with: .white, on: .red)
+        ansiColorLogFormatter.colorize(level: .alert, with: .white, on: .red, options: [.bold])
+        ansiColorLogFormatter.colorize(level: .emergency, with: .white, on: .red, options: [.bold, .blink])
         fileDestination.formatters = [ansiColorLogFormatter]
     }
 
@@ -87,9 +90,12 @@ let log: XCGLogger = {
     ansiColorLogFormatter.colorize(level: .verbose, with: .colorIndex(number: 244), options: [.faint])
     ansiColorLogFormatter.colorize(level: .debug, with: .black)
     ansiColorLogFormatter.colorize(level: .info, with: .blue, options: [.underline])
+    ansiColorLogFormatter.colorize(level: .notice, with: .green, options: [.italic])
     ansiColorLogFormatter.colorize(level: .warning, with: .red, options: [.faint])
     ansiColorLogFormatter.colorize(level: .error, with: .red, options: [.bold])
     ansiColorLogFormatter.colorize(level: .severe, with: .white, on: .red)
+    ansiColorLogFormatter.colorize(level: .alert, with: .white, on: .red, options: [.bold])
+    ansiColorLogFormatter.colorize(level: .emergency, with: .white, on: .red, options: [.bold, .blink])
     autoRotatingFileDestination.formatters = [ansiColorLogFormatter]
 
     // Add the destination to the logger
@@ -104,22 +110,29 @@ let log: XCGLogger = {
     //    log.levelDescriptions[.verbose] = "🗯"
     //    log.levelDescriptions[.debug] = "🔹"
     //    log.levelDescriptions[.info] = "ℹ️"
+    //    log.levelDescriptions[.notice] = "✳️"
     //    log.levelDescriptions[.warning] = "⚠️"
     //    log.levelDescriptions[.error] = "‼️"
     //    log.levelDescriptions[.severe] = "💣"
+    //    log.levelDescriptions[.alert] = "🛑"
+    //    log.levelDescriptions[.emergency] = "🚨"
 
     // Alternatively, you can use emoji to highlight log levels (you probably just want to use one of these methods at a time).
     let emojiLogFormatter = PrePostFixLogFormatter()
     emojiLogFormatter.apply(prefix: "🗯🗯🗯 ", postfix: " 🗯🗯🗯", to: .verbose)
     emojiLogFormatter.apply(prefix: "🔹🔹🔹 ", postfix: " 🔹🔹🔹", to: .debug)
     emojiLogFormatter.apply(prefix: "ℹ️ℹ️ℹ️ ", postfix: " ℹ️ℹ️ℹ️", to: .info)
+    emojiLogFormatter.apply(prefix: "✳️✳️✳️ ", postfix: " ✳️✳️✳️", to: .notice)
     emojiLogFormatter.apply(prefix: "⚠️⚠️⚠️ ", postfix: " ⚠️⚠️⚠️", to: .warning)
     emojiLogFormatter.apply(prefix: "‼️‼️‼️ ", postfix: " ‼️‼️‼️", to: .error)
     emojiLogFormatter.apply(prefix: "💣💣💣 ", postfix: " 💣💣💣", to: .severe)
+    emojiLogFormatter.apply(prefix: "🛑🛑🛑 ", postfix: " 🛑🛑🛑", to: .alert)
+    emojiLogFormatter.apply(prefix: "🚨🚨🚨 ", postfix: " 🚨🚨🚨", to: .emergency)
     log.formatters = [emojiLogFormatter]
 
     return log
 }()
+let log: XCGLogger = _xcode_workaround_log
 
 // Create custom tags for your logs
 extension Tag {
@@ -151,7 +164,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }()
 
     // MARK: - Life cycle methods
-    func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]? = nil) -> Bool {
+    func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]? = nil) -> Bool {
         // Override point for customization after application launch.
         return true
     }

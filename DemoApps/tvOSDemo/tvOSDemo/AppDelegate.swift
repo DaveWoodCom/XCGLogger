@@ -29,9 +29,12 @@ let log: XCGLogger = {
             ansiColorLogFormatter.colorize(level: .verbose, with: .colorIndex(number: 244), options: [.faint])
             ansiColorLogFormatter.colorize(level: .debug, with: .black)
             ansiColorLogFormatter.colorize(level: .info, with: .blue, options: [.underline])
+            ansiColorLogFormatter.colorize(level: .notice, with: .green, options: [.italic])
             ansiColorLogFormatter.colorize(level: .warning, with: .red, options: [.faint])
             ansiColorLogFormatter.colorize(level: .error, with: .red, options: [.bold])
             ansiColorLogFormatter.colorize(level: .severe, with: .white, on: .red)
+            ansiColorLogFormatter.colorize(level: .alert, with: .white, on: .red, options: [.bold])
+            ansiColorLogFormatter.colorize(level: .emergency, with: .white, on: .red, options: [.bold, .blink])
             fileDestination.formatters = [ansiColorLogFormatter]
         }
     #endif
@@ -54,7 +57,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         return urls[urls.endIndex - 1]
     }()
 
-    func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
+    func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
         // Display initial app info
         _ = log
