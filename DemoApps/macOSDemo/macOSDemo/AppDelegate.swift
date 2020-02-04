@@ -126,6 +126,14 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         }
     }
 
+    @IBAction func noticeButtonTouchUpInside(_ sender: AnyObject) {
+        log.notice("Notice button tapped")
+        log.notice {
+            // add expensive code required only for logging, then return an optional String
+            return "Executed notice code block" // or nil
+        }
+    }
+
     @IBAction func warningButtonTouchUpInside(_ sender: AnyObject) {
         log.warning("Warning button tapped")
         log.warning {
@@ -150,14 +158,32 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         }
     }
 
-    @IBAction func rotateLogFileButtonTouchUpInside(_ sender: AnyObject) {
-        if let fileDestination = log.destination(withIdentifier: "advancedLogger.fileDestination") as? FileDestination {
-
-            let dateHash: String = dateHashFormatter.string(from: Date())
-            let archiveFilePath: String = ("~/Desktop/XCGLogger_Log_\(dateHash).txt" as NSString).expandingTildeInPath
-
-            fileDestination.rotateFile(to: archiveFilePath)
+    @IBAction func alertButtonTouchUpInside(_ sender: AnyObject) {
+        log.alert("Alert button tapped")
+        log.alert {
+            // add expensive code required only for logging, then return an optional String
+            return "Executed alert code block" // or nil
         }
+    }
+
+    @IBAction func emergencyButtonTouchUpInside(_ sender: AnyObject) {
+        log.emergency("Emergency button tapped")
+        log.emergency {
+            // add expensive code required only for logging, then return an optional String
+            return "Executed emergency code block" // or nil
+        }
+    }
+
+    @IBAction func rotateLogFileButtonTouchUpInside(_ sender: AnyObject) {
+        guard let fileDestination = log.destination(withIdentifier: "advancedLogger.fileDestination") as? FileDestination else {
+            log.error("File destination not found, unable to rotate the log")
+            return
+        }
+
+        let dateHash: String = dateHashFormatter.string(from: Date())
+        let archiveFilePath: String = ("~/Desktop/XCGLogger_Log_\(dateHash).txt" as NSString).expandingTildeInPath
+
+        fileDestination.rotateFile(to: archiveFilePath)
     }
 
     @IBAction func logLevelSliderValueChanged(_ sender: AnyObject) {
@@ -173,13 +199,22 @@ class AppDelegate: NSObject, NSApplicationDelegate {
             logLevel = .info
         }
         else if (3 <= logLevelSlider.floatValue && logLevelSlider.floatValue < 4) {
-            logLevel = .warning
+            logLevel = .notice
         }
         else if (4 <= logLevelSlider.floatValue && logLevelSlider.floatValue < 5) {
-            logLevel = .error
+            logLevel = .warning
         }
         else if (5 <= logLevelSlider.floatValue && logLevelSlider.floatValue < 6) {
+            logLevel = .error
+        }
+        else if (6 <= logLevelSlider.floatValue && logLevelSlider.floatValue < 7) {
             logLevel = .severe
+        }
+        else if (7 <= logLevelSlider.floatValue && logLevelSlider.floatValue < 8) {
+            logLevel = .alert
+        }
+        else if (8 <= logLevelSlider.floatValue && logLevelSlider.floatValue < 9) {
+            logLevel = .emergency
         }
         else {
             logLevel = .none

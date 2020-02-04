@@ -1,7 +1,11 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder.AppleTV.Storyboard" version="3.0" toolsVersion="9052" systemVersion="14F27" targetRuntime="AppleTV" propertyAccessControl="none" useAutolayout="YES" initialViewController="BYZ-38-t0r">
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder.AppleTV.Storyboard" version="3.0" toolsVersion="15705" targetRuntime="AppleTV" propertyAccessControl="none" useAutolayout="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
+    <device id="appleTV" appearance="light"/>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9040"/>
+        <deployment identifier="tvOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15706"/>
+        <capability name="Stack View standard spacing" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
         <!--View Controller-->
@@ -16,70 +20,90 @@
                         <rect key="frame" x="0.0" y="0.0" width="1920" height="1080"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <stackView opaque="NO" contentMode="scaleToFill" distribution="fillProportionally" spacing="20" translatesAutoresizingMaskIntoConstraints="NO" id="9vu-XM-mOk">
-                                <rect key="frame" x="210" y="490" width="1500" height="100"/>
+                            <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" spacingType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="9vu-XM-mOk">
+                                <rect key="frame" x="60" y="490" width="1800" height="100"/>
                                 <subviews>
-                                    <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="y9z-jK-zMO">
-                                        <rect key="frame" x="0.0" y="0.0" width="233" height="100"/>
-                                        <inset key="contentEdgeInsets" minX="40" minY="20" maxX="40" maxY="20"/>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="y9z-jK-zMO">
+                                        <rect key="frame" x="0.0" y="0.0" width="146.5" height="100"/>
+                                        <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
                                         <state key="normal" title="Verbose"/>
                                         <connections>
                                             <action selector="verboseButtonTapped:" destination="BYZ-38-t0r" eventType="primaryActionTriggered" id="1vo-a3-Fpk"/>
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="IsG-yw-5FH">
-                                        <rect key="frame" x="253" y="0.0" width="234" height="100"/>
-                                        <inset key="contentEdgeInsets" minX="40" minY="20" maxX="40" maxY="20"/>
+                                        <rect key="frame" x="206.5" y="0.0" width="147" height="100"/>
+                                        <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
                                         <state key="normal" title="Debug"/>
                                         <connections>
                                             <action selector="debugButtonTapped:" destination="BYZ-38-t0r" eventType="primaryActionTriggered" id="2yT-lb-ejH"/>
                                         </connections>
                                     </button>
-                                    <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Qsc-0z-OHO">
-                                        <rect key="frame" x="507" y="0.0" width="233" height="100"/>
-                                        <inset key="contentEdgeInsets" minX="40" minY="20" maxX="40" maxY="20"/>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Qsc-0z-OHO">
+                                        <rect key="frame" x="413.5" y="0.0" width="146.5" height="100"/>
+                                        <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
                                         <state key="normal" title="Info"/>
                                         <connections>
                                             <action selector="infoButtonTapped:" destination="BYZ-38-t0r" eventType="primaryActionTriggered" id="YC9-Ue-p0s"/>
                                         </connections>
                                     </button>
-                                    <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="NM2-o3-cOV">
-                                        <rect key="frame" x="760" y="0.0" width="233" height="100"/>
-                                        <inset key="contentEdgeInsets" minX="40" minY="20" maxX="40" maxY="20"/>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="Wgw-eQ-fNr">
+                                        <rect key="frame" x="620" y="0.0" width="146.5" height="100"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
+                                        <state key="normal" title="Notice"/>
+                                        <connections>
+                                            <action selector="noticeButtonTapped:" destination="BYZ-38-t0r" eventType="primaryActionTriggered" id="hz4-Xu-2L0"/>
+                                        </connections>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="NM2-o3-cOV">
+                                        <rect key="frame" x="826.5" y="0.0" width="147" height="100"/>
+                                        <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
                                         <state key="normal" title="Warning"/>
                                         <connections>
                                             <action selector="warningButtonTapped:" destination="BYZ-38-t0r" eventType="primaryActionTriggered" id="L7G-zG-7yT"/>
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="HDx-FH-fvk">
-                                        <rect key="frame" x="1013" y="0.0" width="234" height="100"/>
-                                        <inset key="contentEdgeInsets" minX="40" minY="20" maxX="40" maxY="20"/>
+                                        <rect key="frame" x="1033.5" y="0.0" width="146.5" height="100"/>
+                                        <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
                                         <state key="normal" title="Error"/>
                                         <connections>
                                             <action selector="errorButtonTapped:" destination="BYZ-38-t0r" eventType="primaryActionTriggered" id="trL-zq-PTM"/>
                                         </connections>
                                     </button>
-                                    <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="oOh-qv-6XU">
-                                        <rect key="frame" x="1267" y="0.0" width="233" height="100"/>
-                                        <inset key="contentEdgeInsets" minX="40" minY="20" maxX="40" maxY="20"/>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="oOh-qv-6XU">
+                                        <rect key="frame" x="1240" y="0.0" width="146.5" height="100"/>
+                                        <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
                                         <state key="normal" title="Severe"/>
                                         <connections>
                                             <action selector="severeButtonTapped:" destination="BYZ-38-t0r" eventType="primaryActionTriggered" id="NzO-ZD-5pU"/>
                                         </connections>
                                     </button>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ouP-ul-Ch2">
+                                        <rect key="frame" x="1446.5" y="0.0" width="147" height="100"/>
+                                        <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
+                                        <state key="normal" title="Alert"/>
+                                        <connections>
+                                            <action selector="alertButtonTapped:" destination="BYZ-38-t0r" eventType="primaryActionTriggered" id="2rC-lY-icJ"/>
+                                        </connections>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="FgZ-uh-abi">
+                                        <rect key="frame" x="1653.5" y="0.0" width="146.5" height="100"/>
+                                        <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
+                                        <state key="normal" title="Emerg"/>
+                                        <connections>
+                                            <action selector="emergencyButtonTapped:" destination="BYZ-38-t0r" eventType="primaryActionTriggered" id="vdj-IK-f5V"/>
+                                        </connections>
+                                    </button>
                                 </subviews>
                                 <constraints>
-                                    <constraint firstItem="oOh-qv-6XU" firstAttribute="width" secondItem="y9z-jK-zMO" secondAttribute="width" id="8Tj-5F-0lS"/>
                                     <constraint firstAttribute="height" constant="100" id="BYQ-Av-S54"/>
-                                    <constraint firstItem="IsG-yw-5FH" firstAttribute="width" secondItem="y9z-jK-zMO" secondAttribute="width" id="C1Y-gT-AP7"/>
-                                    <constraint firstItem="HDx-FH-fvk" firstAttribute="width" secondItem="y9z-jK-zMO" secondAttribute="width" id="Mh9-Gg-vle"/>
-                                    <constraint firstItem="NM2-o3-cOV" firstAttribute="width" secondItem="y9z-jK-zMO" secondAttribute="width" id="ZBX-js-a33"/>
-                                    <constraint firstItem="Qsc-0z-OHO" firstAttribute="width" secondItem="y9z-jK-zMO" secondAttribute="width" id="dfL-OL-mbC"/>
-                                    <constraint firstAttribute="width" constant="1500" id="yoU-uA-3x8"/>
+                                    <constraint firstAttribute="width" constant="1800" id="yoU-uA-3x8"/>
                                 </constraints>
                             </stackView>
                         </subviews>
-                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                        <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.0" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
                             <constraint firstItem="9vu-XM-mOk" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="ERq-Xz-gop"/>
                             <constraint firstItem="9vu-XM-mOk" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" id="o4R-xC-qou"/>
@@ -88,7 +112,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="339" y="483"/>
+            <point key="canvasLocation" x="353" y="433"/>
         </scene>
     </scenes>
 </document>

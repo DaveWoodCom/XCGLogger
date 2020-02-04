@@ -49,6 +49,14 @@ class ViewController: UIViewController {
         }
     }
 
+    @IBAction func noticeButtonTouchUpInside(_ sender: AnyObject) {
+        log.notice("Notice button tapped")
+        log.notice {
+            // add expensive code required only for logging, then return an optional String
+            return "Executed notice code block" // or nil
+        }
+    }
+
     @IBAction func warningButtonTouchUpInside(_ sender: AnyObject) {
         log.warning("Warning button tapped")
         log.warning {
@@ -73,6 +81,22 @@ class ViewController: UIViewController {
         }
     }
 
+    @IBAction func alertButtonTouchUpInside(_ sender: AnyObject) {
+        log.alert("Alert button tapped")
+        log.alert {
+            // add expensive code required only for logging, then return an optional String
+            return "Executed alert code block" // or nil
+        }
+    }
+
+    @IBAction func emergencyButtonTouchUpInside(_ sender: AnyObject) {
+        log.emergency("Emergency button tapped")
+        log.emergency {
+            // add expensive code required only for logging, then return an optional String
+            return "Executed emergency code block" // or nil
+        }
+    }
+
     @IBAction func verboseSensitiveButtonTouchUpInside(_ sender: AnyObject) {
         // Can add multiple Dev/Tag objects together using the | operator
         log.verbose("Verbose (Sensitive) button tapped", userInfo: Dev.dave | Tag.sensitive)
@@ -85,6 +109,10 @@ class ViewController: UIViewController {
     @IBAction func infoSensitiveButtonTouchUpInside(_ sender: AnyObject) {
         // Can create a custom tag name on the fly by passing in the tag name as a string
         log.info("Info (Sensitive) button tapped", userInfo: Dev.dave | Tag.sensitive | Tag("informative"))
+    }
+
+    @IBAction func noticeSensitiveButtonTouchUpInside(_ sender: AnyObject) {
+        log.notice("Notice (Sensitive) button tapped", userInfo: Dev.dave | Tag.sensitive)
     }
 
     @IBAction func warningSensitiveButtonTouchUpInside(_ sender: AnyObject) {
@@ -104,6 +132,14 @@ class ViewController: UIViewController {
         log.severe("Severe (Sensitive) button tapped", userInfo: Tag.sensitive.dictionary)
     }
 
+    @IBAction func alertSensitiveButtonTouchUpInside(_ sender: AnyObject) {
+        log.alert("Alert (Sensitive) button tapped", userInfo: Dev.dave | Tag.sensitive)
+    }
+
+    @IBAction func emergencySensitiveButtonTouchUpInside(_ sender: AnyObject) {
+        log.emergency("Emergency (Sensitive) button tapped", userInfo: Dev.dave | Tag.sensitive)
+    }
+
     @IBAction func logLevelSliderValueChanged(_ sender: AnyObject) {
         var logLevel: XCGLogger.Level = .verbose
 
@@ -117,13 +153,22 @@ class ViewController: UIViewController {
             logLevel = .info
         }
         else if (3 <= logLevelSlider.value && logLevelSlider.value < 4) {
-            logLevel = .warning
+            logLevel = .notice
         }
         else if (4 <= logLevelSlider.value && logLevelSlider.value < 5) {
-            logLevel = .error
+            logLevel = .warning
         }
         else if (5 <= logLevelSlider.value && logLevelSlider.value < 6) {
+            logLevel = .error
+        }
+        else if (6 <= logLevelSlider.value && logLevelSlider.value < 7) {
             logLevel = .severe
+        }
+        else if (7 <= logLevelSlider.value && logLevelSlider.value < 8) {
+            logLevel = .alert
+        }
+        else if (8 <= logLevelSlider.value && logLevelSlider.value < 9) {
+            logLevel = .emergency
         }
         else {
             logLevel = .none

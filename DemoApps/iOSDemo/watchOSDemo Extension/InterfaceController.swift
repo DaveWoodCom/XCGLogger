@@ -57,6 +57,10 @@ class InterfaceController: WKInterfaceController {
         log.info("Info tapped on the Watch")
     }
 
+    @IBAction func noticeButtonTapped(_ sender: WKInterfaceButton) {
+        log.notice("Notice tapped on the Watch")
+    }
+
     @IBAction func warningButtonTapped(_ sender: WKInterfaceButton) {
         log.warning("Warning tapped on the Watch")
     }
@@ -67,5 +71,13 @@ class InterfaceController: WKInterfaceController {
 
     @IBAction func severeButtonTapped(_ sender: WKInterfaceButton) {
         log.severe("Severe tapped on the Watch")
+    }
+
+    @IBAction func alertButtonTapped(_ sender: WKInterfaceButton) {
+        log.alert("Alert tapped on the Watch")
+    }
+
+    @IBAction func emergencyButtonTapped(_ sender: WKInterfaceButton) {
+        log.emergency("Emergency tapped on the Watch")
     }
 }

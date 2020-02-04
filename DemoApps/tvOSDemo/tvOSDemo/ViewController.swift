@@ -33,6 +33,10 @@ class ViewController: UIViewController {
         log.info("Info tapped on the TV")
     }
 
+    @IBAction func noticeButtonTapped(_ sender: UIButton) {
+        log.notice("Notice tapped on the TV")
+    }
+
     @IBAction func warningButtonTapped(_ sender: UIButton) {
         log.warning("Warning tapped on the TV")
     }
@@ -43,5 +47,13 @@ class ViewController: UIViewController {
 
     @IBAction func severeButtonTapped(_ sender: UIButton) {
         log.severe("Severe tapped on the TV")
+    }
+
+    @IBAction func alertButtonTapped(_ sender: UIButton) {
+        log.alert("Alert tapped on the TV")
+    }
+
+    @IBAction func emergencyButtonTapped(_ sender: UIButton) {
+        log.emergency("Emergency tapped on the TV")
     }
 }
