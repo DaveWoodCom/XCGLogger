@@ -581,7 +581,6 @@ The change log is now in its own file: [CHANGELOG.md](CHANGELOG.md)
 [KZLinkedConsole]: https://github.com/krzysztofzablocki/KZLinkedConsole
 [NSLogger]: https://github.com/fpillet/NSLogger
 [XCGLoggerNSLoggerConnector]: https://github.com/markuswinkler/XCGLoggerNSLoggerConnector
-[Firelog]: http://jogabo.github.io/firelog/
 [Firebase]: https://www.firebase.com/
 
 [xcglogger-7.0.1]: https://github.com/DaveWoodCom/XCGLogger/releases/tag/7.0.1
