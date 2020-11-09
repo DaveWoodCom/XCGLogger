@@ -12,11 +12,11 @@ import Foundation
 // MARK: - AutoRotatingFileDestination
 /// A destination that outputs log details to files in a log folder, with auto-rotate options (by size or by time).
 ///
-/// The number of allowed files is controlled by targetMaxLogFiles.
+/// The number of allowed files is controlled by targetMaxLogFiles. Archived files will be auto-deleted, oldest first, to try to keep file count from exceeding this number (though count may exceed the maximum temporarily).
 ///
-/// The maximum size per file is controlled by setting maxFileSize. Archived files will be auto-deleted, oldest first, to try to keep file count from exceeding this number (though count may exceed the maximum temporarily).
+/// The maximum size per file is controlled by setting maxFileSize. The active file will be rotated to archive at _approximately_ this file size.
 ///
-/// Rotation triggering is controlled by the values set for maxFileSize and maxTimeInterval (or defaults, if you do not specify a value). Either can trigger rotation as they are applied independently. Note that both have default values, so omitting values is not equal to "no limit"!
+/// Rotation triggering is controlled by the values set for maxFileSize and maxTimeInterval, and either can trigger rotation as they are applied independently. Note that both have default values, so omitting values is not equal to "no limit"!
 ///
 /// If you use multiple AutoRotatingFileDestinations: file sets (current + archived files) are grouped by the .identifier you specify, not simply by filename patterns. If you omit the identifier and use the default of "" (empty string), then ALL files in the directory will be considered part of the same set, even when they are being created by multiple AutoRotatingFileDestinations. This may cause unexpected behavior when choosing the "oldest file" to delete, as ALL files will be considered as a group. To avoid this, either always specify a unique .identifier per destination, or point each AutoRotatingFileDestinations at its own directory.
 open class AutoRotatingFileDestination: FileDestination {
@@ -120,7 +120,7 @@ open class AutoRotatingFileDestination: FileDestination {
     ///     - shouldAppend: Overwrite existing file (false), or continue existing file if any (true). **Default:** false
     ///     - appendMarker: Text to add to log file when reconnecting to an existing file (ignored if shouldAppend is false).
     ///     - attributes: File attributes to use when creating file.  **Default:** nil
-    ///     - maxFileSize: Desired maximum size of active file before rotating to archive and starting new active file. **Default:** autoRotatingFileDefaultMaxFileSize
+    ///     - maxFileSize: Desired maximum size (in bytes) of active file before rotating to archive and starting new active file. **Default:** autoRotatingFileDefaultMaxFileSize
     ///     - maxTimeInterval: Desired maximum size of active file before rotating to archive and starting new active file. Note that a "good" value for this parameter is highly application-dependent, based on logging volume! **Default:** autoRotatingFileDefaultMaxTimeInterval
     ///     - archiveSuffixDateFormatter: Formatter for creating the suffix added to base log file name for log rotation to archive files. **Default:** nil
     ///     - targetMaxLogFiles: Maximum number of files to keep, couting active + archived. When rotating, the oldest archived files will be deleted until remaining count is at or under this number. **Default:** 10
