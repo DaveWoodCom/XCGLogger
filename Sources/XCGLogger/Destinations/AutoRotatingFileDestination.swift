@@ -10,7 +10,15 @@
 import Foundation
 
 // MARK: - AutoRotatingFileDestination
-/// A destination that outputs log details to files in a log folder, with auto-rotate options (by size or by time)
+/// A destination that outputs log details to files in a log folder, with auto-rotate options (by size or by time).
+///
+/// The number of allowed files is controlled by targetMaxLogFiles.
+///
+/// The maximum size per file is controlled by setting maxFileSize. Archived files will be auto-deleted, oldest first, to try to keep file count from exceeding this number (though count may exceed the maximum temporarily).
+///
+/// Rotation triggering is controlled by the values set for maxFileSize and maxTimeInterval (or defaults, if you do not specify a value). Either can trigger rotation as they are applied independently. Note that both have default values, so omitting values is not equal to "no limit"!
+///
+/// If you use multiple AutoRotatingFileDestinations: file sets (current + archived files) are grouped by the .identifier you specify, not simply by filename patterns. If you omit the identifier and use the default of "" (empty string), then ALL files in the directory will be considered part of the same set, even when they are being created by multiple AutoRotatingFileDestinations. This may cause unexpected behavior when choosing the "oldest file" to delete, as ALL files will be considered as a group. To avoid this, either always specify a unique .identifier per destination, or point each AutoRotatingFileDestinations at its own directory.
 open class AutoRotatingFileDestination: FileDestination {
     // MARK: - Constants
     public static let autoRotatingFileDefaultMaxFileSize: UInt64 = 1_048_576
@@ -103,6 +111,19 @@ open class AutoRotatingFileDestination: FileDestination {
     }
 
     // MARK: - Life Cycle
+    /// Create an instance implemented as a set of multiple linked files that will be managed as a group based on identifier.
+    ///
+    /// - Parameters:
+    ///     - owner: The log level of this logger, any logs received at this level or higher will be output to the destinations. **Default:** none
+    ///     - writeToFile: FileURL or path (as String) to the base (active) file, which will be rotated out to archived file(s) based on other settings.
+    ///     - identifier: Arbitrary value to "tag" base file + rotated archive files as belonging to the same group; added as a custom attribute on files for later examination when determining files to auto-delete as part of rotation.
+    ///     - shouldAppend: Overwrite existing file (false), or continue existing file if any (true). **Default:** false
+    ///     - appendMarker: Text to add to log file when reconnecting to an existing file (ignored if shouldAppend is false).
+    ///     - attributes: File attributes to use when creating file.  **Default:** nil
+    ///     - maxFileSize: Desired maximum size of active file before rotating to archive and starting new active file. **Default:** autoRotatingFileDefaultMaxFileSize
+    ///     - maxTimeInterval: Desired maximum size of active file before rotating to archive and starting new active file. Note that a "good" value for this parameter is highly application-dependent, based on logging volume! **Default:** autoRotatingFileDefaultMaxTimeInterval
+    ///     - archiveSuffixDateFormatter: Formatter for creating the suffix added to base log file name for log rotation to archive files. **Default:** nil
+    ///     - targetMaxLogFiles: Maximum number of files to keep, couting active + archived. When rotating, the oldest archived files will be deleted until remaining count is at or under this number. **Default:** 10
     public init(owner: XCGLogger? = nil, writeToFile: Any, identifier: String = "", shouldAppend: Bool = false, appendMarker: String? = "-- ** ** ** --", attributes: [FileAttributeKey: Any]? = nil, maxFileSize: UInt64 = autoRotatingFileDefaultMaxFileSize, maxTimeInterval: TimeInterval = autoRotatingFileDefaultMaxTimeInterval, archiveSuffixDateFormatter: DateFormatter? = nil, targetMaxLogFiles: UInt8 = 10) {
         super.init(owner: owner, writeToFile: writeToFile, identifier: identifier, shouldAppend: true, appendMarker: shouldAppend ? appendMarker : nil, attributes: attributes)
 
