@@ -454,7 +454,7 @@ class XCGLoggerTests: XCTestCase {
         let knownDate = Date(timeIntervalSince1970: 0)
         testDestination.add(expectedLogMessage: "[\(XCGLogger.Level.error)] [\(fileName)] \(#function) > \(knownDate)")
         XCTAssert(testDestination.remainingNumberOfExpectedLogMessages == 1, "Fail: Didn't correctly load all of the expected log messages")
-        log.error { return knownDate }
+        log.error({ return knownDate })
         XCTAssert(testDestination.remainingNumberOfExpectedLogMessages == 0, "Fail: Didn't receive all expected log lines")
         XCTAssert(testDestination.numberOfUnexpectedLogMessages == 0, "Fail: Received an unexpected log line")
 
@@ -926,9 +926,7 @@ class XCGLoggerTests: XCTestCase {
         let myConcurrentQueue = DispatchQueue(label: log.identifier + ".concurrentQueue", attributes: .concurrent)
         myConcurrentQueue.sync {
             DispatchQueue.concurrentPerform(iterations: linesToLog.count) { (index: Int) -> () in
-                log.debug {
-                    return "\(linesToLog[index])"
-                }
+                log.debug({ return "\(linesToLog[index])" })
             }
         }
 
