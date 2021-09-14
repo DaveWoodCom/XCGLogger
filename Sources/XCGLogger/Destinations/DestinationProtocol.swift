@@ -48,10 +48,12 @@ public protocol DestinationProtocol: CustomDebugStringConvertible {
     ///
     func processInternal(logDetails: LogDetails)
 
-    // TODO: *dean* add documentation
+    /// Returns a string to use when processing the log details (internal use, same as processLogDetails but omits function/file/line info)
+    /// - Parameter details: A string to use when processing the log details.
     func internalMessagePrefix(from details: LogDetails) -> String?
-
-    // TODO: *dean* add documentation
+    
+    /// Returns a string to use when processing the log details.
+    /// - Parameter details: A string to use when processing the log details.
     func messagePrefix(from details: LogDetails) -> String?
     
     /// Check if the destination's log level is equal to or lower than the specified level.
