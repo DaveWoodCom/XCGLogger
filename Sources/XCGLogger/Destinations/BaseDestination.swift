@@ -77,11 +77,27 @@ open class BaseDestination: DestinationProtocol, CustomDebugStringConvertible {
     /// - Returns:  Nothing
     ///
     open func process(logDetails: LogDetails) {
-        guard let prefix = messagePrefix(from: logDetails) else { return }
+        guard
+            let prefix = messagePrefix(from: logDetails,
+                                       showDate: self.showDate,
+                                       showLevel: self.showLevel,
+                                       showLogIdentifier: self.showLogIdentifier,
+                                       showThreadName: self.showThreadName,
+                                       showFileName: self.showFileName,
+                                       showLineNumber: self.showLineNumber,
+                                       showFunctionName: self.showFunctionName)
+        else { return }
         output(logDetails: logDetails, message: "\(prefix)\(logDetails.message)")
     }
     
-    open func messagePrefix(from details: LogDetails) -> String? {
+    open func messagePrefix(from details: LogDetails,
+                            showDate: Bool,
+                            showLevel: Bool,
+                            showLogIdentifier: Bool,
+                            showThreadName: Bool,
+                            showFileName: Bool,
+                            showLineNumber: Bool,
+                            showFunctionName: Bool) -> String? {
         guard let owner = owner else { return nil }
         
         var extendedDetails: String = ""
@@ -126,7 +142,7 @@ open class BaseDestination: DestinationProtocol, CustomDebugStringConvertible {
             extendedDetails += "\(details.functionName) "
         }
         
-        return "\(extendedDetails)> "
+        return extendedDetails.isEmpty ? extendedDetails : "\(extendedDetails)> "
     }
 
     /// Process the log details (internal use, same as process(logDetails:) but omits function/file/line info).
@@ -137,11 +153,19 @@ open class BaseDestination: DestinationProtocol, CustomDebugStringConvertible {
     /// - Returns:  Nothing
     ///
     open func processInternal(logDetails: LogDetails) {
-        guard let prefix = internalMessagePrefix(from: logDetails) else { return }
+        guard
+            let prefix = internalMessagePrefix(from: logDetails,
+                                               showDate: self.showDate,
+                                               showLevel: self.showLevel,
+                                               showLogIdentifier: self.showLogIdentifier)
+        else { return }
         output(logDetails: logDetails, message: "\(prefix)\(logDetails.message)")
     }
     
-    open func internalMessagePrefix(from details: LogDetails) -> String? {
+    open func internalMessagePrefix(from details: LogDetails,
+                                    showDate: Bool,
+                                    showLevel: Bool,
+                                    showLogIdentifier: Bool) -> String? {
         guard let owner = owner else { return nil }
         
         var extendedDetails: String = ""
@@ -157,7 +181,8 @@ open class BaseDestination: DestinationProtocol, CustomDebugStringConvertible {
         if showLogIdentifier {
             extendedDetails += "[\(owner.identifier)] "
         }
-        return "\(extendedDetails)> "
+        
+        return extendedDetails.isEmpty ? extendedDetails : "\(extendedDetails)> "
     }
 
     // MARK: - Misc methods
