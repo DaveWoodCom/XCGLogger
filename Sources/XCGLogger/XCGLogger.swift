@@ -278,22 +278,6 @@ open class XCGLogger: CustomDebugStringConvertible {
     /// Log a message if the logger's log level is equal to or lower than the specified level.
     ///
     /// - Parameters:
-    ///     - level:        Specified log level **Default:** *Debug*.
-    ///     - functionName: Normally omitted **Default:** *#function*.
-    ///     - fileName:     Normally omitted **Default:** *#file*.
-    ///     - lineNumber:   Normally omitted **Default:** *#line*.
-    ///     - userInfo:     Dictionary for adding arbitrary data to the log message, can be used by filters/formatters etc
-    ///     - closure:      A closure that returns the object to be logged.
-    ///
-    /// - Returns:  Nothing
-    ///
-    open class func logln(_ level: Level = .debug, functionName: String = #function, fileName: String = #file, lineNumber: Int = #line, userInfo: [String: Any] = [:], closure: () -> Any?) {
-        self.default.logln(level, functionName: functionName, fileName: fileName, lineNumber: lineNumber, userInfo: userInfo, closure: closure)
-    }
-
-    /// Log a message if the logger's log level is equal to or lower than the specified level.
-    ///
-    /// - Parameters:
     ///     - closure:      A closure that returns the object to be logged.
     ///     - level:        Specified log level **Default:** *Debug*.
     ///     - functionName: Normally omitted **Default:** *#function*.
@@ -320,27 +304,17 @@ open class XCGLogger: CustomDebugStringConvertible {
     /// - Returns:  Nothing
     ///
     open func logln(_ level: Level = .debug, functionName: StaticString = #function, fileName: StaticString = #file, lineNumber: Int = #line, userInfo: [String: Any] = [:], closure: () -> Any?) {
-        logln(level, functionName: String(describing: functionName), fileName: String(describing: fileName), lineNumber: lineNumber, userInfo: userInfo, closure: closure)
-    }
-
-    /// Log a message if the logger's log level is equal to or lower than the specified level.
-    ///
-    /// - Parameters:
-    ///     - level:        Specified log level **Default:** *Debug*.
-    ///     - functionName: Normally omitted **Default:** *#function*.
-    ///     - fileName:     Normally omitted **Default:** *#file*.
-    ///     - lineNumber:   Normally omitted **Default:** *#line*.
-    ///     - userInfo:     Dictionary for adding arbitrary data to the log message, can be used by filters/formatters etc
-    ///     - closure:      A closure that returns the object to be logged.
-    ///
-    /// - Returns:  Nothing
-    ///
-    open func logln(_ level: Level = .debug, functionName: String = #function, fileName: String = #file, lineNumber: Int = #line, userInfo: [String: Any] = [:], closure: () -> Any?) {
         let enabledDestinations = destinations.filter({$0.isEnabledFor(level: level)})
         guard enabledDestinations.count > 0 else { return }
         guard let closureResult = closure() else { return }
-
-        let logDetails: LogDetails = LogDetails(level: level, date: Date(), message: String(describing: closureResult), functionName: functionName, fileName: fileName, lineNumber: lineNumber, userInfo: userInfo)
+        
+        let logDetails = LogDetails(level: level,
+                                    date: Date(),
+                                    message: String(describing: closureResult),
+                                    functionName: "\(functionName)",
+                                    fileName: "\(fileName)",
+                                    lineNumber: lineNumber,
+                                    userInfo: userInfo)
         for destination in enabledDestinations {
             destination.process(logDetails: logDetails)
         }

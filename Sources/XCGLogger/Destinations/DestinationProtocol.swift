@@ -13,22 +13,22 @@ public protocol DestinationProtocol: CustomDebugStringConvertible {
     // MARK: - Properties
     /// Logger that owns the destination object
     var owner: XCGLogger? {get set}
-
+    
     /// Identifier for the destination (should be unique)
     var identifier: String {get set}
-
+    
     /// Log level for this destination
     var outputLevel: XCGLogger.Level {get set}
-
+    
     /// Flag whether or not we've logged the app details to this destination
     var haveLoggedAppDetails: Bool { get set }
-
+    
     /// Array of log formatters to apply to messages before they're output
     var formatters: [LogFormatterProtocol]? { get set }
-
+    
     /// Array of log filters to apply to messages before they're output
     var filters: [FilterProtocol]? { get set }
-
+    
     // MARK: - Methods
     /// Process the log details.
     ///
@@ -38,7 +38,7 @@ public protocol DestinationProtocol: CustomDebugStringConvertible {
     /// - Returns:  Nothing
     ///
     func process(logDetails: LogDetails)
-
+    
     /// Process the log details (internal use, same as processLogDetails but omits function/file/line info).
     ///
     /// - Parameters:
@@ -47,7 +47,37 @@ public protocol DestinationProtocol: CustomDebugStringConvertible {
     /// - Returns:  Nothing
     ///
     func processInternal(logDetails: LogDetails)
-
+    
+    /// Returns a string to use when processing the log details (internal use, same as processLogDetails but omits function/file/line info)
+    /// - Parameters:
+    ///   - details: A string to use when processing the log details.
+    ///   - showDate: Whether to show a formatted date string.
+    ///   - showLevel: Whether to show the log level.
+    ///   - showLogIdentifier: Whether to show a log identifier.
+    func internalMessagePrefix(from details: LogDetails,
+                               showDate: Bool,
+                               showLevel: Bool,
+                               showLogIdentifier: Bool) -> String?
+    
+    /// Returns a string to use when processing the log details.
+    /// - Parameters:
+    ///   - details: A string to use when processing the log details.
+    ///   - showDate: Whether to show a formatted date string.
+    ///   - showLevel: Whether to show the log level.
+    ///   - showLogIdentifier: Whether to show a log identifier.
+    ///   - showThreadName: Whether to show the thread's name.
+    ///   - showFileName: Whether to show the filename.
+    ///   - showLineNumber: Whether to show the line number.
+    ///   - showFunctionName: Whether to show the function name.
+    func messagePrefix(from details: LogDetails,
+                       showDate: Bool,
+                       showLevel: Bool,
+                       showLogIdentifier: Bool,
+                       showThreadName: Bool,
+                       showFileName: Bool,
+                       showLineNumber: Bool,
+                       showFunctionName: Bool) -> String?
+    
     /// Check if the destination's log level is equal to or lower than the specified level.
     ///
     /// - Parameters:
@@ -58,7 +88,7 @@ public protocol DestinationProtocol: CustomDebugStringConvertible {
     ///     - false:    Log destination is at a higher log level.
     ///
     func isEnabledFor(level: XCGLogger.Level) -> Bool
-
+    
     /// Apply filters to determine if the log message should be logged.
     ///
     /// - Parameters:
@@ -70,7 +100,7 @@ public protocol DestinationProtocol: CustomDebugStringConvertible {
     ///     - false:    Keep this log message and continue processing.
     ///
     func shouldExclude(logDetails: inout LogDetails, message: inout String) -> Bool
-
+    
     /// Apply formatters.
     ///
     /// - Parameters:
@@ -83,7 +113,7 @@ public protocol DestinationProtocol: CustomDebugStringConvertible {
 }
 
 extension DestinationProtocol {
-
+    
     /// Iterate over all of the log filters in this destination, or the logger if none set for the destination.
     ///
     /// - Parameters:
@@ -96,16 +126,16 @@ extension DestinationProtocol {
     ///
     public func shouldExclude(logDetails: inout LogDetails, message: inout String) -> Bool {
         guard let filters = self.filters ?? self.owner?.filters, filters.count > 0 else { return false }
-
+        
         for filter in filters {
             if filter.shouldExclude(logDetails: &logDetails, message: &message) {
                 return true
             }
         }
-
+        
         return false
     }
-
+    
     /// Iterate over all of the log formatters in this destination, or the logger if none set for the destination.
     ///
     /// - Parameters:
@@ -116,7 +146,7 @@ extension DestinationProtocol {
     ///
     public func applyFormatters(logDetails: inout LogDetails, message: inout String) {
         guard let formatters = self.formatters ?? self.owner?.formatters, formatters.count > 0 else { return }
-
+        
         for formatter in formatters {
             formatter.format(logDetails: &logDetails, message: &message)
         }
