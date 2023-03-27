@@ -402,6 +402,68 @@ class XCGLoggerTests: XCTestCase {
         XCTAssert(testDestination.numberOfUnexpectedLogMessages == 0, "Fail: Received an unexpected log line")
     }
 
+    /// Test that a per-destination formatter works
+    func test_00111_customPerDestinationDateFormatter() {
+        let log: XCGLogger = XCGLogger(identifier: functionIdentifier())
+        log.outputLevel = .debug
+
+        let defaultDateFormatter = log.dateFormatter
+        let alternateDateFormat = "MM/dd/yyyy h:mma"
+        let alternateDateFormatter1 = DateFormatter()
+        alternateDateFormatter1.dateFormat = alternateDateFormat
+
+        let alternateDateFormatter2 = DateFormatter()
+        alternateDateFormatter2.dateFormat = "h:mma"
+
+        log.dateFormatter = alternateDateFormatter1
+
+        log.debug("Test date format is different than our default")
+
+        XCTAssertNotNil(log.dateFormatter, "Fail: date formatter is nil")
+        XCTAssertEqual(log.dateFormatter!.dateFormat, alternateDateFormat, "Fail: date format doesn't match our custom date format")
+        XCTAssert(defaultDateFormatter != alternateDateFormatter1, "Fail: Did not assign a custom date formatter")
+
+        // We add this destination after the normal log.debug() call above (that's for humans to look at), because
+        // there's a chance when the test runs, that we could cross time boundaries (ie, second [or even the year])
+        let testDestination1: TestDestination = TestDestination(identifier: log.identifier + ".testDestination1")
+        testDestination1.showThreadName = false
+        testDestination1.showLevel = true
+        testDestination1.showFileName = true
+        testDestination1.showLineNumber = false
+        testDestination1.showDate = true
+        log.add(destination: testDestination1)
+
+        // We add this destination after the normal log.debug() call above (that's for humans to look at), because
+        // there's a chance when the test runs, that we could cross time boundaries (ie, second [or even the year])
+        let testDestination2: TestDestination = TestDestination(identifier: log.identifier + ".testDestination2")
+        testDestination2.showThreadName = false
+        testDestination2.showLevel = true
+        testDestination2.showFileName = true
+        testDestination2.showLineNumber = false
+        testDestination2.showDate = true
+        testDestination2.dateFormatter = alternateDateFormatter2
+        log.add(destination: testDestination2)
+
+        // We force the date for this part of the test to ensure a change of date as the test runs doesn't break the test
+        let knownDate = Date(timeIntervalSince1970: 0)
+        let message = "Testing date format output matches what we expect"
+        testDestination1.add(expectedLogMessage: "\(alternateDateFormatter1.string(from: knownDate)) [\(XCGLogger.Level.debug)] [\(fileName)] \(#function) > \(message)")
+        testDestination2.add(expectedLogMessage: "\(alternateDateFormatter2.string(from: knownDate)) [\(XCGLogger.Level.debug)] [\(fileName)] \(#function) > \(message)")
+
+        XCTAssert(testDestination1.remainingNumberOfExpectedLogMessages == 1, "Fail: Didn't correctly load all of the expected log messages")
+        XCTAssert(testDestination2.remainingNumberOfExpectedLogMessages == 1, "Fail: Didn't correctly load all of the expected log messages")
+
+        let knownLogDetails = LogDetails(level: .debug, date: knownDate, message: message, functionName: #function, fileName: #file, lineNumber: #line)
+        testDestination1.process(logDetails: knownLogDetails)
+        testDestination2.process(logDetails: knownLogDetails)
+
+        XCTAssert(testDestination1.remainingNumberOfExpectedLogMessages == 0, "Fail: Didn't receive all expected log lines")
+        XCTAssert(testDestination1.numberOfUnexpectedLogMessages == 0, "Fail: Received an unexpected log line")
+
+        XCTAssert(testDestination2.remainingNumberOfExpectedLogMessages == 0, "Fail: Didn't receive all expected log lines")
+        XCTAssert(testDestination2.numberOfUnexpectedLogMessages == 0, "Fail: Received an unexpected log line")
+    }
+
     /// Test that we can log a variety of different object types
     func test_00120_variousParameters() {
         let log: XCGLogger = XCGLogger(identifier: functionIdentifier())
