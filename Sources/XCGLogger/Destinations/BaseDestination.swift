@@ -52,6 +52,9 @@ open class BaseDestination: DestinationProtocol, CustomDebugStringConvertible {
     /// Option: whether or not to output the date the log was created
     open var showDate: Bool = true
 
+    /// Option: Destionation based formatter, igonores `XCGLogger.owner.dateFormatter` if set
+    open var dateFormatter: DateFormatter?
+
     /// Option: override descriptions of log levels
     open var levelDescriptions: [XCGLogger.Level: String] = [:]
 
@@ -82,7 +85,7 @@ open class BaseDestination: DestinationProtocol, CustomDebugStringConvertible {
         var extendedDetails: String = ""
 
         if showDate {
-            extendedDetails += "\((owner.dateFormatter != nil) ? owner.dateFormatter!.string(from: logDetails.date) : logDetails.date.description) "
+            extendedDetails += "\(self.formatted(date: logDetails.date)) "
         }
 
         if showLevel {
@@ -137,7 +140,7 @@ open class BaseDestination: DestinationProtocol, CustomDebugStringConvertible {
         var extendedDetails: String = ""
 
         if showDate {
-            extendedDetails += "\((owner.dateFormatter != nil) ? owner.dateFormatter!.string(from: logDetails.date) : logDetails.date.description) "
+            extendedDetails += "\(self.formatted(date: logDetails.date)) "
         }
 
         if showLevel {
@@ -163,6 +166,20 @@ open class BaseDestination: DestinationProtocol, CustomDebugStringConvertible {
     ///
     open func isEnabledFor(level: XCGLogger.Level) -> Bool {
         return level >= self.outputLevel
+    }
+
+    /// Use the correct formatter (first `self`, then `owner` to format the date.
+    ///
+    /// - Parameters:
+    ///     - date: the date for format
+    ///
+    /// - Returns:
+    ///     - string:   `date` formatted using "best" formatter, or in worst case `.description` if noone is set.
+    ///
+    private func formatted(date: Date) -> String {
+        (dateFormatter ?? owner?.dateFormatter).map {
+            $0.string(from: date)
+        } ?? date.description
     }
 
     // MARK: - Methods that must be overridden in subclasses
