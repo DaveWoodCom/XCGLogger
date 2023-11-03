@@ -57,7 +57,7 @@ DerivedData/
 # NB: slash on the end, so we only remove the FOLDER, not any files that were badly named "build"
 
 build/
-
+.swiftpm/
 
 #####
 # Xcode private settings (window sizes, bookmarks, breakpoints, custom executables, smart groups)

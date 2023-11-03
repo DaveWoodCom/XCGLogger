@@ -1,6 +1,6 @@
 Pod::Spec.new do |spec|
 
-    spec.name = 'XCGLogger'
+    spec.name = '_XCGLogger'
     spec.version = '7.0.1'
     spec.summary = 'A debug log module for use in Swift projects.'
 
@@ -29,15 +29,15 @@ Pod::Spec.new do |spec|
 
     # Main XCGLogger Framework
     spec.subspec 'Core' do |core|
-        core.dependency 'ObjcExceptionBridging'
-        core.source_files = 'Sources/XCGLogger/**/*.{swift}'
-        core.exclude_files = 'Sources/XCGLogger/**/Optional/*.{swift}'
+        core.dependency '_ObjcExceptionBridging'
+        core.source_files = 'Sources/_XCGLogger/**/*.{swift}'
+        core.exclude_files = 'Sources/_XCGLogger/**/Optional/*.{swift}'
         core.resource = '.swift-version'
     end
 
     # An experimental subspec to include helpers for using the UserInfo dictionary with log messages, tagging logs with tags and/or developers
     spec.subspec 'UserInfoHelpers' do |userinfohelpers|
-        userinfohelpers.dependency 'XCGLogger/Core'
-        userinfohelpers.source_files = 'Sources/XCGLogger/Misc/Optional/UserInfoHelpers.swift'
+        userinfohelpers.dependency '_XCGLogger/Core'
+        userinfohelpers.source_files = 'Sources/_XCGLogger/Misc/Optional/UserInfoHelpers.swift'
     end
 end
