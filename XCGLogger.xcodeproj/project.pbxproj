@@ -229,6 +229,7 @@
 		7573B4E11DE41AC200726CE1 /* ObjcExceptionBridging.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = ObjcExceptionBridging.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		7573B4F01DE41B1800726CE1 /* ObjcExceptionBridging.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = ObjcExceptionBridging.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		7573B5011DE41B5000726CE1 /* ObjcExceptionBridging.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = ObjcExceptionBridging.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		BA36232F2BCF12EF00C1EE54 /* PrivacyInfo.xcprivacy */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = PrivacyInfo.xcprivacy; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -439,6 +440,7 @@
 		55E3EE3B19D76F280068C3A7 = {
 			isa = PBXGroup;
 			children = (
+				BA36232F2BCF12EF00C1EE54 /* PrivacyInfo.xcprivacy */,
 				55E3EE4719D76F280068C3A7 /* XCGLogger */,
 				55E3EE5419D76F280068C3A7 /* XCGLoggerTests */,
 				7573B4BF1DE4146300726CE1 /* ObjcExceptionBridging */,
