@@ -11,15 +11,15 @@
 #####
 # OS X temporary files that should never be committed
 #
-# c.f. http://www.westwind.com/reference/os-x/invisibles.html
+# c.f. https://www.westwind.com/reference/os-x/invisibles.html
 
 .DS_Store
 
-# c.f. http://www.westwind.com/reference/os-x/invisibles.html
+# c.f. https://www.westwind.com/reference/os-x/invisibles.html
 
 .Trashes
 
-# c.f. http://www.westwind.com/reference/os-x/invisibles.html
+# c.f. https://www.westwind.com/reference/os-x/invisibles.html
 
 *.swp
 
@@ -70,19 +70,19 @@ build/
 # 99% of projects do NOT use those, so they do NOT want to version control this file.
 #  ..but if you're in the 1%, comment out the line "*.pbxuser"
 
-# .pbxuser: http://lists.apple.com/archives/xcode-users/2004/Jan/msg00193.html
+# .pbxuser: https://lists.apple.com/archives/xcode-users/2004/Jan/msg00193.html
 
 *.pbxuser
 
-# .mode1v3: http://lists.apple.com/archives/xcode-users/2007/Oct/msg00465.html
+# .mode1v3: https://lists.apple.com/archives/xcode-users/2007/Oct/msg00465.html
 
 *.mode1v3
 
-# .mode2v3: http://lists.apple.com/archives/xcode-users/2007/Oct/msg00465.html
+# .mode2v3: https://lists.apple.com/archives/xcode-users/2007/Oct/msg00465.html
 
 *.mode2v3
 
-# .perspectivev3: http://stackoverflow.com/questions/5223297/xcode-projects-what-is-a-perspectivev3-file
+# .perspectivev3: https://stackoverflow.com/questions/5223297/xcode-projects-what-is-a-perspectivev3-file
 
 *.perspectivev3
 
@@ -97,7 +97,7 @@ build/
 # Xcode 4 - semi-personal settings
 #
 # Apple Shared data that Apple put in the wrong folder
-# c.f. http://stackoverflow.com/a/19260712/153422
+# c.f. https://stackoverflow.com/a/19260712/153422
 #     FROM ANSWER: Apple says "don't ignore it"
 #     FROM COMMENTS: Apple is wrong; Apple code is too buggy to trust; there are no known negative side-effects to ignoring Apple's unofficial advice and instead doing the thing that actively fixes bugs in Xcode
 # Up to you, but ... current advice: ignore it.
@@ -169,14 +169,14 @@ xcuserdata/
 #
 # COCOAPODS:
 #
-# c.f. http://guides.cocoapods.org/using/using-cocoapods.html#what-is-a-podfilelock
-# c.f. http://guides.cocoapods.org/using/using-cocoapods.html#should-i-ignore-the-pods-directory-in-source-control
+# c.f. https://guides.cocoapods.org/using/using-cocoapods.html#what-is-a-podfilelock
+# c.f. https://guides.cocoapods.org/using/using-cocoapods.html#should-i-ignore-the-pods-directory-in-source-control
 #
 !Podfile.lock
 #
 # RUBY:
 #
-# c.f. http://yehudakatz.com/2010/12/16/clarifying-the-roles-of-the-gemspec-and-gemfile/
+# c.f. https://yehudakatz.com/2010/12/16/clarifying-the-roles-of-the-gemspec-and-gemfile/
 #
 !Gemfile.lock
 #
@@ -188,7 +188,7 @@ xcuserdata/
 #
 # TEXTMATE:
 #
-# -- UNVERIFIED: c.f. http://stackoverflow.com/a/50283/153422
+# -- UNVERIFIED: c.f. https://stackoverflow.com/a/50283/153422
 #
 #tm_build_errors
 
