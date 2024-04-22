@@ -68,7 +68,7 @@ Add something similar to the following lines to your `Podfile`. You may need to 
 
 ```
 source 'https://github.com/CocoaPods/Specs.git'
-platform :ios, '8.0'
+platform :ios, '15.0'
 use_frameworks!
 
 pod 'XCGLogger', '~> 7.0.1'
