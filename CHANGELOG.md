@@ -1,5 +1,6 @@
 # Change Log
 
+* **Version 7.1.1**: *(2024/04/22)* - Adds Privacy Manifest files (thanks @mithleshgomotive, @rinkietheridge-ban), updates deployment targets
 * **Version 7.0.1**: *(2020/02/04)* - Updated for Xcode 11.3.1, adds in missing convenience methods for notice, alert, and emergency (thanks @hk05)
 * **Version 7.0.0**: *(2019/03/26)* - Updated for Xcode 10.2/Swift 5.0, adds additional log levels: notice, alert, and emergency
 * **Version 6.1.0**: *(2018/09/16)* - Fix for Xcode 10.0 warnings/Swift 4.2, other minor tweaks
