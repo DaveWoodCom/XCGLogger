@@ -4,7 +4,7 @@
 //
 //  Created by Dave Wood on 2017-04-04.
 //  Copyright © 2017 Dave Wood, Cerebral Gardens.
-//  Some rights reserved: https://github.com/DaveWoodCom/XCGLogger/blob/master/LICENSE.txt
+//  Some rights reserved: https://github.com/DaveWoodCom/XCGLogger/blob/main/LICENSE.txt
 //
 //  Based on code by Martin-R here: https://stackoverflow.com/a/38343753/144857
 

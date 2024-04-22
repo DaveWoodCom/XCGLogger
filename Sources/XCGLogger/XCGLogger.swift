@@ -4,7 +4,7 @@
 //
 //  Created by Dave Wood on 2014-06-06.
 //  Copyright © 2014 Dave Wood, Cerebral Gardens.
-//  Some rights reserved: https://github.com/DaveWoodCom/XCGLogger/blob/master/LICENSE.txt
+//  Some rights reserved: https://github.com/DaveWoodCom/XCGLogger/blob/main/LICENSE.txt
 //
 
 #if os(macOS)
@@ -171,7 +171,7 @@ open class XCGLogger: CustomDebugStringConvertible {
     // MARK: - Setup methods
     /// A shortcut method to configure the default logger instance.
     ///
-    /// - Note: The function exists to get you up and running quickly, but it's recommended that you use the advanced usage configuration for most projects. See https://github.com/DaveWoodCom/XCGLogger/blob/master/README.md#advanced-usage-recommended
+    /// - Note: The function exists to get you up and running quickly, but it's recommended that you use the advanced usage configuration for most projects. See https://github.com/DaveWoodCom/XCGLogger/blob/main/README.md#advanced-usage-recommended
     ///
     /// - Parameters:
     ///     - level: The log level of this logger, any logs received at this level or higher will be output to the destinations. **Default:** Debug
@@ -193,7 +193,7 @@ open class XCGLogger: CustomDebugStringConvertible {
 
     /// A shortcut method to configure the logger.
     ///
-    /// - Note: The function exists to get you up and running quickly, but it's recommended that you use the advanced usage configuration for most projects. See https://github.com/DaveWoodCom/XCGLogger/blob/master/README.md#advanced-usage-recommended
+    /// - Note: The function exists to get you up and running quickly, but it's recommended that you use the advanced usage configuration for most projects. See https://github.com/DaveWoodCom/XCGLogger/blob/main/README.md#advanced-usage-recommended
     ///
     /// - Parameters:
     ///     - level: The log level of this logger, any logs received at this level or higher will be output to the destinations. **Default:** Debug

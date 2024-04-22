@@ -30,7 +30,7 @@ to this:
 ```2014-06-09 06:44:43.600 [Debug] [AppDelegate.swift:40] application(_:didFinishLaunchingWithOptions:): Simple message```
 
 #### Example
-<img src="https://raw.githubusercontent.com/DaveWoodCom/XCGLogger/master/ReadMeImages/SampleLog.png" alt="Example" style="width: 690px;" />
+<img src="https://raw.githubusercontent.com/DaveWoodCom/XCGLogger/main/ReadMeImages/SampleLog.png" alt="Example" style="width: 690px;" />
 
 ### Communication _(Hat Tip AlamoFire)_
 
@@ -546,9 +546,9 @@ Also, please check out some of my other projects:
 
 The change log is now in its own file: [CHANGELOG.md](CHANGELOG.md)
 
-[xcglogger-logo]: https://github.com/DaveWoodCom/XCGLogger/raw/master/ReadMeImages/XCGLoggerLogo_326x150.png
+[xcglogger-logo]: https://github.com/DaveWoodCom/XCGLogger/raw/main/ReadMeImages/XCGLoggerLogo_326x150.png
 [swift.org]: https://swift.org/
-[license]: https://github.com/DaveWoodCom/XCGLogger/blob/master/LICENSE.txt
+[license]: https://github.com/DaveWoodCom/XCGLogger/blob/main/LICENSE.txt
 [swiftpm]: https://swift.org/package-manager/
 [cocoapods]: https://cocoapods.org/
 [cocoapods-xcglogger]: https://cocoapods.org/pods/XCGLogger
