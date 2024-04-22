@@ -1,0 +1,4 @@
+# git commit hashes to ignore when viewing git blame
+# See: https://www.michaelheap.com/git-ignore-rev/
+# See: https://docs.github.com/en/repositories/working-with-files/using-files/viewing-a-file#ignore-commits-in-the-blame-view
+
