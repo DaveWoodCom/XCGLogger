@@ -4,7 +4,6 @@
 [![badge-platforms]][swift.org]
 [![badge-license]][license]
 
-[![badge-travis]][travis]
 [![badge-swiftpm]][swiftpm]
 [![badge-cocoapods]][cocoapods-xcglogger]
 [![badge-carthage]][carthage]
@@ -550,7 +549,6 @@ The change log is now in its own file: [CHANGELOG.md](CHANGELOG.md)
 [xcglogger-logo]: https://github.com/DaveWoodCom/XCGLogger/raw/master/ReadMeImages/XCGLoggerLogo_326x150.png
 [swift.org]: https://swift.org/
 [license]: https://github.com/DaveWoodCom/XCGLogger/blob/master/LICENSE.txt
-[travis]: https://travis-ci.org/DaveWoodCom/XCGLogger
 [swiftpm]: https://swift.org/package-manager/
 [cocoapods]: https://cocoapods.org/
 [cocoapods-xcglogger]: https://cocoapods.org/pods/XCGLogger
@@ -567,7 +565,6 @@ The change log is now in its own file: [CHANGELOG.md](CHANGELOG.md)
 [badge-language]: https://img.shields.io/badge/Swift-1.x%20%7C%202.x%20%7C%203.x%20%7C%204.x%20%7C%205.x-orange.svg?style=flat
 [badge-platforms]: https://img.shields.io/badge/Platforms-macOS%20%7C%20iOS%20%7C%20tvOS%20%7C%20watchOS-lightgray.svg?style=flat
 [badge-license]: https://img.shields.io/badge/License-MIT-lightgrey.svg?style=flat
-[badge-travis]: https://img.shields.io/travis/DaveWoodCom/XCGLogger/master.svg?style=flat
 [badge-swiftpm]: https://img.shields.io/badge/Swift_Package_Manager-v7.1.0-64a6dd.svg?style=flat
 [badge-cocoapods]: https://img.shields.io/cocoapods/v/XCGLogger.svg?style=flat
 [badge-carthage]: https://img.shields.io/badge/Carthage-v7.1.0-64a6dd.svg?style=flat
