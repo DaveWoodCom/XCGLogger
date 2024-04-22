@@ -34,6 +34,10 @@ let package = Package(
             dependencies: ["XCGLogger"]),
         .target(
             name: "ObjcExceptionBridging",
-            dependencies: []),
+            dependencies: [],
+            path: "Sources/ObjcExceptionBridging",
+            resources: [
+                .process("PrivacyInfo.xcprivacy")
+            ]),
     ]
 )
