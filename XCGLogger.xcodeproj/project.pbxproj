@@ -444,7 +444,6 @@
 		55E3EE3B19D76F280068C3A7 = {
 			isa = PBXGroup;
 			children = (
-				BA36232F2BCF12EF00C1EE54 /* PrivacyInfo.xcprivacy */,
 				55E3EE4719D76F280068C3A7 /* XCGLogger */,
 				55E3EE5419D76F280068C3A7 /* XCGLoggerTests */,
 				7573B4BF1DE4146300726CE1 /* ObjcExceptionBridging */,
@@ -475,7 +474,6 @@
 		55E3EE4719D76F280068C3A7 /* XCGLogger */ = {
 			isa = PBXGroup;
 			children = (
-				BA5ACC1E2BD051F800108C5E /* PrivacyInfo.xcprivacy */,
 				554DF40F19D76FA9005708BE /* XCGLogger.swift */,
 				5501A3801D761F4E00CB8ABE /* Destinations */,
 				5501A3811D761F4E00CB8ABE /* Extensions */,
@@ -484,6 +482,7 @@
 				5501A3B31D762CDE00CB8ABE /* Misc */,
 				5501A3C41D76640F00CB8ABE /* ObjectiveC */,
 				55E3EE4819D76F280068C3A7 /* Supporting Files */,
+				BA5ACC1E2BD051F800108C5E /* PrivacyInfo.xcprivacy */,
 			);
 			name = XCGLogger;
 			path = Sources/XCGLogger;
