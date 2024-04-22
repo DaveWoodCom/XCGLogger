@@ -12,7 +12,7 @@ Pod::Spec.new do |spec|
 
     spec.license = { :type => 'MIT', :file => 'LICENSE.txt' }
     spec.author = { 'Dave Wood' => 'cocoapods@cerebralgardens.com' }
-    spec.social_media_url = 'http://twitter.com/DaveWoodX'
+    spec.social_media_url = 'https://mastodon.social/@davewoodx'
     spec.platforms = { :ios => '8.0', :watchos => '2.0', :tvos => '9.0' }
     spec.requires_arc = true
     spec.pod_target_xcconfig = { 'SWIFT_VERSION' => '5.0' }
