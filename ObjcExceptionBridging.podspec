@@ -13,15 +13,15 @@ Pod::Spec.new do |spec|
     spec.license = { :type => 'MIT', :file => 'LICENSE.txt' }
     spec.author = { 'Dave Wood' => 'cocoapods@cerebralgardens.com' }
     spec.social_media_url = 'https://mastodon.social/@davewoodx'
-    spec.platforms = { :ios => '15.0', :watchos => '9.0', :tvos => '15.0' }
+    spec.platforms = { :ios => '12.0', :watchos => '4.0', :tvos => '12.0', :osx => '10.13' }
     spec.requires_arc = true
 
     spec.source = { :git => 'https://github.com/DaveWoodCom/XCGLogger.git', :tag => '7.1.1' }
 
-    spec.ios.deployment_target = '15.0'
-    spec.osx.deployment_target = '13.0'
-    spec.watchos.deployment_target = '9.0'
-    spec.tvos.deployment_target = '15.0'
+    spec.ios.deployment_target = '12.0'
+    spec.osx.deployment_target = '10.13'
+    spec.watchos.deployment_target = '4.0'
+    spec.tvos.deployment_target = '12.0'
     
     spec.default_subspecs = 'ObjcExceptionBridging'
 
