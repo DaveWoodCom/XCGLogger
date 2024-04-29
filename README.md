@@ -55,7 +55,7 @@ in your repository folder.
 
 Add the following line to your `Cartfile`.
 
-```github "DaveWoodCom/XCGLogger" ~> 7.1.2```
+```github "DaveWoodCom/XCGLogger" ~> 7.1.3```
 
 Then run `carthage update --no-use-binaries` or just `carthage update`. For details of the installation and usage of Carthage, visit [its project page][carthage].
 
@@ -70,12 +70,12 @@ source 'https://github.com/CocoaPods/Specs.git'
 platform :ios, '12.0'
 use_frameworks!
 
-pod 'XCGLogger', '~> 7.1.2'
+pod 'XCGLogger', '~> 7.1.3'
 ```
 
 Specifying the pod `XCGLogger` on its own will include the core framework. We're starting to add subspecs to allow you to include optional components as well:
 
-`pod 'XCGLogger/UserInfoHelpers', '~> 7.1.2'`: Include some experimental code to help deal with using UserInfo dictionaries to tag log messages.
+`pod 'XCGLogger/UserInfoHelpers', '~> 7.1.3'`: Include some experimental code to help deal with using UserInfo dictionaries to tag log messages.
 
 Then run `pod install`. For details of the installation and usage of CocoaPods, visit [its official web site][cocoapods].
 
@@ -117,7 +117,7 @@ Add the following entry to your package's dependencies:
 ### Backwards Compatibility
 
 Use:
-* XCGLogger version [7.1.2][xcglogger-7.1.2] for Swift 5.0
+* XCGLogger version [7.1.3][xcglogger-7.1.3] for Swift 5.0
 * XCGLogger version [6.1.0][xcglogger-6.1.0] for Swift 4.2
 * XCGLogger version [6.0.4][xcglogger-6.0.4] for Swift 4.1
 * XCGLogger version [6.0.2][xcglogger-6.0.2] for Swift 4.0
@@ -565,9 +565,9 @@ The change log is now in its own file: [CHANGELOG.md](CHANGELOG.md)
 [badge-language]: https://img.shields.io/badge/Swift-1.x%20%7C%202.x%20%7C%203.x%20%7C%204.x%20%7C%205.x-orange.svg?style=flat
 [badge-platforms]: https://img.shields.io/badge/Platforms-macOS%20%7C%20iOS%20%7C%20tvOS%20%7C%20watchOS-lightgray.svg?style=flat
 [badge-license]: https://img.shields.io/badge/License-MIT-lightgrey.svg?style=flat
-[badge-swiftpm]: https://img.shields.io/badge/Swift_Package_Manager-v7.1.2-64a6dd.svg?style=flat
+[badge-swiftpm]: https://img.shields.io/badge/Swift_Package_Manager-v7.1.3-64a6dd.svg?style=flat
 [badge-cocoapods]: https://img.shields.io/cocoapods/v/XCGLogger.svg?style=flat
-[badge-carthage]: https://img.shields.io/badge/Carthage-v7.1.2-64a6dd.svg?style=flat
+[badge-carthage]: https://img.shields.io/badge/Carthage-v7.1.3-64a6dd.svg?style=flat
 
 [badge-sponsors]: https://img.shields.io/badge/Sponsors-Cerebral%20Gardens-orange.svg?style=flat
 [badge-mastodon]: https://img.shields.io/badge/Mastodon-DaveWoodX-606A84.svg?style=flat
@@ -580,7 +580,7 @@ The change log is now in its own file: [CHANGELOG.md](CHANGELOG.md)
 [XCGLoggerNSLoggerConnector]: https://github.com/markuswinkler/XCGLoggerNSLoggerConnector
 [Firebase]: https://www.firebase.com/
 
-[xcglogger-7.1.2]: https://github.com/DaveWoodCom/XCGLogger/releases/tag/7.1.2
+[xcglogger-7.1.3]: https://github.com/DaveWoodCom/XCGLogger/releases/tag/7.1.3
 [xcglogger-6.1.0]: https://github.com/DaveWoodCom/XCGLogger/releases/tag/6.1.0
 [xcglogger-6.0.4]: https://github.com/DaveWoodCom/XCGLogger/releases/tag/6.0.4
 [xcglogger-6.0.2]: https://github.com/DaveWoodCom/XCGLogger/releases/tag/6.0.2
