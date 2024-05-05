@@ -1,7 +1,7 @@
 Pod::Spec.new do |spec|
 
     spec.name = 'ObjcExceptionBridging'
-    spec.version = '7.1.3'
+    spec.version = '7.1.4'
     spec.summary = 'A bridge to Objective-C exception handling, for use in Swift projects.'
 
     spec.description = <<-DESC

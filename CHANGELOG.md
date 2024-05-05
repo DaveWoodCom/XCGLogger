@@ -1,5 +1,6 @@
 # Change Log
 
+* **Version 7.1.4**: *(2024/05/05)* - Moves Privacy Manifests to framework specific bundles (thanks @alexzchut and @reeq-dev)
 * **Version 7.1.3**: *(2024/04/28)* - Drops deployment targets down to the minimum allowed in Xcode 15.3 (iOS = 12.0, watchOS = 4.0, tvOS = 12.0, macOS = 10.13)
 * **Version 7.1.1**: *(2024/04/22)* - Adds Privacy Manifest files (thanks @mithleshgomotive, @rinkietheridge-ban), updates deployment targets
 * **Version 7.0.1**: *(2020/02/04)* - Updated for Xcode 11.3.1, adds in missing convenience methods for notice, alert, and emergency (thanks @hk05)
