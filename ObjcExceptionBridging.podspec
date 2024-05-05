@@ -29,6 +29,10 @@ Pod::Spec.new do |spec|
     # ObjcExceptionBridging Framework
     spec.subspec 'ObjcExceptionBridging' do |core|
         core.source_files = 'Sources/ObjcExceptionBridging/**/*.{h,m}'
-        core.resource = 'Sources/ObjcExceptionBridging/PrivacyInfo.xcprivacy'
+        core.resource_bundles = {
+            "#{spec.name}" => [
+            	'Sources/ObjcExceptionBridging/PrivacyInfo.xcprivacy',
+            ]
+        }        
     end
 end

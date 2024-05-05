@@ -33,7 +33,11 @@ Pod::Spec.new do |spec|
         core.dependency 'ObjcExceptionBridging'
         core.source_files = 'Sources/XCGLogger/**/*.{swift}'
         core.exclude_files = 'Sources/XCGLogger/**/Optional/*.{swift}'
-        core.resource = 'Sources/XCGLogger/PrivacyInfo.xcprivacy'
+        core.resource_bundles = {
+            "#{spec.name}" => [
+            	'Sources/XCGLogger/PrivacyInfo.xcprivacy',
+            ]
+        }        
     end
 
     # An experimental subspec to include helpers for using the UserInfo dictionary with log messages, tagging logs with tags and/or developers
