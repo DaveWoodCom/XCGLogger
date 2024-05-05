@@ -16,7 +16,7 @@ Pod::Spec.new do |spec|
     spec.platforms = { :ios => '12.0', :watchos => '4.0', :tvos => '12.0', :osx => '10.13' }
     spec.requires_arc = true
 
-    spec.source = { :git => 'https://github.com/DaveWoodCom/XCGLogger.git', :tag => '7.1.3' }
+    spec.source = { :git => 'https://github.com/DaveWoodCom/XCGLogger.git', :tag => '#{spec.version}' }
 
     spec.ios.deployment_target = '12.0'
     spec.osx.deployment_target = '10.13'
