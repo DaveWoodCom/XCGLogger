@@ -15,6 +15,7 @@ Pod::Spec.new do |spec|
     spec.social_media_url = 'https://mastodon.social/@davewoodx'
     spec.platforms = { :ios => '12.0', :watchos => '4.0', :tvos => '12.0', :osx => '10.13' }
     spec.requires_arc = true
+    spec.cocoapods_version = '>= 1.13.0'
 
     spec.source = { :git => 'https://github.com/DaveWoodCom/XCGLogger.git', :tag => '#{spec.version}' }
 

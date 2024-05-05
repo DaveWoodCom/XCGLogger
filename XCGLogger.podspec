@@ -17,6 +17,7 @@ Pod::Spec.new do |spec|
     spec.requires_arc = true
     spec.pod_target_xcconfig = { 'SWIFT_VERSION' => '5.0' }
     spec.swift_version = '5.0'
+    spec.cocoapods_version = '>= 1.13.0'
 
     spec.source = { :git => 'https://github.com/DaveWoodCom/XCGLogger.git', :tag => "#{spec.version}" }
 
