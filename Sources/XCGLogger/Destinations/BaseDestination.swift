@@ -67,7 +67,7 @@ open class BaseDestination: DestinationProtocol, CustomDebugStringConvertible {
         self.owner = owner
         self.identifier = identifier
     }
-
+    
     // MARK: - Methods to Process Log Details
     /// Process the log details.
     ///
@@ -77,22 +77,43 @@ open class BaseDestination: DestinationProtocol, CustomDebugStringConvertible {
     /// - Returns:  Nothing
     ///
     open func process(logDetails: LogDetails) {
-        guard let owner = owner else { return }
-
+        guard
+            let prefix = messagePrefix(from: logDetails,
+                                       showDate: self.showDate,
+                                       showLevel: self.showLevel,
+                                       showLogIdentifier: self.showLogIdentifier,
+                                       showThreadName: self.showThreadName,
+                                       showFileName: self.showFileName,
+                                       showLineNumber: self.showLineNumber,
+                                       showFunctionName: self.showFunctionName)
+        else { return }
+        output(logDetails: logDetails, message: "\(prefix)\(logDetails.message)")
+    }
+    
+    open func messagePrefix(from details: LogDetails,
+                            showDate: Bool,
+                            showLevel: Bool,
+                            showLogIdentifier: Bool,
+                            showThreadName: Bool,
+                            showFileName: Bool,
+                            showLineNumber: Bool,
+                            showFunctionName: Bool) -> String? {
+        guard let owner = owner else { return nil }
+        
         var extendedDetails: String = ""
-
+        
         if showDate {
-            extendedDetails += "\((owner.dateFormatter != nil) ? owner.dateFormatter!.string(from: logDetails.date) : logDetails.date.description) "
+            extendedDetails += "\((owner.dateFormatter != nil) ? owner.dateFormatter!.string(from: details.date) : details.date.description) "
         }
-
+        
         if showLevel {
-            extendedDetails += "[\(levelDescriptions[logDetails.level] ?? owner.levelDescriptions[logDetails.level] ?? logDetails.level.description)] "
+            extendedDetails += "[\(levelDescriptions[details.level] ?? owner.levelDescriptions[details.level] ?? details.level.description)] "
         }
-
+        
         if showLogIdentifier {
             extendedDetails += "[\(owner.identifier)] "
         }
-
+        
         if showThreadName {
             if Thread.isMainThread {
                 extendedDetails += "[main] "
@@ -109,19 +130,19 @@ open class BaseDestination: DestinationProtocol, CustomDebugStringConvertible {
                 }
             }
         }
-
+        
         if showFileName {
-            extendedDetails += "[\((logDetails.fileName as NSString).lastPathComponent)\((showLineNumber ? ":" + String(logDetails.lineNumber) : ""))] "
+            extendedDetails += "[\((details.fileName as NSString).lastPathComponent)\((showLineNumber ? ":" + String(details.lineNumber) : ""))] "
         }
         else if showLineNumber {
-            extendedDetails += "[\(logDetails.lineNumber)] "
+            extendedDetails += "[\(details.lineNumber)] "
         }
-
+        
         if showFunctionName {
-            extendedDetails += "\(logDetails.functionName) "
+            extendedDetails += "\(details.functionName) "
         }
-
-        output(logDetails: logDetails, message: "\(extendedDetails)> \(logDetails.message)")
+        
+        return extendedDetails.isEmpty ? extendedDetails : "\(extendedDetails)> "
     }
 
     /// Process the log details (internal use, same as process(logDetails:) but omits function/file/line info).
@@ -132,23 +153,36 @@ open class BaseDestination: DestinationProtocol, CustomDebugStringConvertible {
     /// - Returns:  Nothing
     ///
     open func processInternal(logDetails: LogDetails) {
-        guard let owner = owner else { return }
-
+        guard
+            let prefix = internalMessagePrefix(from: logDetails,
+                                               showDate: self.showDate,
+                                               showLevel: self.showLevel,
+                                               showLogIdentifier: self.showLogIdentifier)
+        else { return }
+        output(logDetails: logDetails, message: "\(prefix)\(logDetails.message)")
+    }
+    
+    open func internalMessagePrefix(from details: LogDetails,
+                                    showDate: Bool,
+                                    showLevel: Bool,
+                                    showLogIdentifier: Bool) -> String? {
+        guard let owner = owner else { return nil }
+        
         var extendedDetails: String = ""
-
+        
         if showDate {
-            extendedDetails += "\((owner.dateFormatter != nil) ? owner.dateFormatter!.string(from: logDetails.date) : logDetails.date.description) "
+            extendedDetails += "\((owner.dateFormatter != nil) ? owner.dateFormatter!.string(from: details.date) : details.date.description) "
         }
-
+        
         if showLevel {
-            extendedDetails += "[\(logDetails.level)] "
+            extendedDetails += "[\(details.level)] "
         }
-
+        
         if showLogIdentifier {
             extendedDetails += "[\(owner.identifier)] "
         }
-
-        output(logDetails: logDetails, message: "\(extendedDetails)> \(logDetails.message)")
+        
+        return extendedDetails.isEmpty ? extendedDetails : "\(extendedDetails)> "
     }
 
     // MARK: - Misc methods
