@@ -15,7 +15,7 @@
 
 // MARK: - XCGLogger
 /// The main logging class
-open class XCGLogger: CustomDebugStringConvertible {
+open class XCGLogger: CustomDebugStringConvertible, @unchecked Sendable {
     // MARK: - Constants
     public struct Constants {
         /// Prefix identifier to use for all other identifiers
